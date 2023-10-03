@@ -1,1 +1,1 @@
-<h1>Hello world!</h1>
+<h1 class="text-red-700">Hello world!</h1>
