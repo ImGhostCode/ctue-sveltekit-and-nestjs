@@ -1,0 +1,154 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// psql -h localhost -p 5432 -U postgres
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum FavoriteItem {
+  Sentence
+  Word
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  name         String?
+  avt          String?
+  favoriteList FavoriteItem[]
+  Account      Account[]
+  Contribution Contribution[]
+  Sentence     Sentence[]
+  Word         Word[]
+  Practice     Practice[]
+
+  @@map("users")
+}
+
+model Account {
+  email       String @unique
+  userId      Int
+  password    String
+  authType    String
+  accountType String
+  user        User   @relation(fields: [userId], references: [id])
+
+  @@map("accounts")
+}
+
+model Sentence {
+  id      Int     @id @default(autoincrement())
+  typeId  Int
+  topicId Int
+  content String
+  mean    String
+  note    String?
+
+  User       User?     @relation(fields: [userId], references: [id])
+  userId     Int?
+  Practice   Practice? @relation(fields: [practiceId], references: [id])
+  practiceId Int?
+  Topic      Topic     @relation(fields: [topicId], references: [id])
+  Type       Type      @relation(fields: [typeId], references: [id])
+
+  @@map("sentences")
+}
+
+model VerifyCode {
+  id    Int    @id @default(autoincrement())
+  email String
+  code  Int
+
+  @@map("verifyCodes")
+}
+
+model Contribution {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  type    String
+  content String
+  status  String
+
+  User User @relation(fields: [userId], references: [id])
+
+  @@map("contributions")
+}
+
+model Practice {
+  id        Int        @id @default(autoincrement())
+  userId    Int
+  words     Word[]
+  sentences Sentence[]
+  reviewDay DateTime
+  result    Int
+  User      User?      @relation(fields: [userId], references: [id])
+
+  @@map("practices")
+}
+
+model Word {
+  id               Int      @id @default(autoincrement())
+  typeId           Int
+  topicId          Int
+  levelId          Int
+  specializationId Int
+  content          String
+  mean             String
+  note             String
+  phonetic         String
+  examples         String[]
+  picture          String
+  synonyms         String
+  antonyms         String
+
+  Type           Type           @relation(fields: [typeId], references: [id])
+  Level          Level          @relation(fields: [levelId], references: [id])
+  Specialization Specialization @relation(fields: [specializationId], references: [id])
+  Topic          Topic          @relation(fields: [topicId], references: [id])
+  User           User?          @relation(fields: [userId], references: [id])
+  userId         Int?
+  Practice       Practice?      @relation(fields: [practiceId], references: [id])
+  practiceId     Int?
+
+  @@map("words")
+}
+
+model Topic {
+  id       Int        @id @default(autoincrement())
+  name     String
+  Sentence Sentence[]
+  Word     Word[]
+
+  @@map("topics")
+}
+
+model Level {
+  id   Int    @id @default(autoincrement())
+  name String
+  Word Word[]
+
+  @@map("levels")
+}
+
+model Specialization {
+  id   Int    @id @default(autoincrement())
+  name String
+  Word Word[]
+
+  @@map("specializations")
+}
+
+model Type {
+  id       Int        @id @default(autoincrement())
+  name     String
+  isWord   Boolean
+  Sentence Sentence[]
+  Word     Word[]
+
+  @@map("types")
+}
