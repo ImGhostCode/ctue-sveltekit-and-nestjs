@@ -1,13 +1,65 @@
 import { Injectable } from '@nestjs/common';
 import { LoginDto, RegisterDto } from './dto';
+import { PrismaService } from '../prisma/prisma.service';
+import * as argon2 from 'argon2';
+import { ResponseData, AUTH_TYPES, ACCOUNT_TYPES } from '../global';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-    register(registerDto: RegisterDto) {
-        return 'Register'
+    constructor(private prismaService: PrismaService, private jwtService: JwtService, private configService: ConfigService) { }
+
+    async register(registerDto: RegisterDto) {
+        try {
+            const user = await this.prismaService.account.findUnique({
+                where: { email: registerDto.email }
+            })
+            if (user) return new ResponseData<string>(null, 400, 'Email đã được sử dụng')
+            const newUser = await this.prismaService.user.create({
+                data: {
+                    name: registerDto.name
+                }
+            })
+            if (!newUser) return new ResponseData<string>(null, 400, 'Tạo tài khoản thất bại, thử lại')
+            const hashedPassword = await argon2.hash(registerDto.password)
+            const newAccount = await this.prismaService.account.create({
+                data: {
+                    email: registerDto.email,
+                    password: hashedPassword,
+                    authType: AUTH_TYPES.LOCAL,
+                    accountType: ACCOUNT_TYPES.USER,
+                    userId: newUser.id
+                }
+            })
+            if (!newAccount) return new ResponseData<string>(null, 400, 'Tạo tài khoản thất bại, thử lại')
+            return new ResponseData<any>(newAccount, 200, 'Tạo tài khoản thành công')
+        } catch (error) {
+            return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+        }
     }
 
-    login(loginDto: LoginDto) {
-        return 'Login'
+    async login(loginDto: LoginDto) {
+        const account = await this.prismaService.account.findUnique({
+            where: { email: loginDto.email }
+        })
+        if (!account) return new ResponseData<string>(null, 400, 'Tài khoản không tồn tại')
+        const passwordMatched = await argon2.verify(account.password, loginDto.password)
+        if (!passwordMatched) return new ResponseData<string>(null, 400, 'Mật khẩu không chính xác')
+        return this.signJwtToken(account.userId, account.email)
+    }
+
+    async signJwtToken(userId: number, email: string) {
+        const payload = {
+            sub: userId,
+            email: email
+        }
+        const jwtString = await this.jwtService.signAsync(payload, {
+            expiresIn: '10m',
+            secret: this.configService.get('JWT_SECRET')
+        })
+        return {
+            accessToken: jwtString
+        }
     }
 }
