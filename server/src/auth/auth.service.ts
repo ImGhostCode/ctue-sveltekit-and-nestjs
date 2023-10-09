@@ -40,13 +40,18 @@ export class AuthService {
     }
 
     async login(loginDto: LoginDto) {
-        const account = await this.prismaService.account.findUnique({
-            where: { email: loginDto.email }
-        })
-        if (!account) return new ResponseData<string>(null, 400, 'Tài khoản không tồn tại')
-        const passwordMatched = await argon2.verify(account.password, loginDto.password)
-        if (!passwordMatched) return new ResponseData<string>(null, 400, 'Mật khẩu không chính xác')
-        return this.signJwtToken(account.userId, account.email)
+        try {
+            const account = await this.prismaService.account.findUnique({
+                where: { email: loginDto.email }
+            })
+            if (!account) return new ResponseData<string>(null, 400, 'Tài khoản không tồn tại')
+            const passwordMatched = await argon2.verify(account.password, loginDto.password)
+            if (!passwordMatched) return new ResponseData<string>(null, 400, 'Mật khẩu không chính xác')
+            const data = this.signJwtToken(account.userId, account.email)
+            return new ResponseData<any>(data, 200, 'Đăng nhập thành công')
+        } catch (error) {
+            return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+        }
     }
 
     async signJwtToken(userId: number, email: string) {
