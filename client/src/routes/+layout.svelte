@@ -109,11 +109,13 @@
 			</button>
 		</div>
 		<div class="flex md:order-2">
-			<!-- <button
-				type="button"
-				class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-				>Đăng nhập</button
-			> -->
+			<a href="/login">
+				<button
+					type="button"
+					class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 outline-none focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+					>Đăng nhập</button
+				></a
+			>
 
 			<!-- <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
 				<svg
@@ -128,9 +130,9 @@
 					/></svg
 				>
 			</div> -->
-			<div class="relative w-10 h-10 overflow-hiddenrounded-full">
+			<!-- <div class="relative w-10 h-10 overflow-hiddenrounded-full">
 				<img class="w-10 h-10" src={default_user} alt="Bordered avatar" />
-			</div>
+			</div> -->
 
 			<button
 				data-collapse-toggle="navbar-cta"
@@ -189,20 +191,22 @@
 	<div
 		class="absolute rounded-full transition-all duration-[0.2s] ease-out scale-y-0 group-hover:scale-y-100 group-hover:-translate-x-16 flex p-2 hover:p-3 bg-green-300 scale-100 hover:bg-green-400 text-white"
 	>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			fill="none"
-			viewBox="0 0 24 24"
-			stroke-width="1.5"
-			stroke="currentColor"
-			class="w-6 h-6"
+		<a href="/"
+			><svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				class="w-6 h-6"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+				/>
+			</svg></a
 		>
-			<path
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-			/>
-		</svg>
 	</div>
 	<!-- sub top -->
 	<!-- svelte-ignore a11y-click-events-have-key-events -->

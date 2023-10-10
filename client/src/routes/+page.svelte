@@ -6,7 +6,6 @@
 	import donate from '$lib/assets/icons/donate.png';
 	import edit from '$lib/assets/icons/edit.png';
 	import favorite from '$lib/assets/icons/favorite.png';
-	import fb_icon from '$lib/assets/icons/fb-icon.png';
 	import friends from '$lib/assets/icons/friends.png';
 	import grammar from '$lib/assets/icons/grammar.png';
 	import job from '$lib/assets/icons/job.png';
@@ -21,7 +20,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-50 hover:bg-gray-100"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
 			>
 				<div class="w-1/5"><img src={ipa} alt="ipa" /></div>
 				<div class="w-4/5">
@@ -35,7 +34,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-50 hover:bg-gray-100"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
 			>
 				<div class="w-1/5"><img src={dictionary} alt="dictionary" /></div>
 				<div class="w-4/5">
@@ -49,7 +48,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-50 hover:bg-gray-100"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
 			>
 				<div class="w-1/5"><img src={favorite} alt="favorite" /></div>
 				<div class="w-4/5">
@@ -61,7 +60,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-50 hover:bg-gray-100"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
 			>
 				<div class="w-1/5"><img src={verb} alt="verb" /></div>
 				<div class="w-4/5">
@@ -73,7 +72,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-50 hover:bg-gray-100"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
 			>
 				<div class="w-1/5"><img src={grammar} alt="grammar" /></div>
 				<div class="w-4/5">
@@ -85,7 +84,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-50 hover:bg-gray-100"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
 			>
 				<div class="w-1/5"><img src={game} alt="game" /></div>
 				<div class="w-4/5">
@@ -99,7 +98,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-50 hover:bg-gray-100"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
 			>
 				<div class="w-1/5"><img src={medal} alt="medal" /></div>
 				<div class="w-4/5">
@@ -113,7 +112,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-50 hover:bg-gray-100"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
 			>
 				<div class="w-1/5"><img src={edit} alt="edit" /></div>
 				<div class="w-4/5">
