@@ -15,8 +15,8 @@
 				<input
 					class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 					id="email"
-					type="text"
-					placeholder="Email"
+					type="email"
+					placeholder="example@gmail.com"
 				/>
 			</div>
 			<div class="mb-6">
@@ -31,10 +31,10 @@
 				<div class="flex relative">
 					<input
 						type={showInput1 ? 'text' : 'password'}
-						class="shadow appearance-none border focus:border-green-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						class="shadow appearance-none border focus:border-green-500 rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 						id="password"
 						placeholder="******************"
-						maxlength="32"
+						minlength="6"
 					/>
 					<button
 						id="eye"
@@ -84,7 +84,7 @@
 			<div class="flex items-center justify-between mb-6">
 				<button
 					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-					type="button"
+					type="submit"
 				>
 					Đăng nhập
 				</button>

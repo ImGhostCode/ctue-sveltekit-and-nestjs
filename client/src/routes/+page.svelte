@@ -15,12 +15,12 @@
 	import translate from '$lib/assets/icons/translate.png';
 </script>
 
-<main class="h-[2000px]">
+<!-- <main class="h-[2000px]">
 	<div class="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={ipa} alt="ipa" /></div>
 				<div class="w-4/5">
@@ -34,7 +34,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={dictionary} alt="dictionary" /></div>
 				<div class="w-4/5">
@@ -48,7 +48,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={favorite} alt="favorite" /></div>
 				<div class="w-4/5">
@@ -60,7 +60,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={verb} alt="verb" /></div>
 				<div class="w-4/5">
@@ -72,7 +72,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={grammar} alt="grammar" /></div>
 				<div class="w-4/5">
@@ -84,11 +84,11 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={game} alt="game" /></div>
 				<div class="w-4/5">
-					<p class="text-2xl text-amber-500 font-bold">Play Games</p>
+					<p class="text-2xl text-amber-500 font-bold">Ôn tập</p>
 					<p class="text-ms text-gray-500">
 						Ôn luyện kiến thức hiệu quả và đỡ nhàm chán hơn qua việc chơi game cùng CTUE nhé
 					</p>
@@ -98,7 +98,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={medal} alt="medal" /></div>
 				<div class="w-4/5">
@@ -112,7 +112,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-md bg-gray-100 hover:bg-gray-200"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={edit} alt="edit" /></div>
 				<div class="w-4/5">
@@ -124,4 +124,4 @@
 			</a>
 		</div>
 	</div>
-</main>
+</main> -->
