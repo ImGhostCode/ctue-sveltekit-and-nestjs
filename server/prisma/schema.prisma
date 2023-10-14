@@ -39,7 +39,7 @@ model Account {
   authType    String
   accountType String
   isBan       Boolean @default(false)
-  user        User    @relation(fields: [userId], references: [id])
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("accounts")
 }

@@ -1,0 +1,37 @@
+@urlDev=http://localhost:8000/users
+
+### get me
+GET {{urlDev}}/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3MjY1Njk2LCJleHAiOjE2OTcyNzI4OTZ9.63NyTqkfiKITJ04-7Z71y-hq7BqW8Ajwv18kcFzscDM
+
+### get all users
+GET {{urlDev}}/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3MjY1Njk2LCJleHAiOjE2OTcyNzI4OTZ9.63NyTqkfiKITJ04-7Z71y-hq7BqW8Ajwv18kcFzscDM
+
+### is ban user
+PUT {{urlDev}}/is-ban/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2OTcyNDkwMDEsImV4cCI6MTY5NzI0OTYwMX0.KUe8vXsktbwlosOCVlsBpJsbDn5x8r4Ez-dx-pyuonA
+
+### delete user
+DELETE {{urlDev}}/14
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3MjY5NzkzLCJleHAiOjE2OTcyNzY5OTN9.c2PiP7TqE43RYz5t5e2RyRe4sNamvR5zFXUeP8e0zhc
+
+### change user
+PUT  {{urlDev}}/change-user/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3MjY1Njk2LCJleHAiOjE2OTcyNzI4OTZ9.63NyTqkfiKITJ04-7Z71y-hq7BqW8Ajwv18kcFzscDM
+Content-Type: application/json
+
+{
+    "name": "test",
+    "avt": "1234"
+}
+
+### change password
+PUT  {{urlDev}}/change-password/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3MjY5NzkzLCJleHAiOjE2OTcyNzY5OTN9.c2PiP7TqE43RYz5t5e2RyRe4sNamvR5zFXUeP8e0zhc
+Content-Type: application/json
+
+{
+    "oldpassword": "1234567",
+    "newpassword": "123456"
+}
