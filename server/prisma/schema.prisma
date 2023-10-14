@@ -33,12 +33,13 @@ model User {
 }
 
 model Account {
-  email       String @unique
+  email       String  @unique
   userId      Int
   password    String
   authType    String
   accountType String
-  user        User   @relation(fields: [userId], references: [id])
+  isBan       Boolean @default(false)
+  user        User    @relation(fields: [userId], references: [id])
 
   @@map("accounts")
 }

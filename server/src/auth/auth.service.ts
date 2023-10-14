@@ -33,7 +33,10 @@ export class AuthService {
                 }
             })
             if (!newAccount) return new ResponseData<string>(null, 400, 'Tạo tài khoản thất bại, thử lại')
-            return new ResponseData<any>(newAccount, 200, 'Tạo tài khoản thành công')
+            delete newAccount.password
+            delete newUser.id
+            const data = { ...newAccount, ...newUser }
+            return new ResponseData<any>(data, 200, 'Tạo tài khoản thành công')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
@@ -47,7 +50,8 @@ export class AuthService {
             if (!account) return new ResponseData<string>(null, 400, 'Tài khoản không tồn tại')
             const passwordMatched = await argon2.verify(account.password, loginDto.password)
             if (!passwordMatched) return new ResponseData<string>(null, 400, 'Mật khẩu không chính xác')
-            const data = this.signJwtToken(account.userId, account.email)
+            if (account.isBan) return new ResponseData<string>(null, 400, 'Tài khoản đã bị khóa')
+            const data = await this.signJwtToken(account.userId, account.email)
             return new ResponseData<any>(data, 200, 'Đăng nhập thành công')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
