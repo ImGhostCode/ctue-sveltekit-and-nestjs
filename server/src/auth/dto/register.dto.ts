@@ -1,19 +1,19 @@
 import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator"
-import { MAX, MIN } from '../../constants'
+import { CONSTANTS_MAX, CONSTANTS_MIN } from '../../global'
 
 export class RegisterDto {
     @IsEmail()
     @IsNotEmpty()
-    @MaxLength(MAX.EMAIL_LEN)
+    @MaxLength(CONSTANTS_MAX.EMAIL_LEN)
     email: string
 
     @IsString()
-    @MaxLength(MAX.NAME_LEN)
+    @MaxLength(CONSTANTS_MAX.NAME_LEN)
     @IsNotEmpty()
     name: string
 
     @IsString()
-    @MinLength(MIN.PASSWORD_LEN)
+    @MinLength(CONSTANTS_MIN.PASSWORD_LEN)
     @IsNotEmpty()
     password: string
 }
