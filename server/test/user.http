@@ -2,11 +2,11 @@
 
 ### get me
 GET {{urlDev}}/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3MjY1Njk2LCJleHAiOjE2OTcyNzI4OTZ9.63NyTqkfiKITJ04-7Z71y-hq7BqW8Ajwv18kcFzscDM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3Mjg3MTUwLCJleHAiOjE2OTcyOTQzNTB9.2Epz94KYky02mW5YSWn-7jbTYJrnG6gbjabHyVnqn04
 
 ### get all users
 GET {{urlDev}}/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3MjY1Njk2LCJleHAiOjE2OTcyNzI4OTZ9.63NyTqkfiKITJ04-7Z71y-hq7BqW8Ajwv18kcFzscDM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3Mjg3NzM1LCJleHAiOjE2OTcyOTQ5MzV9.ebko55P_hrYJssONfBpA4TeMBHrgeAuIPHwmM714ZEM
 
 ### is ban user
 PUT {{urlDev}}/is-ban/2

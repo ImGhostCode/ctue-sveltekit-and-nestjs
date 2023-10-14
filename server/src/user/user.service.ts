@@ -11,9 +11,8 @@ export class UserService {
     constructor(private prismaService: PrismaService) { }
 
     async getUser(account: Account) {
-        if (!account) return new ResponseData<string>(null, 400, 'Thiếu tham số bắt buộc')
         try {
-            return new ResponseData<any>(account, 200, 'Tài khoản không tồn tại')
+            return new ResponseData<any>(account, 200, 'Tài khoản tồn tại')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
