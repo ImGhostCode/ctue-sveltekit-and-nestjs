@@ -15,7 +15,7 @@
 	import translate from '$lib/assets/icons/translate.png';
 </script>
 
-<!-- <main class="h-[2000px]">
+<main class="h-[2000px]">
 	<div class="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
 		<div class="p-3 w-1/3">
 			<a
@@ -124,4 +124,4 @@
 			</a>
 		</div>
 	</div>
-</main> -->
+</main>
