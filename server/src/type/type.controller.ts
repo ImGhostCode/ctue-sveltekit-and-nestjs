@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, ParseBoolPipe } from '@nestjs/common';
 import { TypeService } from './type.service';
 import { CreateTypeDto, UpdateTypeDto } from './dto';
 
@@ -11,23 +11,23 @@ export class TypeController {
     return this.typeService.create(createTypeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.typeService.findAll();
+  @Get(':isword')
+  findAll(@Param('isword', ParseBoolPipe) isWord: boolean) {
+    return this.typeService.findAll(isWord);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.typeService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id', ParseIntPipe) id: number) {
+  //   return this.typeService.findOne(id);
+  // }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTypeDto: UpdateTypeDto) {
-    return this.typeService.update(+id, updateTypeDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateTypeDto: UpdateTypeDto) {
+    return this.typeService.update(id, updateTypeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.typeService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.typeService.remove(id);
   }
 }

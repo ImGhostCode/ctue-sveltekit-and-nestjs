@@ -4,4 +4,7 @@ export class UpdateTypeDto {
     @IsString()
     @IsNotEmpty()
     name: string
+
+    @IsNotEmpty()
+    isWord: boolean
 }
