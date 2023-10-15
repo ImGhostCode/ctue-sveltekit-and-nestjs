@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { SpecializationService } from './specialization.service';
 import { CreateSpecializationDto, UpdateSpecializationDto } from './dto';
 
@@ -16,18 +16,18 @@ export class SpecializationController {
     return this.specializationService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.specializationService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id', ParseIntPipe) id: number) {
+  //   return this.specializationService.findOne(id);
+  // }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSpecializationDto: UpdateSpecializationDto) {
-    return this.specializationService.update(+id, updateSpecializationDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateSpecializationDto: UpdateSpecializationDto) {
+    return this.specializationService.update(id, updateSpecializationDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.specializationService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.specializationService.remove(id);
   }
 }
