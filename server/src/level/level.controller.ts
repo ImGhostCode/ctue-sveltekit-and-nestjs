@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { LevelService } from './level.service';
 import { CreateLevelDto, UpdateLevelDto } from './dto/';
 
@@ -17,17 +17,17 @@ export class LevelController {
   }
 
   // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.levelService.findOne(+id);
+  // findOne(@Param('id', ParseIntPipe) id: number) {
+  //   return this.levelService.findOne(id);
   // }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLevelDto: UpdateLevelDto) {
-    return this.levelService.update(+id, updateLevelDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateLevelDto: UpdateLevelDto) {
+    return this.levelService.update(id, updateLevelDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.levelService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.levelService.remove(id);
   }
 }

@@ -19,6 +19,6 @@ Content-Type: application/json
     "name": "A1"
 }
 
-### Update level
+### Delete level
 DELETE  {{urlDev}}/2
 

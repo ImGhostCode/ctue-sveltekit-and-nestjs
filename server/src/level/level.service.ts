@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLevelDto, UpdateLevelDto } from './dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { ResponseData } from 'src/global';
 import { Level } from '@prisma/client';
 
@@ -59,7 +59,7 @@ export class LevelService {
     try {
       const level = await this.findOne(id)
       if (!level) return new ResponseData<string>(null, 400, 'Không tìm thấy cấp độ')
-      return new ResponseData<any>(await this.prismaService.level.delete({ where: { id } }), 200, 'Cập nhật thành công')
+      return new ResponseData<any>(await this.prismaService.level.delete({ where: { id } }), 200, 'Xóa thành công')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }
