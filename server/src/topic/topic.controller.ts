@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { TopicService } from './topic.service';
 import { CreateTopicDto, UpdateTopicDto } from './dto';
 
 @Controller('topic')
 export class TopicController {
-  constructor(private readonly topicService: TopicService) { }
+  constructor(private topicService: TopicService) { }
 
   @Post()
   create(@Body() createTopicDto: CreateTopicDto) {
@@ -16,18 +16,18 @@ export class TopicController {
     return this.topicService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.topicService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id', ParseIntPipe) id: number) {
+  //   return this.topicService.findOne(id);
+  // }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTopicDto: UpdateTopicDto) {
-    return this.topicService.update(+id, updateTopicDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateTopicDto: UpdateTopicDto) {
+    return this.topicService.update(id, updateTopicDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.topicService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.topicService.remove(id);
   }
 }

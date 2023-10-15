@@ -47,7 +47,7 @@ export class LevelService {
     try {
       const level = await this.findOne(id)
       if (!level) return new ResponseData<string>(null, 400, 'Không tìm thấy cấp độ')
-      const isExisted = await this.IsExisted(level.name)
+      const isExisted = await this.IsExisted(updateLevelDto.name)
       if (isExisted) return new ResponseData<string>(null, 400, 'Cấp độ đã tồn tại')
       return new ResponseData<Level>(await this.prismaService.level.update({ where: { id }, data: { ...updateLevelDto } }), 200, 'Cập nhật thành công')
     } catch (error) {
