@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { GetAccount, Roles } from '../auth/decorator';
 import { MyJWTGuard, RolesGuard } from '../auth/guard';
@@ -28,14 +28,14 @@ export class UserController {
 
     @UseGuards(MyJWTGuard, RolesGuard)
     @Roles(ACCOUNT_TYPES.ADMIN)
-    @Put('toggle-ban/:id')
+    @Patch('toggle-ban/:id')
     toggleBanUser(@Param('id', ParseIntPipe) id: number) {
         return this.userService.toggleBanUser(id)
     }
 
     @UseGuards(MyJWTGuard, RolesGuard)
     @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
-    @Put('update-profile/:id')
+    @Patch('update-profile/:id')
     updateProfile(@Param('id', ParseIntPipe) id: number, @GetAccount() account: Account, @Body() updateProfileDto: UpdateProfileDto) {
         if (account.accountType == ACCOUNT_TYPES.USER) return this.userService.updateProfile(account.userId, updateProfileDto)
         return this.userService.updateProfile(id, updateProfileDto)
@@ -43,7 +43,7 @@ export class UserController {
 
     @UseGuards(MyJWTGuard, RolesGuard)
     @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
-    @Put('update-password/:id')
+    @Patch('update-password/:id')
     updatePassword(@Param('id', ParseIntPipe) id: number, @GetAccount() account: Account, @Body() updatePasswordDto: UpdatePasswordDto) {
         if (account.accountType == ACCOUNT_TYPES.USER) return this.userService.updatePassword(account.userId, updatePasswordDto)
         return this.userService.updatePassword(id, updatePasswordDto)
@@ -66,7 +66,7 @@ export class UserController {
         return this.userService.sendVerifyCode(verifyCodeDto)
     }
 
-    @Put('toggle-favorite')
+    @Patch('toggle-favorite')
     toggleFavorite(@Body() toggleFavoriteDto: ToggleFavoriteDto) {
         return this.userService.toggleFavorite(toggleFavoriteDto)
     }

@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, MaxLength } from "class-validator";
-import { CONSTANTS_MAX } from "src/global";
+import { CONSTANTS_MAX } from "../../global";
 
 export class VerifyCodeDto {
     @IsEmail()

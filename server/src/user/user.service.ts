@@ -36,7 +36,6 @@ export class UserService {
     }
 
     async toggleBanUser(id: number) {
-        if (!id) return new ResponseData<string>(null, 400, 'Thiếu tham số bắt buộc')
         try {
             const account = await this.prismaService.account.findFirst({
                 where: { userId: id }
@@ -54,7 +53,6 @@ export class UserService {
     }
 
     async updateProfile(id: number, updateProfileDto: UpdateProfileDto) {
-        if (!id && !updateProfileDto) return new ResponseData<string>(null, 400, 'Thiếu tham số bắt buộc')
         try {
             const account = await this.prismaService.account.findFirst({
                 where: { userId: id }
@@ -71,15 +69,14 @@ export class UserService {
     }
 
     async updatePassword(id: number, updatePasswordDto: UpdatePasswordDto) {
-        if (!id && !updatePasswordDto) return new ResponseData<string>(null, 400, 'Thiếu tham số bắt buộc')
         try {
             const account = await this.prismaService.account.findFirst({
                 where: { userId: id }
             })
             if (!account) new ResponseData<any>(null, 400, 'Tài khoản không tồn tại')
-            const passwordMatched = await argon2.verify(account.password, updatePasswordDto.oldpassword)
+            const passwordMatched = await argon2.verify(account.password, updatePasswordDto.oldPassword)
             if (!passwordMatched) return new ResponseData<string>(null, 400, 'Mật khẩu hiện tại không chính xác')
-            const hashedPassword = await argon2.hash(updatePasswordDto.newpassword)
+            const hashedPassword = await argon2.hash(updatePasswordDto.newPassword)
             await this.prismaService.account.update({
                 where: { email: account.email },
                 data: { password: hashedPassword }
@@ -91,7 +88,6 @@ export class UserService {
     }
 
     async deleteUser(id: number) {
-        if (!id) return new ResponseData<string>(null, 400, 'Thiếu tham số bắt buộc')
         try {
             const account = await this.prismaService.account.findFirst({
                 where: { userId: id }
