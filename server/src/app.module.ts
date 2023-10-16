@@ -9,9 +9,10 @@ import { TypeModule } from './type/type.module';
 import { LevelModule } from './level/level.module';
 import { TopicModule } from './topic/topic.module';
 import { SpecializationModule } from './specialization/specialization.module';
+import { ContributionModule } from './contribution/contribution.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, SentenceModule, WordModule, TypeModule, LevelModule, TopicModule, SpecializationModule]
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, SentenceModule, WordModule, TypeModule, LevelModule, TopicModule, SpecializationModule, ContributionModule]
 })
 export class AppModule {
   static port: number
