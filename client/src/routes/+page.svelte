@@ -19,7 +19,7 @@
 	<div class="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
 		<div class="p-3 w-1/3">
 			<a
-				href="/"
+				href="/IPA"
 				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={ipa} alt="ipa" /></div>
