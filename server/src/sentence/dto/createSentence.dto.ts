@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator"
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator"
 import { CONSTANTS_MAX } from "src/global"
 
 export class CreateSentenceDto {
@@ -6,14 +6,11 @@ export class CreateSentenceDto {
     @IsNotEmpty()
     typeId: number
 
-    @IsNumber()
+    @IsArray()
     @IsNotEmpty()
-    topicId: number
+    topicId: number[]
 
-    @IsNumber()
-    @IsNotEmpty()
-    practiceId: number
-
+    @IsOptional()
     @IsNumber()
     userId?: number
 
@@ -27,6 +24,7 @@ export class CreateSentenceDto {
     @IsNotEmpty()
     mean: string
 
+    @IsOptional()
     @IsString()
     @MaxLength(CONSTANTS_MAX.SENTENCE_NOTE_LEN)
     note?: string

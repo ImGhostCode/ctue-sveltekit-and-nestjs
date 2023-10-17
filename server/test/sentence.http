@@ -1,0 +1,30 @@
+@urlDev=http://localhost:8000/sentence
+
+### Create sentence
+POST  {{urlDev}}/
+Content-Type: application/json
+
+{
+    "typeId": 1,
+    "topicId": [1],
+    "content": "content test 5",
+    "mean": "mean test",
+    "note": ""
+}
+
+### Get all sentences
+GET   {{urlDev}}/
+
+### Get one sentence
+GET   {{urlDev}}/2
+
+### Update sentenced
+PATCH {{urlDev}}/3
+Content-Type: application/json
+
+{
+    "typeId": 2
+}
+
+### Delete sentence
+DELETE  {{urlDev}}/2

@@ -5,7 +5,7 @@ POST  {{urlDev}}/
 Content-Type: application/json
 
 {
-    "name": "test 1"
+    "name": "test 2"
 }
 
 ### Get all topics

@@ -27,7 +27,7 @@ export class SpecializationService {
   }
 
   async IsExisted(name: string) {
-    const type = await this.prismaService.specialization.findFirst({
+    const specialization = await this.prismaService.specialization.findFirst({
       where: {
         name: {
           equals: name,
@@ -35,7 +35,7 @@ export class SpecializationService {
         }
       }
     })
-    if (type) return true
+    if (specialization) return true
     return false
   }
 
@@ -45,8 +45,8 @@ export class SpecializationService {
 
   async update(id: number, updateSpecializationDto: UpdateSpecializationDto) {
     try {
-      const type = await this.findOne(id)
-      if (!type) return new ResponseData<string>(null, 400, 'Không tìm thấy chuyên ngành')
+      const specialization = await this.findOne(id)
+      if (!specialization) return new ResponseData<string>(null, 400, 'Không tìm thấy chuyên ngành')
       const isExisted = await this.IsExisted(updateSpecializationDto.name)
       if (isExisted) return new ResponseData<string>(null, 400, 'Chuyên ngành đã tồn tại')
       return new ResponseData<Specialization>(await this.prismaService.specialization.update({ where: { id }, data: { ...updateSpecializationDto } }), 200, 'Cập nhật thành công')
@@ -57,8 +57,8 @@ export class SpecializationService {
 
   async remove(id: number) {
     try {
-      const type = await this.findOne(id)
-      if (!type) return new ResponseData<string>(null, 400, 'Không tìm thấy chuyên ngành')
+      const specialization = await this.findOne(id)
+      if (!specialization) return new ResponseData<string>(null, 400, 'Không tìm thấy chuyên ngành')
       return new ResponseData<any>(await this.prismaService.specialization.delete({ where: { id } }), 200, 'Xóa thành công')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')

@@ -5,7 +5,7 @@ POST  {{urlDev}}/
 Content-Type: application/json
 
 {
-    "name": "test 2",
+    "name": "test 3",
     "isWord": false
 }
 
