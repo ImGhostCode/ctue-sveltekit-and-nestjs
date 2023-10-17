@@ -4,10 +4,13 @@
 	import ipa_u from '$lib/assets/images/ipa/u.jpg';
 	import ipa_ou from '$lib/assets/images/ipa/ou.jpg';
 	import ipa_a from '$lib/assets/images/ipa/a.jpg';
+	import ipaChart from '$lib/assets/images/ipa/ipa-chart.png';
+	import ipaTable from '$lib/assets/images/ipa/ipa-table.jpg';
+	import mouthShape from '$lib/assets/images/ipa/mouth-shape.png';
 	let isChecked = false;
 </script>
 
-<div class="max-w-screen-xl w-screen mx-auto text-left mt-6">
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
 	<h1 class="text-2xl text-orange-600 mb-2">1. Nguyên âm đơn (Vowels)</h1>
 	<p class=" text-slate-500 mb-4">Chúng ta có 12 nguyên âm đơn, mình chia làm 5 nhóm:</p>
 
@@ -867,6 +870,27 @@
 		Chúng ta có 8 nguyên âm đôi, mình chia làm 3 nhóm, phát âm theo nguyên tắc 7/3, 7 phần cho âm
 		đầu và 3 phần âm sau:
 	</p>
+
+	<h1 class="text-2xl text-orange-600 mb-2">3. Phụ âm (Consonants)</h1>
+	<p class=" text-slate-500 mb-4">
+		Chúng ta có 24 phụ âm, mình chia làm 8 nhóm. Lưu ý về các dạng phụ âm như âm vô thanh thì không
+		phát ra âm thanh, luồng hơi không làm rung dây thanh quản. Âm hữu thanh phát ra âm thanh, hơi
+		thở đi từ họng, qua lưỡi, răng sau đó ra ngoài là cách phát âm của các âm này, dây thanh quản bị
+		rung.
+	</p>
+
+	<h1 class="text-2xl text-orange-600 mb-2">4. Biểu đồ IPA (IPA Chart)</h1>
+	<div class="">
+		<img class="mx-auto" src={ipaChart} alt={ipaChart} />
+	</div>
+	<h1 class="text-2xl text-orange-600 mb-2">5. Tóm lượt (Summary)</h1>
+	<div class="mb-4">
+		<img src={ipaTable} alt={ipaTable} />
+	</div>
+
+	<div class="mb-4">
+		<img class="mx-auto" src={mouthShape} alt={mouthShape} />
+	</div>
 
 	<!-- <div id="accordion-open" data-accordion="open">
 		<h2 id="accordion-open-heading-1">
