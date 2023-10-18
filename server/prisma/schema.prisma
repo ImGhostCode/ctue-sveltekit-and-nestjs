@@ -106,11 +106,11 @@ model Word {
   content          String
   mean             String
   note             String?
-  phonetic         String
+  phonetic         String?
   examples         String[]
   picture          String?
-  synonyms         String
-  antonyms         String
+  synonyms         String?
+  antonyms         String?
 
   Type           Type           @relation(fields: [typeId], references: [id])
   Level          Level          @relation(fields: [levelId], references: [id])

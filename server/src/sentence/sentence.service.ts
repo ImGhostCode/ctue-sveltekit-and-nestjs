@@ -94,7 +94,7 @@ export class SentenceService {
                     Type: true
                 }
             })
-            return new ResponseData<Sentence>(newSentence, 200, 'Câu này đã tồn tại')
+            return new ResponseData<Sentence>(newSentence, 200, 'Cập nhật thành công')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
@@ -102,7 +102,7 @@ export class SentenceService {
 
     async delete(id: number) {
         try {
-            const sentence = await this.prismaService.sentence.findUnique({ where: { id: id } })
+            const sentence = await this.findById(id)
             if (!sentence) return new ResponseData<string>(null, 400, 'Câu không tồn tại')
             return new ResponseData<Sentence>(await this.prismaService.sentence.delete({ where: { id: id } }), 200, 'Xóa thành công')
         } catch (error) {
