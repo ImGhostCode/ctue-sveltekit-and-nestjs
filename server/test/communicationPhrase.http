@@ -1,0 +1,28 @@
+@urlDev=http://localhost:8000/communication-phrase
+
+### Create comunication phrase
+POST  {{urlDev}}/
+Content-Type: application/json
+
+{
+    "content": "test2",
+    "mean": "test1"
+}
+
+### Get all comunication phrases
+GET   {{urlDev}}/
+
+### Get comunication phrase
+GET   {{urlDev}}/2
+
+### Update comunication phrase
+PATCH {{urlDev}}/2
+Content-Type: application/json
+
+{
+    "content": "test3",
+    "mean": "test1"
+}
+
+### Delete comunication phrase
+DELETE  {{urlDev}}/2
