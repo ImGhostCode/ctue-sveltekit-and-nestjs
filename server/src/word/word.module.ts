@@ -4,6 +4,7 @@ import { WordService } from './word.service';
 
 @Module({
   controllers: [WordController],
-  providers: [WordService]
+  providers: [WordService],
+  exports: [WordService]
 })
-export class WordModule {}
+export class WordModule { }

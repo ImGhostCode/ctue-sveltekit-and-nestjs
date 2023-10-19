@@ -1,19 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query, UseGuards } from '@nestjs/common';
 import { ContributionService } from './contribution.service';
-import { CreateContributionDto, UpdateContributionDto } from './dto';
+import { CreateContributionDto } from './dto';
+import { GetAccount } from '../auth/decorator';
+import { Account } from '@prisma/client';
+import { MyJWTGuard } from '../auth/guard';
 
+@UseGuards(MyJWTGuard)
 @Controller('contribution')
 export class ContributionController {
   constructor(private readonly contributionService: ContributionService) { }
 
   @Post()
-  create(@Body() createContributionDto: CreateContributionDto) {
-    return this.contributionService.create(createContributionDto);
+  create(@Body() createContributionDto: CreateContributionDto, @GetAccount() account: Account) {
+    return this.contributionService.create(createContributionDto, account.userId);
   }
 
   @Get()
-  findAll() {
-    return this.contributionService.findAll();
+  findAll(@Query("type") type: string) {
+    return this.contributionService.findAll(type);
   }
 
   @Get(':id')
@@ -22,8 +26,8 @@ export class ContributionController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateContributionDto: UpdateContributionDto) {
-    return this.contributionService.update(id, updateContributionDto);
+  verifyContribute(@Param('id', ParseIntPipe) id: number, @Body() body: { status: string }) {
+    return this.contributionService.verifyContribute(id, body.status);
   }
 
   @Delete(':id')

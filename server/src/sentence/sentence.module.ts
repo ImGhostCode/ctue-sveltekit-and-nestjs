@@ -4,6 +4,7 @@ import { SentenceService } from './sentence.service';
 
 @Module({
   controllers: [SentenceController],
-  providers: [SentenceService]
+  providers: [SentenceService],
+  exports: [SentenceService]
 })
-export class SentenceModule {}
+export class SentenceModule { }
