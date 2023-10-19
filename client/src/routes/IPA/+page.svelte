@@ -15,8 +15,8 @@
 	<p class=" text-slate-500 mb-4">Chúng ta có 12 nguyên âm đơn, mình chia làm 5 nhóm:</p>
 
 	<!-- 1 -->
-	<div class="collapse collapse-arrow bg-base-200 mb-3">
-		<input type="radio" name="my-accordion-2" checked={isChecked} />
+	<div class="collapse bg-base-200 mb-3">
+		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
 			😁 Nhóm âm cười &nbsp;<b>/ ɪ /, / i: /</b>
 		</div>
@@ -158,8 +158,8 @@
 	</div>
 
 	<!-- 2 -->
-	<div class="collapse collapse-arrow bg-base-200 mb-3">
-		<input type="radio" name="my-accordion-2" />
+	<div class="collapse bg-base-200 mb-3">
+		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
 			💋 Nhóm âm hôn &nbsp;<b>/ ʊ /, / u: /</b>
 		</div>
@@ -301,8 +301,8 @@
 	</div>
 
 	<!-- 3 -->
-	<div class="collapse collapse-arrow bg-base-200 mb-3">
-		<input type="radio" name="my-accordion-2" />
+	<div class="collapse bg-base-200 mb-3">
+		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
 			😱 Nhóm âm shock &nbsp;<b>/ ɔ: /, / ɒ /</b>
 		</div>
@@ -444,8 +444,8 @@
 	</div>
 
 	<!-- 4 -->
-	<div class="collapse collapse-arrow bg-base-200 mb-3">
-		<input type="radio" name="my-accordion-2" />
+	<div class="collapse bg-base-200 mb-3">
+		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
 			😮 Nhóm âm mở &nbsp;<b>/ e /, / æ /, / ɑ: /, / ʌ /</b>
 		</div>
@@ -723,8 +723,8 @@
 	</div>
 
 	<!-- 5 -->
-	<div class="collapse collapse-arrow bg-base-200 mb-3">
-		<input type="radio" name="my-accordion-2" />
+	<div class="collapse bg-base-200 mb-3">
+		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
 			😝 Nhóm âm ơ &nbsp;<b>/ ə /, / ɜ: /</b>
 		</div>
