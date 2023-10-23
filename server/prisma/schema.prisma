@@ -11,9 +11,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum FavoriteItem {
-  Sentence
-  Word
+model FavoriteItem {
+  id     Int  @id @default(autoincrement())
+  userId Int?
+
+  Word     Word[]
+  Sentence Sentence[]
+  User     User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -88,10 +92,11 @@ model Sentence {
   mean       String
   note       String?
 
-  User     User?     @relation(fields: [userId], references: [id])
-  Practice Practice? @relation(fields: [practiceId], references: [id])
-  Topic    Topic[]
-  Type     Type      @relation(fields: [typeId], references: [id])
+  Topic        Topic[]
+  FavoriteItem FavoriteItem[]
+  User         User?          @relation(fields: [userId], references: [id])
+  Practice     Practice?      @relation(fields: [practiceId], references: [id])
+  Type         Type           @relation(fields: [typeId], references: [id])
 
   @@map("sentences")
 }
@@ -112,10 +117,11 @@ model Word {
   synonyms         String?
   antonyms         String?
 
+  FavoriteItem   FavoriteItem[]
+  Topic          Topic[]
   Type           Type           @relation(fields: [typeId], references: [id])
   Level          Level          @relation(fields: [levelId], references: [id])
   Specialization Specialization @relation(fields: [specializationId], references: [id])
-  Topic          Topic[]
   User           User?          @relation(fields: [userId], references: [id])
   Practice       Practice?      @relation(fields: [practiceId], references: [id])
 

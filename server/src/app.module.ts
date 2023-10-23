@@ -11,9 +11,10 @@ import { TopicModule } from './topic/topic.module';
 import { SpecializationModule } from './specialization/specialization.module';
 import { ContributionModule } from './contribution/contribution.module';
 import { CommunicationPhraseModule } from './communication-phrase/communication-phrase.module';
+import { FavoriteItemModule } from './favorite-item/favorite-item.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, SentenceModule, WordModule, TypeModule, LevelModule, TopicModule, SpecializationModule, ContributionModule, CommunicationPhraseModule]
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, SentenceModule, WordModule, TypeModule, LevelModule, TopicModule, SpecializationModule, ContributionModule, CommunicationPhraseModule, FavoriteItemModule]
 })
 export class AppModule {
   static port: number

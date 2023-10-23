@@ -33,6 +33,7 @@ export class AuthService {
                 }
             })
             if (!newAccount) return new ResponseData<string>(null, 400, 'Tạo tài khoản thất bại, thử lại')
+            await this.prismaService.favoriteItem.create({ data: { userId: newUser.id } })
             delete newAccount.password
             delete newUser.id
             const data = { ...newAccount, ...newUser }

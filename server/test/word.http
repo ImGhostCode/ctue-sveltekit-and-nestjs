@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
     "typeId": 1,
-    "topicId": [2],          
+    "topicId": [1],          
     "levelId": 1,
     "specializationId": 1,
     "content": "hello world 4",

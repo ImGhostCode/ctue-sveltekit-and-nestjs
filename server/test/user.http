@@ -2,11 +2,11 @@
 
 ### get me
 GET {{urlDev}}/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3Mjg3MTUwLCJleHAiOjE2OTcyOTQzNTB9.2Epz94KYky02mW5YSWn-7jbTYJrnG6gbjabHyVnqn04
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2OTgwNjE2MjYsImV4cCI6MTY5ODA2ODgyNn0.Boz68wFblIbETROX9GFDrtMy-8af6YFrlChCD2efJV0
 
 ### get all users
 GET {{urlDev}}/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjk3NDYwMzM1LCJleHAiOjE2OTc0Njc1MzV9.r7Y4fcHV6SFFiB-J8aLLDxy2Hr_ZMcYTg3Ypw6VoRVY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2OTgwNjE2MjYsImV4cCI6MTY5ODA2ODgyNn0.Boz68wFblIbETROX9GFDrtMy-8af6YFrlChCD2efJV0
 
 ### is ban user
 PATCH  {{urlDev}}/toggle-ban/2
