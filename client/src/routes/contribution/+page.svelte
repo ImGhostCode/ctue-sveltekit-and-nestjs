@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	/**
 	 * @type {any}
 	 */
@@ -8,6 +8,9 @@
 
 	let files = null;
 	let showTopics = false;
+	let showPhonetic = false;
+
+	let phoneticValue = '';
 	let topics = [
 		{ id: 1, name: 'Thực vật', selected: false, image: tree },
 		{ id: 2, name: 'Đời sống', selected: false, image: social }
@@ -21,6 +24,10 @@
 		// Note that `files` is of type `FileList`, not an Array:
 		// https://developer.mozilla.org/en-US/docs/Web/API/FileList
 		console.log(files);
+	}
+
+	function handleInputFocus() {
+		showPhonetic = !showPhonetic;
 	}
 
 	function handleFileInput(event) {
@@ -68,16 +75,200 @@
 				/>
 			</div>
 			<div class="form-control w-full max-w-sm mb-3">
-				<label class="label" for="spelling">
+				<label class="label" for="phonetic">
 					<span class="label-text">Phiên âm (*)</span>
 				</label>
 				<input
 					type="text"
 					placeholder="..."
-					class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
-					id="spelling"
+					class="input-phonetic input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+					id="phonetic"
+					on:focus={handleInputFocus}
+					bind:value={phoneticValue}
 				/>
 			</div>
+
+			{#if showPhonetic}
+				<div
+					class="col-span-3 rounded-md p-3 bg-white shadow-lg mb-4 flex flex-row gap-2 flex-wrap"
+				>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += "'")}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>'</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ɪ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ɪ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'iː')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>iː</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ʊ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ʊ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'uː')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>uː</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'e')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>e</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ə')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ə</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ɜː')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ɜː</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ɔː')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ɔː</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'æ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>æ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ʌ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ʌ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'aː')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>aː</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ɒ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ɒ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ɪə')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ɪə</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'eɪ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>eɪ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ʊə')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ʊə</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ɔɪ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ɔɪ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'əʊ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>əʊ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'aɪ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>aɪ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'aʊ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>aʊ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'tʃ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>tʃ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'dʒ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>dʒ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'θ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>θ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ð')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ð</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ʃ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ʃ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ŋ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ŋ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ʒ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ʒ</span
+					>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={() => (phoneticValue += 'ʃ')}
+						class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+						>ʃ</span
+					>
+
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<span
+						on:click={handleInputFocus}
+						class=" btn-outline btn-error p-2 max-w-[90px] w-full text-center h-10 border rounded-md cursor-pointer"
+						>Đóng</span
+					>
+				</div>
+			{/if}
 
 			<div class="mb-3 form-control">
 				<label for="types" class="block mb-2 text-sm">Loại từ (*)</label>
@@ -339,23 +530,30 @@
 					</span></button
 				>
 			</div>
-		</form>
+			{#if showTopics}
+				<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-3">
+					{#each topics as topic, index (topic.name)}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<div
+							class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
+							class:bg-green-500={topic.selected}
+							class:text-white={topic.selected}
+							on:click={() => toggleSelected(index)}
+						>
+							<img class="mr-1" src={topic.image} alt={topic.name} />
+							<span class="pr-1 text-sm">{topic.name}</span>
+						</div>
+					{/each}
+				</div>
+			{/if}
+			<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
 
-		{#if showTopics}
-			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md">
-				{#each topics as topic, index (topic.name)}
-					<div
-						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
-						class:bg-green-500={topic.selected}
-						class:text-white={topic.selected}
-						on:click={() => toggleSelected(index)}
-					>
-						<img class="mr-1" src={topic.image} alt={topic.name} />
-						<span class="pr-1 text-sm">{topic.name}</span>
-					</div>
-				{/each}
+			<div class="mt-4 col-span-3 text-right">
+				<button type="reset" class="btn btn-outline btn-error mr-2">Reset</button>
+
+				<button type="submit" class="btn btn-accent text-white">Thêm từ</button>
 			</div>
-		{/if}
+		</form>
 	</div>
 </div>
 
