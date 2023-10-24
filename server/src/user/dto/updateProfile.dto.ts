@@ -6,8 +6,4 @@ export class UpdateProfileDto {
     @IsString()
     @MaxLength(CONSTANTS_MAX.NAME_LEN)
     name?: string
-
-    @IsOptional()
-    @IsString()
-    avt?: string
 }

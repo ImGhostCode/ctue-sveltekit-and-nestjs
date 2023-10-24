@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { GetAccount, Roles } from '../auth/decorator';
 import { MyJWTGuard, RolesGuard } from '../auth/guard';
@@ -6,6 +6,7 @@ import { Account } from '@prisma/client';
 import { ACCOUNT_TYPES } from '../global';
 import { UpdateProfileDto, UpdatePasswordDto, VerifyCodeDto, ToggleFavoriteDto } from './dto';
 import { ResetPasswordDto } from './dto/resetPassword.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 
 @Controller('users')
@@ -35,10 +36,11 @@ export class UserController {
 
     @UseGuards(MyJWTGuard, RolesGuard)
     @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
+    @UseInterceptors(FileInterceptor('avt'))
     @Patch('update-profile/:id')
-    updateProfile(@Param('id', ParseIntPipe) id: number, @GetAccount() account: Account, @Body() updateProfileDto: UpdateProfileDto) {
-        if (account.accountType == ACCOUNT_TYPES.USER) return this.userService.updateProfile(account.userId, updateProfileDto)
-        return this.userService.updateProfile(id, updateProfileDto)
+    updateProfile(@Param('id', ParseIntPipe) id: number, @GetAccount() account: Account, @Body() updateProfileDto: UpdateProfileDto, @UploadedFile() avt: Express.Multer.File) {
+        if (account.accountType == ACCOUNT_TYPES.USER) return this.userService.updateProfile(account.userId, updateProfileDto, avt)
+        return this.userService.updateProfile(id, updateProfileDto, avt)
     }
 
     @UseGuards(MyJWTGuard, RolesGuard)

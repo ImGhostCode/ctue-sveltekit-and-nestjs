@@ -4,10 +4,11 @@ import { ResponseData } from 'src/global';
 import { UpdateProfileDto, VerifyCodeDto, UpdatePasswordDto, ResetPasswordDto, ToggleFavoriteDto } from './dto';
 import * as argon2 from 'argon2';
 import { Account } from '@prisma/client';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class UserService {
-    constructor(private prismaService: PrismaService) { }
+    constructor(private prismaService: PrismaService, private cloudinaryService: CloudinaryService) { }
 
     async getUser(account: Account) {
         try {
@@ -52,15 +53,21 @@ export class UserService {
         }
     }
 
-    async updateProfile(id: number, updateProfileDto: UpdateProfileDto) {
+    async updateProfile(id: number, updateProfileDto: UpdateProfileDto, avt: Express.Multer.File) {
         try {
+            const data: { name?: string, avt?: string } = { ...updateProfileDto }
             const account = await this.prismaService.account.findFirst({
                 where: { userId: id }
             })
             if (!account) new ResponseData<any>(null, 400, 'Tài khoản không tồn tại')
+            if (avt) {
+                const img = await this.cloudinaryService.uploadFile(avt)
+                data.avt = img.url
+            }
+
             await this.prismaService.user.update({
                 where: { id: id },
-                data: { ...updateProfileDto }
+                data: data
             })
             return new ResponseData<any>(null, 200, 'Cập nhật thông tin thành công')
         } catch (error) {
