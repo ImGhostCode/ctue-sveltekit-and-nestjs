@@ -1,5 +1,6 @@
 import { IsArray, IsNumber, IsOptional, IsString, MaxLength } from "class-validator"
 import { CONSTANTS_MAX } from "../../global"
+import { Transform, TransformFnParams } from "class-transformer"
 export class UpdateWordDto {
     @IsOptional()
     @IsNumber()
@@ -11,7 +12,11 @@ export class UpdateWordDto {
 
     @IsOptional()
     @IsArray()
-    topicId?: number[]
+    @Transform((params: TransformFnParams) => {
+        return params.value.map(item => parseInt(item, 10));
+    })
+    @IsNumber({}, { each: true })
+    topicId: number[]
 
     @IsOptional()
     @IsNumber()
@@ -43,10 +48,6 @@ export class UpdateWordDto {
     @IsOptional()
     @IsArray()
     examples?: string[]
-
-    @IsOptional()
-    @IsString()
-    picture?: string
 
     @IsOptional()
     @IsString()

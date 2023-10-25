@@ -3,16 +3,23 @@ import { CreateWordDto, UpdateWordDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { ResponseData } from '../global';
 import { Word } from '@prisma/client';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class WordService {
-    constructor(private prismaService: PrismaService) { }
+    constructor(private prismaService: PrismaService, private cloudinaryService: CloudinaryService) { }
 
-    async create(createWordDto: CreateWordDto) {
+    async create(createWordDto: CreateWordDto, pictureFile: Express.Multer.File) {
         try {
-            const { userId, typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, picture, antonyms, synonyms } = createWordDto
+            const { userId, typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, antonyms, synonyms } = createWordDto
             const isExisted = await this.isExisted(createWordDto.content)
             if (isExisted) return new ResponseData<string>(null, 400, 'Từ đã tồn tại')
+            let picture: string
+            if (pictureFile) {
+                const file = await this.cloudinaryService.uploadFile(pictureFile)
+                picture = file.url
+            }
+
             const word = await this.prismaService.word.create({
                 data: {
                     userId,
@@ -27,9 +34,9 @@ export class WordService {
                     note,
                     phonetic,
                     examples,
-                    picture,
                     antonyms,
                     synonyms,
+                    picture
                 },
                 include: {
                     User: true,
@@ -41,6 +48,8 @@ export class WordService {
             })
             return new ResponseData<Word>(word, 200, 'Tạo từ thành công')
         } catch (error) {
+            console.log(error);
+
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
     }
@@ -71,11 +80,16 @@ export class WordService {
         }
     }
 
-    async update(id: number, updateWordDto: UpdateWordDto) {
+    async update(id: number, updateWordDto: UpdateWordDto, pictureFile: Express.Multer.File) {
         try {
-            let { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, picture, antonyms, synonyms } = updateWordDto
+            let { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, antonyms, synonyms } = updateWordDto
             const word = await this.findById(id)
             if (!word) return new ResponseData<string>(null, 400, 'Từ không tồn tại')
+            let picture: string
+            if (pictureFile) {
+                const file = await this.cloudinaryService.uploadFile(pictureFile)
+                picture = file.url
+            }
             if (content) {
                 const isExisted = await this.isExisted(content)
                 if (isExisted) return new ResponseData<string>(null, 400, 'Từ này đã tồn tại')
@@ -93,7 +107,7 @@ export class WordService {
                 where: { id: id },
                 data: {
                     typeId, content, mean, note, levelId, specializationId, phonetic, examples,
-                    picture, antonyms, synonyms, Topic: { connect: topicId.map((id) => ({ id })) }
+                    antonyms, synonyms, Topic: { connect: topicId.map((id) => ({ id })) }, picture
                 },
                 include: {
                     User: true, Topic: true, Type: true, Specialization: true, Level: true

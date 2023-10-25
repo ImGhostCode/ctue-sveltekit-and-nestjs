@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ContributionService } from './contribution.service';
 import { CreateContributionDto } from './dto';
 import { GetAccount } from '../auth/decorator';
 import { Account } from '@prisma/client';
 import { MyJWTGuard } from '../auth/guard';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(MyJWTGuard)
 @Controller('contribution')
@@ -26,8 +27,9 @@ export class ContributionController {
   }
 
   @Patch(':id')
-  verifyContribute(@Param('id', ParseIntPipe) id: number, @Body() body: { status: string }) {
-    return this.contributionService.verifyContribute(id, body.status);
+  @UseInterceptors(FileInterceptor('picture'))
+  verifyContribute(@Param('id', ParseIntPipe) id: number, @Body() body: { status: string }, @UploadedFile() picture: Express.Multer.File) {
+    return this.contributionService.verifyContribute(id, body.status, picture);
   }
 
   @Delete(':id')

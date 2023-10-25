@@ -1,14 +1,16 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { WordService } from './word.service';
 import { CreateWordDto, UpdateWordDto } from './dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('word')
 export class WordController {
     constructor(private wordServive: WordService) { }
 
     @Post()
-    create(@Body() createWordDto: CreateWordDto) {
-        return this.wordServive.create(createWordDto)
+    @UseInterceptors(FileInterceptor('picture'))
+    create(@Body() createWordDto: CreateWordDto, @UploadedFile() picture: Express.Multer.File) {
+        return this.wordServive.create(createWordDto, picture)
     }
 
     @Get()
@@ -22,8 +24,9 @@ export class WordController {
     }
 
     @Patch(':id')
-    update(@Param('id', ParseIntPipe) id: number, @Body() updateWordDto: UpdateWordDto) {
-        return this.wordServive.update(id, updateWordDto)
+    @UseInterceptors(FileInterceptor('picture'))
+    update(@Param('id', ParseIntPipe) id: number, @Body() updateWordDto: UpdateWordDto, @UploadedFile() picture: Express.Multer.File) {
+        return this.wordServive.update(id, updateWordDto, picture)
     }
 
     @Delete(':id')

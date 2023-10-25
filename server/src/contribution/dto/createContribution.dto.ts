@@ -1,5 +1,5 @@
 import { IsArray, IsNotEmpty, IsNotEmptyObject, IsNumber, IsObject, IsOptional, IsString, MaxLength, ValidateNested } from "class-validator"
-import { Type } from 'class-transformer'
+import { Transform, TransformFnParams, Type } from 'class-transformer'
 import { CONSTANTS_MAX } from "src/global"
 
 class Content {
@@ -7,8 +7,12 @@ class Content {
     @IsNumber()
     typeId?: number
 
-    @IsArray()
     @IsNotEmpty()
+    @IsArray()
+    @Transform((params: TransformFnParams) => {
+        return params.value.map(item => parseInt(item, 10));
+    })
+    @IsNumber({}, { each: true })
     topicId?: number[]
 
     @IsOptional()
@@ -39,10 +43,6 @@ class Content {
     @IsOptional()
     @IsArray()
     examples?: string[]
-
-    @IsOptional()
-    @IsString()
-    picture?: string
 
     @IsOptional()
     @IsString()

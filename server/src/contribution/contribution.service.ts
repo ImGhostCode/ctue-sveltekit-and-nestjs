@@ -60,17 +60,17 @@ export class ContributionService {
     }
   }
 
-  async verifyContribute(id: number, status: string) {
+  async verifyContribute(id: number, status: string, pictureFile: Express.Multer.File) {
     try {
       const contribution = await this.findById(id)
       if (!contribution) return new ResponseData<string>(null, 400, 'Đóng góp không tồn tại')
       if (contribution.status !== CONTRIBUTION_STATUS.WAITING) return new ResponseData<string>(null, 400, "Từ đã được xác minh")
       if (status === CONTRIBUTION_STATUS.ACCEPT) {
-        const { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, picture, synonyms, antonyms } = contribution.content as any
+        const { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, synonyms, antonyms } = contribution.content as any
         const { userId } = contribution
         let value: any
         if (contribution.type === 'word') {
-          value = await this.wordService.create({ typeId, topicId, levelId, specializationId, content, mean, note, phonetic, picture, synonyms, antonyms, userId, examples })
+          value = await this.wordService.create({ typeId, topicId, levelId, specializationId, content, mean, note, phonetic, synonyms, antonyms, userId, examples }, pictureFile)
         } else {
           value = await this.sentenceService.create({ typeId, topicId, content, mean, note, userId })
         }
