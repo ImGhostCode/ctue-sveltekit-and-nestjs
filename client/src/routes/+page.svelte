@@ -33,6 +33,20 @@
 		</div>
 		<div class="p-3 w-1/3">
 			<a
+				href="/1000-communication-phrase"
+				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+			>
+				<div class="w-1/5"><img src={communicate} alt={communicate} /></div>
+				<div class="w-4/5">
+					<p class="text-2xl text-amber-500 font-bold">1000+ câu giao tiếp</p>
+					<p class="text-ms text-gray-500">
+						Luyện nghe, nói câu tiếng Anh giao tiếp hàng ngày cùng Dyno
+					</p>
+				</div>
+			</a>
+		</div>
+		<div class="p-3 w-1/3">
+			<a
 				href="/"
 				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
@@ -47,7 +61,7 @@
 		</div>
 		<div class="p-3 w-1/3">
 			<a
-				href="/"
+				href="/favorite"
 				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={favorite} alt="favorite" /></div>

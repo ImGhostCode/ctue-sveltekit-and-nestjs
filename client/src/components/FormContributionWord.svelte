@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 
-	let files = null;
+	let files: any = null;
 	let showTopics = false;
 	let showPhonetic = false;
 
@@ -12,7 +12,7 @@
 		{ id: 2, name: 'Đời sống', selected: false, image: social }
 	];
 
-	function toggleSelected(index) {
+	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
 	}
 
@@ -72,7 +72,7 @@
 		</div>
 
 		<div
-			class:hidden={showPhonetic}
+			class:hidden={!showPhonetic}
 			class="col-span-3 rounded-md p-3 bg-white shadow-lg mb-4 flex flex-row gap-2 flex-wrap"
 		>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
