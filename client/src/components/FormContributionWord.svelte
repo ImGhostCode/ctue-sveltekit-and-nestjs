@@ -476,7 +476,7 @@
 			<div class="h-[36px]" />
 			<button
 				on:click={() => (showTopics = !showTopics)}
-				class="input input-bordered w-full max-w-sm flex justify-center items-center"
+				class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
 				>Thêm chủ đề <span class="ml-2">
 					{#if showTopics}
 						<svg
