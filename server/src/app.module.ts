@@ -13,9 +13,10 @@ import { ContributionModule } from './contribution/contribution.module';
 import { CommunicationPhraseModule } from './communication-phrase/communication-phrase.module';
 import { FavoriteItemModule } from './favorite-item/favorite-item.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { MailingModule } from './mailing/mailing.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, SentenceModule, WordModule, TypeModule, LevelModule, TopicModule, SpecializationModule, ContributionModule, CommunicationPhraseModule, FavoriteItemModule, CloudinaryModule]
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, SentenceModule, WordModule, TypeModule, LevelModule, TopicModule, SpecializationModule, ContributionModule, CommunicationPhraseModule, FavoriteItemModule, CloudinaryModule, MailingModule]
 })
 export class AppModule {
   static port: number

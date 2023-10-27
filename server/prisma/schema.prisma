@@ -51,9 +51,10 @@ model Account {
 }
 
 model VerifyCode {
-  id    Int    @id @default(autoincrement())
-  email String
-  code  Int
+  id        Int      @id @default(autoincrement())
+  email     String
+  code      Int
+  createdAt DateTime @default(now())
 
   @@map("verifyCodes")
 }

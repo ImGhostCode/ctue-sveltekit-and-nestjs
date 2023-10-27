@@ -35,3 +35,11 @@ Content-Type: application/json
     "oldpassword": "1234567",
     "newpassword": "123456"
 }
+
+### verify Code
+POST {{urlDev}}/verify-code
+Content-Type: application/json
+
+{
+   "email": ""
+}

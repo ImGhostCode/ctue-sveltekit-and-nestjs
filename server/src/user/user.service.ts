@@ -5,10 +5,11 @@ import { UpdateProfileDto, VerifyCodeDto, UpdatePasswordDto, ResetPasswordDto, T
 import * as argon2 from 'argon2';
 import { Account } from '@prisma/client';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class UserService {
-    constructor(private prismaService: PrismaService, private cloudinaryService: CloudinaryService) { }
+    constructor(private prismaService: PrismaService, private cloudinaryService: CloudinaryService, private mailerService: MailerService) { }
 
     async getUser(account: Account) {
         try {
@@ -120,10 +121,41 @@ export class UserService {
     }
 
     async sendVerifyCode(verifyCodeDto: VerifyCodeDto) {
-
+        try {
+            const { email } = verifyCodeDto
+            const account = await this.prismaService.account.findUnique({ where: { email }, include: { user: true } })
+            if (!account) return new ResponseData<any>(null, 400, 'Email này chưa đăng ký')
+            const code = this.random6DigitNumber()
+            const verifyCode = await this.prismaService.verifyCode.create({
+                data: {
+                    email: verifyCodeDto.email,
+                    code: parseInt(code)
+                }
+            })
+            if (!verifyCode) return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+            const emailSend = await this.mailerService.sendMail({
+                to: email,
+                subject: 'Mã xác minh tài khoản của Ứng dụng hỗ  trợ học tiếng anh',
+                template: './verifycode',
+                context: {
+                    name: account.user.name,
+                    code: code
+                }
+            })
+            if (!emailSend) return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+            return new ResponseData<string>(null, 200, 'Gửi mã thành công')
+        } catch (error) {
+            return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+        }
     }
 
     async toggleFavorite(toggleFavoriteDto: ToggleFavoriteDto) {
 
+    }
+
+    random6DigitNumber() {
+        const randomNumber = Math.floor(Math.random() * 1000000);
+        const paddedNumber = randomNumber.toString().padStart(6, '0');
+        return paddedNumber;
     }
 }
