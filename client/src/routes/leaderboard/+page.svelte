@@ -96,14 +96,14 @@
 				</div>
 			</div>
 
-			<div class="flex items-center my-4 mx-3 border border-[#ffaa00] p-2 rounded-sm">
+			<div class="flex items-center my-4 mx-3 border border-[#FFD700] p-2 rounded-sm">
 				<img src={defaultUser} alt={defaultUser} class="h-[50px] w-[50px]" />
 				<div class="ml-2 grow">
 					<p>name user</p>
 					<p class="text-slate-500">4&nbsp;câu</p>
 				</div>
 				<div
-					class="flex justify-center items-center nthTop h-10 w-10 bg-[#ffaa00] text-center text-2xl font-bold"
+					class="flex justify-center items-center nthTop h-10 w-10 bg-[#FFD700] text-center text-2xl font-bold"
 				>
 					1
 				</div>
@@ -135,14 +135,14 @@
 				</div>
 			</div>
 
-			<div class="flex items-center my-4 mx-3 border border-[#ffaa00] p-2 rounded-sm">
+			<div class="flex items-center my-4 mx-3 border border-[#FFD700] p-2 rounded-sm">
 				<img src={defaultUser} alt={defaultUser} class="h-[50px] w-[50px]" />
 				<div class="ml-2 grow">
 					<p>name user</p>
 					<p class="text-slate-500">3&nbsp;câu</p>
 				</div>
 				<div
-					class="flex justify-center items-center nthTop h-10 w-10 bg-[#ffaa00] text-center text-2xl font-bold"
+					class="flex justify-center items-center nthTop h-10 w-10 bg-[#FFD700] text-center text-2xl font-bold"
 				>
 					1
 				</div>
