@@ -202,8 +202,8 @@
 					<span class="label-text">Số câu</span>
 				</label>
 				<input
-					type="text"
-					placeholder="50"
+					type="number"
+					value="50"
 					class="input input-bordered focus:border-green-600 focus:outline-none"
 					id="number-sentence"
 				/>
@@ -256,12 +256,14 @@
 </dialog>
 
 <div class="flex flex-col justify-center items-center h-full">
-	<div class="grid grid-flow-row w-5/6 shadow-lg py-6 px-9 border my-auto">
+	<div
+		class="practice grid grid-flow-row w-5/6 shadow-lg py-6 px-9 border my-auto grid-cols-1 h-[85%] rounded-lg"
+	>
 		<div class=" flex justify-start items-center">
 			<img src={correctWord} alt={correctWord} class="h-[56px] w-[56px]" />
 			<h1 class="text-2xl text-[#dd9210]">HÃY CHỌN TỪ ĐÚNG</h1>
 		</div>
-		<div class="h-[1px] w-full border border-gray-200 my-4" />
+		<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
 
 		<div class="flex justify-between items-center text-lg my-[14px]">
 			<div class="">Câu <b>1</b> / <b>5</b></div>
@@ -297,10 +299,45 @@
 			</div>
 		</div>
 
-		<div class="grid">
-			<div class="flex flex-col justify-center items-center">Kiem tra</div>
+		<div class="grid text-center grid-flow-row">
+			<div class="flex flex-col justify-center items-center row-span-4 text-2xl font-bold">
+				Kiem tra
+			</div>
 
-			<div class="grid" />
+			<div
+				class="grid grid-cols-2 grid-rows-2 gap-10 w-full max-w-[50%] mx-auto my-0 py-6 row-span-6"
+			>
+				<div
+					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
+				>
+					<p class="text-xl">Push</p>
+					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
+				</div>
+				<div
+					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
+				>
+					<p class="text-xl">Push</p>
+					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
+				</div>
+				<div
+					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
+				>
+					<p class="text-xl">Push</p>
+					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
+				</div>
+				<div
+					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
+				>
+					<p class="text-xl">Push</p>
+					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.practice {
+		grid-template-rows: 2fr 1fr 17fr;
+	}
+</style>
