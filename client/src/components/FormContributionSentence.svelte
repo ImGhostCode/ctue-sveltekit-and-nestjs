@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 
@@ -8,7 +8,7 @@
 		{ id: 2, name: 'Chào hỏi', selected: false }
 	];
 
-	function toggleSelected(index) {
+	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
 	}
 </script>
@@ -90,15 +90,14 @@
 		{#if showTopics}
 			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-3">
 				{#each topics as topic, index (topic.name)}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div
+					<button
 						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
 					>
 						<span class="pr-1 text-sm">{topic.name}</span>
-					</div>
+					</button>
 				{/each}
 			</div>
 		{/if}

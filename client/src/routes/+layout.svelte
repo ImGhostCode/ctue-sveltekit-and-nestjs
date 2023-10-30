@@ -119,7 +119,7 @@
 								<span class="ml-2">Thông tin cá nhân</span>
 							</li></a
 						>
-						<a href="">
+						<a href="/">
 							<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
 								<span class="inline-block"
 									><svg
@@ -145,7 +145,7 @@
 								<span class="ml-2">Cài đặt</span>
 							</li></a
 						>
-						<a href="">
+						<a href="/">
 							<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
 								<span class="inline-block"
 									><svg
@@ -166,7 +166,7 @@
 								<span class="ml-2">Liên hệ - Giúp đỡ</span>
 							</li></a
 						>
-						<a href="">
+						<a href="/">
 							<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
 								<span class="inline-block"
 									><svg

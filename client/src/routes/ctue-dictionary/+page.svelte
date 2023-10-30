@@ -11,7 +11,7 @@
 		{ id: 5, name: 'Đời sống 4', selected: false, image: social }
 	];
 
-	function toggleSelected(index) {
+	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
 	}
 
@@ -24,7 +24,7 @@
 		<h1 class="h1 text-2xl text-orange-600">Từ điển CTUE</h1>
 
 		<!-- You can open the modal using ID.showModal() method -->
-		<button class="" on:click={myModal5.showModal()}
+		<button class="" on:click={() => myModal5.showModal()}
 			><svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -271,9 +271,12 @@
 			>
 		</div> -->
 		<div class="dropdown">
-			<label tabindex="0" class="btn btn-ghost m-1"
-				>Sắp xếp <span
-					><svg
+			<!-- svelte-ignore a11y-positive-tabindex -->
+			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+			<!-- svelte-ignore a11y-label-has-associated-control -->
+			<label tabindex="11" class="btn btn-ghost m-1"
+				>Sắp xếp <span>
+					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -289,17 +292,19 @@
 					</svg>
 				</span></label
 			>
-			<ul tabindex="0" class=" dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-				<li><a>A-Z</a></li>
-				<li><a>Z-A</a></li>
-				<li><a>Random</a></li>
+			<!-- svelte-ignore a11y-positive-tabindex -->
+			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+			<ul tabindex="11" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+				<li><button>A-Z</button></li>
+				<li><button>Z-A</button></li>
+				<li><button>Random</button></li>
 			</ul>
 		</div>
 	</div>
 
 	<div class="border rounded-md p-4">
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
-			<div class="flex hover:cursor-pointer grow" on:click={myModal4.showModal()}>
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
 				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
@@ -308,7 +313,7 @@
 					</div>
 					<p>Thêm</p>
 				</div>
-			</div>
+			</button>
 			<div class="grow-0">
 				<Speaker />
 				<button class="hover:scale-110 transition-all ml-2"
@@ -330,7 +335,7 @@
 			</div>
 		</div>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
-			<div class="flex hover:cursor-pointer grow" on:click={myModal4.showModal()}>
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
 				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
@@ -339,7 +344,7 @@
 					</div>
 					<p>Thêm</p>
 				</div>
-			</div>
+			</button>
 			<div class="grow-0">
 				<Speaker />
 				<button class="hover:scale-110 transition-all ml-2"
@@ -361,7 +366,7 @@
 			</div>
 		</div>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
-			<div class="flex hover:cursor-pointer grow" on:click={myModal4.showModal()}>
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
 				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
@@ -370,7 +375,7 @@
 					</div>
 					<p>Thêm</p>
 				</div>
-			</div>
+			</button>
 			<div class="grow-0">
 				<Speaker />
 				<button class="hover:scale-110 transition-all ml-2"

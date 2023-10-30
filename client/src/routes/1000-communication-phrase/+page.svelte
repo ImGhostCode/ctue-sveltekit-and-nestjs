@@ -7,7 +7,7 @@
 		{ id: 2, name: 'Chào hỏi', selected: false }
 	];
 
-	function toggleSelected(index) {
+	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
 	}
 
@@ -19,7 +19,7 @@
 		<h1 class="h1 text-2xl text-orange-600">1000+ Cụm từ giao tiếp</h1>
 
 		<!-- You can open the modal using ID.showModal() method -->
-		<button class="" on:click={myModal4.showModal()}
+		<button class="" on:click={() => myModal4.showModal()}
 			><svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

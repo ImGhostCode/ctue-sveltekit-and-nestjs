@@ -26,9 +26,11 @@
 		showPhonetic = !showPhonetic;
 	}
 
-	function handleFileInput(event) {
-		files = event.target.files[0];
-	}
+	const handleFileInput: svelte.JSX.EventHandler<Event, HTMLInputElement> = (e) => {
+		if (e.currentTarget.files == null) return; // files can be null, handle however appropriate
+
+		files = e.currentTarget.files[0];
+	};
 </script>
 
 <div class="shadow-lg px-7 py-8 rounded-lg my-10">
@@ -75,181 +77,179 @@
 			class:hidden={!showPhonetic}
 			class="col-span-3 rounded-md p-3 bg-white shadow-lg mb-4 flex flex-row gap-2 flex-wrap"
 		>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
+			<button
 				class:hidden={showPhonetic}
 				on:click={() => (phoneticValue += "'")}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>'</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ɪ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɪ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'iː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>iː</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ʊ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʊ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'uː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>uː</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'e')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>e</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ə')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ə</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ɜː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɜː</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ɔː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɔː</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'æ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>æ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ʌ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʌ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'aː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>aː</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ɒ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɒ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ɪə')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɪə</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'eɪ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>eɪ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ʊə')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʊə</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ɔɪ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɔɪ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'əʊ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>əʊ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'aɪ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>aɪ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'aʊ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>aʊ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'tʃ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>tʃ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'dʒ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>dʒ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'θ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>θ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ð')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ð</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ʃ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʃ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ŋ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ŋ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ʒ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʒ</span
-			>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
-				on:click={() => (phoneticValue += 'ʃ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʃ</span
+				>'</button
 			>
 
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<span
+			<button
+				on:click={() => (phoneticValue += 'ɪ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ɪ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'iː')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>iː</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ʊ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ʊ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'uː')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>uː</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'e')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>e</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ə')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ə</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ɜː')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ɜː</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ɔː')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ɔː</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'æ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>æ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ʌ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ʌ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'aː')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>aː</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ɒ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ɒ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ɪə')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ɪə</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'eɪ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>eɪ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ʊə')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ʊə</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ɔɪ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ɔɪ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'əʊ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>əʊ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'aɪ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>aɪ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'aʊ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>aʊ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'tʃ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>tʃ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'dʒ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>dʒ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'θ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>θ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ð')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ð</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ʃ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ʃ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ŋ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ŋ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ʒ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ʒ</button
+			>
+
+			<button
+				on:click={() => (phoneticValue += 'ʃ')}
+				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
+				>ʃ</button
+			>
+
+			<button
 				on:click={handleInputFocus}
 				class=" btn-outline btn-error p-2 max-w-[90px] w-full text-center h-10 border rounded-md cursor-pointer"
-				>Đóng</span
+				>Đóng</button
 			>
 		</div>
 
@@ -511,8 +511,7 @@
 		{#if showTopics}
 			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-3">
 				{#each topics as topic, index (topic.name)}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div
+					<button
 						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
@@ -520,7 +519,7 @@
 					>
 						<img class="mr-1" src={topic.image} alt={topic.name} />
 						<span class="pr-1 text-sm">{topic.name}</span>
-					</div>
+					</button>
 				{/each}
 			</div>
 		{/if}
