@@ -11,10 +11,9 @@ export class WordService {
 
     async create(createWordDto: CreateWordDto, pictureFile: Express.Multer.File) {
         try {
-            const { userId, typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, antonyms, synonyms } = createWordDto
+            let { userId, typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, antonyms, synonyms, picture } = createWordDto
             const isExisted = await this.isExisted(createWordDto.content)
             if (isExisted) return new ResponseData<string>(null, 400, 'Từ đã tồn tại')
-            let picture: string
             if (pictureFile) {
                 const file = await this.cloudinaryService.uploadFile(pictureFile)
                 picture = file.url

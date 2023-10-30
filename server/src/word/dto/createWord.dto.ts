@@ -57,4 +57,8 @@ export class CreateWordDto {
     @IsOptional()
     @IsString()
     antonyms?: string
+
+    @IsOptional()
+    @IsString()
+    picture?: string
 }

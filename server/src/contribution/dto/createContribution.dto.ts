@@ -51,6 +51,10 @@ class Content {
     @IsOptional()
     @IsString()
     antonyms?: string
+
+    @IsOptional()
+    @IsString()
+    picture?: string
 }
 
 export class CreateContributionDto {

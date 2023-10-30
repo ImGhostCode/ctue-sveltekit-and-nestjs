@@ -2,15 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { CreateContributionDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CONSTANTS_MAX, CONTRIBUTION_STATUS, ResponseData } from '../global';
-import { Contribution } from '@prisma/client';
+import { Account, Contribution } from '@prisma/client';
 import { WordService } from '../word/word.service';
 import { SentenceService } from '../sentence/sentence.service';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class ContributionService {
-  constructor(private prismaService: PrismaService, private wordService: WordService, private sentenceService: SentenceService) { }
+  constructor(private prismaService: PrismaService, private wordService: WordService, private sentenceService: SentenceService, private cloudinaryService: CloudinaryService) { }
 
-  async create(createContributionDto: CreateContributionDto, userId: number) {
+  async create(createContributionDto: CreateContributionDto, userId: number, pictureFile: Express.Multer.File) {
     const { levelId, specializationId, content, mean } = createContributionDto.content
     try {
       if (createContributionDto.type === 'word') {
@@ -26,6 +27,8 @@ export class ContributionService {
           return new ResponseData<string>(null, 400, 'Độ dài các thuộc thính không phù hợp')
         }
       }
+      const fileData = await this.cloudinaryService.uploadFile(pictureFile)
+      createContributionDto.content.picture = fileData.url
       const contribution = await this.prismaService.contribution.create({
         data: {
           userId: userId,
@@ -50,6 +53,16 @@ export class ContributionService {
     }
   }
 
+  async findAllByUser(type: string, userId: number) {
+    try {
+      let contributions = await this.prismaService.contribution.findMany({ where: { userId, type } })
+      contributions.forEach((contribution) => contribution.content = JSON.parse(contribution.content as string))
+      return new ResponseData<Contribution>(contributions, 200, 'Tìm thành công')
+    } catch (error) {
+      return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+    }
+  }
+
   async findOne(id: number) {
     try {
       const contribution = await this.findById(id)
@@ -60,17 +73,17 @@ export class ContributionService {
     }
   }
 
-  async verifyContribute(id: number, status: string, pictureFile: Express.Multer.File) {
+  async verifyContribute(id: number, status: string) {
     try {
       const contribution = await this.findById(id)
       if (!contribution) return new ResponseData<string>(null, 400, 'Đóng góp không tồn tại')
       if (contribution.status !== CONTRIBUTION_STATUS.WAITING) return new ResponseData<string>(null, 400, "Từ đã được xác minh")
       if (status === CONTRIBUTION_STATUS.ACCEPT) {
-        const { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, synonyms, antonyms } = contribution.content as any
+        const { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, synonyms, antonyms, picture } = contribution.content as any
         const { userId } = contribution
         let value: any
         if (contribution.type === 'word') {
-          value = await this.wordService.create({ typeId, topicId, levelId, specializationId, content, mean, note, phonetic, synonyms, antonyms, userId, examples }, pictureFile)
+          value = await this.wordService.create({ typeId, topicId, levelId, specializationId, content, mean, note, phonetic, synonyms, antonyms, userId, examples, picture }, null)
         } else {
           value = await this.sentenceService.create({ typeId, topicId, content, mean, note, userId })
         }
@@ -89,10 +102,13 @@ export class ContributionService {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: number, account: Account) {
     try {
       const contribution = await this.findById(id)
       if (!contribution) return new ResponseData<Contribution>(null, 400, 'Đóng góp không tồn tại')
+      if (account.accountType === 'user') {
+        if (contribution.userId !== account.userId) return new ResponseData<Contribution>(null, 400, 'Không có quyền hạn để xóa')
+      }
       return new ResponseData<Contribution>(await this.prismaService.contribution.delete({ where: { id } }), 200, 'Xóa thành công')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
