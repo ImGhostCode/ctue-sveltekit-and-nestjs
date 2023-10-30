@@ -73,9 +73,7 @@
 		userSplit = newUserSplit;
 	};
 
-	const isSelected = (index: number): boolean => {
-		console.log(userSplit.findIndex((item) => index === item.index) !== -1);
-
+	$: isSelected = (index: number) => {
 		return userSplit.findIndex((item) => index === item.index) !== -1;
 	};
 
@@ -375,10 +373,10 @@
 		<div class="grid text-center grid-flow-row grid-rows-3">
 			<!-- Selected -->
 			<div class="flex justify-center items-center">
-				{#each userSplit as { index, ch } (index)}
+				{#each userSplit as { index, ch }, idx (index)}
 					<button
 						class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
-						on:click={() => handleReturnCharacter(index)}
+						on:click={() => handleReturnCharacter(idx)}
 					>
 						{ch}
 					</button>
@@ -497,14 +495,19 @@
 			<!-- Select to answer -->
 			<div class="flex justify-center items-center">
 				{#each originSplit as ch, index (index)}
-					<button
-						on:click={() => handleSelectCharacter(index)}
-						class={`h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300`}
-						disabled={isSelected(index)}
-						class:cursor-none={isSelected(index)}
-					>
-						{isSelected(index) ? '!' : ch}
-					</button>
+					{#if isSelected(index)}
+						<button
+							class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg hover:bg-base-300 cursor-not-allowed"
+							disabled
+						/>
+					{:else}
+						<button
+							on:click={() => handleSelectCharacter(index)}
+							class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
+						>
+							{ch}
+						</button>
+					{/if}
 				{/each}
 			</div>
 		</div>
