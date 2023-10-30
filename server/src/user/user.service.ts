@@ -117,7 +117,32 @@ export class UserService {
     }
 
     async resetPassword(resetPasswordDto: ResetPasswordDto) {
-
+        try {
+            const currentDate = new Date();
+            const { email, code, newPassword } = resetPasswordDto
+            const verifyCode = await this.prismaService.verifyCode.findFirst({
+                where: { email, code }
+            })
+            if (!verifyCode) return new ResponseData<string>(null, 400, 'Mã xác minh không tồn tại')
+            const createdAt = new Date(verifyCode.createdAt)
+            createdAt.setMinutes(createdAt.getMinutes() + 5)
+            if (createdAt <= currentDate) return new ResponseData<string>(null, 400, 'Quá thời gian của mã xác minh')
+            const account = await this.prismaService.account.findUnique({
+                where: { email }
+            })
+            if (!account) return new ResponseData<string>(null, 400, 'Tài khoản không tồn tại')
+            const hashedPassword = await argon2.hash(newPassword)
+            await this.prismaService.account.update({
+                where: { email },
+                data: { password: hashedPassword }
+            })
+            await this.prismaService.verifyCode.deleteMany({
+                where: { email: email }
+            })
+            return new ResponseData<string>(null, 200, 'Đổi mật khẩu thành công')
+        } catch (error) {
+            return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+        }
     }
 
     async sendVerifyCode(verifyCodeDto: VerifyCodeDto) {
@@ -125,6 +150,7 @@ export class UserService {
             const { email } = verifyCodeDto
             const account = await this.prismaService.account.findUnique({ where: { email }, include: { user: true } })
             if (!account) return new ResponseData<any>(null, 400, 'Email này chưa đăng ký')
+            await this.prismaService.verifyCode.deleteMany({ where: { email: email } })
             const code = this.random6DigitNumber()
             const verifyCode = await this.prismaService.verifyCode.create({
                 data: {
@@ -147,10 +173,6 @@ export class UserService {
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
-    }
-
-    async toggleFavorite(toggleFavoriteDto: ToggleFavoriteDto) {
-
     }
 
     random6DigitNumber() {

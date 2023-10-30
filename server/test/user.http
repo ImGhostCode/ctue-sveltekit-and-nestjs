@@ -41,5 +41,15 @@ POST {{urlDev}}/verify-code
 Content-Type: application/json
 
 {
-   "email": ""
+   "email": "test@gmail.com"
+}
+
+### reset password
+PATCH  {{urlDev}}/reset-password
+Content-Type: application/json
+
+{
+   "email": "test@gmail.com",
+   "code": 939843,
+   "newPassword": "123456"
 }

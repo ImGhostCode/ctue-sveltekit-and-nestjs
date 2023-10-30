@@ -58,7 +58,7 @@ export class UserController {
         return this.userService.deleteUser(id)
     }
 
-    @Post('reset-password')
+    @Patch('reset-password')
     resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
         return this.userService.resetPassword(resetPasswordDto)
     }
@@ -66,10 +66,5 @@ export class UserController {
     @Post('verify-code')
     sendVerifyCode(@Body() verifyCodeDto: VerifyCodeDto) {
         return this.userService.sendVerifyCode(verifyCodeDto)
-    }
-
-    @Patch('toggle-favorite')
-    toggleFavorite(@Body() toggleFavoriteDto: ToggleFavoriteDto) {
-        return this.userService.toggleFavorite(toggleFavoriteDto)
     }
 }
