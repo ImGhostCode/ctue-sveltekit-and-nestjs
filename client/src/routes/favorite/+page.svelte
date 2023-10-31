@@ -11,7 +11,7 @@
 		{ id: 5, name: 'Đời sống 4', selected: false, image: social }
 	];
 
-	function toggleSelected(index) {
+	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
 	}
 
@@ -53,6 +53,8 @@
 			>
 		</div> -->
 		<div class="dropdown">
+			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+			<!-- svelte-ignore a11y-label-has-associated-control -->
 			<label tabindex="0" class="btn btn-ghost m-1"
 				>Sắp xếp <span
 					><svg
@@ -71,10 +73,11 @@
 					</svg>
 				</span></label
 			>
+			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<ul tabindex="0" class=" dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-				<li><a>A-Z</a></li>
-				<li><a>Z-A</a></li>
-				<li><a>Random</a></li>
+				<li><button>A-Z</button></li>
+				<li><button>Z-A</button></li>
+				<li><button>Random</button></li>
 			</ul>
 		</div>
 	</div>
