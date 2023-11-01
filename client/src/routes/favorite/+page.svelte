@@ -1,6 +1,8 @@
 <script lang="ts">
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
+	import culture from '$lib/assets/icons/topics/culture.png';
+	import exciting from '$lib/assets/icons/topics/exciting.png';
 	import Speaker from '../../components/Speaker.svelte';
 	let showTopics = false;
 	let topics = [
@@ -20,7 +22,7 @@
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
 	<div class="items-center mb-4">
-		<h1 class="h1 text-2xl text-orange-600">Từ điển của bạn</h1>
+		<h1 class="h1 text-2xl text-title">Từ điển của bạn</h1>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200" />
 
@@ -84,16 +86,16 @@
 
 	<div class="border rounded-md p-4">
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
-			<div class="flex hover:cursor-pointer grow" on:click={myModal4.showModal()}>
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
 				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
 						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
 						<span class="mr-2 text-blue-600">/æd/</span>
 					</div>
-					<p>Thêm</p>
+					<p class="text-left">Thêm</p>
 				</div>
-			</div>
+			</button>
 			<div class="grow-0">
 				<Speaker />
 				<button class="hover:scale-110 transition-all ml-2"
@@ -115,16 +117,16 @@
 			</div>
 		</div>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
-			<div class="flex hover:cursor-pointer grow" on:click={myModal4.showModal()}>
-				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={culture} alt={culture} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
-						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<p class="mr-2 text-green-600 text-xl font-semibold">Push</p>
 						<span class="mr-2 text-blue-600">/æd/</span>
 					</div>
-					<p>Thêm</p>
+					<p class="text-left">Đẩy</p>
 				</div>
-			</div>
+			</button>
 			<div class="grow-0">
 				<Speaker />
 				<button class="hover:scale-110 transition-all ml-2"
@@ -146,16 +148,16 @@
 			</div>
 		</div>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
-			<div class="flex hover:cursor-pointer grow" on:click={myModal4.showModal()}>
-				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={exciting} alt={exciting} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
-						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<p class="mr-2 text-green-600 text-xl font-semibold">make</p>
 						<span class="mr-2 text-blue-600">/æd/</span>
 					</div>
-					<p>Thêm</p>
+					<p class="text-left">Làm</p>
 				</div>
-			</div>
+			</button>
 			<div class="grow-0">
 				<Speaker />
 				<button class="hover:scale-110 transition-all ml-2"
@@ -184,7 +186,7 @@
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 			</form>
-			<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi Tiết Từ "Add"</h3>
+			<h3 class="font-bold text-2xl text-title mb-2">Chi Tiết Từ "Add"</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="flex my-4">

@@ -4,6 +4,8 @@
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
+	let myModal4: HTMLDialogElement;
+
 	export let showOnPx = 150;
 	let hidden = true;
 
@@ -26,6 +28,9 @@
 			hidden = true;
 		}
 	}
+
+	let volume: number = 100;
+	let speed: number = 100;
 </script>
 
 <div class="box">
@@ -96,12 +101,10 @@
 					>Đăng nhập</button
 				></a
 			> -->
-				<div
-					class="relative w-12 h-12 overflow-hiddenrounded-full avatar-user z-10 scale-90 hover:scale-100 origin-top transition-all duration-200"
-				>
+				<div class="relative w-12 h-12 rounded-full avatar-user z-10 group cursor-pointer">
 					<img class="" src={default_user} alt="Bordered avatar" />
 					<ul
-						class="absolute w-[300px] shadow-lg bg-[#fcfcfc] sub-avatar-user hidden rounded-sm right-0 top-full"
+						class="absolute w-[300px] shadow-lg bg-[#fcfcfc] sub-avatar-user hidden rounded-sm group-hover:opacity-100 opacity-75 right-0 top-full scale-90 hover:scale-100 origin-top transition-all duration-200"
 					>
 						<a href="/profile">
 							<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
@@ -180,7 +183,7 @@
 								<span class="ml-2">Quản lý đóng góp</span>
 							</li></a
 						>
-						<a href="/">
+						<button class="w-full" on:click={() => myModal4.showModal()}>
 							<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
 								<span class="inline-block"
 									><svg
@@ -204,7 +207,7 @@
 									</svg>
 								</span>
 								<span class="ml-2">Cài đặt</span>
-							</li></a
+							</li></button
 						>
 						<a href="/">
 							<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
@@ -357,7 +360,8 @@
 			</svg>
 		</div>
 		<!-- sub middle -->
-		<div
+		<button
+			on:click={() => myModal4.showModal()}
 			class="absolute rounded-full transition-all duration-[0.2s] ease-out scale-x-0 group-hover:scale-x-100 group-hover:-translate-y-14 group-hover:-translate-x-14 flex p-2 hover:p-3 bg-yellow-300 hover:bg-yellow-400 text-white"
 		>
 			<svg
@@ -374,9 +378,151 @@
 					d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
 				/>
 			</svg>
-		</div>
+		</button>
 	</div>
 </div>
+
+<dialog bind:this={myModal4} id="my_modal_4" class="modal">
+	<div class="modal-box w-11/12 max-w-5xl">
+		<h3 class="font-bold text-2xl text-orange-600 mb-2">Cài đặt</h3>
+		<div class="h-[1px] w-full border border-gray-200" />
+
+		<div class="px-6 py-3">
+			<div class="border rounded-md my-4 p-4">
+				<p class="text-lg">Chủ Đề</p>
+				<div class="flex">
+					<button class="rounded-full border border-green-500 p-2 mx-2 hover:bg-base-300">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="w-6 h-6 text-green-500"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+							/>
+						</svg>
+					</button>
+					<button class="rounded-full border p-2 mx-2 hover:bg-base-300">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="w-6 h-6"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+							/>
+						</svg>
+					</button>
+				</div>
+			</div>
+
+			<div class="border rounded-md my-4 p-4">
+				<h1 class="text-lg mb-3">Giọng Đọc</h1>
+				<div class="grid grid-cols-3 gap-7">
+					<div class="col-span-1 flex flex-col">
+						<p class="text-light text-slate-500 my-2">Voice</p>
+
+						<select class="border border-slate-500 select w-full max-w-xs">
+							<option selected>Google US English</option>
+							<option>Google UK Female</option>
+							<option>BaGoogle US Malert</option>
+						</select>
+					</div>
+					<div class="col-span-1 flex flex-col">
+						<p class="text-light text-slate-500 my-2">Voice</p>
+
+						<div
+							class="h-auto flex justify-between items-center grow shrink-0
+						"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-6 h-6 grow-0"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
+								/>
+							</svg>
+
+							<input
+								type="range"
+								min="0"
+								max="100"
+								class="range mx-3 range-xs range-primary"
+								bind:value={volume}
+							/>
+							<p class="grow">{volume}</p>
+						</div>
+					</div>
+					<div class="col-span-1 flex flex-col">
+						<p class="text-light text-slate-500 my-2">Speed</p>
+
+						<div
+							class="h-auto flex justify-between items-center grow shrink-0
+						"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-6 h-6"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+								/>
+							</svg>
+
+							<input
+								type="range"
+								min="0"
+								max="100"
+								class="range mx-3 range-xs range-primary"
+								bind:value={speed}
+							/>
+							<p class="grow">{speed}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="border rounded-md my-4 p-4">
+				<p class="text-lg mb-3">Cài Đặt Khác</p>
+				<p class="text-slate-500 my-2">Hiện/Ẩn thanh điều hướng</p>
+				<input type="checkbox" class="toggle toggle-success" checked />
+			</div>
+		</div>
+
+		<div class="h-[1px] w-full border border-gray-200" />
+
+		<div class="modal-action">
+			<form method="dialog">
+				<!-- if there is a button, it will close the modal -->
+				<!-- <button class="btn">Close</button> -->
+				<button class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
+			</form>
+		</div>
+	</div>
+</dialog>
+
 <svelte:window on:scroll={handleOnScroll} />
 
 <!-- component -->

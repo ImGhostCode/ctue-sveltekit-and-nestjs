@@ -34,7 +34,7 @@
 </script>
 
 <div class="shadow-lg px-7 py-8 rounded-lg my-10">
-	<h1 class="text-3xl text-orange-500 font-bold">Thêm từ mới của bạn vào CTUE</h1>
+	<h1 class="text-3xl text-title font-bold">Thêm từ mới của bạn vào CTUE</h1>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form action="" class="grid grid-cols-3">
 		<div class="form-control w-full max-w-sm mb-3">

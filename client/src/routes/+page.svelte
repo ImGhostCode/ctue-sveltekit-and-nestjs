@@ -83,7 +83,7 @@
 				</div>
 			</a>
 		</div>
-		<div class="p-3 w-1/3">
+		<!-- <div class="p-3 w-1/3">
 			<a
 				href="/"
 				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
@@ -94,7 +94,7 @@
 					<p class="text-ms text-gray-500">Danh sách tổng hợp những cấu trúc câu trong tiếng Anh</p>
 				</div>
 			</a>
-		</div>
+		</div> -->
 		<div class="p-3 w-1/3">
 			<a
 				href="/practice"

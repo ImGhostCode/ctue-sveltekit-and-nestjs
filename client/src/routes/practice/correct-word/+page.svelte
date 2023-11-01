@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 	import correctWord from '$lib/assets/icons/games/correct-word.png';
@@ -12,14 +12,14 @@
 		{ id: 5, name: 'Đời sống 4', selected: false, image: social }
 	];
 
-	function toggleSelected(index) {
+	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
 	}
 </script>
 
 <dialog id="" class="modal">
 	<div class="modal-box max-w-3xl">
-		<h3 class="font-bold text-xl text-orange-600 mb-2">Lựa chọn gói từ vựng</h3>
+		<h3 class="font-bold text-xl text-title mb-2">Lựa chọn gói từ vựng</h3>
 		<div class="h-[1px] w-full border border-gray-200" />
 
 		<div class="grid grid-cols-2 gap-2 mt-4">

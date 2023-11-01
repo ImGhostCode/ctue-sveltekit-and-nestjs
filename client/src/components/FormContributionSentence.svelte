@@ -14,7 +14,7 @@
 </script>
 
 <div class="shadow-lg px-7 py-8 rounded-lg my-10">
-	<h1 class="text-3xl text-orange-500 font-bold">Thêm Câu Giao Tiếp Hay Mà Bạn Biết</h1>
+	<h1 class="text-3xl text-title font-bold">Thêm Câu Giao Tiếp Hay Mà Bạn Biết</h1>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form action="" class="flex flex-col">
 		<div class="form-control w-full mb-3">

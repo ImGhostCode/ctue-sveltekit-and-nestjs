@@ -16,6 +16,9 @@ export default {
           '0%': { transform: 'scale(30%)', opacity: 0.7 },
           '100%': { transform: 'scale(100%)', opacity: 1 },
         }
+      },
+      colors: {
+        'title': '#dd9210'
       }
     }
   }

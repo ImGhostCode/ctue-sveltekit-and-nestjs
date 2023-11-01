@@ -16,7 +16,7 @@
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
 	<div class="flex justify-between items-center mb-4">
-		<h1 class="h1 text-2xl text-orange-600">1000+ Cụm từ giao tiếp</h1>
+		<h1 class="h1 text-2xl text-title">1000+ Cụm từ giao tiếp</h1>
 
 		<!-- You can open the modal using ID.showModal() method -->
 		<button class="" on:click={() => myModal4.showModal()}

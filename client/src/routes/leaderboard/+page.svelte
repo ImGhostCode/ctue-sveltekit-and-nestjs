@@ -6,7 +6,7 @@
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
 	<div class="flex justify-center items-center mb-4">
 		<img src={medal} alt={medal} class="h-[50px] w-[50px]" />
-		<h1 class="text-4xl font-bold text-orange-600">LEADERBOARD</h1>
+		<h1 class="text-4xl font-bold text-title">LEADERBOARD</h1>
 	</div>
 
 	<div class="grid grid-cols-3 gap-8">

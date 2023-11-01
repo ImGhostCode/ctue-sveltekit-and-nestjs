@@ -1,6 +1,8 @@
 <script lang="ts">
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
+	import animal from '$lib/assets/icons/topics/animal.png';
+	import clothes from '$lib/assets/icons/topics/clothes.png';
 	import Speaker from '../../components/Speaker.svelte';
 	let showTopics = false;
 	let topics = [
@@ -21,7 +23,7 @@
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
 	<div class="flex justify-between items-center mb-4">
-		<h1 class="h1 text-2xl text-orange-600">Từ điển CTUE</h1>
+		<h1 class="h1 text-2xl text-title">Từ điển CTUE</h1>
 
 		<!-- You can open the modal using ID.showModal() method -->
 		<button class="" on:click={() => myModal5.showModal()}
@@ -43,7 +45,7 @@
 		>
 		<dialog bind:this={myModal5} id="my_modal_5" class="modal">
 			<div class="modal-box w-11/12 max-w-5xl">
-				<h3 class="font-bold text-xl text-orange-600 mb-2">Gói từ vựng</h3>
+				<h3 class="font-bold text-xl text-title mb-2">Gói từ vựng</h3>
 				<div class="h-[1px] w-full border border-gray-200" />
 
 				<div class="grid grid-cols-2 gap-2 mt-4">
@@ -234,7 +236,7 @@
 					<form method="dialog">
 						<!-- if there is a button, it will close the modal -->
 						<button class="btn">Close</button>
-						<button class="btn btn-success">OK</button>
+						<button class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
 					</form>
 				</div>
 			</div>
@@ -311,7 +313,7 @@
 						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
 						<span class="mr-2 text-blue-600">/æd/</span>
 					</div>
-					<p>Thêm</p>
+					<p class="text-left">Thêm</p>
 				</div>
 			</button>
 			<div class="grow-0">
@@ -336,13 +338,13 @@
 		</div>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
 			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
-				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<img src={animal} alt={animal} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
-						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<p class="mr-2 text-green-600 text-xl font-semibold">make</p>
 						<span class="mr-2 text-blue-600">/æd/</span>
 					</div>
-					<p>Thêm</p>
+					<p class="text-left">Làm</p>
 				</div>
 			</button>
 			<div class="grow-0">
@@ -367,13 +369,13 @@
 		</div>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
 			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
-				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<img src={clothes} alt={clothes} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
-						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<p class="mr-2 text-green-600 text-xl font-semibold">check</p>
 						<span class="mr-2 text-blue-600">/æd/</span>
 					</div>
-					<p>Thêm</p>
+					<p class="text-left">Kiểm tra</p>
 				</div>
 			</button>
 			<div class="grow-0">
@@ -404,7 +406,7 @@
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 			</form>
-			<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi Tiết Từ "Add"</h3>
+			<h3 class="font-bold text-2xl text-title mb-2">Chi Tiết Từ "Add"</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="flex my-4">
