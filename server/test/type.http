@@ -1,0 +1,25 @@
+@urlDev=http://localhost:8000/type
+
+### Create level
+POST  {{urlDev}}/
+Content-Type: application/json
+
+{
+    "name": "test 3",
+    "isWord": false
+}
+
+### Get all levels
+GET   {{urlDev}}/false
+
+### Update level
+PATCH {{urlDev}}/3
+Content-Type: application/json
+
+{
+    "name": "test 2",
+    "isWord": true
+}
+
+### Delete level
+DELETE  {{urlDev}}/2

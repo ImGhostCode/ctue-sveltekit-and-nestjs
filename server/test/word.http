@@ -1,0 +1,44 @@
+@urlDev=http://localhost:8000/word
+
+### Create word
+POST  {{urlDev}}/
+Content-Type: application/json
+
+{
+    "typeId": 1,
+    "topicId": [1],          
+    "levelId": 1,
+    "specializationId": 1,
+    "content": "hello world 4 1",
+    "mean": "test word 1",
+    "note": "test",
+    "phonetic": "test",
+    "examples": ["test", "test1"],
+    "picture": "test"
+}
+
+### Get all words
+GET   {{urlDev}}/
+
+### Get one word
+GET   {{urlDev}}/3
+
+### Update wordd
+PATCH {{urlDev}}/3
+Content-Type: application/json
+
+{
+    "typeId": 1,
+    "topicId": [1],          
+    "levelId": 1,
+    "specializationId": 1,
+    "content": "hello world 56",
+    "mean": "test 1",
+    "note": "test 1",
+    "phonetic": "test 1",
+    "examples": ["test"],
+    "picture": "test"
+}
+
+### Delete word
+DELETE  {{urlDev}}/2
