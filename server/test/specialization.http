@@ -1,0 +1,24 @@
+@urlDev=http://localhost:8000/specialization
+
+### Create specialization
+POST  {{urlDev}}/
+Content-Type: application/json
+
+{
+    "name": "test1"
+}
+
+### Get all specializations
+GET   {{urlDev}}/
+
+### Update specialization
+PATCH {{urlDev}}/2
+Content-Type: application/json
+
+{
+    "name": "test31"
+}
+
+### Delete specialization
+DELETE  {{urlDev}}/2
+

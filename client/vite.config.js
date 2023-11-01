@@ -4,7 +4,7 @@ dotenv.config()
 
 /** @type {import('vite').UserConfig} */
 const config = {
-	plugins: [sveltekit()],
+	plugins: [sveltekit(),],
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},

@@ -1,5 +1,24 @@
-import { error } from '@sveltejs/kit'; import type { PageLoad } from './$types';
-export const load: PageLoad = ({ params }) => {
-    // if (params.slug === 'hello-world') { return { title: 'Hello world!', content: 'Welcome to our blog. Lorem ipsum dolor sit amet...', }; }
-    // throw error(404, 'Not found');
-};
+// import type { PageServerLoad, Actions } from './$types';
+
+// export const load: PageServerLoad = async ({ cookies }) => {
+//     // const user = await db.getUserFromSession(cookies.get('sessionid'));
+//     // return { user };
+// };
+
+// export const actions = {
+//     login: async ({ cookies, request }) => {
+//         // const data = await request.formData();
+//         // const email = data.get('email');
+//         // const password = data.get('password');
+
+//         // const user = await db.getUser(email);
+//         // cookies.set('sessionid', await db.createSession(user));
+
+//         // return { success: true };
+//     },
+//     register: async (event) => {
+//         // TODO register the user
+//         console.log('register');
+
+//     },
+// } satisfies Actions;

@@ -1,0 +1,24 @@
+@urlDev=http://localhost:8000/topic
+
+### Create topic
+POST  {{urlDev}}/
+Content-Type: application/json
+
+{
+    "name": "test 2"
+}
+
+### Get all topics
+GET   {{urlDev}}/
+
+### Update topic
+PATCH {{urlDev}}/3
+Content-Type: application/json
+
+{
+    "name": "test31"
+}
+
+### Delete topic
+DELETE  {{urlDev}}/2
+
