@@ -39,6 +39,8 @@ export class AuthService {
             const data = { ...newAccount, ...newUser }
             return new ResponseData<any>(data, 200, 'Tạo tài khoản thành công')
         } catch (error) {
+            console.log(error);
+
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
     }
