@@ -1,7 +1,11 @@
 <script lang="ts">
 	import fb_icon from '$lib/assets/icons/fb-icon.png';
 	import gg_icon from '$lib/assets/icons/gg-icon.png';
+	import type { PageData } from './$types';
+
 	let showInput1: boolean = false;
+
+	export let data: PageData;
 </script>
 
 <main class="flex justify-center item-center h-screen">

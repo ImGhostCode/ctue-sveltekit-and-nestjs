@@ -1,4 +1,4 @@
-import { sveltekit } from '@sveltejs/kit/vite';
+import { sveltekit, vitePreprocess } from '@sveltejs/kit/vite';
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -11,7 +11,8 @@ const config = {
 	server: {
 		port: process.env.PORT,
 		strictPort: false,
-	}
+	},
+	preprocess: vitePreprocess()
 };
 
 export default config;

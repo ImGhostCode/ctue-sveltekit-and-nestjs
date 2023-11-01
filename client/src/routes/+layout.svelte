@@ -1,6 +1,9 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	import default_user from '$lib/assets/images/default-user.png';
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
 	export let showOnPx = 150;
 	let hidden = true;
 
