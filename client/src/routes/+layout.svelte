@@ -3,6 +3,7 @@
 	import default_user from '$lib/assets/images/default-user.png';
 	import type { LayoutServerData, LayoutData } from './$types';
 	import { onMount } from 'svelte';
+	import { enhance } from '$app/forms';
 
 	export let data: LayoutServerData;
 
@@ -225,7 +226,7 @@
 									<span class="ml-2">Liên hệ - Giúp đỡ</span>
 								</li></a
 							>
-							<a href="/">
+							<form action="?/logout" method="post" use:enhance>
 								<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
 									<span class="inline-block"
 										><svg
@@ -243,9 +244,9 @@
 											/>
 										</svg>
 									</span>
-									<span class="ml-2">Đăng xuất</span>
-								</li></a
-							>
+									<button class="ml-2" type="submit">Đăng xuất</button>
+								</li>
+							</form>
 						</ul>
 					</div>
 				{:else}

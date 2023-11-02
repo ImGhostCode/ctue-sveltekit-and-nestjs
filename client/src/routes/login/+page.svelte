@@ -96,7 +96,8 @@
 					<button
 						id="eye"
 						class="absolute right-0 outline-none px-3 my-auto h-full"
-						on:click|preventDefault={() => (showInput1 = !showInput1)}
+						on:click={() => (showInput1 = !showInput1)}
+						type="button"
 					>
 						{#if showInput1}
 							<svg
