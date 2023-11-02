@@ -4,6 +4,8 @@
 	import type { LayoutData } from './$types';
 
 	export let data: LayoutData;
+	console.log('data layout', data);
+
 	let myModal4: HTMLDialogElement;
 
 	export let showOnPx = 150;
@@ -94,14 +96,14 @@
 						/>
 					</div>
 				</div>
-				<!-- <a href="/login">
-				<button
-					type="button"
-					class="text-white leading-6 bg-blue-600 hover:bg-blue-800 focus:ring-4 outline-none focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-					>Đăng nhập</button
-				></a
-			> -->
-				<div class="relative w-12 h-12 rounded-full avatar-user z-10 group cursor-pointer">
+				<a href="/login">
+					<button
+						type="button"
+						class="text-white leading-6 bg-blue-600 hover:bg-blue-800 focus:ring-4 outline-none focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+						>Đăng nhập</button
+					></a
+				>
+				<!-- <div class="relative w-12 h-12 rounded-full avatar-user z-10 group cursor-pointer">
 					<img class="" src={default_user} alt="Bordered avatar" />
 					<ul
 						class="absolute w-[300px] shadow-lg bg-[#fcfcfc] sub-avatar-user hidden rounded-sm group-hover:opacity-100 opacity-75 right-0 top-full scale-90 hover:scale-100 origin-top transition-all duration-200"
@@ -109,20 +111,6 @@
 						<a href="/profile">
 							<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
 								<span class="inline-block">
-									<!-- <svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke-width="1.5"
-										stroke="currentColor"
-										class="w-6 h-6"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-										/>
-									</svg> -->
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
@@ -252,7 +240,7 @@
 							</li></a
 						>
 					</ul>
-				</div>
+				</div> -->
 
 				<!-- <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
 				<svg

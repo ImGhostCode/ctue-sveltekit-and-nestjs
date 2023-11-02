@@ -9,6 +9,7 @@ async function bootstrap() {
     transform: true,
     transformOptions: { enableImplicitConversion: true }
   }))
+  app.setGlobalPrefix('apis');
   await app.listen(AppModule.port || 8888);
 }
 bootstrap();

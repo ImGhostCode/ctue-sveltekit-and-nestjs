@@ -1,12 +1,63 @@
 <script lang="ts">
 	import fb_icon from '$lib/assets/icons/fb-icon.png';
 	import gg_icon from '$lib/assets/icons/gg-icon.png';
+	import { enhance } from '$app/forms';
+	import type { PageData, ActionData } from './$types';
+	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import { goto } from '$app/navigation';
+
 	let showInput1: boolean = false;
+
+	export let data: PageData;
+
+	export let form: ActionData;
+	let redirectOnToastClose = false;
+
+	$: if (form?.success) {
+		const toast = toasts.add({
+			title: 'Success',
+			description: form?.message,
+			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			placement: 'bottom-right',
+			type: 'success',
+			theme: 'dark',
+			showProgress: true,
+			// type: 'success',
+			// theme: 'dark',
+			onClick: () => {},
+			onRemove: () => {
+				goto('/'); // Use goto to redirect to the '/login' route.
+			}
+			//component: BootstrapToast // You can customize the toast component here
+		});
+	}
+
+	$: if (form?.invalidCredential) {
+		const toast = toasts.add({
+			title: 'Error',
+			description: form?.message,
+			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			placement: 'bottom-right',
+			type: 'error',
+			theme: 'dark',
+			showProgress: true,
+			// type: 'error',
+			// theme: 'dark',
+			onClick: () => {},
+			onRemove: () => {}
+			//component: BootstrapToast // You can customize the toast component here
+		});
+	}
 </script>
 
 <main class="flex justify-center item-center h-screen">
 	<div class="w-full max-w-xs flex flex-col justify-center items-center">
-		<form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 border">
+		<form
+			class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 border"
+			method="post"
+			action="?/login"
+			use:enhance
+		>
 			<div class="text-center text-2xl font-bold mb-4">
 				<h1>Đăng nhập</h1>
 			</div>
@@ -16,8 +67,13 @@
 					class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 					id="email"
 					type="email"
+					name="email"
 					placeholder="example@gmail.com"
+					class:border-red-500={form?.missingEmail || form?.invalidCredential}
 				/>
+				{#if form?.missingEmail}
+					<p class="text-xs text-error mt-2">Vui lòng nhập email</p>
+				{/if}
 			</div>
 			<div class="mb-6">
 				<label class="block text-gray-700 text-sm font-bold mb-2" for="password"> Mật khẩu </label>
@@ -34,7 +90,8 @@
 						class="shadow appearance-none border focus:border-green-500 rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 						id="password"
 						placeholder="******************"
-						minlength="6"
+						name="password"
+						class:border-red-500={form?.invalidCredential || form?.passIsInvalid}
 					/>
 					<button
 						id="eye"
@@ -79,6 +136,9 @@
 						{/if}
 					</button>
 				</div>
+				{#if form?.passIsInvalid}
+					<p class="text-xs text-error mt-2">Vui lòng nhập mật khẩu từ 6-12 ký tự</p>
+				{/if}
 				<!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
 			</div>
 			<div class="flex items-center justify-between mb-6">
@@ -118,3 +178,8 @@
 		</p>
 	</div>
 </main>
+
+<ToastContainer placement="bottom-right" let:data>
+	<FlatToast {data} />
+	<!-- Provider template for your toasts -->
+</ToastContainer>

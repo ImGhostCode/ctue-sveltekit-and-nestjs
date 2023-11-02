@@ -310,25 +310,25 @@
 				<div
 					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
 				>
-					<p class="text-xl">Push</p>
+					<p class="text-xl">push</p>
 					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
 				</div>
 				<div
 					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
 				>
-					<p class="text-xl">Push</p>
+					<p class="text-xl">check</p>
 					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
 				</div>
 				<div
 					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
 				>
-					<p class="text-xl">Push</p>
+					<p class="text-xl">make</p>
 					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
 				</div>
 				<div
 					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
 				>
-					<p class="text-xl">Push</p>
+					<p class="text-xl">run</p>
 					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
 				</div>
 			</div>
