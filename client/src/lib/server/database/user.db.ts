@@ -6,9 +6,16 @@ const URL = '/users';
 
 export async function getUser(accessToken: string) {
 
-    // const result = await axiosClient.get(`${URL}/me`, config: {
-    //    accessToken: accessToken
-    // })
+    try {
+        const response = await axiosClient.get(`${URL}/me`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
 
-    return result
+        return response.data;
+
+    } catch (error) {
+        throw error;
+    }
 }

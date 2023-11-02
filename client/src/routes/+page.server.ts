@@ -6,6 +6,6 @@ import * as db from '$lib/server/database';
 export const load: PageServerLoad = async ({ cookies, request }) => {
     // const user = await db.getUserFromSession(cookies.get('sessionid'));
     // return { user };
-    console.log(request);
+    // console.log(request);
 
 };

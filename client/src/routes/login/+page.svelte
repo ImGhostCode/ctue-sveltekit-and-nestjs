@@ -137,7 +137,7 @@
 					</button>
 				</div>
 				{#if form?.passIsInvalid}
-					<p class="text-xs text-error mt-2">Vui lòng nhập mật khẩu từ 6-12 ký tự</p>
+					<p class="text-xs text-error mt-2">Vui lòng nhập mật khẩu ít nhất 6 ký tự</p>
 				{/if}
 				<!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
 			</div>
