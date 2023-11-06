@@ -40,7 +40,7 @@
 				<div class="w-4/5">
 					<p class="text-2xl text-amber-500 font-bold">1000+ câu giao tiếp</p>
 					<p class="text-ms text-gray-500">
-						Luyện nghe, nói câu tiếng Anh giao tiếp hàng ngày cùng Dyno
+						Luyện nghe, nói câu tiếng Anh giao tiếp hàng ngày cùng CTUE
 					</p>
 				</div>
 			</a>

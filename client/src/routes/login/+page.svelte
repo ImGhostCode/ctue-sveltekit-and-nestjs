@@ -96,7 +96,8 @@
 					<button
 						id="eye"
 						class="absolute right-0 outline-none px-3 my-auto h-full"
-						on:click|preventDefault={() => (showInput1 = !showInput1)}
+						on:click={() => (showInput1 = !showInput1)}
+						type="button"
 					>
 						{#if showInput1}
 							<svg
@@ -137,7 +138,7 @@
 					</button>
 				</div>
 				{#if form?.passIsInvalid}
-					<p class="text-xs text-error mt-2">Vui lòng nhập mật khẩu từ 6-12 ký tự</p>
+					<p class="text-xs text-error mt-2">Vui lòng nhập mật khẩu ít nhất 6 ký tự</p>
 				{/if}
 				<!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
 			</div>
