@@ -19,3 +19,18 @@ export async function getUser(accessToken: string) {
         throw error;
     }
 }
+export async function updateProfile(id: number, accessToken: string, data: any) {
+
+    try {
+
+        const response = await axiosClient.patchForm(`${URL}/update-profile/${id}`, data, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data
+
+    } catch (error) {
+        throw error;
+    }
+}

@@ -16,11 +16,11 @@
 		topics[index].selected = !topics[index].selected;
 	}
 
-	$: if (files) {
-		// Note that `files` is of type `FileList`, not an Array:
-		// https://developer.mozilla.org/en-US/docs/Web/API/FileList
-		console.log(files);
-	}
+	// $: if (files) {
+	// 	// Note that `files` is of type `FileList`, not an Array:
+	// 	// https://developer.mozilla.org/en-US/docs/Web/API/FileList
+	// 	console.log(files);
+	// }
 
 	function handleInputFocus() {
 		showPhonetic = !showPhonetic;
