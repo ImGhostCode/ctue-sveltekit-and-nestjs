@@ -61,7 +61,7 @@
 					<form method="dialog">
 						<!-- if there is a button, it will close the modal -->
 						<button class="btn">Close</button>
-						<button class="btn btn-success">OK</button>
+						<button class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
 					</form>
 				</div>
 			</div>
