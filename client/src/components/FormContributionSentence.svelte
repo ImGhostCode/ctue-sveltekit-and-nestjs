@@ -21,10 +21,8 @@
 			<label class="label" for="new-sentence">
 				<span class="label-text">Một câu bằng tiếng Anh (*)</span>
 			</label>
-			<input
-				type="text"
-				placeholder="..."
-				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none"
+			<textarea
+				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
 				id="new-sentence"
 			/>
 		</div>
@@ -32,10 +30,8 @@
 			<label class="label" for="new-sentence-mean">
 				<span class="label-text">Nghĩa của câu bằng tiếng Viết (*)</span>
 			</label>
-			<input
-				type="text"
-				placeholder="..."
-				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none"
+			<textarea
+				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
 				id="new-sentence-mean"
 			/>
 		</div>
@@ -43,10 +39,8 @@
 			<label class="label" for="note">
 				<span class="label-text">Thêm ghi chú cho câu trên (*)</span>
 			</label>
-			<input
-				type="text"
-				placeholder="..."
-				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none"
+			<textarea
+				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
 				id="note"
 			/>
 		</div>

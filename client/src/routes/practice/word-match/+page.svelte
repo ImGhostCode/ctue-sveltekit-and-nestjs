@@ -53,11 +53,11 @@
 	const originSplit: string[] = splitWord(word.toLocaleLowerCase());
 
 	const handleSelectCharacter = (index: number): void => {
-		console.log('click');
+		// console.log('click');
 
 		const newUserSplit = [...userSplit, { index, ch: originSplit[index] }];
 		userSplit = newUserSplit;
-		console.log(newUserSplit);
+		// console.log(newUserSplit);
 
 		if (newUserSplit.length === word.length) {
 			isCheck = true;

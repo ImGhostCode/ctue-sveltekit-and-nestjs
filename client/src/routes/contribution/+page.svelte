@@ -1,8 +1,22 @@
-<script>
+<script lang="ts">
+	import { onMount } from 'svelte';
 	import FormContributionSentence from '../../components/FormContributionSentence.svelte';
 	import FormContributionWord from '../../components/FormContributionWord.svelte';
+	import type { ActionData } from './$types';
+	import { goto } from '$app/navigation';
+
+	export let form: ActionData;
+	/** @type {import('./$types').PageData} */
+	export let data: any;
 
 	let sentenceScreen = true;
+
+	onMount(() => {
+		if (!data?.user) {
+			goto('/login', { replaceState: true }); // Redirect to the login page if not authenticated
+			return;
+		}
+	});
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">

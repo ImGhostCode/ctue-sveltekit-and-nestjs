@@ -24,6 +24,7 @@
 
 	let myModal4: HTMLDialogElement;
 	let myModal5: HTMLDialogElement;
+	let myModal6: HTMLDialogElement;
 
 	let contributions = [
 		{ id: 1, type: 'Câu', content: 'Nội dung json', status: 'Đang chờ' },
@@ -94,7 +95,7 @@
 						>
 						<button
 							class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
-							on:click={() => deleteContribution(2)}>Xóa</button
+							on:click={() => myModal6.showModal()}>Từ chối</button
 						>
 					</td>
 				</tr>
@@ -177,5 +178,37 @@
 		</p>
 		<p class="font-bold">Ghi chú:</p>
 		<p>dfs</p>
+	</div>
+</dialog>
+
+<dialog bind:this={myModal6} id="my_modal_4" class="modal">
+	<div class="modal-box w-11/12 max-w-5xl">
+		<form action="" method="post">
+			<h3 class="font-bold text-xl text-orange-600 mb-2">Từ chối đóng góp</h3>
+			<div class="h-[1px] w-full border border-gray-200" />
+
+			<div class="">
+				<div class="form-control w-full mb-3">
+					<label class="label" for="feedback">
+						<span class="label-text">Lý do (*)</span>
+					</label>
+					<textarea
+						class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
+						id="feedback"
+						name="feedback"
+					/>
+				</div>
+			</div>
+
+			<div class="h-[1px] w-full border border-gray-200" />
+
+			<div class="modal-action">
+				<form method="dialog">
+					<!-- if there is a button, it will close the modal -->
+					<button class="btn">Close</button>
+					<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
+				</form>
+			</div>
+		</form>
 	</div>
 </dialog>
