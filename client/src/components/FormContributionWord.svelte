@@ -326,7 +326,7 @@
 		</div>
 
 		<div class="mb-3">
-			<label for="level" class="block mb-2 text-sm">Bặc của từ (*)</label>
+			<label for="level" class="block mb-2 text-sm">Bậc của từ (*)</label>
 			<select
 				id="level"
 				name="level"
@@ -417,10 +417,9 @@
 			<label class="label" for="examples">
 				<span class="label-text">Câu ví dụ</span>
 			</label>
-			<input
-				type="text"
-				placeholder="..."
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+			<textarea
+				rows="10"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="examples"
 				name="examples"
 			/>
@@ -430,10 +429,9 @@
 			<label class="label" for="synonymous">
 				<span class="label-text">Các từ đồng nghĩa</span>
 			</label>
-			<input
-				type="text"
-				placeholder="..."
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+			<textarea
+				rows="10"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="synonymous"
 				name="synonymous"
 			/>
@@ -443,10 +441,9 @@
 			<label class="label" for="opposite">
 				<span class="label-text">Các từ trái nghĩa</span>
 			</label>
-			<input
-				type="text"
-				placeholder="..."
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+			<textarea
+				rows="10"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="opposite"
 				name="opposite"
 			/>
@@ -456,10 +453,9 @@
 			<label class="label" for="note">
 				<span class="label-text">Ghi chú</span>
 			</label>
-			<input
-				type="text"
-				placeholder="..."
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+			<textarea
+				rows="10"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="note"
 				name="note"
 			/>
@@ -577,9 +573,8 @@
 		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
 
 		<div class="mt-4 col-span-3 text-right">
-			<button type="reset" class="btn btn-outline btn-error mr-2">Reset</button>
-
-			<button type="submit" class="btn btn-accent text-white">Thêm từ</button>
+			<button type="submit" class="btn btn-accent text-white mr-2">Thêm từ</button>
+			<button type="reset" class="btn btn-outline btn-error">Loại bỏ</button>
 		</div>
 	</form>
 </div>

@@ -49,8 +49,8 @@
 		<span class="loading loading-ring loading-lg" />
 	</div>
 {:else}
-	<div class="box">
-		<nav class="bg-white border-gray-200 border shadow-md row header">
+	<div class="box min-h-max h-full">
+		<nav class=" bg-blue-600 text-primary-content shadow-md row header">
 			<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
 				<a href="/" class="flex items-center">
 					<img
@@ -58,7 +58,7 @@
 						class="h-8 mr-3"
 						alt="Flowbite Logo"
 					/>
-					<span class="self-center text-2xl font-semibold whitespace-nowrap text-dark">CTUe</span>
+					<span class="self-center text-2xl font-semibold whitespace-nowrap text-white">CTUe</span>
 				</a>
 
 				<div class="flex">
@@ -90,7 +90,7 @@
 						<div class="relative hidden md:block">
 							<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 								<svg
-									class="w-4 h-4 text-gray-500 dark:text-gray-400"
+									class="w-4 h-4 text-slate-600"
 									aria-hidden="true"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
@@ -109,7 +109,7 @@
 							<input
 								type="text"
 								id="search-navbar"
-								class="block w-full p-2 pl-10 text-sm text-gray-900 border-2 outline-none focus:border-blue-600 border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500"
+								class="block w-full p-2 pl-10 text-sm text-slate-600 placeholder:text-slate-600 border-2 outline-none rounded-lg bg-white"
 								placeholder="Tìm kiếm..."
 							/>
 						</div>
@@ -123,7 +123,7 @@
 								alt={data.user.user.avt}
 							/>
 							<ul
-								class="absolute w-[300px] shadow-lg bg-[#fcfcfc] sub-avatar-user hidden rounded-sm group-hover:opacity-100 opacity-75 right-0 top-full scale-90 hover:scale-100 origin-top transition-all duration-200"
+								class="absolute w-[300px] text-slate-700 shadow-lg bg-[#fcfcfc] sub-avatar-user hidden rounded-sm group-hover:opacity-100 opacity-75 right-0 top-full scale-90 hover:scale-100 origin-top transition-all duration-200"
 							>
 								<a href="/profile">
 									<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
@@ -264,53 +264,11 @@
 						<a href="/login">
 							<button
 								type="button"
-								class="text-white leading-6 bg-blue-600 hover:bg-blue-800 focus:ring-4 outline-none focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+								class="text-white border border-white bg-transparent leading-6 focus:ring-4 outline-none focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
 								>Đăng nhập</button
 							></a
 						>
 					{/if}
-
-					<!-- <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-				<svg
-					class="absolute w-12 h-12 text-gray-400 -left-1"
-					fill="currentColor"
-					viewBox="0 0 20 20"
-					xmlns="http://www.w3.org/2000/svg"
-					><path
-						fill-rule="evenodd"
-						d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-						clip-rule="evenodd"
-					/></svg
-				>
-			</div> -->
-					<!-- <div class="relative w-10 h-10 overflow-hiddenrounded-full">
-				<img class="w-10 h-10" src={default_user} alt="Bordered avatar" />
-			</div> -->
-
-					<!-- <button
-				data-collapse-toggle="navbar-cta"
-				type="button"
-				class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-				aria-controls="navbar-cta"
-				aria-expanded="false"
-			>
-				<span class="sr-only">Open main menu</span>
-				<svg
-					class="w-5 h-5"
-					aria-hidden="true"
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 17 14"
-				>
-					<path
-						stroke="currentColor"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M1 1h15M1 7h15M1 13h15"
-					/>
-				</svg>
-			</button> -->
 				</div>
 			</div>
 		</nav>
@@ -544,6 +502,59 @@
 	</dialog>
 {/if}
 
+<footer class="footer footer-center p-10 bg-blue-500 text-primary-content">
+	<aside>
+		<a href="/" class="flex items-center">
+			<img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo" />
+			<span class="self-center text-2xl font-semibold whitespace-nowrap text-dark">CTUe</span>
+		</a>
+		<p class="font-bold">
+			ACME Industries Ltd. <br />Providing reliable tech since 1992
+		</p>
+		<p>Copyright © 2023 - All right reserved</p>
+	</aside>
+	<nav>
+		<div class="grid grid-flow-col gap-4">
+			<a href="/"
+				><svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					class="fill-current"
+					><path
+						d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+					/></svg
+				></a
+			>
+			<a href="/"
+				><svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					class="fill-current"
+					><path
+						d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"
+					/></svg
+				></a
+			>
+			<a href="/"
+				><svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					class="fill-current"
+					><path
+						d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
+					/></svg
+				></a
+			>
+		</div>
+	</nav>
+</footer>
+
 <svelte:window on:scroll={handleOnScroll} />
 
 <!-- component -->
@@ -552,7 +563,7 @@
 	.box {
 		display: flex;
 		flex-flow: column;
-		height: 100%;
+		/* height: 100%; */
 	}
 
 	.box .row {
