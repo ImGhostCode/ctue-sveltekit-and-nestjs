@@ -13,11 +13,12 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
 
 export const actions = {
-    update: async ({ request, cookies }) => {
+    contribute: async ({ request, cookies }) => {
         try {
             isLoadingForm.set(true)
 
             const formData = Object.fromEntries(await request.formData());
+            console.log("form data contribution::: ", formData);
             const token: string | undefined = cookies.get('accessToken');
             const userId = Number(formData.userId)
             // console.log(formData);
@@ -32,32 +33,39 @@ export const actions = {
 
             }
 
-            const { avt } = formData as { avt: File };
-            const avtFile = avt;
+            const { ilustrate } = formData as { ilustrate: File };
+            const ilustrateFile = ilustrate;
+
             const formDataWithFile = new FormData();
             if (
-                ((formData.avt as File).name &&
-                    (formData.avt as File).name !== 'undefined') && formData.name
+                ((formData.ilustrate as File).name &&
+                    (formData.ilustrate as File).name !== 'undefined') && formData.name
             ) {
                 // return fail(400, {
                 //     error: true,
                 //     message: 'You must provide a file or name to update'
                 // });
-                formDataWithFile.append('avt', avtFile);
+                formDataWithFile.append('ilustrate', ilustrateFile);
             }
-            formDataWithFile.append('name', formData.name);
 
-            const result = await db.updateProfile(userId, token || '', formDataWithFile);
 
-            if (result.statusCode == 200) {
-                isLoadingForm.set(false)
-                return { success: true, message: result.message };
-            } else {
-                return fail(400, {
-                    error: true,
-                    message: result.message
-                });
-            }
+            // formDataWithFile.append('name', formData.name);
+
+
+
+            // const result = await db.updateProfile(userId, token || '', formDataWithFile);
+
+            // if (result.statusCode == 200) {
+            //     isLoadingForm.set(false)
+            //     return { success: true, message: result.message };
+            // } else {
+            //     return fail(400, {
+            //         error: true,
+            //         message: result.message
+            //     });
+            // }
+
+            return { data: true }
 
         } catch (error) {
             isLoadingForm.set(false)

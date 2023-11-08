@@ -5,7 +5,9 @@ const URL = '/auth';
 
 export async function register(data: any) {
 
+
     const result = await axiosClient.post(`${URL}/register`, data)
+
 
     return result
 }

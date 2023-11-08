@@ -20,7 +20,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/IPA"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={ipa} alt="ipa" /></div>
 				<div class="w-4/5">
@@ -34,7 +34,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/1000-communication-phrase"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={communicate} alt={communicate} /></div>
 				<div class="w-4/5">
@@ -48,7 +48,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/ctue-dictionary"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={dictionary} alt="dictionary" /></div>
 				<div class="w-4/5">
@@ -62,7 +62,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/favorite"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={favorite} alt="favorite" /></div>
 				<div class="w-4/5">
@@ -74,7 +74,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/irregular-verbs"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={verb} alt="verb" /></div>
 				<div class="w-4/5">
@@ -86,7 +86,7 @@
 		<!-- <div class="p-3 w-1/3">
 			<a
 				href="/"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={grammar} alt="grammar" /></div>
 				<div class="w-4/5">
@@ -98,7 +98,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/practice"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={game} alt="game" /></div>
 				<div class="w-4/5">
@@ -112,7 +112,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/leaderboard"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={medal} alt="medal" /></div>
 				<div class="w-4/5">
@@ -126,7 +126,7 @@
 		<div class="p-3 w-1/3">
 			<a
 				href="/contribution"
-				class="h-[180px] px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
+				class="h-[180px] border-b-slate-300 px-6 py-4 flex justify-center items-center transition rounded-md border shadow-lg bg-[#f1f1f1] hover:bg-[#e5e5e5]"
 			>
 				<div class="w-1/5"><img src={edit} alt="edit" /></div>
 				<div class="w-4/5">

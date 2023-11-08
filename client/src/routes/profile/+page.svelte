@@ -1,16 +1,19 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import default_image from '$lib/assets/images/default-image.png';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
+	import { isLoadingForm } from '$lib/store';
+	import moment from 'moment';
 
 	export let form: ActionData;
 
 	/** @type {import('./$types').PageData} */
 	export let data: any;
+
 	let isLoading = true;
-	let isLoadingForm = false;
+	// let isLoadingForm = false;
 	let newName: string | null = null;
 
 	onMount(() => {
@@ -24,7 +27,7 @@
 	// console.log(data);
 
 	$: if (form?.success) {
-		isLoadingForm = false;
+		// isLoadingForm = false;
 		isEditing = false;
 	}
 
@@ -32,7 +35,14 @@
 		goto('/login', { replaceState: true }); // Redirect to the login page if not authenticated
 	}
 
-	$: console.log(avt);
+	// $: console.log('profile :: ', $isLoadingForm);
+
+	// let isLoadingFormTest = false;
+
+	// const unsubscribe = isLoadingForm.subscribe((value) => {
+	// 	isLoadingFormTest = value;
+	// 	console.log('profile subscribe::.svelte::::', isLoadingFormTest);
+	// });
 
 	let isEditing = false;
 	let avt: any = null;
@@ -43,6 +53,8 @@
 		avt = e.currentTarget.files[0];
 		console.log(URL.createObjectURL(avt));
 	};
+
+	// onDestroy(unsubscribe);
 </script>
 
 {#if isLoading}
@@ -60,19 +72,19 @@
 					<div class="h-[150px] w-[150px] mx-auto relative mb-4">
 						{#if avt instanceof File}
 							<img
-								class="h-[150px] w-[150px] mx-auto rounded-full"
+								class="h-[150px] w-[150px] mx-auto rounded-full border-2 border-blue-500"
 								src={URL.createObjectURL(avt)}
 								alt={URL.createObjectURL(avt)}
 							/>
 						{:else if data.user.user.avt}
 							<img
-								class="h-[150px] w-[150px] mx-auto rounded-full"
+								class="h-[150px] w-[150px] mx-auto rounded-full border-2 border-blue-500"
 								src={data.user.user.avt}
 								alt={data.user.user.avt}
 							/>
 						{:else}
 							<img
-								class="h-[150px] w-[150px] mx-auto rounded-full"
+								class="h-[150px] w-[150px] mx-auto rounded-full border-2 border-blue-500"
 								src={default_image}
 								alt={default_image}
 							/>
@@ -145,13 +157,14 @@
 
 					<!-- <h4 class="leading-6 mb-6 font-light">test35e724</h4> -->
 					<p class="font-light">{data.user.email}</p>
-					<p class="font-light mb-4">Đã tham gia vào {data.user.user.createdAt}</p>
+					<p class="font-light mb-4">
+						Đã tham gia vào {moment(data.user.user.createdAt).format('DD/MM/YYYY')}
+					</p>
 
 					{#if isEditing}
 						<div class="flex justify-between items-center">
 							<button
 								type="button"
-								disabled={isLoading}
 								on:click={() => (
 									(isEditing = false), (newName = data.user.user.name), (avt = null)
 								)}
@@ -159,20 +172,20 @@
 							>
 								<span class="">Huỷ bỏ</span>
 							</button>
-							{#if isLoadingForm}
-								<!-- Display a loading indicator (e.g., spinner) -->
-								<span class="loading loading-ring loading-md" />
-							{:else}
-								<button
-									type="submit"
-									class="w-full ml-1 px-6 py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 border border-blue-600 rounded-sm shadow text-white font-semibold"
-									class:disable={isLoading || (!avt && newName === data.user.user.name)}
-									disabled={isLoading || (!avt && newName === data.user.user.name)}
-									class:cursor-not-allowed={isLoading || (!avt && newName === data.user.user.name)}
-								>
+							<button
+								type="submit"
+								class="w-full ml-1 px-6 py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 border border-blue-600 rounded-sm shadow text-white font-semibold"
+								class:disable={$isLoadingForm || (!avt && newName === data.user.user.name)}
+								disabled={$isLoadingForm || (!avt && newName === data.user.user.name)}
+								class:cursor-not-allowed={$isLoadingForm ||
+									(!avt && newName === data.user.user.name)}
+							>
+								{#if $isLoadingForm}
+									<span class="loading loading-ring loading-md" />
+								{:else}
 									<span class="">Cập nhật</span>
-								</button>
-							{/if}
+								{/if}
+							</button>
 						</div>
 					{:else}
 						<button

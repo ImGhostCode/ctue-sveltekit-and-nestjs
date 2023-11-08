@@ -1,8 +1,8 @@
 <script lang="ts">
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
+	import { enhance } from '$app/forms';
 
-	let files: any = null;
 	let showTopics = false;
 	let showPhonetic = false;
 
@@ -26,17 +26,26 @@
 		showPhonetic = !showPhonetic;
 	}
 
+	let imgIlustrate: any = null;
+
 	const handleFileInput: svelte.JSX.EventHandler<Event, HTMLInputElement> = (e) => {
 		if (e.currentTarget.files == null) return; // files can be null, handle however appropriate
 
-		files = e.currentTarget.files[0];
+		imgIlustrate = e.currentTarget.files[0];
+		console.log(URL.createObjectURL(imgIlustrate));
 	};
 </script>
 
 <div class="shadow-lg px-7 py-8 rounded-lg my-10">
 	<h1 class="text-3xl text-title font-bold">Thêm từ mới của bạn vào CTUE</h1>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
-	<form action="" class="grid grid-cols-3">
+	<form
+		method="post"
+		use:enhance
+		enctype="multipart/form-data"
+		action="?/contribute"
+		class="grid grid-cols-3"
+	>
 		<div class="form-control w-full max-w-sm mb-3">
 			<label class="label" for="new-word">
 				<span class="label-text">Từ mới (*)</span>
@@ -46,6 +55,7 @@
 				placeholder="..."
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="new-word"
+				name="newWord"
 			/>
 		</div>
 		<div class="form-control w-full max-w-sm mb-3">
@@ -57,6 +67,7 @@
 				placeholder="..."
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="mean"
+				name="mean"
 			/>
 		</div>
 		<div class="form-control w-full max-w-sm mb-3">
@@ -68,6 +79,7 @@
 				placeholder="..."
 				class="input-phonetic input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="phonetic"
+				name="phonetic"
 				on:focus={handleInputFocus}
 				bind:value={phoneticValue}
 			/>
@@ -78,6 +90,7 @@
 			class="col-span-3 rounded-md p-3 bg-white shadow-lg mb-4 flex flex-row gap-2 flex-wrap"
 		>
 			<button
+				type="button"
 				class:hidden={showPhonetic}
 				on:click={() => (phoneticValue += "'")}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
@@ -85,168 +98,196 @@
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ɪ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ɪ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'iː')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>iː</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ʊ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ʊ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'uː')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>uː</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'e')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>e</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ə')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ə</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ɜː')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ɜː</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ɔː')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ɔː</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'æ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>æ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ʌ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ʌ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'aː')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>aː</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ɒ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ɒ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ɪə')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ɪə</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'eɪ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>eɪ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ʊə')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ʊə</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ɔɪ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ɔɪ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'əʊ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>əʊ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'aɪ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>aɪ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'aʊ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>aʊ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'tʃ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>tʃ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'dʒ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>dʒ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'θ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>θ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ð')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ð</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ʃ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ʃ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ŋ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ŋ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ʒ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ʒ</button
 			>
 
 			<button
+				type="button"
 				on:click={() => (phoneticValue += 'ʃ')}
 				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
 				>ʃ</button
 			>
 
 			<button
+				type="button"
 				on:click={handleInputFocus}
 				class=" btn-outline btn-error p-2 max-w-[90px] w-full text-center h-10 border rounded-md cursor-pointer"
 				>Đóng</button
@@ -257,6 +298,7 @@
 			<label for="types" class="block mb-2 text-sm">Loại từ (*)</label>
 			<select
 				id="types"
+				name="types"
 				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
 				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="N"
@@ -287,6 +329,7 @@
 			<label for="level" class="block mb-2 text-sm">Bặc của từ (*)</label>
 			<select
 				id="level"
+				name="level"
 				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
 				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="U"
@@ -305,6 +348,7 @@
 			<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành (*)</label>
 			<select
 				id="specialization"
+				name="specialization"
 				class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
 				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0">Không</option>
@@ -378,6 +422,7 @@
 				placeholder="..."
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="examples"
+				name="examples"
 			/>
 		</div>
 
@@ -390,6 +435,7 @@
 				placeholder="..."
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="synonymous"
+				name="synonymous"
 			/>
 		</div>
 
@@ -402,6 +448,7 @@
 				placeholder="..."
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="opposite"
+				name="opposite"
 			/>
 		</div>
 
@@ -414,17 +461,18 @@
 				placeholder="..."
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="note"
+				name="note"
 			/>
 		</div>
 
 		<div class="form-control w-full max-w-sm mb-3">
 			<div class="h-[36px]" />
 
-			{#if files}
+			{#if imgIlustrate instanceof File}
 				<div class="h-16 input input-bordered flex justify-between items-center">
-					<img class="h-14 w-14" src={URL.createObjectURL(files)} alt="Preview" />
-					<span class="truncate">{files.name}</span>
-					<button on:click={() => (files = null)}
+					<img class="h-14 w-14" src={URL.createObjectURL(imgIlustrate)} alt="Preview" />
+					<span class="truncate">{imgIlustrate.name}</span>
+					<button type="button" on:click={() => (imgIlustrate = null)}
 						><svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
@@ -437,44 +485,45 @@
 						</svg>
 					</button>
 				</div>
-			{:else}
-				<label class="" for="img-ilustrate">
-					<div
-						class="flex justify-center items-center w-full max-w-sm input input-bordered hover:bg-gray-100 hover:cursor-pointer"
-					>
-						<div class="flex">
-							<span class="label-text mr-3">Thêm ảnh minh hoạ</span>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
-								/>
-							</svg>
-						</div>
-						<input
-							on:change={handleFileInput}
-							type="file"
-							accept="image/png, image/jpeg"
-							bind:files
-							class="hidden"
-							id="img-ilustrate"
-						/>
-					</div>
-				</label>
 			{/if}
+			<label class="" class:hidden={imgIlustrate instanceof File} for="img-ilustrate">
+				<div
+					class="flex justify-center items-center w-full max-w-sm input input-bordered hover:bg-gray-100 hover:cursor-pointer"
+				>
+					<div class="flex">
+						<span class="label-text mr-3">Thêm ảnh minh hoạ</span>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="w-6 h-6"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+							/>
+						</svg>
+					</div>
+					<input
+						bind:value={imgIlustrate}
+						on:change={handleFileInput}
+						type="file"
+						accept="image/png, image/jpeg"
+						class="hidden"
+						name="imgIlustrate"
+						id="img-ilustrate"
+					/>
+				</div>
+			</label>
 		</div>
 
 		<div class="form-control w-full max-w-sm mb-3">
 			<div class="h-[36px]" />
 			<button
+				type="button"
 				on:click={() => (showTopics = !showTopics)}
 				class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
 				>Thêm chủ đề <span class="ml-2">
@@ -512,6 +561,7 @@
 			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-3">
 				{#each topics as topic, index (topic.name)}
 					<button
+						type="button"
 						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
@@ -522,6 +572,7 @@
 					</button>
 				{/each}
 			</div>
+			<input type="text" id="topics" name="topics" bind:value={topics} class="hidden" />
 		{/if}
 		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
 
