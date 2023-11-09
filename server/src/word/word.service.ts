@@ -18,7 +18,6 @@ export class WordService {
                 const file = await this.cloudinaryService.uploadFile(pictureFile)
                 picture = file.url
             }
-
             const word = await this.prismaService.word.create({
                 data: {
                     userId,
@@ -100,16 +99,31 @@ export class WordService {
                         Topic: { disconnect: word.Topic.map((id) => id) }
                     }
                 })
+            } else {
+                topicId = []
             }
-            topicId = []
             const newWord = await this.prismaService.word.update({
                 where: { id: id },
                 data: {
-                    typeId, content, mean, note, levelId, specializationId, phonetic, examples,
-                    antonyms, synonyms, Topic: { connect: topicId.map((id) => ({ id })) }, picture
+                    typeId,
+                    content,
+                    mean,
+                    note,
+                    levelId,
+                    specializationId,
+                    phonetic,
+                    examples,
+                    antonyms,
+                    synonyms,
+                    Topic: { connect: topicId.map((id) => ({ id })) },
+                    picture
                 },
                 include: {
-                    User: true, Topic: true, Type: true, Specialization: true, Level: true
+                    User: true,
+                    Topic: true,
+                    Type: true,
+                    Specialization: true,
+                    Level: true
                 }
             })
             return new ResponseData<Word>(newWord, 200, 'Cập nhật thành công')
