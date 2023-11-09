@@ -13,9 +13,10 @@
 	import voice from '$lib/assets/icons/voice.png';
 	import verb from '$lib/assets/icons/verb.png';
 	import translate from '$lib/assets/icons/translate.png';
+	import bgCtu from '$lib/assets/images/CTU_Blank_white.png';
 </script>
 
-<main class="bg-white">
+<main class="bg-[url('$lib/assets/images/CTU_Blank_white.png')]">
 	<div class="max-w-screen-xl flex flex-wrap mx-auto py-10">
 		<div class="p-3 w-1/3 h-max">
 			<a
@@ -137,3 +138,9 @@
 		</div>
 	</div>
 </main>
+
+<style>
+	main {
+		/* background: url(//elearning.ctu.edu.vn/pluginfile.php/1/theme_lambda/pagebackground/1692676992/CTU_Blank_white.png); */
+	}
+</style>

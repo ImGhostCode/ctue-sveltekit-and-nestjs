@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Pagination from '../../components/Pagination.svelte';
 	let myModal4: HTMLDialogElement;
 
 	let users = [
@@ -88,6 +89,9 @@
 			{/each}
 		</tbody>
 	</table>
+
+	<!-- Pagination -->
+	<Pagination />
 </div>
 
 <dialog bind:this={myModal4} id="my_modal_4" class="modal">

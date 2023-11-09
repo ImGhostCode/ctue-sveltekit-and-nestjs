@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Speaker from '../../components/Speaker.svelte';
+	import Pagination from '../../components/Pagination.svelte';
 
 	let showTopics = false;
 	let topics = [
@@ -101,8 +102,5 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="join grid grid-cols-2 w-max mx-auto mt-4">
-		<button class="join-item btn btn-outline">Previous page</button>
-		<button class="join-item btn btn-outline">Next</button>
-	</div>
+	<Pagination />
 </div>

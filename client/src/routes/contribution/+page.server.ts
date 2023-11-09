@@ -8,7 +8,10 @@ import { isLoadingForm } from '$lib/store';
 export const load: PageServerLoad = async ({ cookies }) => {
     // const user = await db.getUserFromSession(cookies.get('sessionid'));
     const token: string | undefined = cookies.get('accessToken');
-    return { token };
+    const typesWord = await db.getTypes(true)
+    console.log(typesWord);
+
+    return { token, typesWord };
 };
 
 
@@ -38,14 +41,14 @@ export const actions = {
 
             const formDataWithFile = new FormData();
             if (
-                ((formData.ilustrate as File).name &&
-                    (formData.ilustrate as File).name !== 'undefined') && formData.name
+                ((formData.ilustrate as File)?.name &&
+                    (formData.ilustrate as File)?.name !== 'undefined') && formData?.name
             ) {
                 // return fail(400, {
                 //     error: true,
                 //     message: 'You must provide a file or name to update'
                 // });
-                formDataWithFile.append('ilustrate', ilustrateFile);
+                formDataWithFile.append('picture', ilustrateFile);
             }
 
 

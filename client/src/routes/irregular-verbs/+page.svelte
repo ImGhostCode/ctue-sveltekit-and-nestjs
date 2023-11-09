@@ -1,3 +1,7 @@
+<script>
+	import Pagination from '../../components/Pagination.svelte';
+</script>
+
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<h1 class="header-page">Động từ bất quy tắc (Irregular Verb)</h1>
 	<p class="my-2 text-slate-500 mb-4 max-w-screen-lg">
@@ -102,8 +106,6 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="join grid grid-cols-2 w-max mx-auto mt-4">
-		<button class="join-item btn btn-outline">Previous page</button>
-		<button class="join-item btn btn-outline">Next</button>
-	</div>
+
+	<Pagination />
 </div>

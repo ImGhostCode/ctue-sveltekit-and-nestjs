@@ -4,6 +4,7 @@
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 	import Speaker from '../../components/Speaker.svelte';
+	import Pagination from '../../components/Pagination.svelte';
 	let showTopics = false;
 	let topics = [
 		{ id: 1, name: 'Thực vật', selected: false, image: tree },
@@ -61,7 +62,7 @@
 		<div class="dropdown">
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<!-- svelte-ignore a11y-label-has-associated-control -->
-			<label tabindex="0" class="btn m-1">Phân loại</label>
+			<label tabindex="0" class="btn m-1 bg-sky-500 hover:bg-sky-600 text-white">Phân loại</label>
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
 				<li><button>Từ</button></li>
@@ -102,6 +103,9 @@
 			{/each}
 		</tbody>
 	</table>
+
+	<!-- Pagination -->
+	<Pagination />
 </div>
 
 <dialog bind:this={myModal5} id="my_modal_3" class="modal">
