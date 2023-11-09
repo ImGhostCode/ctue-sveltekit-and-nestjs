@@ -10,8 +10,8 @@
 	let isChecked = false;
 </script>
 
-<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
-	<h1 class="text-2xl text-title mb-2">1. Nguyên âm đơn (Vowels)</h1>
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
+	<h1 class="text-2xl text-title font-bold mb-2">1. Nguyên âm đơn (Vowels)</h1>
 	<p class=" text-slate-500 mb-4">Chúng ta có 12 nguyên âm đơn, mình chia làm 5 nhóm:</p>
 
 	<!-- 1 -->
@@ -865,13 +865,13 @@
 		</div>
 	</div>
 
-	<h1 class="text-2xl text-title mb-2">2. Nguyên âm đôi (Diphthongs)</h1>
+	<h1 class="text-2xl text-title font-bold mb-2">2. Nguyên âm đôi (Diphthongs)</h1>
 	<p class=" text-slate-500 mb-4">
 		Chúng ta có 8 nguyên âm đôi, mình chia làm 3 nhóm, phát âm theo nguyên tắc 7/3, 7 phần cho âm
 		đầu và 3 phần âm sau:
 	</p>
 
-	<h1 class="text-2xl text-title mb-2">3. Phụ âm (Consonants)</h1>
+	<h1 class="text-2xl text-title font-bold mb-2">3. Phụ âm (Consonants)</h1>
 	<p class=" text-slate-500 mb-4">
 		Chúng ta có 24 phụ âm, mình chia làm 8 nhóm. Lưu ý về các dạng phụ âm như âm vô thanh thì không
 		phát ra âm thanh, luồng hơi không làm rung dây thanh quản. Âm hữu thanh phát ra âm thanh, hơi
@@ -879,11 +879,11 @@
 		rung.
 	</p>
 
-	<h1 class="text-2xl text-title mb-2">4. Biểu đồ IPA (IPA Chart)</h1>
+	<h1 class="text-2xl text-title font-bold mb-2">4. Biểu đồ IPA (IPA Chart)</h1>
 	<div class="">
 		<img class="mx-auto" src={ipaChart} alt={ipaChart} />
 	</div>
-	<h1 class="text-2xl text-title mb-2">5. Tóm lượt (Summary)</h1>
+	<h1 class="text-2xl text-title font-bold mb-2">5. Tóm lượt (Summary)</h1>
 	<div class="mb-4">
 		<img src={ipaTable} alt={ipaTable} />
 	</div>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import default_user from '$lib/assets/images/default-user.png';
+	import ctueLogo from '$lib/assets/images/ctue-high-resolution-logo-transparent3.png';
 	import type { LayoutServerData, LayoutData } from './$types';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
@@ -49,16 +50,12 @@
 		<span class="loading loading-ring loading-lg" />
 	</div>
 {:else}
-	<div class="box min-h-max h-full">
-		<nav class=" bg-blue-600 text-primary-content shadow-md row header">
+	<div class="box">
+		<nav class=" bg-indigo-600 text-primary-content shadow-md row header">
 			<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
 				<a href="/" class="flex items-center">
-					<img
-						src="https://flowbite.com/docs/images/logo.svg"
-						class="h-8 mr-3"
-						alt="Flowbite Logo"
-					/>
-					<span class="self-center text-2xl font-semibold whitespace-nowrap text-white">CTUe</span>
+					<img src={ctueLogo} class="h-12 mr-3" alt="CTUe Logo" />
+					<!-- <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">CTUe</span> -->
 				</a>
 
 				<div class="flex">
@@ -274,6 +271,7 @@
 		</nav>
 
 		<slot class="row content" />
+
 		<div class="row footer group fixed bottom-0 right-0 p-2 flex items-end justify-end w-24 h-24">
 			<!-- main -->
 			<div
@@ -300,11 +298,12 @@
 				</svg>
 			</div>
 			<!-- sub left -->
-			<div
-				class="absolute rounded-full transition-all duration-[0.2s] ease-out scale-y-0 group-hover:scale-y-100 group-hover:-translate-x-16 flex p-2 hover:p-3 bg-green-300 scale-100 hover:bg-green-400 text-white"
+			<a
+				href="/"
+				class=" absolute rounded-full transition-all duration-[0.2s] ease-out scale-y-0 group-hover:scale-y-100 group-hover:-translate-x-16 flex p-2 hover:p-3 bg-green-300 scale-100 hover:bg-green-400 text-white"
 			>
-				<a href="/"
-					><svg
+				<div class="">
+					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -317,9 +316,9 @@
 							stroke-linejoin="round"
 							d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
 						/>
-					</svg></a
-				>
-			</div>
+					</svg>
+				</div>
+			</a>
 			<!-- sub top -->
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
@@ -502,14 +501,14 @@
 	</dialog>
 {/if}
 
-<footer class="footer footer-center p-10 bg-blue-500 text-primary-content">
+<footer class="footer footer-center p-10 bg-indigo-500 text-primary-content">
 	<aside>
 		<a href="/" class="flex items-center">
-			<img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo" />
-			<span class="self-center text-2xl font-semibold whitespace-nowrap text-dark">CTUe</span>
+			<img src={ctueLogo} class="h-8 mr-3" alt="CTUe Logo" />
+			<!-- <span class="self-center text-2xl font-semibold whitespace-nowrap text-dark">CTUe</span> -->
 		</a>
 		<p class="font-bold">
-			ACME Industries Ltd. <br />Providing reliable tech since 1992
+			CTUe Industries Ltd. <br />Providing reliable tech since 1992
 		</p>
 		<p>Copyright © 2023 - All right reserved</p>
 	</aside>
