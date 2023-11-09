@@ -4,6 +4,7 @@
 	import animal from '$lib/assets/icons/topics/animal.png';
 	import clothes from '$lib/assets/icons/topics/clothes.png';
 	import Speaker from '../../components/Speaker.svelte';
+	import Pagination from '../../components/Pagination.svelte';
 	let showTopics = false;
 	let topics = [
 		{ id: 1, name: 'Thực vật', selected: false, image: tree },
@@ -483,10 +484,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="join grid grid-cols-2 w-max mx-auto mt-4">
-		<button class="join-item btn btn-outline">Previous page</button>
-		<button class="join-item btn btn-outline">Next</button>
-	</div>
+	<Pagination />
 
 	<!-- You can open the modal using ID.showModal() method -->
 	<dialog bind:this={myModal4} id="my_modal_3" class="modal">

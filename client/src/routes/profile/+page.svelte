@@ -18,10 +18,9 @@
 
 	onMount(() => {
 		isLoading = false;
-		if (!data?.user) {
-			goto('/login', { replaceState: true }); // Redirect to the login page if not authenticated
-		}
-		newName = data.user.user.name;
+		if (!data?.user || !data?.token) {
+			goto('/login'); // Redirect to the login page if not authenticated
+		} else newName = data.user.user.name;
 	});
 
 	// console.log(data);
@@ -32,7 +31,7 @@
 	}
 
 	$: if (form?.noToken) {
-		goto('/login', { replaceState: true }); // Redirect to the login page if not authenticated
+		goto('/login'); // Redirect to the login page if not authenticated
 	}
 
 	// $: console.log('profile :: ', $isLoadingForm);
@@ -64,8 +63,8 @@
 	</div>
 {:else}
 	<!-- Your component content goes here -->
-	{#if data.user}
-		<div class="w-full h-full flex justify-center items-center">
+	{#if data?.user}
+		<div class="w-full h-full flex justify-center items-center min-h-screen max-h-max">
 			<div class="px-14 py-9 shadow-lg w-[360px] text-center border-2 border-gray-100 rounded-md">
 				<!-- <form enctype="multipart/form-data" on:submit|preventDefault={handleSubmit}> -->
 				<form method="post" use:enhance enctype="multipart/form-data" action="?/update">

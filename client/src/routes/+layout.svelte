@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import default_user from '$lib/assets/images/default-user.png';
+	import bgCtu from '$lib/assets/images/CTU_Blank_white.png';
 	import ctueLogo from '$lib/assets/images/ctue-high-resolution-logo-transparent3.png';
 	import type { LayoutServerData, LayoutData } from './$types';
 	import { onMount } from 'svelte';
@@ -115,7 +116,7 @@
 					{#if data.user}
 						<div class="relative w-12 h-12 avatar-user z-10 group cursor-pointer">
 							<img
-								class="h-full w-full rounded-full border-2 border-blue-500"
+								class="h-full w-full rounded-full border-2 border-sky-400"
 								src={data.user.user.avt}
 								alt={data.user.user.avt}
 							/>
@@ -270,7 +271,7 @@
 			</div>
 		</nav>
 
-		<slot class="row content" />
+		<slot class="row content " />
 
 		<div class="row footer group fixed bottom-0 right-0 p-2 flex items-end justify-end w-24 h-24">
 			<!-- main -->
@@ -588,5 +589,9 @@
 
 	.avatar-user:hover .sub-avatar-user {
 		display: block;
+	}
+
+	.content {
+		/* background: url(bgCtu); */
 	}
 </style>
