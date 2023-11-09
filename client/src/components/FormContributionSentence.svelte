@@ -2,14 +2,27 @@
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 
+	type Types = { id: number; name: string; isWord: boolean };
+	type Topics = { id: number; name: string; isWord: boolean };
+	type SelectedTopics = { id: number; name: string; isWord: boolean; selected: boolean };
+
+	export let types: Types[];
+
+	export let topics: Topics[];
+
 	let showTopics = false;
-	let topics = [
-		{ id: 1, name: 'Giao tiếp thông dụng', selected: false },
-		{ id: 2, name: 'Chào hỏi', selected: false }
-	];
+
+	let selectedTopics: SelectedTopics[] = topics.map((topic) => {
+		return { ...topic, selected: false };
+	});
 
 	function toggleSelected(index: number) {
-		topics[index].selected = !topics[index].selected;
+		selectedTopics[index].selected = !selectedTopics[index].selected;
+	}
+	function resetSelectedTopics() {
+		selectedTopics = selectedTopics.map((topic) => {
+			return { ...topic, selected: false };
+		});
 	}
 </script>
 
@@ -45,47 +58,79 @@
 			/>
 		</div>
 
-		<div class="form-control w-full mb-3">
-			<div class="h-[36px]" />
-			<button
-				on:click={() => (showTopics = !showTopics)}
-				class="input input-bordered w-full flex justify-center items-center"
-				>Thêm chủ đề <span class="ml-2">
-					{#if showTopics}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-						</svg>
+		<div class="flex flex-row gap-6">
+			<div class="mb-3 form-control basis-1/2">
+				<label for="types" class="block mb-2 text-sm">Loại câu (*)</label>
+				<select
+					id="types"
+					name="types"
+					class="w-full select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block p-2.5"
+				>
+					<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="Chưa xác định"
+						>Chưa xác định</option
+					>
+					{#if types}
+						{#each types as type (type.id)}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.name}
+								>{type.name}</option
+							>
+						{/each}
 					{:else}
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option
 						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-							/>
-						</svg>
 					{/if}
-				</span></button
-			>
+				</select>
+			</div>
+
+			<div class="form-control mb-3 basis-1/2">
+				<div class="h-[28px]" />
+				<button
+					type="button"
+					on:click={() => (showTopics = !showTopics)}
+					class="input input-bordered w-full flex justify-center items-center focus:outline-none"
+					class:border-green-600={showTopics}
+					>Thêm chủ đề <span class="ml-2">
+						{#if showTopics}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-6 h-6"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M4.5 15.75l7.5-7.5 7.5 7.5"
+								/>
+							</svg>
+						{:else}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-6 h-6"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+								/>
+							</svg>
+						{/if}
+					</span></button
+				>
+			</div>
 		</div>
 		{#if showTopics}
-			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-3">
-				{#each topics as topic, index (topic.name)}
+			<div class="topics px-3 py-2 bg-base-200 flex flex-wrap rounded-md col-span-3">
+				{#each selectedTopics as topic, index (topic.name)}
 					<button
-						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
+						type="button"
+						class="topic-item px-3 py-2 m-2 text-base text-slate-700 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
@@ -98,7 +143,11 @@
 		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
 
 		<div class="mt-4 col-span-3 text-right">
-			<button type="reset" class="btn btn-outline btn-error mr-2">Reset</button>
+			<button
+				type="reset"
+				class="btn btn-outline btn-error mr-2"
+				on:click={() => resetSelectedTopics()}>Reset</button
+			>
 
 			<button type="submit" class="btn btn-accent text-white">Thêm từ</button>
 		</div>

@@ -3,6 +3,16 @@
 	import social from '$lib/assets/icons/topics/social.png';
 	import { enhance } from '$app/forms';
 
+	type Types = { id: number; name: string; isWord: boolean };
+	type Levels = { id: number; name: string };
+	type Specializations = { id: number; name: string };
+
+	export let types: Types[];
+	export let levels: Levels[];
+	export let specializations: Specializations[];
+
+	console.log(types);
+
 	let showTopics = false;
 	let showPhonetic = false;
 
@@ -301,27 +311,18 @@
 				name="types"
 				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="N"
-					>Noun - Danh từ</option
+				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="Chưa xác định"
+					>Chưa xác định</option
 				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="Adj"
-					>Adjective - Tính từ</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="Adv"
-					>Adverb - Trạng từ</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="V">Verb - Động từ</option>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="Pro">Pronoun - Đại từ</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="Con"
-					>Conjunction - Liên từ</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="Pre"
-					>Preposition - Giới từ</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="Det"
-					>Determiners - Hạn định từ</option
-				>
+				{#if types}
+					{#each types as type (type.id)}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.name}
+							>{type.name}</option
+						>
+					{/each}
+				{:else}
+					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+				{/if}
 			</select>
 		</div>
 
@@ -332,15 +333,18 @@
 				name="level"
 				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="U"
+				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="Chưa xác định"
 					>Chưa xác định</option
 				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="A1">A1</option>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="A2">A2</option>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="B1">B1</option>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="B2">B2</option>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="C1">C1</option>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="C2">C2</option>
+				{#if levels}
+					{#each levels as level (level.id)}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.name}
+							>{level.name}</option
+						>
+					{/each}
+				{:else}
+					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+				{/if}
 			</select>
 		</div>
 
@@ -351,65 +355,18 @@
 				name="specialization"
 				class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0">Không</option>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="1"
-					>Công nghệ sinh học (Biotechnology)</option
+				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="Chưa xác định"
+					>Chưa xác định</option
 				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="2"
-					>Công nghệ thông tin (Information Technology)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="3"
-					>Công nghệ thực phẩm (Food Technology)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="4"
-					>Giải trí (Entertainment)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="5"
-					>Kinh tế học (Economics)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="6"
-					>Kế toán (Accounting)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="7"
-					>Kỹ thuật hoá học (Chemical Engineering)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="8"
-					>Mỹ thuật (Fine Arts Industry)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="9">Ngành Marketing</option>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="10"
-					>Quản trị khách sạn (Hotel Management)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="11"
-					>Quản trị kinh doanh (Business Adminstration)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="12"
-					>Quản trị nhân lực (Human Resource Management)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="13"
-					>Thiết kế (Design UI/UX)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="14"
-					>Thương mại quốc tế (International Trade)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="15"
-					>Thương mại điện tử (E-Commerce)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="16"
-					>Tiếng Anh thương mại (Business English)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="17"
-					>Tài chính ngân hàng (Finance & Banking)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="18"
-					>Văn hoá học (Culturology)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="19"
-					>Xây dựng (Construction Industry)</option
-				>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" value="20"
-					>Xã hội học (Sociology)</option
-				>
+				{#if specializations}
+					{#each specializations as specialization (specialization.id)}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.name}
+							>{specialization.name}</option
+						>
+					{/each}
+				{:else}
+					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+				{/if}
 			</select>
 		</div>
 
