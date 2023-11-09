@@ -3,7 +3,7 @@
 	let showInput2: boolean = false;
 </script>
 
-<main class="flex justify-center item-center h-screen">
+<main class="flex justify-center item-center min-h-screen max-h-max">
 	<div class="w-full max-w-xs flex flex-col justify-center items-center">
 		<form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 border">
 			<div class="text-center text-2xl font-bold mb-4">

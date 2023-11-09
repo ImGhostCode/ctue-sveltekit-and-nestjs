@@ -15,16 +15,16 @@
 	import translate from '$lib/assets/icons/translate.png';
 </script>
 
-<main class="">
+<main class="bg-white">
 	<div class="max-w-screen-xl flex flex-wrap mx-auto py-10">
 		<div class="p-3 w-1/3 h-max">
 			<a
 				href="/IPA"
-				class=" h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-[#58cc02] hover:bg-green-600"
+				class=" h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700 hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={ipa} alt="ipa" /></div>
 				<div class="w-5/6">
-					<p class="text-3xl text-white font-bold mb-2">Bảng phiên âm (IPA)</p>
+					<p class="text-3xl text-yellow-400 font-bold mb-2">Bảng phiên âm (IPA)</p>
 					<p class="text-md text-white">
 						Luyện nghe, phát âm chuẩn với 44 âm trong bảng phiên âm quốc tế IPA
 					</p>
@@ -34,7 +34,7 @@
 		<div class="p-3 w-1/3 h-max">
 			<a
 				href="/1000-communication-phrase"
-				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-500 hover:bg-green-600"
+				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700 hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={communicate} alt={communicate} /></div>
 				<div class="w-5/6">
@@ -48,7 +48,7 @@
 		<div class="p-3 w-1/3 h-max">
 			<a
 				href="/ctue-dictionary"
-				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-500 hover:bg-green-600"
+				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700 hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={dictionary} alt="dictionary" /></div>
 				<div class="w-5/6">
@@ -62,7 +62,7 @@
 		<div class="p-3 w-1/3 h-max">
 			<a
 				href="/favorite"
-				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-500 hover:bg-green-600"
+				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700 hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={favorite} alt="favorite" /></div>
 				<div class="w-5/6">
@@ -74,7 +74,7 @@
 		<div class="p-3 w-1/3 h-max">
 			<a
 				href="/irregular-verbs"
-				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-500 hover:bg-green-600"
+				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700 hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={verb} alt="verb" /></div>
 				<div class="w-5/6">
@@ -86,7 +86,7 @@
 		<!-- <div class="p-3 w-1/3 h-max">
 			<a
 				href="/"
-				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-500 hover:bg-green-600"
+				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700  hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={grammar} alt="grammar" /></div>
 				<div class="w-5/6">
@@ -98,7 +98,7 @@
 		<div class="p-3 w-1/3 h-max">
 			<a
 				href="/practice"
-				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-500 hover:bg-green-600"
+				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700 hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={game} alt="game" /></div>
 				<div class="w-5/6">
@@ -112,7 +112,7 @@
 		<div class="p-3 w-1/3 h-max">
 			<a
 				href="/leaderboard"
-				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-500 hover:bg-green-600"
+				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700 hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={medal} alt="medal" /></div>
 				<div class="w-5/6">
@@ -124,7 +124,7 @@
 		<div class="p-3 w-1/3 h-max">
 			<a
 				href="/contribution"
-				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-500 hover:bg-green-600"
+				class="h-[240px] border-[#84d8ff] px-6 py-4 flex justify-center items-center transition rounded-md border-2 shadow-lg bg-green-600 hover:bg-green-700 hover:scale-105 duration-300"
 			>
 				<div class="w-1/6"><img src={edit} alt="edit" /></div>
 				<div class="w-5/6">

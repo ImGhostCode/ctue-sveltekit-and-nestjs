@@ -53,7 +53,7 @@
 	}
 </script>
 
-<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<h1 class="text-2xl text-orange-600 mb-2">Quản lý tài khoản</h1>
 
 	<div class="h-[1px] w-full border border-gray-200" />

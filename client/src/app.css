@@ -17,3 +17,7 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.header-page {
+    @apply text-2xl text-title font-bold mb-2
+}

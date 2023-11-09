@@ -326,20 +326,20 @@
 	</dialog>
 </div>
 
-<div class="flex flex-col justify-center items-center h-full">
+<div class="flex flex-col justify-start items-center min-h-screen max-h-max">
 	<div
-		class="practice grid grid-flow-row w-5/6 shadow-lg py-6 px-9 border my-auto grid-cols-1 h-[85%] rounded-lg"
+		class="practice grid grid-flow-row max-w-screen-xl w-screen shadow-lg py-6 px-9 border mx-auto mt-10 grid-cols-1 rounded-lg"
 	>
 		<div class=" flex justify-start items-center">
-			<img src={wordMatch} alt={wordMatch} class="h-[56px] w-[56px]" />
-			<h1 class="text-2xl text-[#dd9210]">GHÉP TỪ</h1>
+			<img src={wordMatch} alt={wordMatch} class="h-[56px] w-[56px] mr-2" />
+			<h1 class="text-2xl text-[#dd9210] font-bold">GHÉP TỪ</h1>
 		</div>
 		<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
 
 		<div class="flex justify-between items-center text-lg my-[14px]">
-			<div class="">Câu <b>1</b> / <b>5</b></div>
+			<div class="">Câu <b class="text-sky-600">1</b> / <b>5</b></div>
 			<div class="flex justify-center items-center font-thin">
-				<b class="font-bold">0&nbsp;</b>
+				<b class="font-bold text-green-600">0&nbsp;</b>
 				Đúng
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -354,7 +354,7 @@
 					/>
 				</svg>
 
-				-&nbsp;<b class="font-bold">0&nbsp;</b>Sai
+				-&nbsp;<b class="font-bold text-red-600">0&nbsp;</b>Sai
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
@@ -486,8 +486,8 @@
 				</div>
 
 				<div class="">
-					<p class="text-xl font-semibold mb-2">Test</p>
-					<p class="text-red-500">Sai rồi</p>
+					<p class="text-2xl font-semibold mb-2 text-slate-600">Test</p>
+					<p class="text-red-500 text-sm">Sai rồi</p>
 				</div>
 				<Speaker />
 			</div>
@@ -516,6 +516,6 @@
 
 <style>
 	.practice {
-		grid-template-rows: 2fr 1fr 17fr;
+		grid-template-rows: 1fr 1fr 11fr;
 	}
 </style>

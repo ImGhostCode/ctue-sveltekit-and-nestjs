@@ -255,20 +255,20 @@
 	</div>
 </dialog>
 
-<div class="flex flex-col justify-center items-center h-full">
+<div class="flex flex-col justify-start items-center min-h-screen max-h-max">
 	<div
-		class="practice grid grid-flow-row w-5/6 shadow-lg py-6 px-9 border my-auto grid-cols-1 h-[85%] rounded-lg"
+		class="practice grid grid-flow-row max-w-screen-xl w-screen shadow-lg py-6 px-9 border mx-auto mt-10 grid-cols-1 rounded-lg"
 	>
 		<div class=" flex justify-start items-center">
 			<img src={correctWord} alt={correctWord} class="h-[56px] w-[56px]" />
-			<h1 class="text-2xl text-[#dd9210]">HÃY CHỌN TỪ ĐÚNG</h1>
+			<h1 class="text-2xl text-[#dd9210] font-bold">HÃY CHỌN TỪ ĐÚNG</h1>
 		</div>
 		<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
 
 		<div class="flex justify-between items-center text-lg my-[14px]">
-			<div class="">Câu <b>1</b> / <b>5</b></div>
+			<div class="">Câu <b class="text-sky-600">1</b> / <b class="">5</b></div>
 			<div class="flex justify-center items-center font-thin">
-				<b class="font-bold">0&nbsp;</b>
+				<b class="font-bold text-green-600">0&nbsp;</b>
 				Đúng
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -283,7 +283,7 @@
 					/>
 				</svg>
 
-				-&nbsp;<b class="font-bold">0&nbsp;</b>Sai
+				-&nbsp;<b class="font-bold text-red-600">0&nbsp;</b>Sai
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
@@ -300,35 +300,35 @@
 		</div>
 
 		<div class="grid text-center grid-flow-row">
-			<div class="flex flex-col justify-center items-center row-span-4 text-2xl font-bold">
-				Kiem tra
+			<div class="flex flex-col justify-center items-center row-span-4">
+				<p class="text-2xl font-bold text-slate-500 mb-1">Kiem tra</p>
+				<p class="text-green-500 text-sm">Chính xác</p>
 			</div>
-
 			<div
 				class="grid grid-cols-2 grid-rows-2 gap-10 w-full max-w-[50%] mx-auto my-0 py-6 row-span-6"
 			>
 				<div
-					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
+					class="bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer"
 				>
-					<p class="text-xl">push</p>
+					<p class="text-2xl font-semibold text-white">push</p>
 					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
 				</div>
 				<div
-					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
+					class="bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer"
 				>
-					<p class="text-xl">check</p>
+					<p class="text-2xl font-semibold text-white">check</p>
 					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
 				</div>
 				<div
-					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
+					class="bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer"
 				>
-					<p class="text-xl">make</p>
+					<p class="text-2xl font-semibold text-white">make</p>
 					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
 				</div>
 				<div
-					class="bg-base-200 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-base-300 hover:cursor-pointer"
+					class="bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer"
 				>
-					<p class="text-xl">run</p>
+					<p class="text-2xl font-semibold text-white">run</p>
 					<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
 				</div>
 			</div>
@@ -338,6 +338,6 @@
 
 <style>
 	.practice {
-		grid-template-rows: 2fr 1fr 17fr;
+		grid-template-rows: 1fr 1fr 11fr;
 	}
 </style>
