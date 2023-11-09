@@ -41,9 +41,13 @@
 	<div class="h-[1px] w-full border border-gray-200" />
 
 	{#if sentenceScreen}
-		<FormContributionWord />
+		<FormContributionWord
+			types={data.typesWord}
+			levels={data.levels}
+			specializations={data.specializations}
+		/>
 	{:else}
-		<FormContributionSentence />
+		<FormContributionSentence types={data.typesSentence} topics={data.topics} />
 	{/if}
 </div>
 
