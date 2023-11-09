@@ -46,15 +46,29 @@ export class WordService {
             })
             return new ResponseData<Word>(word, 200, 'Tạo từ thành công')
         } catch (error) {
-            console.log(error);
-
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
     }
 
-    async findAll() {
+    async findAll(option: { sort: any, type: number, level: number, specialization: number, topic: [] }) {
         try {
+            const { sort, type, level, specialization, topic } = option
             return new ResponseData<Word>(await this.prismaService.word.findMany({
+                orderBy: {
+                    content: sort
+                },
+                where: {
+                    typeId: type,
+                    levelId: level,
+                    specializationId: specialization,
+                    Topic: {
+                        some: {
+                            id: {
+                                in: topic
+                            }
+                        }
+                    }
+                },
                 include: {
                     User: true,
                     Topic: true,
@@ -64,6 +78,7 @@ export class WordService {
                 }
             }), 200, 'Tìm thành công')
         } catch (error) {
+            console.log(error);
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
     }
