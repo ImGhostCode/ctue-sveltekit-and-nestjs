@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { SentenceService } from './sentence.service';
 import { CreateSentenceDto, UpdateSentenceDto } from './dto';
 import { MyJWTGuard, RolesGuard } from '../auth/guard';
@@ -17,8 +17,8 @@ export class SentenceController {
     }
 
     @Get()
-    findAll() {
-        return this.sentenceService.findAll()
+    findAll(@Query('topic') topic: []) {
+        return this.sentenceService.findAll(topic)
     }
 
     @Get(':id')

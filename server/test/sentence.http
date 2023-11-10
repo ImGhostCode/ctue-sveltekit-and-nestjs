@@ -1,4 +1,4 @@
-@urlDev=http://localhost:8000/sentence
+@urlDev=http://localhost:8000/apis/sentence
 
 ### Create sentence
 POST  {{urlDev}}/
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### Get all sentences
-GET   {{urlDev}}/
+GET   {{urlDev}}?topic=1&&topic=2
 
 ### Get one sentence
 GET   {{urlDev}}/2

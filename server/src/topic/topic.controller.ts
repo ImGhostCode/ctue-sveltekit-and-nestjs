@@ -16,9 +16,9 @@ export class TopicController {
     return this.topicService.create(createTopicDto);
   }
 
-  @Get()
-  findAll() {
-    return this.topicService.findAll();
+  @Get(':isWord')
+  findAll(@Param('isWord') isWord: boolean) {
+    return this.topicService.findAll(isWord);
   }
 
   @Patch(':id')

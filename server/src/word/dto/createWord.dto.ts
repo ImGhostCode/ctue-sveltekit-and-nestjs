@@ -51,12 +51,12 @@ export class CreateWordDto {
     examples?: string[]
 
     @IsOptional()
-    @IsString()
-    synonyms?: string
+    @IsArray()
+    synonyms?: string[]
 
     @IsOptional()
-    @IsString()
-    antonyms?: string
+    @IsArray()
+    antonyms?: string[]
 
     @IsOptional()
     @IsString()
