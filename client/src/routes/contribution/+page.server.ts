@@ -34,20 +34,38 @@ export const actions = {
         try {
             isLoadingForm.set(true)
 
-            const formData = Object.fromEntries(await request.formData());
-            console.log("form data contribution::: ", formData);
             const token: string | undefined = cookies.get('accessToken');
-            const userId = Number(formData.userId)
-            // console.log(formData);
-            delete formData.userId
 
             if (!token) {
                 isLoadingForm.set(false)
                 return fail(400, {
                     token,
-                    noToken: true
+                    noToken: true,
+                    message: 'Hết hạn đăng nhập'
                 });
 
+            }
+
+            const formData = Object.fromEntries(await request.formData());
+
+            // Validate required fields
+            const requiredFields = ['content', 'mean', 'phonetic', 'ilustrate'];
+            const missingFields: { [key: string]: boolean } = { 'content': false, 'mean': false, 'phonetic': false, 'ilustrate': false };
+
+            for (const field of requiredFields) {
+                if (!formData[field] || ((formData[field] as File).name &&
+                    (formData[field] as File).name === 'undefined')) {
+                    isLoadingForm.set(false);
+                    missingFields[field] = true;
+                }
+            }
+
+            if (missingFields.content || missingFields.mean || missingFields.phonetic || missingFields.ilustrate) {
+                return fail(400, {
+                    error: `Missing`,
+                    message: 'Vui lòng diền các thông tin cần thiết',
+                    missingFields
+                });
             }
 
             const { ilustrate } = formData as { ilustrate: File };
@@ -55,35 +73,38 @@ export const actions = {
 
             const formDataWithFile = new FormData();
             if (
-                ((formData.ilustrate as File)?.name &&
-                    (formData.ilustrate as File)?.name !== 'undefined') && formData?.name
+                ((formData.ilustrate as File).name &&
+                    (formData.ilustrate as File).name !== 'undefined')
             ) {
-                // return fail(400, {
-                //     error: true,
-                //     message: 'You must provide a file or name to update'
-                // });
+
                 formDataWithFile.append('picture', ilustrateFile);
             }
 
 
-            // formDataWithFile.append('name', formData.name);
+            const contentData = {
+                content: formData.content,
+                mean: formData.mean,
+                typeId: Number(formData.typeId),
+                topicId: String(formData.topicId).split(','),
+                levelId: Number(formData.levelId),
+                specializationId: Number(formData.specializationId),
+                examples: formData.examples,
+                synonyms: formData.synonyms,
+                antonyms: formData.antonyms,
+            };
 
+            formDataWithFile.append('type', 'word');
+            formDataWithFile.append('content', JSON.stringify(contentData));
 
+            const res = await db.postContribution(token, formDataWithFile)
 
-            // const result = await db.updateProfile(userId, token || '', formDataWithFile);
+            if (res.data.statusCode == 400) {
 
-            // if (result.statusCode == 200) {
-            //     isLoadingForm.set(false)
-            //     return { success: true, message: result.message };
-            // } else {
-            //     return fail(400, {
-            //         error: true,
-            //         message: result.message
-            //     });
-            // }
+                return fail(400, { error: 'Error', message: res.data.message });
 
-            return { data: true }
-
+            } else {
+                return { success: true, data: res.data, message: res.message }
+            }
         } catch (error) {
             isLoadingForm.set(false)
             throw error

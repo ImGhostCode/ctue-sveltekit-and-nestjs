@@ -2,6 +2,8 @@
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 	import { enhance } from '$app/forms';
+	import type { ActionData } from '../routes/$types';
+	import { goto } from '$app/navigation';
 
 	type Types = { id: number; name: string; isWord: boolean };
 	type Levels = { id: number; name: string };
@@ -10,8 +12,7 @@
 	export let types: Types[];
 	export let levels: Levels[];
 	export let specializations: Specializations[];
-
-	console.log(types);
+	export let missingFields: any;
 
 	let showTopics = false;
 	let showPhonetic = false;
@@ -22,15 +23,14 @@
 		{ id: 2, name: 'Đời sống', selected: false, image: social }
 	];
 
+	$: topicIds = topics
+		.filter((topic) => topic.selected)
+		.map((topic) => topic.id)
+		.toString();
+
 	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
 	}
-
-	// $: if (files) {
-	// 	// Note that `files` is of type `FileList`, not an Array:
-	// 	// https://developer.mozilla.org/en-US/docs/Web/API/FileList
-	// 	console.log(files);
-	// }
 
 	function handleInputFocus() {
 		showPhonetic = !showPhonetic;
@@ -42,7 +42,7 @@
 		if (e.currentTarget.files == null) return; // files can be null, handle however appropriate
 
 		imgIlustrate = e.currentTarget.files[0];
-		console.log(URL.createObjectURL(imgIlustrate));
+		//console.log(URL.createObjectURL(imgIlustrate));
 	};
 </script>
 
@@ -64,9 +64,13 @@
 				type="text"
 				placeholder="..."
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class:border-red-600={missingFields?.content}
 				id="new-word"
-				name="newWord"
+				name="content"
 			/>
+			{#if missingFields?.content}
+				<p class="text-xs text-error mt-2">Hãy nhập một từ vào đây</p>
+			{/if}
 		</div>
 		<div class="form-control w-full max-w-sm mb-3">
 			<label class="label" for="mean">
@@ -76,9 +80,13 @@
 				type="text"
 				placeholder="..."
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class:border-red-600={missingFields?.mean}
 				id="mean"
 				name="mean"
 			/>
+			{#if missingFields?.mean}
+				<p class="text-xs text-error mt-2">Hãy nhập nghĩa của từ</p>
+			{/if}
 		</div>
 		<div class="form-control w-full max-w-sm mb-3">
 			<label class="label" for="phonetic">
@@ -88,11 +96,15 @@
 				type="text"
 				placeholder="..."
 				class="input-phonetic input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class:border-red-600={missingFields?.phonetic}
 				id="phonetic"
 				name="phonetic"
 				on:focus={handleInputFocus}
 				bind:value={phoneticValue}
 			/>
+			{#if missingFields?.phonetic}
+				<p class="text-xs text-error mt-2">Hãy nhập phiên âm của từ</p>
+			{/if}
 		</div>
 
 		<div
@@ -308,15 +320,15 @@
 			<label for="types" class="block mb-2 text-sm">Loại từ (*)</label>
 			<select
 				id="types"
-				name="types"
+				name="typeId"
 				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="Chưa xác định"
+				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0"
 					>Chưa xác định</option
 				>
 				{#if types}
 					{#each types as type (type.id)}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.name}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}
 							>{type.name}</option
 						>
 					{/each}
@@ -330,15 +342,15 @@
 			<label for="level" class="block mb-2 text-sm">Bậc của từ (*)</label>
 			<select
 				id="level"
-				name="level"
+				name="levelId"
 				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="Chưa xác định"
+				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0"
 					>Chưa xác định</option
 				>
 				{#if levels}
 					{#each levels as level (level.id)}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.name}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}
 							>{level.name}</option
 						>
 					{/each}
@@ -352,15 +364,15 @@
 			<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành (*)</label>
 			<select
 				id="specialization"
-				name="specialization"
+				name="specializationId"
 				class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="Chưa xác định"
+				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0"
 					>Chưa xác định</option
 				>
 				{#if specializations}
 					{#each specializations as specialization (specialization.id)}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.name}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}
 							>{specialization.name}</option
 						>
 					{/each}
@@ -383,26 +395,26 @@
 		</div>
 
 		<div class="form-control w-full max-w-sm mb-3">
-			<label class="label" for="synonymous">
+			<label class="label" for="synonyms">
 				<span class="label-text">Các từ đồng nghĩa</span>
 			</label>
 			<textarea
 				rows="10"
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
-				id="synonymous"
-				name="synonymous"
+				id="synonyms"
+				name="synonyms"
 			/>
 		</div>
 
 		<div class="form-control w-full max-w-sm mb-3">
-			<label class="label" for="opposite">
+			<label class="label" for="antonyms">
 				<span class="label-text">Các từ trái nghĩa</span>
 			</label>
 			<textarea
 				rows="10"
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
-				id="opposite"
-				name="opposite"
+				id="antonyms"
+				name="antonyms"
 			/>
 		</div>
 
@@ -439,8 +451,10 @@
 					</button>
 				</div>
 			{/if}
+
 			<label class="" class:hidden={imgIlustrate instanceof File} for="img-ilustrate">
 				<div
+					class:border-red-600={missingFields?.ilustrate}
 					class="flex justify-center items-center w-full max-w-sm input input-bordered hover:bg-gray-100 hover:cursor-pointer"
 				>
 					<div class="flex">
@@ -466,10 +480,13 @@
 						type="file"
 						accept="image/png, image/jpeg"
 						class="hidden"
-						name="imgIlustrate"
+						name="ilustrate"
 						id="img-ilustrate"
 					/>
 				</div>
+				{#if missingFields?.ilustrate}
+					<p class="text-xs text-error mt-2">Hãy thêm ảnh minh họa</p>
+				{/if}
 			</label>
 		</div>
 
@@ -533,5 +550,7 @@
 			<button type="submit" class="btn btn-accent text-white mr-2">Thêm từ</button>
 			<button type="reset" class="btn btn-outline btn-error">Loại bỏ</button>
 		</div>
+
+		<input type="text" class="hidden" name="topicId" id="topics" bind:value={topicIds} />
 	</form>
 </div>
