@@ -50,10 +50,10 @@ export class UpdateWordDto {
     examples?: string[]
 
     @IsOptional()
-    @IsString()
-    synonyms?: string
+    @IsArray()
+    synonyms?: string[]
 
     @IsOptional()
-    @IsString()
-    antonyms?: string
+    @IsArray()
+    antonyms?: string[]
 }

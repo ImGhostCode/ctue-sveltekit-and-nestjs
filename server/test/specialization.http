@@ -1,7 +1,8 @@
-@urlDev=http://localhost:8000/specialization
+@urlDev=http://localhost:8000/apis/specialization
 
 ### Create specialization
 POST  {{urlDev}}/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjk5NTQ1OTg3LCJleHAiOjE2OTk1NTMxODd9.M191Brri7UXXY3L91vAByUcyUarPu_0dMIVjSeVEww0
 Content-Type: application/json
 
 {

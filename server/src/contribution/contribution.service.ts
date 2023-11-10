@@ -34,7 +34,7 @@ export class ContributionService {
           userId: userId,
           content: JSON.stringify(createContributionDto.content),
           type: createContributionDto.type,
-          status: CONTRIBUTION_STATUS.WAITING
+          status: -1
         }
       })
       return new ResponseData<Contribution>(contribution, 200, 'Tạo thành công')
@@ -43,9 +43,9 @@ export class ContributionService {
     }
   }
 
-  async findAll(type: string) {
+  async findAll(type: string, status: number) {
     try {
-      let contributions = await this.prismaService.contribution.findMany({ where: { type } })
+      let contributions = await this.prismaService.contribution.findMany({ where: { type, status } })
       contributions.forEach((contribution) => contribution.content = JSON.parse(contribution.content as string))
       return new ResponseData<Contribution>(contributions, 200, 'Tìm thành công')
     } catch (error) {
@@ -73,12 +73,16 @@ export class ContributionService {
     }
   }
 
-  async verifyContribute(id: number, status: string) {
+  async verifyContribute(id: number, body: { status: number, feedback: string }) {
     try {
       const contribution = await this.findById(id)
-      if (!contribution) return new ResponseData<string>(null, 400, 'Đóng góp không tồn tại')
-      if (contribution.status !== CONTRIBUTION_STATUS.WAITING) return new ResponseData<string>(null, 400, "Từ đã được xác minh")
-      if (status === CONTRIBUTION_STATUS.ACCEPT) {
+      if (!contribution) {
+        return new ResponseData<string>(null, 400, 'Đóng góp không tồn tại')
+      }
+      if (contribution.status !== -1) {
+        return new ResponseData<string>(null, 400, "Từ đã được xác minh")
+      }
+      if (body.status === 1) {
         const { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, synonyms, antonyms, picture } = contribution.content as any
         const { userId } = contribution
         let value: any
@@ -88,12 +92,12 @@ export class ContributionService {
           value = await this.sentenceService.create({ typeId, topicId, content, mean, note, userId })
         }
         if (value.statusCode === 200) {
-          await this.prismaService.contribution.update({ where: { id }, data: { status: CONTRIBUTION_STATUS.ACCEPT } })
+          await this.prismaService.contribution.update({ where: { id }, data: { status: body.status, feedback: '' } })
           return new ResponseData<string>(null, 200, 'Duyệt thành công')
         }
         return value
-      } else if (status === CONTRIBUTION_STATUS.REFUSE) {
-        await this.prismaService.contribution.update({ where: { id }, data: { status: CONTRIBUTION_STATUS.REFUSE } })
+      } else if (body.status === 0) {
+        await this.prismaService.contribution.update({ where: { id }, data: { status: body.status, feedback: body.feedback } })
         return new ResponseData<string>(null, 200, 'Từ chối thành công')
       }
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')

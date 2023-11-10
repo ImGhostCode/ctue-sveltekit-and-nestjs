@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "words" ALTER COLUMN "phonetic" DROP NOT NULL,
-ALTER COLUMN "synonyms" DROP NOT NULL,
-ALTER COLUMN "antonyms" DROP NOT NULL;

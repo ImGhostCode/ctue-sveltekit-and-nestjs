@@ -35,9 +35,18 @@ export class SentenceService {
         }
     }
 
-    async findAll() {
+    async findAll(topic: []) {
         try {
             return new ResponseData<Sentence>(await this.prismaService.sentence.findMany({
+                where: {
+                    Topic: {
+                        some: {
+                            id: {
+                                in: topic
+                            }
+                        }
+                    }
+                },
                 include: {
                     Practice: true,
                     User: true,
