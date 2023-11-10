@@ -1,6 +1,8 @@
 <script lang="ts">
 	import '../app.css';
-	import default_user from '$lib/assets/images/default-user.png';
+
+	import default_image from '$lib/assets/images/default-image.png';
+
 	import bgCtu from '$lib/assets/images/CTU_Blank_white.png';
 	import ctueLogo from '$lib/assets/images/ctue-high-resolution-logo-transparent3.png';
 	import type { LayoutServerData, LayoutData } from './$types';
@@ -115,11 +117,19 @@
 
 					{#if data.user}
 						<div class="relative w-12 h-12 avatar-user z-10 group cursor-pointer">
-							<img
-								class="h-full w-full rounded-full border-2 border-sky-400"
-								src={data.user.user.avt}
-								alt={data.user.user.avt}
-							/>
+							{#if data.user.user.avt}
+								<img
+									class="h-full w-full rounded-full border-2 border-sky-400"
+									src={data.user.user.avt}
+									alt={data.user.user.avt}
+								/>
+							{:else}
+								<img
+									class="h-full w-full rounded-full border-2 border-sky-400"
+									src={default_image}
+									alt={default_image}
+								/>
+							{/if}
 							<ul
 								class="absolute w-[300px] text-slate-700 shadow-lg bg-[#fcfcfc] sub-avatar-user hidden rounded-sm group-hover:opacity-100 opacity-75 right-0 top-full scale-90 hover:scale-100 origin-top transition-all duration-200"
 							>

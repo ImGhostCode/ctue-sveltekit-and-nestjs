@@ -4,4 +4,5 @@ export * from './level.db'
 export * from './type.db'
 export * from './specialization.db'
 export * from './topic.db'
+export * from './contribute.db'
 

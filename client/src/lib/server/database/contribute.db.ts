@@ -7,7 +7,7 @@ const URL = '/contribution';
 export async function postContribution(accessToken: string, data: any) {
 
     try {
-        const response = await axiosClient.post(`${URL}`, data, {
+        const response = await axiosClient.postForm(`${URL}`, data, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },

@@ -151,7 +151,7 @@
 							/>
 						</div>
 					{:else}
-						<h2 class="leading-12 text-2xl">{data.user.user.name}</h2>
+						<h2 class="leading-12 text-2xl break-words">{data.user.user.name}</h2>
 					{/if}
 
 					<!-- <h4 class="leading-6 mb-6 font-light">test35e724</h4> -->
