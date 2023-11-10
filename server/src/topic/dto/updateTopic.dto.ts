@@ -1,7 +1,16 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { Optional } from "@nestjs/common";
+import { IsBoolean, IsOptional, IsString } from "class-validator";
 
 export class UpdateTopicDto {
     @IsString()
-    @IsNotEmpty()
-    name: string
+    @IsOptional()
+    name?: string
+
+    @IsBoolean()
+    @IsOptional()
+    isWord?: boolean
+
+    @Optional()
+    @IsString()
+    image?: string
 }

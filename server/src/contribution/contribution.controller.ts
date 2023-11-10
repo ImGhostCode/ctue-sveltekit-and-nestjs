@@ -21,8 +21,8 @@ export class ContributionController {
 
   @Get()
   @Roles(ACCOUNT_TYPES.ADMIN)
-  findAll(@Query("type") type: string) {
-    return this.contributionService.findAll(type);
+  findAll(@Query("type") type: string, @Query("status") status: number) {
+    return this.contributionService.findAll(type, status);
   }
 
   @Get('user')
@@ -39,8 +39,8 @@ export class ContributionController {
 
   @Patch(':id')
   @Roles(ACCOUNT_TYPES.ADMIN)
-  verifyContribute(@Param('id', ParseIntPipe) id: number, @Body() body: { status: string }) {
-    return this.contributionService.verifyContribute(id, body.status);
+  verifyContribute(@Param('id', ParseIntPipe) id: number, @Body() body: { status: number, feedback: string }) {
+    return this.contributionService.verifyContribute(id, body);
   }
 
   @Delete(':id')

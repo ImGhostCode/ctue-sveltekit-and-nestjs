@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { WordService } from './word.service';
 import { CreateWordDto, UpdateWordDto } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -19,8 +19,8 @@ export class WordController {
     }
 
     @Get()
-    findAll() {
-        return this.wordServive.findAll()
+    findAll(@Query() option: { sort: any, type: number, level: number, specialization: number, topic: [] }) {
+        return this.wordServive.findAll(option)
     }
 
     @Get(':id')

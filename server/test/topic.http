@@ -1,11 +1,14 @@
-@urlDev=http://localhost:8000/topic
+@urlDev=http://localhost:8000/apis/topic
 
 ### Create topic
 POST  {{urlDev}}/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjk5NTQ1OTg3LCJleHAiOjE2OTk1NTMxODd9.M191Brri7UXXY3L91vAByUcyUarPu_0dMIVjSeVEww0
 Content-Type: application/json
 
 {
-    "name": "test 2"
+    "name": "test 2",
+    "isWord": true,
+    "image": "12"
 }
 
 ### Get all topics

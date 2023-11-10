@@ -10,13 +10,13 @@ import { LevelModule } from './level/level.module';
 import { TopicModule } from './topic/topic.module';
 import { SpecializationModule } from './specialization/specialization.module';
 import { ContributionModule } from './contribution/contribution.module';
-import { CommunicationPhraseModule } from './communication-phrase/communication-phrase.module';
+import { IrregularVerbModule } from './irregular-verb/irregular-verb.module';
 import { FavoriteItemModule } from './favorite-item/favorite-item.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { MailingModule } from './mailing/mailing.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, SentenceModule, WordModule, TypeModule, LevelModule, TopicModule, SpecializationModule, ContributionModule, CommunicationPhraseModule, FavoriteItemModule, CloudinaryModule, MailingModule]
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, SentenceModule, WordModule, TypeModule, LevelModule, TopicModule, SpecializationModule, ContributionModule, IrregularVerbModule, FavoriteItemModule, CloudinaryModule, MailingModule]
 })
 export class AppModule {
   static port: number
