@@ -7,7 +7,7 @@ import { isLoadingForm } from '$lib/store';
 type Types = { id: number, name: string, isWord: boolean }
 type Levels = { id: number, name: string }
 type Specializations = { id: number, name: string }
-type Topics = { id: number, name: string }
+type Topics = { id: number, name: string, isWord: boolean, selected: boolean }
 
 export const load: PageServerLoad = async ({ cookies }) => {
 
@@ -15,16 +15,23 @@ export const load: PageServerLoad = async ({ cookies }) => {
     const typesWord: Types = await db.getTypes(true)
     const typesSentence: Types = await db.getTypes(false)
 
-    const levels: Types = await db.getLevels()
+    const levels: Levels = await db.getLevels()
     const specializations: Specializations = await db.getSpecializations()
-    const topics: Topics = await db.getTopics()
+    let topicsWord: Topics[] = await db.getTopics(true)
+    let topicsSentence: Topics[] = await db.getTopics(false)
 
+    topicsWord = topicsWord.map(topic => {
+        return { ...topic, selected: false }
+    })
 
+    topicsSentence = topicsSentence.map(topic => {
+        return { ...topic, selected: false }
+    })
 
     //  console.log(typesWord, typesSentence);
 
     return {
-        token, typesWord, typesSentence, levels, specializations, topics
+        token, typesWord, typesSentence, levels, specializations, topicsWord, topicsSentence
     };
 };
 
@@ -66,6 +73,12 @@ export const actions = {
                     message: 'Vui lòng diền các thông tin cần thiết',
                     missingFields
                 });
+            } else {
+                fail(400, {
+                    error: `Missing`,
+                    message: 'Vui lòng diền các thông tin cần thiết',
+                    missingFields: []
+                });
             }
 
             const { ilustrate } = formData as { ilustrate: File };
@@ -91,6 +104,7 @@ export const actions = {
                 examples: formData.examples,
                 synonyms: formData.synonyms,
                 antonyms: formData.antonyms,
+                note: formData.note
             };
 
             formDataWithFile.append('type', 'word');
@@ -98,15 +112,99 @@ export const actions = {
 
             const res = await db.postContribution(token, formDataWithFile)
 
-            if (res.data.statusCode == 400) {
+
+            if (res.data?.statusCode == 400) {
 
                 return fail(400, { error: 'Error', message: res.data.message });
 
             } else {
-                return { success: true, data: res.data, message: res.message }
+                return { success: true, data: res.data, message: 'Gửi yêu cầu thành công' }
             }
         } catch (error) {
             isLoadingForm.set(false)
+            console.log('error:::', error);
+
+            // throw error
+        } finally {
+            isLoadingForm.set(false)
+        }
+
+    },
+    'contribute-sentence': async ({ request, cookies }) => {
+        try {
+            isLoadingForm.set(true)
+
+            const token: string | undefined = cookies.get('accessToken');
+
+            if (!token) {
+                isLoadingForm.set(false)
+                return fail(400, {
+                    token,
+                    noToken: true,
+                    message: 'Hết hạn đăng nhập'
+                });
+
+            }
+
+            const formData = Object.fromEntries(await request.formData());
+
+            // Validate required fields
+            const requiredFields = ['content', 'mean'];
+            const missingFields: { [key: string]: boolean } = { 'content': false, 'mean': false };
+
+            for (const field of requiredFields) {
+                if (!formData[field]) {
+                    isLoadingForm.set(false);
+                    missingFields[field] = true;
+                }
+            }
+
+            if (missingFields.content || missingFields.mean) {
+                return fail(400, {
+                    error: `Missing`,
+                    message: 'Vui lòng diền các thông tin cần thiết',
+                    missingFields
+                });
+            } else {
+                fail(400, {
+                    error: `Missing`,
+                    message: 'Vui lòng diền các thông tin cần thiết',
+                    missingFields: []
+                });
+            }
+
+
+            const formDataWithFile = new FormData();
+
+            const contentData = {
+                content: formData.content,
+                mean: formData.mean,
+                typeId: Number(formData.typeId),
+                topicId: String(formData.topicId).split(','),
+                levelId: Number(formData.levelId),
+                specializationId: Number(formData.specializationId),
+                examples: formData.examples,
+                synonyms: formData.synonyms,
+                antonyms: formData.antonyms,
+                note: formData.note
+            };
+
+            formDataWithFile.append('type', 'sentence');
+            formDataWithFile.append('content', JSON.stringify(contentData));
+
+            const res = await db.postContribution(token, formDataWithFile)
+
+            if (res.data?.statusCode == 400) {
+
+                return fail(400, { error: 'Error', message: res.data.message });
+
+            } else {
+                return { success: true, data: res.data, message: 'Gửi yêu cầu thành công' }
+            }
+        } catch (error) {
+            isLoadingForm.set(false)
+            // console.log(error);
+
             throw error
         } finally {
             isLoadingForm.set(false)

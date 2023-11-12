@@ -12,27 +12,38 @@ export class ContributionService {
   constructor(private prismaService: PrismaService, private wordService: WordService, private sentenceService: SentenceService, private cloudinaryService: CloudinaryService) { }
 
   async create(createContributionDto: CreateContributionDto, userId: number, pictureFile: Express.Multer.File) {
-    const { levelId, specializationId, content, mean } = createContributionDto.content
+
+    const contentContribution = JSON.parse(String(createContributionDto.content))
+
+    console.log(contentContribution);
+
+
+    const { levelId, specializationId, content, mean, note } = contentContribution
     try {
       if (createContributionDto.type === 'word') {
-        if (!levelId || !specializationId) {
+        if (levelId === undefined || specializationId === undefined) {
           return new ResponseData<string>(null, 400, 'Thiếu tham số bắt buộc')
         }
-        if (content.length > CONSTANTS_MAX.WORD_CONTENT_LEN || mean.length > CONSTANTS_MAX.WORD_NOTE_LEN) {
+        if (content.length > CONSTANTS_MAX.WORD_CONTENT_LEN || mean.length > CONSTANTS_MAX.WORD_MEAN_LEN || note.length > CONSTANTS_MAX.WORD_NOTE_LEN) {
           return new ResponseData<string>(null, 400, 'Độ dài các thuộc thính không phù hợp')
         }
       }
       if (createContributionDto.type === 'sentence') {
-        if (content.length > CONSTANTS_MAX.SENTENCE_CONTENT_LEN || mean.length > CONSTANTS_MAX.SENTENCE_MEAN_LEN) {
+        if (content.length > CONSTANTS_MAX.SENTENCE_CONTENT_LEN || mean.length > CONSTANTS_MAX.SENTENCE_MEAN_LEN || note.length > CONSTANTS_MAX.SENTENCE_NOTE_LEN) {
           return new ResponseData<string>(null, 400, 'Độ dài các thuộc thính không phù hợp')
         }
       }
-      const fileData = await this.cloudinaryService.uploadFile(pictureFile)
-      createContributionDto.content.picture = fileData.url
+
+      if (createContributionDto.type === 'word') {
+        const fileData = await this.cloudinaryService.uploadFile(pictureFile)
+        contentContribution.picture = fileData.url
+      }
+
+
       const contribution = await this.prismaService.contribution.create({
         data: {
           userId: userId,
-          content: JSON.stringify(createContributionDto.content),
+          content: JSON.parse(String(createContributionDto.content)),
           type: createContributionDto.type,
           status: -1
         }
