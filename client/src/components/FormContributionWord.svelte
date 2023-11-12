@@ -1,27 +1,71 @@
 <script lang="ts">
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
+	import food from '$lib/assets/icons/topics/food.png';
+	import health from '$lib/assets/icons/topics/health.png';
 	import { enhance } from '$app/forms';
-	import type { ActionData } from '../routes/$types';
-	import { goto } from '$app/navigation';
+	import { isLoadingForm } from '$lib/store';
+
+	const imagesTopic: { [key: string]: string } = {
+		tree,
+		social,
+		food,
+		health
+	};
+
+	const phonetics: string[] = [
+		"'",
+		'ɪ',
+		'iː',
+		'ʊ',
+		'uː',
+		'e',
+		'ə',
+		'ɜː',
+		'ɔː',
+		'æ',
+		'ʌ',
+		'aː',
+		'ɒ',
+		'ɪə',
+		'eɪ',
+		'ʊə',
+		'ɔɪ',
+		'əʊ',
+		'aɪ',
+		'aʊ',
+		'tʃ',
+		'dʒ',
+		'θ',
+		'ð',
+		'ʃ',
+		'ŋ',
+		'ʒ',
+		'ʃ'
+	];
 
 	type Types = { id: number; name: string; isWord: boolean };
+	type Topics = {
+		selected: boolean;
+		id: number;
+		name: string;
+		isWord: boolean;
+		image: string;
+	};
 	type Levels = { id: number; name: string };
 	type Specializations = { id: number; name: string };
 
 	export let types: Types[];
+	export let topics: Topics[];
 	export let levels: Levels[];
 	export let specializations: Specializations[];
 	export let missingFields: any;
 
 	let showTopics = false;
 	let showPhonetic = false;
+	let imgIlustrate: any = null;
 
 	let phoneticValue = '';
-	let topics = [
-		{ id: 1, name: 'Thực vật', selected: false, image: tree },
-		{ id: 2, name: 'Đời sống', selected: false, image: social }
-	];
 
 	$: topicIds = topics
 		.filter((topic) => topic.selected)
@@ -36,13 +80,10 @@
 		showPhonetic = !showPhonetic;
 	}
 
-	let imgIlustrate: any = null;
-
 	const handleFileInput: svelte.JSX.EventHandler<Event, HTMLInputElement> = (e) => {
 		if (e.currentTarget.files == null) return; // files can be null, handle however appropriate
 
 		imgIlustrate = e.currentTarget.files[0];
-		//console.log(URL.createObjectURL(imgIlustrate));
 	};
 </script>
 
@@ -111,207 +152,19 @@
 			class:hidden={!showPhonetic}
 			class="col-span-3 rounded-md p-3 bg-white shadow-lg mb-4 flex flex-row gap-2 flex-wrap"
 		>
-			<button
-				type="button"
-				class:hidden={showPhonetic}
-				on:click={() => (phoneticValue += "'")}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>'</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ɪ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɪ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'iː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>iː</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ʊ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʊ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'uː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>uː</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'e')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>e</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ə')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ə</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ɜː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɜː</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ɔː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɔː</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'æ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>æ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ʌ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʌ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'aː')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>aː</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ɒ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɒ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ɪə')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɪə</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'eɪ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>eɪ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ʊə')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʊə</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ɔɪ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ɔɪ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'əʊ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>əʊ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'aɪ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>aɪ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'aʊ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>aʊ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'tʃ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>tʃ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'dʒ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>dʒ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'θ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>θ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ð')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ð</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ʃ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʃ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ŋ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ŋ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ʒ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʒ</button
-			>
-
-			<button
-				type="button"
-				on:click={() => (phoneticValue += 'ʃ')}
-				class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
-				>ʃ</button
-			>
+			{#each phonetics as phonetic, index (index)}
+				<button
+					type="button"
+					on:click={() => (phoneticValue += phonetic)}
+					class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer transition-all"
+					>{phonetic}</button
+				>
+			{/each}
 
 			<button
 				type="button"
 				on:click={handleInputFocus}
-				class=" btn-outline btn-error p-2 max-w-[90px] w-full text-center h-10 border rounded-md cursor-pointer"
+				class=" btn-outline btn-error p-2 max-w-[90px] w-full text-center h-10 border rounded-md cursor-pointer transition-all"
 				>Đóng</button
 			>
 		</div>
@@ -532,12 +385,12 @@
 				{#each topics as topic, index (topic.name)}
 					<button
 						type="button"
-						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
+						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
 					>
-						<img class="mr-1" src={topic.image} alt={topic.name} />
+						<img class="mr-1" src={imagesTopic[topic.image]} alt={topic.name} />
 						<span class="pr-1 text-sm">{topic.name}</span>
 					</button>
 				{/each}
@@ -547,7 +400,12 @@
 		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
 
 		<div class="mt-4 col-span-3 text-right">
-			<button type="submit" class="btn btn-accent text-white mr-2">Thêm từ</button>
+			<button
+				type="submit"
+				disabled={$isLoadingForm}
+				class:cursor-not-allowed={$isLoadingForm}
+				class="btn btn-accent text-white mr-2">Gửi yêu cầu</button
+			>
 			<button type="reset" class="btn btn-outline btn-error">Loại bỏ</button>
 		</div>
 

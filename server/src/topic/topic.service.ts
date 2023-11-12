@@ -12,15 +12,25 @@ export class TopicService {
     try {
       const isExisted = await this.IsExisted(createTopicDto.name)
       if (isExisted) return new ResponseData<string>(null, 400, 'Chủ đề đã tồn tại')
-      return new ResponseData<Topic>(await this.prismaService.topic.create({ data: { ...createTopicDto } }), 200, 'Tạo chủ đề thành công')
+      return new ResponseData<Topic>(await this.prismaService.topic.create({
+        data: {
+          name: createTopicDto.name,
+          isWord: createTopicDto.isWord,
+          image: createTopicDto.image
+        }
+      }), 200, 'Tạo chủ đề thành công')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }
   }
 
-  async findAll() {
+  async findAll(isWord: boolean) {
     try {
-      return new ResponseData<Topic>(await this.prismaService.topic.findMany({}), 200, 'Tìm thành công')
+      return new ResponseData<Topic>(await this.prismaService.topic.findMany({
+        where: {
+          isWord: isWord
+        }
+      }), 200, 'Tìm thành công')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }
@@ -49,7 +59,16 @@ export class TopicService {
       if (!topic) return new ResponseData<string>(null, 400, 'Không tìm thấy chủ đề')
       const isExisted = await this.IsExisted(updateTopicDto.name)
       if (isExisted) return new ResponseData<string>(null, 400, 'Chủ đề đã tồn tại')
-      return new ResponseData<Topic>(await this.prismaService.topic.update({ where: { id }, data: { ...updateTopicDto } }), 200, 'Cập nhật thành công')
+      return new ResponseData<Topic>(await this.prismaService.topic.update({
+        where: {
+          id: id
+        },
+        data: {
+          name: updateTopicDto.name,
+          isWord: updateTopicDto.isWord,
+          image: updateTopicDto.image
+        }
+      }), 200, 'Cập nhật thành công')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }

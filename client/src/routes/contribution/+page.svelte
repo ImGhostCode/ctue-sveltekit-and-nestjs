@@ -90,12 +90,17 @@
 	{#if sentenceScreen}
 		<FormContributionWord
 			types={data.typesWord}
+			topics={data.topicsWord}
 			levels={data.levels}
 			specializations={data.specializations}
 			{missingFields}
 		/>
 	{:else}
-		<FormContributionSentence types={data.typesSentence} topics={data.topics} />
+		<FormContributionSentence
+			types={data.typesSentence}
+			topics={data.topicsSentence}
+			{missingFields}
+		/>
 	{/if}
 </div>
 

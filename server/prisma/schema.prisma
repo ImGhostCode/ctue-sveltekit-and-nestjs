@@ -44,6 +44,7 @@ model Account {
   authType    String
   accountType String
   isBan       Boolean @default(false)
+  feedback    String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -60,11 +61,12 @@ model VerifyCode {
 }
 
 model Contribution {
-  id      Int    @id @default(autoincrement())
-  userId  Int
-  type    String
-  content Json
-  status  String
+  id       Int     @id @default(autoincrement())
+  userId   Int
+  type     String
+  content  Json
+  status   Int?
+  feedback String?
 
   User User @relation(fields: [userId], references: [id])
 
@@ -113,10 +115,10 @@ model Word {
   mean             String
   note             String?
   phonetic         String?
-  examples         String[]
   picture          String?
-  synonyms         String?
-  antonyms         String?
+  examples         String[]
+  synonyms         String[]
+  antonyms         String[]
 
   FavoriteItem   FavoriteItem[]
   Topic          Topic[]
@@ -130,8 +132,10 @@ model Word {
 }
 
 model Topic {
-  id   Int    @id @default(autoincrement())
-  name String
+  id     Int     @id @default(autoincrement())
+  name   String
+  isWord Boolean
+  image  String
 
   Sentence Sentence[]
   Word     Word[]
@@ -168,8 +172,12 @@ model Type {
   @@map("types")
 }
 
-model CommunicationPhrase {
-  id      Int    @id @default(autoincrement())
-  content String
-  mean    String
+model IrregularVerb {
+  id   Int    @id @default(autoincrement())
+  v1   String
+  v2   String
+  v3   String
+  mean String
+
+  @@map("irregularVerbs")
 }

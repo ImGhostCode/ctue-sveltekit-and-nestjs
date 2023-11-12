@@ -1,7 +1,8 @@
-@urlDev=http://localhost:8000/word
+@urlDev=http://localhost:8000/apis/word
 
 ### Create word
 POST  {{urlDev}}/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjk5NTQ0MzcwLCJleHAiOjE2OTk1NTE1NzB9.iamg7URW6K2UzJC18ktP2wZACWWlf6fikBUB-b0u0gg
 Content-Type: application/json
 
 {
@@ -9,16 +10,14 @@ Content-Type: application/json
     "topicId": [1],          
     "levelId": 1,
     "specializationId": 1,
-    "content": "hello world 4 1",
+    "content": "d",
     "mean": "test word 1",
     "note": "test",
-    "phonetic": "test",
-    "examples": ["test", "test1"],
-    "picture": "test"
+    "examples": ["test", "test1"]
 }
 
 ### Get all words
-GET   {{urlDev}}/
+GET   {{urlDev}}?sort=desc
 
 ### Get one word
 GET   {{urlDev}}/3
