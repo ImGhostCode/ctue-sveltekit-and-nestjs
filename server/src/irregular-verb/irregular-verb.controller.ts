@@ -5,7 +5,7 @@ import { MyJWTGuard, RolesGuard } from '../auth/guard';
 import { Roles } from '../auth/decorator';
 import { ACCOUNT_TYPES } from '../global';
 
-@Controller('communication-phrase')
+@Controller('irregular-verb')
 export class IrregularVerbController {
   constructor(private irregularVerbService: IrregularVerbService) { }
 
