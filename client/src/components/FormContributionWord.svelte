@@ -67,6 +67,8 @@
 
 	let phoneticValue = '';
 
+	$: console.log($isLoadingForm);
+
 	$: topicIds = topics
 		.filter((topic) => topic.selected)
 		.map((topic) => topic.id)
