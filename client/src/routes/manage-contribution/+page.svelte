@@ -4,6 +4,7 @@
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 	import Speaker from '../../components/Speaker.svelte';
+	import Pagination from '../../components/Pagination.svelte';
 	let showTopics = false;
 	let topics = [
 		{ id: 1, name: 'Thực vật', selected: false, image: tree },
@@ -24,6 +25,7 @@
 
 	let myModal4: HTMLDialogElement;
 	let myModal5: HTMLDialogElement;
+	let myModal6: HTMLDialogElement;
 
 	let contributions = [
 		{ id: 1, type: 'Câu', content: 'Nội dung json', status: 'Đang chờ' },
@@ -51,7 +53,7 @@
 	}
 </script>
 
-<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<h1 class="text-2xl text-orange-600 mb-2">Quản lý đóng góp</h1>
 
 	<div class="h-[1px] w-full border border-gray-200" />
@@ -60,7 +62,7 @@
 		<div class="dropdown">
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<!-- svelte-ignore a11y-label-has-associated-control -->
-			<label tabindex="0" class="btn m-1">Phân loại</label>
+			<label tabindex="0" class="btn m-1 bg-sky-500 hover:bg-sky-600 text-white">Phân loại</label>
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
 				<li><button>Từ</button></li>
@@ -94,13 +96,16 @@
 						>
 						<button
 							class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
-							on:click={() => deleteContribution(2)}>Xóa</button
+							on:click={() => myModal6.showModal()}>Từ chối</button
 						>
 					</td>
 				</tr>
 			{/each}
 		</tbody>
 	</table>
+
+	<!-- Pagination -->
+	<Pagination />
 </div>
 
 <dialog bind:this={myModal5} id="my_modal_3" class="modal">
@@ -177,5 +182,37 @@
 		</p>
 		<p class="font-bold">Ghi chú:</p>
 		<p>dfs</p>
+	</div>
+</dialog>
+
+<dialog bind:this={myModal6} id="my_modal_4" class="modal">
+	<div class="modal-box w-11/12 max-w-5xl">
+		<form action="" method="post">
+			<h3 class="font-bold text-xl text-orange-600 mb-2">Từ chối đóng góp</h3>
+			<div class="h-[1px] w-full border border-gray-200" />
+
+			<div class="">
+				<div class="form-control w-full mb-3">
+					<label class="label" for="feedback">
+						<span class="label-text">Lý do (*)</span>
+					</label>
+					<textarea
+						class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
+						id="feedback"
+						name="feedback"
+					/>
+				</div>
+			</div>
+
+			<div class="h-[1px] w-full border border-gray-200" />
+
+			<div class="modal-action">
+				<form method="dialog">
+					<!-- if there is a button, it will close the modal -->
+					<button class="btn">Close</button>
+					<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
+				</form>
+			</div>
+		</form>
 	</div>
 </dialog>

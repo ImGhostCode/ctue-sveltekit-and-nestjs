@@ -62,10 +62,10 @@ export class CreateContributionDto {
     @IsString()
     type: string
 
-    @IsNotEmptyObject()
-    @IsObject()
-    @IsNotEmpty()
-    @ValidateNested()
+    // @IsNotEmptyObject()
+    // @IsObject() 
+    // @IsNotEmpty()
+    // @ValidateNested()
     @Type(() => Content)
     content: Content
 }

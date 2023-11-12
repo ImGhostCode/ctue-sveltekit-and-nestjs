@@ -2,12 +2,39 @@
 
 ### Create level
 POST  {{urlDev}}/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjk5NTQ1OTg3LCJleHAiOjE2OTk1NTMxODd9.M191Brri7UXXY3L91vAByUcyUarPu_0dMIVjSeVEww0
 Content-Type: application/json
 
 {
-    "name": "test 3",
-    "isWord": false
+    //"name": "Noun - Danh từ",
+    //"isWord": true
+    //"name": "Adjective - Tính từ",
+    //"isWord": true
+
+    //"name": "Câu đơn",
+    //"isWord": false
+
+    //"name": "Câu ghép",
+    //"isWord": false 
+
+    //"name": "Câu phức" ,
+    //"isWord": false
+
+//"Danh từ (Noun)"
+//"Đại từ (Pronoun)"
+//"Tính từ (Adjective)"
+//"Động Từ (Verb)"
+//"Trạng Từ (Adverb)"
+//"Từ hạn định (Determiner)"
+//"Giới từ (Preposition)"
+//"Liên từ (Conjunction)"
+
+
+
+//"Câu phức tổng hợp"
+//"Câu trần thuật"
+//"Câu nghi vấn"
+//"Câu hỏi có - không bắt đầu bằng trợ động từ"
+//"Câu hỏi wh-"
 }
 
 ### Get all levels

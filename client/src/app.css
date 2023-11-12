@@ -6,4 +6,19 @@ html,
 body {
     height: 100%;
     margin: 0;
+    box-sizing: border-box;
+    /* background: url(//elearning.ctu.edu.vn/pluginfile.php/1/theme_lambda/pagebackground/1692676992/CTU_Blank_white.png);     */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.header-page {
+    @apply text-2xl text-title font-bold mb-2
 }

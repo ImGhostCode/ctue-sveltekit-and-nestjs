@@ -3,16 +3,30 @@
 	import medal from '$lib/assets/icons/medal.png';
 </script>
 
-<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
-	<div class="flex justify-center items-center mb-4">
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
+	<div class="flex justify-center items-center my-6">
 		<img src={medal} alt={medal} class="h-[50px] w-[50px]" />
 		<h1 class="text-4xl font-bold text-title">LEADERBOARD</h1>
 	</div>
 
-	<div class="grid grid-cols-3 gap-8">
+	<!-- svelte-ignore a11y-label-has-associated-control -->
+	<div class="dropdown dropdown-bottom dropdown-end w-full text-right mb-4">
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+		<label tabindex="0" class="btn m-1 bg-sky-500 text-white hover:bg-sky-600"
+			>Bảng xếp hạng:&nbsp;<span class="text-amber-300">Ngày</span></label
+		>
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+		<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+			<li><button>Ngày</button></li>
+			<li><button>Tháng</button></li>
+			<li><button>Năm</button></li>
+		</ul>
+	</div>
+
+	<div class="grid grid-cols-3 gap-8 h-full">
 		<div class="h-[500px] border shadow-lg">
 			<div class="bg-purple-600 flex justify-between px-3 py-4 rounded-sm">
-				<h3 class="text-white text-lg">Top Triệu Phú Dyno Coin</h3>
+				<h3 class="text-white text-lg">Top Triệu Phú CTUe Coin</h3>
 				<div class="tooltip tooltip-bottom" data-tip="Top những người dùng có số coin nhiều nhất">
 					<button class="text-white"
 						><svg

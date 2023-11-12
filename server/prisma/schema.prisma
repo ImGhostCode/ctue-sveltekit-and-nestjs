@@ -61,12 +61,14 @@ model VerifyCode {
 }
 
 model Contribution {
-  id       Int     @id @default(autoincrement())
-  userId   Int
-  type     String
-  content  Json
-  status   Int?
-  feedback String?
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  type      String
+  content   Json
+  status    Int?
+  feedback  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   User User @relation(fields: [userId], references: [id])
 

@@ -3,7 +3,11 @@
 	import social from '$lib/assets/icons/topics/social.png';
 	import culture from '$lib/assets/icons/topics/culture.png';
 	import exciting from '$lib/assets/icons/topics/exciting.png';
+	import animal from '$lib/assets/icons/topics/animal.png';
+	import clothes from '$lib/assets/icons/topics/clothes.png';
 	import Speaker from '../../components/Speaker.svelte';
+	import Pagination from '../../components/Pagination.svelte';
+
 	let showTopics = false;
 	let topics = [
 		{ id: 1, name: 'Thực vật', selected: false, image: tree },
@@ -20,9 +24,9 @@
 	let myModal4: HTMLDialogElement;
 </script>
 
-<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<div class="items-center mb-4">
-		<h1 class="h1 text-2xl text-title">Từ điển của bạn</h1>
+		<h1 class="header-page">Từ điển của bạn</h1>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200" />
 
@@ -33,27 +37,7 @@
 			type="text"
 			placeholder="Nhập từ..."
 		/>
-		<!-- <div class="my-4">
-			<button
-				class="btn outline-none border-none bg-transparent hover:bg-transparent hover:opacity-100 opacity-70"
-				>Sắp xếp <span
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="w-6 h-6"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
-						/>
-					</svg>
-				</span></button
-			>
-		</div> -->
+
 		<div class="dropdown">
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<!-- svelte-ignore a11y-label-has-associated-control -->
@@ -83,8 +67,10 @@
 			</ul>
 		</div>
 	</div>
-
+	<!-- fill-red-500 text-red-500 -->
 	<div class="border rounded-md p-4">
+		<!-- A -->
+		<h1 class="text-xl ml-2 mb-2 font-bold text-blue-600">A</h1>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
 			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
 				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
@@ -118,13 +104,13 @@
 		</div>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
 			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
-				<img src={culture} alt={culture} class="h-[50px] w-[50px] inline-block" />
+				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
-						<p class="mr-2 text-green-600 text-xl font-semibold">Push</p>
+						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
 						<span class="mr-2 text-blue-600">/æd/</span>
 					</div>
-					<p class="text-left">Đẩy</p>
+					<p class="text-left">Thêm</p>
 				</div>
 			</button>
 			<div class="grow-0">
@@ -149,7 +135,198 @@
 		</div>
 		<div class="flex border-b-2 hover:border-green-600 mb-4">
 			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
-				<img src={exciting} alt={exciting} class="h-[50px] w-[50px] inline-block" />
+				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<span class="mr-2 text-blue-600">/æd/</span>
+					</div>
+					<p class="text-left">Thêm</p>
+				</div>
+			</button>
+			<div class="grow-0">
+				<Speaker />
+				<button class="hover:scale-110 transition-all ml-2"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 fill-red-500 text-red-500"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
+		<div class="flex border-b-2 hover:border-green-600 mb-4">
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<span class="mr-2 text-blue-600">/æd/</span>
+					</div>
+					<p class="text-left">Thêm</p>
+				</div>
+			</button>
+			<div class="grow-0">
+				<Speaker />
+				<button class="hover:scale-110 transition-all ml-2"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 fill-red-500 text-red-500"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
+		<div class="flex border-b-2 hover:border-green-600 mb-4">
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<span class="mr-2 text-blue-600">/æd/</span>
+					</div>
+					<p class="text-left">Thêm</p>
+				</div>
+			</button>
+			<div class="grow-0">
+				<Speaker />
+				<button class="hover:scale-110 transition-all ml-2"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 fill-red-500 text-red-500"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
+		<div class="flex border-b-2 hover:border-green-600 mb-4">
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<span class="mr-2 text-blue-600">/æd/</span>
+					</div>
+					<p class="text-left">Thêm</p>
+				</div>
+			</button>
+			<div class="grow-0">
+				<Speaker />
+				<button class="hover:scale-110 transition-all ml-2"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 fill-red-500 text-red-500"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<div class="flex border-b-2 hover:border-green-600 mb-4">
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<span class="mr-2 text-blue-600">/æd/</span>
+					</div>
+					<p class="text-left">Thêm</p>
+				</div>
+			</button>
+			<div class="grow-0">
+				<Speaker />
+				<button class="hover:scale-110 transition-all ml-2"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 fill-red-500 text-red-500"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<div class="flex border-b-2 hover:border-green-600 mb-4">
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
+						<span class="mr-2 text-blue-600">/æd/</span>
+					</div>
+					<p class="text-left">Thêm</p>
+				</div>
+			</button>
+			<div class="grow-0">
+				<Speaker />
+				<button class="hover:scale-110 transition-all ml-2"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 fill-red-500 text-red-500"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- B -->
+		<p class="text-xl ml-2 mb-2 font-bold text-blue-600">B</p>
+		<div class="flex border-b-2 hover:border-green-600 mb-4">
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={animal} alt={animal} class="h-[50px] w-[50px] inline-block" />
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
 						<p class="mr-2 text-green-600 text-xl font-semibold">make</p>
@@ -178,7 +355,75 @@
 				</button>
 			</div>
 		</div>
+
+		<div class="flex border-b-2 hover:border-green-600 mb-4">
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={clothes} alt={clothes} class="h-[50px] w-[50px] inline-block" />
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 text-xl font-semibold">check</p>
+						<span class="mr-2 text-blue-600">/æd/</span>
+					</div>
+					<p class="text-left">Kiểm tra</p>
+				</div>
+			</button>
+			<div class="grow-0">
+				<Speaker />
+				<button class="hover:scale-110 transition-all ml-2"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 fill-red-500 text-red-500"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- C -->
+		<p class="text-xl ml-2 mb-2 font-bold text-blue-600">C</p>
+		<div class="flex border-b-2 hover:border-green-600 mb-4">
+			<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<img src={clothes} alt={clothes} class="h-[50px] w-[50px] inline-block" />
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 text-xl font-semibold">check</p>
+						<span class="mr-2 text-blue-600">/æd/</span>
+					</div>
+					<p class="text-left">Kiểm tra</p>
+				</div>
+			</button>
+			<div class="grow-0">
+				<Speaker />
+				<button class="hover:scale-110 transition-all ml-2"
+					><svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6 fill-red-500 text-red-500"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+						/>
+					</svg>
+				</button>
+			</div>
+		</div>
 	</div>
+
+	<Pagination />
 
 	<!-- You can open the modal using ID.showModal() method -->
 	<dialog bind:this={myModal4} id="my_modal_3" class="modal">

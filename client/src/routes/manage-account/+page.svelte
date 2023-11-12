@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Pagination from '../../components/Pagination.svelte';
+	let myModal4: HTMLDialogElement;
 
 	let users = [
 		{
@@ -52,7 +54,7 @@
 	}
 </script>
 
-<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<h1 class="text-2xl text-orange-600 mb-2">Quản lý tài khoản</h1>
 
 	<div class="h-[1px] w-full border border-gray-200" />
@@ -79,11 +81,47 @@
 							class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
 							on:click={() => deleteUser(user.id)}>Xóa</button
 						>
-						<button class="btn btn-sm btn-warning" on:click={() => banUser(user.id)}>Cấm</button>
+						<button class="btn btn-sm btn-warning" on:click={() => myModal4.showModal()}>Cấm</button
+						>
 						<button class="btn btn-sm btn-primary" on:click={() => editUser(user.id)}>Sửa</button>
 					</td>
 				</tr>
 			{/each}
 		</tbody>
 	</table>
+
+	<!-- Pagination -->
+	<Pagination />
 </div>
+
+<dialog bind:this={myModal4} id="my_modal_4" class="modal">
+	<div class="modal-box w-11/12 max-w-5xl">
+		<form action="" method="post">
+			<h3 class="font-bold text-xl text-orange-600 mb-2">Cấm tài khoản người dùng</h3>
+			<div class="h-[1px] w-full border border-gray-200" />
+
+			<div class="">
+				<div class="form-control w-full mb-3">
+					<label class="label" for="feedback">
+						<span class="label-text">Lý do (*)</span>
+					</label>
+					<textarea
+						class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
+						id="feedback"
+						name="feedback"
+					/>
+				</div>
+			</div>
+
+			<div class="h-[1px] w-full border border-gray-200" />
+
+			<div class="modal-action">
+				<form method="dialog">
+					<!-- if there is a button, it will close the modal -->
+					<button class="btn">Close</button>
+					<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
+				</form>
+			</div>
+		</form>
+	</div>
+</dialog>

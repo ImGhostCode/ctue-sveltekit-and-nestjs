@@ -1,5 +1,9 @@
-<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
-	<h1 class="text-2xl text-title mb-2">Động từ bất quy tắc (Irregular Verb)</h1>
+<script>
+	import Pagination from '../../components/Pagination.svelte';
+</script>
+
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
+	<h1 class="header-page">Động từ bất quy tắc (Irregular Verb)</h1>
 	<p class="my-2 text-slate-500 mb-4 max-w-screen-lg">
 		Chúng ta có hơn 600 động từ bất quy tắc, nhưng chỉ có khoảng 360 từ thường xuyên xuất hiện nhất.
 		Bạn hãy tập trung học những từ này trước nhé 😎 (Click vào từ để nghe phát âm)
@@ -102,4 +106,6 @@
 			</tbody>
 		</table>
 	</div>
+
+	<Pagination />
 </div>

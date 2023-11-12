@@ -1,14 +1,104 @@
-<script>
+<script lang="ts">
+	import { onMount } from 'svelte';
 	import FormContributionSentence from '../../components/FormContributionSentence.svelte';
 	import FormContributionWord from '../../components/FormContributionWord.svelte';
+	import type { ActionData } from './$types';
+	import { goto } from '$app/navigation';
+	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import moment from 'moment';
+	import { text } from '@sveltejs/kit';
+
+	export let form: ActionData;
+	/** @type {import('./$types').PageData} */
+	export let data: any;
+
+	const statusCon: { [key: string]: { status: string; color: string } } = {
+		'-1': { status: 'Chờ duyệt', color: 'text-yellow-600' },
+		'0': { status: 'Từ chối', color: 'text-red-600' },
+		'1': { status: 'Đã duyệt', color: 'text-green-600' }
+	};
 
 	let sentenceScreen = true;
+	$: missingFields = form?.missingFields;
+
+	console.log(data.conHistory);
+
+	$: if (form?.noToken) {
+		goto('/login'); // Redirect to the login page if not authenticated
+	}
+
+	onMount(() => {
+		if (!data?.user) {
+			goto('/login', { replaceState: true }); // Redirect to the login page if not authenticated
+			return;
+		}
+	});
+
+	function handleSwitchTab(): void {
+		sentenceScreen = !sentenceScreen;
+		missingFields = [];
+	}
+
+	$: if (form?.success) {
+		const toast = toasts.add({
+			title: 'Success',
+			description: form?.message,
+			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			placement: 'top-right',
+			type: 'success',
+			theme: 'dark',
+			showProgress: true,
+			// type: 'success',
+			// theme: 'dark',
+			onClick: () => {},
+			onRemove: () => {
+				// goto('/'); // Use goto to redirect to the '/login' route.
+			}
+			//component: BootstrapToast // You can customize the toast component here
+		});
+	}
+
+	$: if (form?.error) {
+		const toast = toasts.add({
+			title: 'Error',
+			description: form?.message,
+			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			placement: 'top-right',
+			type: 'error',
+			theme: 'dark',
+			showProgress: true,
+			// type: 'error',
+			// theme: 'dark',
+			onClick: () => {},
+			onRemove: () => {}
+			//component: BootstrapToast // You can customize the toast component here
+		});
+	}
+
+	// Dữ liệu JSON bạn đã cung cấp
+	const jsonData: string = `{
+    "mean": "nhập khẩu",
+    "note": "feaf\r\nfeaffff",
+    "typeId": 1,
+    "content": "import",
+    "levelId": 2,
+    "topicId": ["7", "8", "9"],
+    "antonyms": "",
+    "examples": "faea\r\nfefa",
+    "synonyms": "",
+    "specializationId": 4
+}`;
+
+	const modifiedString = jsonData.replace(/\r\n/g, ' ');
+
+	// Parse dữ liệu JSON thành đối tượng TypeScript
+	const dataTest: any = JSON.parse(modifiedString);
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
 	<div class="">
 		<button
-			on:click={() => (sentenceScreen = true)}
+			on:click={() => handleSwitchTab()}
 			class:bg-green-600={sentenceScreen}
 			class:text-white={sentenceScreen}
 			class:text-gray-500={sentenceScreen === false}
@@ -19,7 +109,7 @@
 			class:bg-green-600={sentenceScreen === false}
 			class:text-white={sentenceScreen === false}
 			class:text-gray-500={sentenceScreen}
-			on:click={() => (sentenceScreen = false)}
+			on:click={() => handleSwitchTab()}
 			class="uppercase outline-none border-none px-5 py-2 rounded-tr-md rounded-tl-md font-semibold"
 			>Thêm câu</button
 		>
@@ -27,11 +117,67 @@
 	<div class="h-[1px] w-full border border-gray-200" />
 
 	{#if sentenceScreen}
-		<FormContributionWord />
+		<FormContributionWord
+			types={data.typesWord}
+			topics={data.topicsWord}
+			levels={data.levels}
+			specializations={data.specializations}
+			{missingFields}
+		/>
 	{:else}
-		<FormContributionSentence />
+		<FormContributionSentence
+			types={data.typesSentence}
+			topics={data.topicsSentence}
+			{missingFields}
+		/>
 	{/if}
+
+	<div class="">
+		<h1 class="text-3xl text-title font-bold mb-2">Lịch sử đóng góp</h1>
+
+		<div class="h-[1px] w-full border border-gray-200" />
+
+		{#if data.conHistory.length}
+			<table class="table table-hover mt-4">
+				<thead>
+					<tr>
+						<th>Thời gian</th>
+						<th>Loại đóng góp</th>
+						<th>Nội dung</th>
+						<th>Trạng thái</th>
+						<th>Phản hồi</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each data.conHistory as con (con.id)}
+						<tr class="hover">
+							<td>{moment(con.createdAt).format('DD/MM/YYYY')}</td>
+							<td>{con.type === 'word' ? 'Từ' : 'Câu'}</td>
+							<td>
+								{con.content.content} - {con.content.mean}
+							</td>
+							<td
+								class="text-yellow-400 font-semibold"
+								class:text-red-600={statusCon[con.status].color === 'red'}
+								class:text-yellow-600={statusCon[con.status].color === 'yellow'}
+								class:text-green-600={statusCon[con.status].color === 'green'}
+								>{statusCon[con.status].status}</td
+							>
+							<td>{con.feedback ?? ''}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		{:else}
+			<p class="text-center text-base my-4 text-slate-600">Bạn chưa có đóng góp nào</p>
+		{/if}
+	</div>
 </div>
+
+<ToastContainer placement="bottom-right" let:data>
+	<FlatToast {data} />
+	<!-- Provider template for your toasts -->
+</ToastContainer>
 
 <style>
 	.form-control input:focus + label .label-text {

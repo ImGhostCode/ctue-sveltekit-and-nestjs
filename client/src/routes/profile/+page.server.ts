@@ -2,6 +2,7 @@ import type { PageServerLoad, Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import * as db from '$lib/server/database';
 import { goto } from '$app/navigation';
+import { isLoadingForm } from '$lib/store';
 
 
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -11,18 +12,19 @@ export const load: PageServerLoad = async ({ cookies }) => {
 };
 
 
-
 export const actions = {
     update: async ({ request, cookies }) => {
         try {
+            isLoadingForm.set(true)
+
             const formData = Object.fromEntries(await request.formData());
             const token: string | undefined = cookies.get('accessToken');
             const userId = Number(formData.userId)
             // console.log(formData);
             delete formData.userId
-            console.log(token);
 
             if (!token) {
+                isLoadingForm.set(false)
                 return fail(400, {
                     token,
                     noToken: true
@@ -48,6 +50,7 @@ export const actions = {
             const result = await db.updateProfile(userId, token || '', formDataWithFile);
 
             if (result.statusCode == 200) {
+                isLoadingForm.set(false)
                 return { success: true, message: result.message };
             } else {
                 return fail(400, {
@@ -57,7 +60,10 @@ export const actions = {
             }
 
         } catch (error) {
+            isLoadingForm.set(false)
             throw error
+        } finally {
+            isLoadingForm.set(false)
         }
 
     }
