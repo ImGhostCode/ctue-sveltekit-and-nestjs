@@ -5,13 +5,23 @@
 	import type { ActionData } from './$types';
 	import { goto } from '$app/navigation';
 	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import moment from 'moment';
+	import { text } from '@sveltejs/kit';
 
 	export let form: ActionData;
 	/** @type {import('./$types').PageData} */
 	export let data: any;
 
+	const statusCon: { [key: string]: { status: string; color: string } } = {
+		'-1': { status: 'Chờ duyệt', color: 'text-yellow-600' },
+		'0': { status: 'Từ chối', color: 'text-red-600' },
+		'1': { status: 'Đã duyệt', color: 'text-green-600' }
+	};
+
 	let sentenceScreen = true;
 	$: missingFields = form?.missingFields;
+
+	console.log(data.conHistory);
 
 	$: if (form?.noToken) {
 		goto('/login'); // Redirect to the login page if not authenticated
@@ -64,6 +74,25 @@
 			//component: BootstrapToast // You can customize the toast component here
 		});
 	}
+
+	// Dữ liệu JSON bạn đã cung cấp
+	const jsonData: string = `{
+    "mean": "nhập khẩu",
+    "note": "feaf\r\nfeaffff",
+    "typeId": 1,
+    "content": "import",
+    "levelId": 2,
+    "topicId": ["7", "8", "9"],
+    "antonyms": "",
+    "examples": "faea\r\nfefa",
+    "synonyms": "",
+    "specializationId": 4
+}`;
+
+	const modifiedString = jsonData.replace(/\r\n/g, ' ');
+
+	// Parse dữ liệu JSON thành đối tượng TypeScript
+	const dataTest: any = JSON.parse(modifiedString);
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
@@ -102,6 +131,47 @@
 			{missingFields}
 		/>
 	{/if}
+
+	<div class="">
+		<h1 class="text-3xl text-title font-bold mb-2">Lịch sử đóng góp</h1>
+
+		<div class="h-[1px] w-full border border-gray-200" />
+
+		{#if data.conHistory.length}
+			<table class="table table-hover mt-4">
+				<thead>
+					<tr>
+						<th>Thời gian</th>
+						<th>Loại đóng góp</th>
+						<th>Nội dung</th>
+						<th>Trạng thái</th>
+						<th>Phản hồi</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each data.conHistory as con (con.id)}
+						<tr class="hover">
+							<td>{moment(con.createdAt).format('DD/MM/YYYY')}</td>
+							<td>{con.type === 'word' ? 'Từ' : 'Câu'}</td>
+							<td>
+								{con.content.content} - {con.content.mean}
+							</td>
+							<td
+								class="text-yellow-400 font-semibold"
+								class:text-red-600={statusCon[con.status].color === 'red'}
+								class:text-yellow-600={statusCon[con.status].color === 'yellow'}
+								class:text-green-600={statusCon[con.status].color === 'green'}
+								>{statusCon[con.status].status}</td
+							>
+							<td>{con.feedback ?? ''}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		{:else}
+			<p class="text-center text-base my-4 text-slate-600">Bạn chưa có đóng góp nào</p>
+		{/if}
+	</div>
 </div>
 
 <ToastContainer placement="bottom-right" let:data>

@@ -12,6 +12,11 @@ type Topics = { id: number, name: string, isWord: boolean, selected: boolean }
 export const load: PageServerLoad = async ({ cookies }) => {
 
     const token: string | undefined = cookies.get('accessToken');
+
+    if (!token) {
+        throw redirect(307, '/login');
+    }
+
     const typesWord: Types = await db.getTypes(true)
     const typesSentence: Types = await db.getTypes(false)
 
@@ -19,6 +24,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
     const specializations: Specializations = await db.getSpecializations()
     let topicsWord: Topics[] = await db.getTopics(true)
     let topicsSentence: Topics[] = await db.getTopics(false)
+    let wordConHistory = await db.getContribution(token || '', 'word')
+    let sentenceConHistory = await db.getContribution(token || '', 'sentence')
 
     topicsWord = topicsWord.map(topic => {
         return { ...topic, selected: false }
@@ -28,10 +35,9 @@ export const load: PageServerLoad = async ({ cookies }) => {
         return { ...topic, selected: false }
     })
 
-    //  console.log(typesWord, typesSentence);
-
     return {
-        token, typesWord, typesSentence, levels, specializations, topicsWord, topicsSentence
+        token, typesWord, typesSentence, levels, specializations, topicsWord, topicsSentence, conHistory: [...wordConHistory.data, ...sentenceConHistory.data]
+
     };
 };
 

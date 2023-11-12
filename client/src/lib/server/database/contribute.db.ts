@@ -19,19 +19,18 @@ export async function postContribution(accessToken: string, data: any) {
         throw error;
     }
 }
+export async function getContribution(accessToken: string, type: string) {
 
-// export async function updateProfile(id: number, accessToken: string, data: any) {
+    try {
+        const response = await axiosClient.get(`${URL}/user?type=${type}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
 
-//     try {
+    } catch (error) {
+        throw error;
+    }
+}
 
-//         const response = await axiosClient.patchForm(`${URL}/update-profile/${id}`, data, {
-//             headers: {
-//                 Authorization: `Bearer ${accessToken}`,
-//             },
-//         })
-//         return response.data
-
-//     } catch (error) {
-//         throw error;
-//     }
-// }

@@ -6,6 +6,7 @@ import { fail, redirect, type Actions, } from '@sveltejs/kit';
 
 export const load: LayoutServerLoad = async ({ request, cookies }) => {
     const token: string | undefined = cookies.get('accessToken');
+
     let user = null;
     if (token) {
         user = await db.getUser(token);
