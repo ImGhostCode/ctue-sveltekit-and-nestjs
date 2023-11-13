@@ -31,10 +31,9 @@ model User {
   Account      Account[]
   Sentence     Sentence[]
   Word         Word[]
-  favoriteList FavoriteItem[]
+  FavoriteList FavoriteItem[]
   Contribution Contribution[]
   Practice     Practice[]
-  HighScore    HighScore[]
 
   @@map("users")
 }
@@ -50,7 +49,7 @@ model Account {
   isBan       Boolean @default(false)
   feedback    String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("accounts")
 }
@@ -179,19 +178,6 @@ model IrregularVerb {
   @@map("irregularVerbs")
 }
 
-model HighScore {
-  id Int @id @default(autoincrement())
-
-  userId Int
-
-  name  String
-  score Int
-
-  User User @relation(fields: [userId], references: [id])
-
-  @@map("highScores")
-}
-
 model Practice {
   id Int @id @default(autoincrement())
 
@@ -200,13 +186,15 @@ model Practice {
   levelId          Int?
   specializationId Int?
 
-  result        Int
-  numOfSentence Int
-  reviewDay     DateTime @default(now())
+  nRight            Int
+  nWrong            Int
+  nRightConsecitive Int
+  numOfSentence     Int
+  createdAt         DateTime @default(now())
 
-  words          Word[]
-  sentences      Sentence[]
-  topic          Topic[]
+  Words          Word[]
+  Sentences      Sentence[]
+  Topic          Topic[]
   User           User?           @relation(fields: [userId], references: [id])
   Type           Type?           @relation(fields: [typeId], references: [id])
   Level          Level?          @relation(fields: [levelId], references: [id])
