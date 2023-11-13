@@ -54,11 +54,22 @@ export class WordService {
         try {
             let { sort, type, level, specialization, topic, page } = option
             let pageSize = 20
-            const totalCount = await this.prismaService.word.count()
-            const totalPages = Math.ceil(totalCount / pageSize)
             if (!page) page = 1
-            else if (page > totalPages) return new ResponseData<any>(null, 400, 'Số trang không hợp lệ')
             let next = (page - 1) * pageSize
+            const totalCount = await this.prismaService.word.count({
+                where: {
+                    typeId: type,
+                    levelId: level,
+                    specializationId: specialization,
+                    Topic: {
+                        some: {
+                            id: { in: topic }
+                        }
+                    }
+                }
+            })
+            const totalPages = Math.ceil(totalCount / pageSize)
+            if (page > totalPages) return new ResponseData<any>(null, 400, 'Số trang không hợp lệ')
             const words = await this.prismaService.word.findMany({
                 skip: next,
                 take: pageSize,
