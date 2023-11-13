@@ -117,11 +117,11 @@
 
 					{#if data.user}
 						<div class="relative w-12 h-12 avatar-user z-10 group cursor-pointer">
-							{#if data.user.user.avt}
+							{#if data.user.User.avt}
 								<img
 									class="h-full w-full rounded-full border-2 border-sky-400"
-									src={data.user.user.avt}
-									alt={data.user.user.avt}
+									src={data.user.User.avt}
+									alt={data.user.User.avt}
 								/>
 							{:else}
 								<img
