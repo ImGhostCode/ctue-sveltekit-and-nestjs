@@ -34,3 +34,13 @@ export async function updateProfile(id: number, accessToken: string, data: any) 
         throw error;
     }
 }
+
+export async function resetPassword(data: any) {
+    const result = await axiosClient.patch(`${URL}/reset-password`, data)
+    return result
+}
+
+export async function sendVerifyCode(data: any) {
+    const result = await axiosClient.post(`${URL}/verify-code`, data)
+    return result
+}
