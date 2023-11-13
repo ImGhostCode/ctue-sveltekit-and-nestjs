@@ -50,10 +50,29 @@ export class WordService {
         }
     }
 
-    async findAll(option: { sort: any, type: number, level: number, specialization: number, topic: [] }) {
+    async findAll(option: { sort: any, type: number, level: number, specialization: number, topic: [], page: number }) {
         try {
-            const { sort, type, level, specialization, topic } = option
-            return new ResponseData<Word>(await this.prismaService.word.findMany({
+            let { sort, type, level, specialization, topic, page } = option
+            let pageSize = 20
+            if (!page) page = 1
+            let next = (page - 1) * pageSize
+            const totalCount = await this.prismaService.word.count({
+                where: {
+                    typeId: type,
+                    levelId: level,
+                    specializationId: specialization,
+                    Topic: {
+                        some: {
+                            id: { in: topic }
+                        }
+                    }
+                }
+            })
+            const totalPages = Math.ceil(totalCount / pageSize)
+            if (page > totalPages) return new ResponseData<any>(null, 400, 'Số trang không hợp lệ')
+            const words = await this.prismaService.word.findMany({
+                skip: next,
+                take: pageSize,
                 orderBy: {
                     content: sort
                 },
@@ -63,20 +82,18 @@ export class WordService {
                     specializationId: specialization,
                     Topic: {
                         some: {
-                            id: {
-                                in: topic
-                            }
+                            id: { in: topic }
                         }
                     }
                 },
                 include: {
-                    User: true,
                     Topic: true,
                     Type: true,
                     Specialization: true,
                     Level: true
                 }
-            }), 200, 'Tìm thành công')
+            })
+            return new ResponseData<any>({ words, totalPages }, 200, 'Tìm thành công')
         } catch (error) {
             console.log(error);
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
@@ -179,5 +196,68 @@ export class WordService {
                 Practice: true, User: true, Topic: true, Type: true, Level: true, Specialization: true
             }
         })
+    }
+
+    async getWordsPack(option: { type: number, level: number, specialization: number, topic: [], numSentence: number }) {
+        try {
+            let { topic, type, level, specialization, numSentence } = option
+            const totalWordspack = await this.prismaService.word.count({
+                where: {
+                    levelId: level,
+                    typeId: type,
+                    specializationId: specialization,
+                    Topic: {
+                        some: {
+                            id: {
+                                in: topic
+                            }
+                        }
+                    }
+                }
+            })
+            if (totalWordspack <= numSentence) return new ResponseData<Word>(null, 400, 'Không đủ gói từ vựng');
+            const maxRandomIndex = totalWordspack - numSentence;
+            const randomPackIndex = Math.floor(Math.random() * (maxRandomIndex + 1))
+            const wordspack = await this.prismaService.word.findMany({
+                where: {
+                    levelId: level,
+                    typeId: type,
+                    specializationId: specialization,
+                    Topic: {
+                        some: {
+                            id: { in: topic }
+                        }
+                    }
+                },
+                take: numSentence,
+                skip: randomPackIndex
+            })
+            return new ResponseData<Word>(wordspack, 200, 'Tìm gói từ vựng thành công')
+        } catch (error) {
+            return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+        }
+    }
+
+    async lookUpDictionary(key: string) {
+        try {
+            const word = await this.prismaService.word.findMany({
+                where: {
+                    OR: [
+                        {
+                            content: { contains: key }
+                        },
+                        {
+                            mean: { contains: key }
+                        }
+                    ]
+                }
+            })
+            if (word.length === 0) {
+                return new ResponseData<Word>([], 400, 'Không tìm thấy từ trong từ điển');
+            }
+            return new ResponseData<Word>(word, 200, 'Tìm thấy từ trong từ điển');
+        } catch (error) {
+            return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+        }
     }
 }

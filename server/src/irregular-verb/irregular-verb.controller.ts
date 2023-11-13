@@ -5,7 +5,7 @@ import { MyJWTGuard, RolesGuard } from '../auth/guard';
 import { Roles } from '../auth/decorator';
 import { ACCOUNT_TYPES } from '../global';
 
-@Controller('communication-phrase')
+@Controller('irregular-verb')
 export class IrregularVerbController {
   constructor(private irregularVerbService: IrregularVerbService) { }
 
@@ -38,5 +38,10 @@ export class IrregularVerbController {
   @Roles(ACCOUNT_TYPES.ADMIN)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.irregularVerbService.remove(id);
+  }
+
+  @Get('seach/:key')
+  searchByKey(@Param('key') key: string) {
+    return this.irregularVerbService.searchByKey(key)
   }
 }

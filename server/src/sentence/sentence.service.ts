@@ -35,10 +35,32 @@ export class SentenceService {
         }
     }
 
-    async findAll(topic: []) {
+    async findAll(option: { topic: [], type: number, page: number, sort: any }) {
         try {
-            return new ResponseData<Sentence>(await this.prismaService.sentence.findMany({
+            let { sort, type, topic, page } = option
+            let pageSize = 20
+            if (!page) page = 1
+            let next = (page - 1) * pageSize
+            const totalCount = await this.prismaService.sentence.count({
                 where: {
+                    typeId: type,
+                    Topic: {
+                        some: {
+                            id: { in: topic }
+                        }
+                    }
+                }
+            })
+            const totalPages = Math.ceil(totalCount / pageSize)
+            if (page > totalPages) return new ResponseData<any>(null, 400, 'Số trang không hợp lệ')
+            const sentences = await this.prismaService.sentence.findMany({
+                skip: next,
+                take: pageSize,
+                orderBy: {
+                    content: sort
+                },
+                where: {
+                    typeId: type,
                     Topic: {
                         some: {
                             id: {
@@ -49,11 +71,11 @@ export class SentenceService {
                 },
                 include: {
                     Practice: true,
-                    User: true,
                     Topic: true,
                     Type: true
                 }
-            }), 200, 'Tìm thành công')
+            })
+            return new ResponseData<any>({ sentences, totalPages }, 200, 'Tìm thành công')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }

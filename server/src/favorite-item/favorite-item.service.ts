@@ -19,8 +19,8 @@ export class FavoriteItemService {
   constructor(private prismaService: PrismaService) { }
 
   async findFavoritesByUserId(userId: number) {
-    const user = await this.prismaService.user.findUnique({ where: { id: userId }, include: { favoriteList: true } })
-    return await this.prismaService.favoriteItem.findUnique({ where: { id: user.favoriteList[0].id }, include: { Word: true, Sentence: true } })
+    const user = await this.prismaService.user.findUnique({ where: { id: userId }, include: { FavoriteList: true } })
+    return await this.prismaService.favoriteItem.findUnique({ where: { id: user.FavoriteList[0].id }, include: { Word: true, Sentence: true } })
   }
 
   async addToFavoritesList(addToFavoritesListDto: AddToFavoritesListDto, userId: number) {
@@ -71,12 +71,64 @@ export class FavoriteItemService {
     }
   }
 
-  async findAllByUserId(userId: number) {
+  async findAllByUserId(userId: number, option: { sort: any }) {
     try {
-      return await this.findFavoritesByUserId(userId)
+      const { sort } = option
+      const data = await this.prismaService.favoriteItem.findFirst({
+        where: {
+          userId: userId
+        },
+        include: {
+          Word: {
+            orderBy: sort
+          },
+          Sentence: {
+            orderBy: sort
+          }
+        }
+      })
+      return new ResponseData<FavoriteItem>(data, 200, 'Tìm thành công')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }
   }
 
+  async searchByKey(userId: number, key: string) {
+    try {
+      const data = await this.prismaService.favoriteItem.findFirst({
+        where: {
+          userId: userId
+        },
+        include: {
+          Word: {
+            where: {
+              OR: [
+                {
+                  content: { contains: key },
+                },
+                {
+                  mean: { contains: key }
+                }
+              ]
+            }
+          },
+          Sentence: {
+            where: {
+              OR: [
+                {
+                  content: { contains: key },
+                },
+                {
+                  mean: { contains: key }
+                }
+              ]
+            }
+          }
+        }
+      })
+      return new ResponseData<FavoriteItem>(data, 200, 'Tìm thành công')
+    } catch (error) {
+      return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+    }
+  }
 }

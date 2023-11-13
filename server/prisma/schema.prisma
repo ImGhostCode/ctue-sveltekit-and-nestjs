@@ -12,7 +12,8 @@ datasource db {
 }
 
 model FavoriteItem {
-  id     Int  @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
   userId Int?
 
   Word     Word[]
@@ -30,7 +31,7 @@ model User {
   Account      Account[]
   Sentence     Sentence[]
   Word         Word[]
-  favoriteList FavoriteItem[]
+  FavoriteList FavoriteItem[]
   Contribution Contribution[]
   Practice     Practice[]
 
@@ -38,15 +39,17 @@ model User {
 }
 
 model Account {
-  email       String  @unique
-  userId      Int
+  email String @unique
+
+  userId Int
+
   password    String
   authType    String
   accountType String
   isBan       Boolean @default(false)
   feedback    String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("accounts")
 }
@@ -75,60 +78,47 @@ model Contribution {
   @@map("contributions")
 }
 
-model Practice {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  result    Int
-  reviewDay DateTime @default(now())
-
-  words     Word[]
-  sentences Sentence[]
-  User      User?      @relation(fields: [userId], references: [id])
-
-  @@map("practices")
-}
-
 model Sentence {
-  id         Int     @id @default(autoincrement())
-  typeId     Int
-  userId     Int?
-  practiceId Int?
-  content    String
-  mean       String
-  note       String?
+  id      Int     @id @default(autoincrement())
+  typeId  Int
+  userId  Int?
+  content String
+  mean    String
+  note    String?
 
   Topic        Topic[]
   FavoriteItem FavoriteItem[]
+  Practice     Practice[]
   User         User?          @relation(fields: [userId], references: [id])
-  Practice     Practice?      @relation(fields: [practiceId], references: [id])
   Type         Type           @relation(fields: [typeId], references: [id])
 
   @@map("sentences")
 }
 
 model Word {
-  id               Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
   typeId           Int
   levelId          Int
   specializationId Int
   userId           Int?
-  practiceId       Int?
-  content          String
-  mean             String
-  note             String?
-  phonetic         String?
-  picture          String?
-  examples         String[]
-  synonyms         String[]
-  antonyms         String[]
+
+  content  String
+  mean     String
+  note     String?
+  phonetic String?
+  picture  String?
+  examples String[]
+  synonyms String[]
+  antonyms String[]
 
   FavoriteItem   FavoriteItem[]
   Topic          Topic[]
+  Practice       Practice[]
   Type           Type           @relation(fields: [typeId], references: [id])
   Level          Level          @relation(fields: [levelId], references: [id])
   Specialization Specialization @relation(fields: [specializationId], references: [id])
   User           User?          @relation(fields: [userId], references: [id])
-  Practice       Practice?      @relation(fields: [practiceId], references: [id])
 
   @@map("words")
 }
@@ -141,6 +131,7 @@ model Topic {
 
   Sentence Sentence[]
   Word     Word[]
+  Practice Practice[]
 
   @@map("topics")
 }
@@ -149,7 +140,8 @@ model Level {
   id   Int    @id @default(autoincrement())
   name String
 
-  Word Word[]
+  Word     Word[]
+  Practice Practice[]
 
   @@map("levels")
 }
@@ -158,7 +150,8 @@ model Specialization {
   id   Int    @id @default(autoincrement())
   name String
 
-  Word Word[]
+  Word     Word[]
+  Practice Practice[]
 
   @@map("specializations")
 }
@@ -170,6 +163,7 @@ model Type {
 
   Sentence Sentence[]
   Word     Word[]
+  Practice Practice[]
 
   @@map("types")
 }
@@ -182,4 +176,29 @@ model IrregularVerb {
   mean String
 
   @@map("irregularVerbs")
+}
+
+model Practice {
+  id Int @id @default(autoincrement())
+
+  userId           Int
+  typeId           Int?
+  levelId          Int?
+  specializationId Int?
+
+  nRight            Int
+  nWrong            Int
+  nRightConsecitive Int
+  numOfSentence     Int
+  createdAt         DateTime @default(now())
+
+  Words          Word[]
+  Sentences      Sentence[]
+  Topic          Topic[]
+  User           User?           @relation(fields: [userId], references: [id])
+  Type           Type?           @relation(fields: [typeId], references: [id])
+  Level          Level?          @relation(fields: [levelId], references: [id])
+  Specialization Specialization? @relation(fields: [specializationId], references: [id])
+
+  @@map("practices")
 }

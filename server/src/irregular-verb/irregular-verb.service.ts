@@ -90,4 +90,33 @@ export class IrregularVerbService {
   async findById(id: number) {
     return this.prismaService.irregularVerb.findUnique({ where: { id } })
   }
+
+  async searchByKey(key: string) {
+    try {
+      const data = await this.prismaService.irregularVerb.findMany({
+        where: {
+          OR: [
+            {
+              v1: { contains: key }
+            },
+            {
+              v2: { contains: key }
+            },
+            {
+              v3: { contains: key }
+            },
+            {
+              mean: { contains: key }
+            },
+          ]
+        }
+      })
+      if (data.length === 0) {
+        return new ResponseData<IrregularVerb>([], 400, 'Không tìm thấy từ');
+      }
+      return new ResponseData<IrregularVerb>(data, 200, 'Tìm thấy từ');
+    } catch (error) {
+      return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+    }
+  }
 }
