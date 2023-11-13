@@ -17,8 +17,8 @@ export class SentenceController {
     }
 
     @Get()
-    findAll(@Query('topic') topic: []) {
-        return this.sentenceService.findAll(topic)
+    findAll(@Query() option: { topic: [], type: number, page: number, sort: any }) {
+        return this.sentenceService.findAll(option)
     }
 
     @Get(':id')

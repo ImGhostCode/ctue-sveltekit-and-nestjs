@@ -39,4 +39,9 @@ export class IrregularVerbController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.irregularVerbService.remove(id);
   }
+
+  @Get('seach/:key')
+  searchByKey(@Param('key') key: string) {
+    return this.irregularVerbService.searchByKey(key)
+  }
 }

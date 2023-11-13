@@ -19,7 +19,7 @@ export class WordController {
     }
 
     @Get()
-    findAll(@Query() option: { sort: any, type: number, level: number, specialization: number, topic: [] }) {
+    findAll(@Query() option: { sort: any, type: number, level: number, specialization: number, topic: [], page: number }) {
         return this.wordServive.findAll(option)
     }
 
@@ -41,5 +41,17 @@ export class WordController {
     @Roles(ACCOUNT_TYPES.ADMIN)
     delete(@Param('id', ParseIntPipe) id: number) {
         return this.wordServive.delete(id)
+    }
+
+    @Get('words-pack')
+    @UseGuards(MyJWTGuard, RolesGuard)
+    @Roles(ACCOUNT_TYPES.USER)
+    getWordsPack(@Query() option: { type: number, level: number, specialization: number, topic: [], numSentence: number }) {
+        return this.wordServive.getWordsPack(option)
+    }
+
+    @Get('look-up-dictionary/:key')
+    lookUpDictionary(@Param('key') key: string) {
+        return this.lookUpDictionary(key)
     }
 }

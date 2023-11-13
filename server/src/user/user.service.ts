@@ -28,7 +28,7 @@ export class UserService {
                     accountType: true,
                     authType: true,
                     isBan: true,
-                    user: true
+                    User: true
                 }
             })
             return new ResponseData<any>(accounts, 200, 'Tìm thấy các người dùng')
@@ -107,7 +107,7 @@ export class UserService {
             await this.prismaService.account.delete({
                 where: { email: account.email },
                 include: {
-                    user: true
+                    User: true
                 }
             })
             await this.prismaService.user.delete({
@@ -151,7 +151,7 @@ export class UserService {
     async sendVerifyCode(verifyCodeDto: VerifyCodeDto) {
         try {
             const { email } = verifyCodeDto
-            const account = await this.prismaService.account.findUnique({ where: { email }, include: { user: true } })
+            const account = await this.prismaService.account.findUnique({ where: { email }, include: { User: true } })
             if (!account) return new ResponseData<any>(null, 400, 'Email này chưa đăng ký')
             await this.prismaService.verifyCode.deleteMany({ where: { email: email } })
             const code = this.random6DigitNumber()
@@ -167,7 +167,7 @@ export class UserService {
                 subject: 'Mã xác minh tài khoản của Ứng dụng hỗ  trợ học tiếng anh',
                 template: './verifycode',
                 context: {
-                    name: account.user.name,
+                    name: account.User.name,
                     code: code
                 }
             })

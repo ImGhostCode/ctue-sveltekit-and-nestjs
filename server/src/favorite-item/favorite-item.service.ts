@@ -19,8 +19,8 @@ export class FavoriteItemService {
   constructor(private prismaService: PrismaService) { }
 
   async findFavoritesByUserId(userId: number) {
-    const user = await this.prismaService.user.findUnique({ where: { id: userId }, include: { favoriteList: true } })
-    return await this.prismaService.favoriteItem.findUnique({ where: { id: user.favoriteList[0].id }, include: { Word: true, Sentence: true } })
+    const user = await this.prismaService.user.findUnique({ where: { id: userId }, include: { FavoriteList: true } })
+    return await this.prismaService.favoriteItem.findUnique({ where: { id: user.FavoriteList[0].id }, include: { Word: true, Sentence: true } })
   }
 
   async addToFavoritesList(addToFavoritesListDto: AddToFavoritesListDto, userId: number) {
