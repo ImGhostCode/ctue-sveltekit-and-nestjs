@@ -164,7 +164,7 @@ export class UserService {
             if (!verifyCode) return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
             const emailSend = await this.mailerService.sendMail({
                 to: email,
-                subject: 'Mã xác minh tài khoản của Ứng dụng hỗ  trợ học tiếng anh',
+                subject: 'Mã OTP để thiết lập mật khẩu mới hoặc tài khoản Ứng dụng hỗ  trợ học tiếng anh',
                 template: './verifycode',
                 context: {
                     name: account.User.name,
