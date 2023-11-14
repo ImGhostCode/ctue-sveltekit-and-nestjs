@@ -1,22 +1,68 @@
 <script lang="ts">
 	import '../app.css';
-
 	import default_image from '$lib/assets/images/default-image.png';
-
 	import bgCtu from '$lib/assets/images/CTU_Blank_white.png';
 	import ctueLogo from '$lib/assets/images/ctue-high-resolution-logo-transparent3.png';
-	import type { LayoutServerData, LayoutData } from './$types';
-	import { onMount } from 'svelte';
+	import type { LayoutServerData } from './$types';
+	import { onDestroy, onMount } from 'svelte';
 	import { enhance } from '$app/forms';
-	import { isLoading } from '$lib/store';
+	import { isLoading, audioSettings } from '$lib/store';
 
 	export let data: LayoutServerData;
 
+	let voices: SpeechSynthesisVoice[];
+
+	let indexVoice: number;
+	let voiceValue: SpeechSynthesisVoice;
+	let speedValue: number;
+	let volumeValue: number;
+
+	const unsubscribe = audioSettings.subscribe((value) => {
+		speedValue = value.speed;
+		volumeValue = value.volume;
+		voiceValue = value.voice;
+	});
+
 	isLoading.set(true);
 
-	onMount(() => {
+	const getSpeechSynthesis = () => {
+		let synth: any;
+		if (typeof window !== 'undefined') synth = window.speechSynthesis;
+		let intervalId = setInterval(() => {
+			if (synth.getVoices().length !== 0) {
+				voices = synth.getVoices();
+				voices = voices.filter((v) => v.lang == 'en-US' || v.lang == 'en-GB');
+				voiceValue = voices[indexVoice];
+				clearInterval(intervalId);
+			}
+		}, 50);
+	};
+
+	onMount(async () => {
+		unsubscribe();
+		getSpeechSynthesis();
 		isLoading.set(false);
 	});
+
+	const updateAudioSettings = (
+		newSpeed: number,
+		newVolume: number,
+		newVoice: SpeechSynthesisVoice
+	) => {
+		audioSettings.update((currentSettings) => ({
+			...currentSettings,
+			speed: newSpeed,
+			volume: newVolume,
+			voice: newVoice
+		}));
+	};
+
+	$: {
+		if (voices) {
+			voiceValue = voices[indexVoice];
+		}
+		updateAudioSettings(speedValue, volumeValue, voiceValue);
+	}
 
 	let myModal4: HTMLDialogElement;
 
@@ -35,20 +81,15 @@
 		if (!scrollContainer()) {
 			return;
 		}
-
 		if (scrollContainer().scrollTop > showOnPx) {
 			hidden = false;
 		} else {
 			hidden = true;
 		}
 	}
-
-	let volume: number = 100;
-	let speed: number = 100;
 </script>
 
 {#if $isLoading}
-	<!-- Display a loading indicator (e.g., spinner) -->
 	<div class="w-full h-full flex justify-center items-center">
 		<span class="loading loading-ring loading-lg" />
 	</div>
@@ -58,7 +99,6 @@
 			<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
 				<a href="/" class="flex items-center">
 					<img src={ctueLogo} class="h-12 mr-3" alt="CTUe Logo" />
-					<!-- <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">CTUe</span> -->
 				</a>
 
 				<div class="flex">
@@ -413,26 +453,26 @@
 						</button>
 					</div>
 				</div>
-
 				<div class="border rounded-md my-4 p-4">
 					<h1 class="text-lg mb-3">Giọng Đọc</h1>
 					<div class="grid grid-cols-3 gap-7">
 						<div class="col-span-1 flex flex-col">
-							<p class="text-light text-slate-500 my-2">Voice</p>
-
-							<select class="border border-slate-500 select w-full max-w-xs">
-								<option selected>Google US English</option>
-								<option>Google UK Female</option>
-								<option>BaGoogle US Malert</option>
+							<p class="text-light text-slate-500 my-2">Giọng</p>
+							<select
+								class="border border-slate-500 select w-full max-w-xs"
+								bind:value={indexVoice}
+							>
+								{#if voices}
+									<!-- <option selected value={null}>Mặc định</option> -->
+									{#each voices as voice, i}
+										<option value={i}>{voice.name}</option>
+									{/each}
+								{/if}
 							</select>
 						</div>
 						<div class="col-span-1 flex flex-col">
-							<p class="text-light text-slate-500 my-2">Voice</p>
-
-							<div
-								class="h-auto flex justify-between items-center grow shrink-0
-						"
-							>
+							<p class="text-light text-slate-500 my-2">Âm lượng</p>
+							<div class="h-auto flex justify-between items-center grow shrink-0">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
@@ -447,24 +487,20 @@
 										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
 									/>
 								</svg>
-
 								<input
 									type="range"
 									min="0"
 									max="100"
 									class="range mx-3 range-xs range-primary"
-									bind:value={volume}
+									bind:value={volumeValue}
 								/>
-								<p class="grow">{volume}</p>
+								<p class="grow">{volumeValue}</p>
 							</div>
 						</div>
 						<div class="col-span-1 flex flex-col">
-							<p class="text-light text-slate-500 my-2">Speed</p>
+							<p class="text-light text-slate-500 my-2">Tốc độ đọc</p>
 
-							<div
-								class="h-auto flex justify-between items-center grow shrink-0
-						"
-							>
+							<div class="h-auto flex justify-between items-center grow shrink-0">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
@@ -479,15 +515,15 @@
 										d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
 									/>
 								</svg>
-
 								<input
 									type="range"
 									min="0"
-									max="100"
+									max="3"
+									step="0.5"
 									class="range mx-3 range-xs range-primary"
-									bind:value={speed}
+									bind:value={speedValue}
 								/>
-								<p class="grow">{speed}</p>
+								<p class="grow">{speedValue}</p>
 							</div>
 						</div>
 					</div>
@@ -498,13 +534,9 @@
 					<input type="checkbox" class="toggle toggle-success" checked />
 				</div>
 			</div>
-
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="modal-action">
 				<form method="dialog">
-					<!-- if there is a button, it will close the modal -->
-					<!-- <button class="btn">Close</button> -->
 					<button class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
 				</form>
 			</div>
@@ -516,7 +548,6 @@
 	<aside>
 		<a href="/" class="flex items-center">
 			<img src={ctueLogo} class="h-8 mr-3" alt="CTUe Logo" />
-			<!-- <span class="self-center text-2xl font-semibold whitespace-nowrap text-dark">CTUe</span> -->
 		</a>
 		<p class="font-bold">
 			CTUe Industries Ltd. <br />Providing reliable tech since 1992
@@ -525,42 +556,45 @@
 	</aside>
 	<nav>
 		<div class="grid grid-flow-col gap-4">
-			<a href="/"
-				><svg
+			<a href="/">
+				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
 					height="24"
 					viewBox="0 0 24 24"
 					class="fill-current"
-					><path
+				>
+					<path
 						d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
-					/></svg
-				></a
-			>
-			<a href="/"
-				><svg
+					/>
+				</svg>
+			</a>
+			<a href="/">
+				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
 					height="24"
 					viewBox="0 0 24 24"
 					class="fill-current"
-					><path
+				>
+					<path
 						d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"
-					/></svg
-				></a
-			>
-			<a href="/"
-				><svg
+					/>
+				</svg>
+			</a>
+			<a href="/">
+				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
 					height="24"
 					viewBox="0 0 24 24"
 					class="fill-current"
-					><path
+				>
+					<path
 						d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
-					/></svg
-				></a
-			>
+					/>
+				</svg>
+			</a>
 		</div>
 	</nav>
 </footer>
