@@ -10,6 +10,8 @@
 
 	export let data: LayoutServerData;
 
+	let showNavBar = false;
+
 	let voices: SpeechSynthesisVoice[];
 
 	let indexVoice: number;
@@ -531,7 +533,7 @@
 				<div class="border rounded-md my-4 p-4">
 					<p class="text-lg mb-3">Cài Đặt Khác</p>
 					<p class="text-slate-500 my-2">Hiện/Ẩn thanh điều hướng</p>
-					<input type="checkbox" class="toggle toggle-success" checked />
+					<input type="checkbox" class="toggle toggle-success" bind:checked={showNavBar} />
 				</div>
 			</div>
 			<div class="h-[1px] w-full border border-gray-200" />

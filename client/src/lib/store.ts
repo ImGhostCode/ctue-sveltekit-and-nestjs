@@ -26,7 +26,7 @@ export const HandlerSpeaker = {
         window.speechSynthesis.cancel();
         speech.lang = 'en';
         speech.text = text;
-        speech.volume = volume;
+        speech.volume = volume / 100;
         speech.voice = voice || null;
         speech.rate = speed;
 
