@@ -34,8 +34,8 @@ export enum CONSTANTS_MIN {
     PASSWORD_LEN = 6
 }
 
-export enum CONTRIBUTION_STATUS {
-    ACCEPT = "Phê duyệt",
-    REFUSE = "Từ chối",
-    WAITING = "Đang chờ phê duyệt"
+export enum PAGE_SIZE {
+    PAGE_USER = 20,
+    PAGE_WORD = 20,
+    PAGE_SENTENCE = 20
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWordDto, UpdateWordDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { ResponseData } from '../global';
+import { PAGE_SIZE, ResponseData } from '../global';
 import { Word } from '@prisma/client';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
@@ -51,11 +51,9 @@ export class WordService {
     }
 
     async findAll(option: { sort: any, type: number, level: number, specialization: number, topic: [], page: number }) {
+        let pageSize = PAGE_SIZE.PAGE_WORD
         try {
             let { sort, type, level, specialization, topic, page } = option
-            let pageSize = 20
-            if (!page) page = 1
-            let next = (page - 1) * pageSize
             const totalCount = await this.prismaService.word.count({
                 where: {
                     typeId: type,
@@ -69,7 +67,9 @@ export class WordService {
                 }
             })
             const totalPages = Math.ceil(totalCount / pageSize)
-            if (page > totalPages) return new ResponseData<any>(null, 400, 'Số trang không hợp lệ')
+            if (!page || page < 1) page = 1
+            if (page > totalPages) page = totalPages
+            let next = (page - 1) * pageSize
             const words = await this.prismaService.word.findMany({
                 skip: next,
                 take: pageSize,
