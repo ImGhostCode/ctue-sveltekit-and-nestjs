@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { ActionData, PageData } from './$types';
-	import { enhance } from '$app/forms';
-	import { toasts } from 'svelte-toasts';
+	import { FlatToast, ToastContainer, toasts } from 'svelte-toasts';
 	import moment from 'moment';
 
 	let myModal4: HTMLDialogElement;
@@ -12,7 +11,9 @@
 
 	let result: any;
 	let banId: number;
-	$: {
+	let feedback: string = '';
+
+	$: if (result && result?.statusCode == 200) {
 		toasts.add({
 			title: 'Success',
 			description: result?.message,
@@ -24,6 +25,21 @@
 			onClick: () => {},
 			onRemove: () => {}
 		});
+		result = null;
+	}
+
+	$: if (result && result?.statusCode !== 200) {
+		toasts.add({
+			title: 'Error',
+			description: result?.message,
+			placement: 'bottom-right',
+			type: 'error',
+			theme: 'dark',
+			showProgress: true,
+			onClick: () => {},
+			onRemove: () => {}
+		});
+		result = null;
 	}
 
 	let users: any[] = [];
@@ -60,15 +76,43 @@
 		totalPages = result.data.totalPages;
 	}
 
-	async function banUser(id: number) {
-		const confirm = window.confirm('Bạn có chắc chắn muốn cấm tài khoản này không?');
+	async function banUser(event: Event) {
+		const confirm = window.confirm('Bạn có chắc chắn muốn khóa tài khoản này không?');
 		if (confirm) {
-			console.log(id);
+			const form = event.target as HTMLFormElement;
+			const data = new FormData(form);
+			let response = await fetch('/manage-account', {
+				method: 'PATCH',
+				body: data
+			});
+			result = await response.json();
+			if (result.statusCode == 200) {
+				await getAllUser(currentPage);
+			}
 		}
+		feedback = '';
+		myModal4.close();
 		banId = 0;
 	}
 
-	async function editUser(id: number) {}
+	async function unBanUser(event: Event) {
+		const confirm = window.confirm('Bạn có chắc chắn muốn mở khóa tài khoản này không?');
+		if (confirm) {
+			const form = event.target as HTMLFormElement;
+			const data = new FormData(form);
+			let response = await fetch('/manage-account', {
+				method: 'PATCH',
+				body: data
+			});
+			result = await response.json();
+			if (result.statusCode == 200) {
+				await getAllUser(currentPage);
+			}
+		}
+		feedback = '';
+		myModal4.close();
+		banId = 0;
+	}
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
@@ -127,7 +171,16 @@
 									Khóa
 								</button>
 							{:else}
-								<button class="btn btn-sm btn-primary"> Mở khóa </button>
+								<form on:submit|preventDefault={unBanUser}>
+									<input
+										type="text"
+										name="userId"
+										id="userId"
+										class="hidden"
+										bind:value={user.userId}
+									/>
+									<button class="btn btn-sm btn-primary"> Mở khóa </button>
+								</form>
 							{/if}
 						</td>
 					</tr>
@@ -166,8 +219,9 @@
 </div>
 <dialog bind:this={myModal4} id="my_modal_4" class="modal">
 	<div class="modal-box w-11/12 max-w-5xl">
-		<form>
+		<form on:submit|preventDefault={banUser}>
 			<h3 class="font-bold text-xl text-orange-600 mb-2">Cấm tài khoản người dùng</h3>
+			<input type="text" name="userId" id="userId" class="hidden" bind:value={banId} />
 			<div class="h-[1px] w-full border border-gray-200" />
 			<div class="">
 				<div class="form-control w-full mb-3">
@@ -175,6 +229,9 @@
 						<span class="label-text">Lý do (*)</span>
 					</label>
 					<textarea
+						bind:value={feedback}
+						required
+						maxlength="200"
 						class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
 						id="feedback"
 						name="feedback"
@@ -184,16 +241,21 @@
 			<div class="h-[1px] w-full border border-gray-200" />
 			<div class="modal-action">
 				<form method="dialog">
-					<button class="btn" on:click={() => (banId = 0)}>Close</button>
 					<button
-						type="submit"
-						on:click={async () => {
-							await banUser(banId);
+						class="btn"
+						on:click={() => {
+							banId = 0;
+							feedback = '';
 						}}
-						class="btn bg-green-600 hover:bg-green-700 text-white">OK</button
 					>
+						Đóng
+					</button>
 				</form>
+				<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">Đồng ý</button>
 			</div>
 		</form>
 	</div>
 </dialog>
+<ToastContainer placement="bottom-right" let:data>
+	<FlatToast {data} />
+</ToastContainer>

@@ -20,5 +20,10 @@ export async function GET(event) {
 }
 
 export async function PATCH(event) {
-
+    const token = event.cookies.get('accessToken');
+    const data = await event.request.formData()
+    const userId = await data.get('userId')
+    const feedback = await data.get('feedback')
+    const result = await db.toggleBanUser(token, userId, feedback || '')
+    return json(result)
 }
