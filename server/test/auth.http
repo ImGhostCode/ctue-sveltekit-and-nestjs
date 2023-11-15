@@ -5,7 +5,7 @@ POST  {{urlDev}}/register
 Content-Type: application/json
 
 {
-    "email": "test34@gmail.com",
+    "email": "test8@gmail.com",
     "password": "123456",
     "name": "test"
 }

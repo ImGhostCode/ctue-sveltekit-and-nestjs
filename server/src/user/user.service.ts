@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { PAGE_SIZE, ResponseData } from 'src/global';
-import { UpdateProfileDto, VerifyCodeDto, UpdatePasswordDto, ResetPasswordDto, ToggleFavoriteDto } from './dto';
+import { UpdateProfileDto, VerifyCodeDto, UpdatePasswordDto, ResetPasswordDto, ToggleBanUserDto } from './dto';
 import * as argon2 from 'argon2';
 import { Account } from '@prisma/client';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
@@ -56,15 +56,17 @@ export class UserService {
         }
     }
 
-    async toggleBanUser(id: number) {
+    async toggleBanUser(id: number, toggleBanUserDto: ToggleBanUserDto) {
         try {
             const account = await this.prismaService.account.findFirst({
                 where: { userId: id }
             })
+            let feedback = toggleBanUserDto.feedback
+            if (account.isBan) feedback = ''
             if (!account) new ResponseData<any>(null, 400, 'Tài khoản không tồn tại')
             await this.prismaService.account.update({
                 where: { email: account.email },
-                data: { isBan: !account.isBan }
+                data: { isBan: !account.isBan, feedback: feedback }
             })
             if (!account.isBan) return new ResponseData<any>(null, 200, 'Khóa người dùng thành công')
             return new ResponseData<any>(null, 200, 'Mở khóa người dùng thành công')
