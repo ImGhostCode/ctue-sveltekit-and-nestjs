@@ -19,9 +19,22 @@ export class UserService {
         }
     }
 
-    async getAllUsers() {
+    async getAllUsers(option: { page: number }) {
         try {
+            let { page } = option
+            let pageSize = 20
+            if (!page) page = 1
+            let next = (page - 1) * pageSize
+            const totalCount = await this.prismaService.account.count({
+                where: {
+                    accountType: 'user'
+                }
+            })
+            const totalPages = Math.ceil(totalCount / pageSize)
+            if (page > totalPages) return new ResponseData<any>(null, 400, 'Số trang không hợp lệ')
             const accounts = await this.prismaService.account.findMany({
+                skip: next,
+                take: pageSize,
                 select: {
                     email: true,
                     userId: true,
@@ -29,9 +42,15 @@ export class UserService {
                     authType: true,
                     isBan: true,
                     User: true
+                },
+                where: {
+                    accountType: 'user'
+                },
+                orderBy: {
+                    userId: 'asc'
                 }
             })
-            return new ResponseData<any>(accounts, 200, 'Tìm thấy các người dùng')
+            return new ResponseData<any>({ accounts, totalPages }, 200, 'Tìm thấy các người dùng')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
