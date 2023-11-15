@@ -19,7 +19,6 @@ export async function getUser(accessToken: string) {
 
 export async function getAllUsers(accessToken: string, page: number) {
     try {
-        if (!page) page = 1
         const response = await axiosClient.get(`${URL}?page=${page}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -31,10 +30,37 @@ export async function getAllUsers(accessToken: string, page: number) {
     }
 }
 
-export async function updateProfile(id: number, accessToken: string, data: any) {
-
+export async function toggleBanUser(accessToken: string, userId: number, feedback: string) {
     try {
+        const data = {
+            feedback: feedback
+        }
+        const response = await axiosClient.patch(`${URL}/toggle-ban/${userId}`, data, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
 
+export async function deleteUser(accessToken: string, userId: number) {
+    try {
+        const response = await axiosClient.delete(`${URL}/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function updateProfile(id: number, accessToken: string, data: any) {
+    try {
         const response = await axiosClient.patchForm(`${URL}/update-profile/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
