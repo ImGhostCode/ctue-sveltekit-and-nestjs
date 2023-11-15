@@ -17,7 +17,6 @@ export const actions = {
         try {
             cookies.delete('accessToken');
             redirect(300, '/')
-
         } catch (error) {
             throw error
         }
