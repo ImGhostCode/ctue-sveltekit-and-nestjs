@@ -1,16 +1,57 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
+	import animal from '$lib/assets/icons/topics/animal.png';
+	import academy from '$lib/assets/icons/topics/academy.png';
+	import body from '$lib/assets/icons/topics/body.png';
+	import color from '$lib/assets/icons/topics/color.png';
+	import clothes from '$lib/assets/icons/topics/clothes.png';
+	import culture from '$lib/assets/icons/topics/culture.png';
+	import entertainment from '$lib/assets/icons/topics/entertainment.png';
+	import exciting from '$lib/assets/icons/topics/exciting.png';
+	import family from '$lib/assets/icons/topics/family.png';
+	import flag from '$lib/assets/icons/topics/flag.png';
 	import food from '$lib/assets/icons/topics/food.png';
 	import health from '$lib/assets/icons/topics/health.png';
-	import { enhance } from '$app/forms';
-	import { isLoadingForm } from '$lib/store';
+	import hobby from '$lib/assets/icons/topics/hobby.png';
+	import ielts from '$lib/assets/icons/topics/ielts.png';
+	import job from '$lib/assets/icons/topics/job.png';
+	import nature from '$lib/assets/icons/topics/nature.png';
+	import others from '$lib/assets/icons/topics/others.png';
+	import skill from '$lib/assets/icons/topics/skill.png';
+	import spirituality from '$lib/assets/icons/topics/spirituality.png';
+	import sport from '$lib/assets/icons/topics/sport.png';
+	import technology from '$lib/assets/icons/topics/technology.png';
+	import toeic from '$lib/assets/icons/topics/toeic.png';
+	import travel from '$lib/assets/icons/topics/travel.png';
 
-	const imagesTopic: { [key: string]: string } = {
+	const imgTopics: { [key: string]: string } = {
 		tree,
 		social,
+		animal,
+		academy,
+		body,
+		color,
+		clothes,
+		culture,
+		entertainment,
+		exciting,
+		family,
+		flag,
 		food,
-		health
+		health,
+		hobby,
+		ielts,
+		job,
+		nature,
+		others,
+		skill,
+		spirituality,
+		sport,
+		technology,
+		toeic,
+		travel
 	};
 
 	const phonetics: string[] = [
@@ -66,8 +107,7 @@
 	let imgIlustrate: any = null;
 
 	let phoneticValue = '';
-
-	$: console.log($isLoadingForm);
+	let isLoadingForm: boolean = false;
 
 	$: topicIds = topics
 		.filter((topic) => topic.selected)
@@ -94,7 +134,13 @@
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form
 		method="post"
-		use:enhance
+		use:enhance={() => {
+			isLoadingForm = true;
+			return async ({ update }) => {
+				isLoadingForm = false;
+				update();
+			};
+		}}
 		enctype="multipart/form-data"
 		action="?/contribute"
 		class="grid grid-cols-3"
@@ -392,7 +438,7 @@
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
 					>
-						<img class="mr-1" src={imagesTopic[topic.image]} alt={topic.name} />
+						<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
 						<span class="pr-1 text-sm">{topic.name}</span>
 					</button>
 				{/each}
@@ -402,12 +448,25 @@
 		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
 
 		<div class="mt-4 col-span-3 text-right">
-			<button
-				type="submit"
-				disabled={$isLoadingForm}
-				class:cursor-not-allowed={$isLoadingForm}
-				class="btn btn-accent text-white mr-2">Gửi yêu cầu</button
-			>
+			{#if isLoadingForm}
+				<button
+					class="btn mr-2 btn-info"
+					disabled={isLoadingForm}
+					class:cursor-not-allowed={isLoadingForm}
+					>&nbsp;
+					<span class="loading loading-dots loading-xs" />
+					&nbsp;
+				</button>
+			{:else}
+				<button
+					type="submit"
+					disabled={isLoadingForm}
+					class:cursor-not-allowed={isLoadingForm}
+					class=" btn btn-accent text-white mr-2"
+				>
+					Gửi yêu cầu
+				</button>
+			{/if}
 			<button type="reset" class="btn btn-outline btn-error">Loại bỏ</button>
 		</div>
 

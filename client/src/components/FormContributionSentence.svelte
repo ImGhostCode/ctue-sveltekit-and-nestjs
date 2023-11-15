@@ -18,6 +18,7 @@
 	export let missingFields: any;
 
 	let showTopics = false;
+	let isLoadingForm: boolean = false;
 
 	$: topicIds = topics
 		.filter((topic) => topic.selected)
@@ -40,7 +41,13 @@
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form
 		method="post"
-		use:enhance
+		use:enhance={() => {
+			isLoadingForm = true;
+			return async ({ update }) => {
+				isLoadingForm = false;
+				update();
+			};
+		}}
 		enctype="multipart/form-data"
 		action="?/contribute-sentence"
 		class="flex flex-col"
@@ -167,7 +174,25 @@
 		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
 
 		<div class="mt-4 col-span-3 text-right">
-			<button type="submit" class="btn btn-accent text-white mr-2">Gửi yêu cầu</button>
+			{#if isLoadingForm}
+				<button
+					class="btn mr-2 btn-info"
+					disabled={isLoadingForm}
+					class:cursor-not-allowed={isLoadingForm}
+					>&nbsp;
+					<span class="loading loading-dots loading-xs" />
+					&nbsp;
+				</button>
+			{:else}
+				<button
+					type="submit"
+					disabled={isLoadingForm}
+					class:cursor-not-allowed={isLoadingForm}
+					class=" btn btn-accent text-white mr-2"
+				>
+					Gửi yêu cầu
+				</button>
+			{/if}
 			<button type="reset" class="btn btn-outline btn-error" on:click={() => resetSelectedTopics()}
 				>Loại bỏ</button
 			>

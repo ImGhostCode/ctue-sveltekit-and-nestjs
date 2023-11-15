@@ -74,25 +74,6 @@
 			//component: BootstrapToast // You can customize the toast component here
 		});
 	}
-
-	// Dữ liệu JSON bạn đã cung cấp
-	const jsonData: string = `{
-    "mean": "nhập khẩu",
-    "note": "feaf\r\nfeaffff",
-    "typeId": 1,
-    "content": "import",
-    "levelId": 2,
-    "topicId": ["7", "8", "9"],
-    "antonyms": "",
-    "examples": "faea\r\nfefa",
-    "synonyms": "",
-    "specializationId": 4
-}`;
-
-	const modifiedString = jsonData.replace(/\r\n/g, ' ');
-
-	// Parse dữ liệu JSON thành đối tượng TypeScript
-	const dataTest: any = JSON.parse(modifiedString);
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">

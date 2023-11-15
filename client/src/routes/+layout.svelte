@@ -3,12 +3,13 @@
 	import default_image from '$lib/assets/images/default-image.png';
 	import bgCtu from '$lib/assets/images/CTU_Blank_white.png';
 	import ctueLogo from '$lib/assets/images/ctue-high-resolution-logo-transparent3.png';
-	import type { LayoutServerData } from './$types';
+	import type { ActionData, LayoutServerData } from './$types';
 	import { onDestroy, onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 	import { isLoading, audioSettings } from '$lib/store';
 
 	export let data: LayoutServerData;
+	export let form: ActionData;
 
 	let showNavBar = false;
 
@@ -287,26 +288,28 @@
 										<span class="ml-2">Liên hệ - Giúp đỡ</span>
 									</li></a
 								>
-								<form action="?/logout" method="post" use:enhance>
-									<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
-										<span class="inline-block"
-											><svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-												stroke="currentColor"
-												class="w-6 h-6"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-												/>
-											</svg>
-										</span>
-										<button class="ml-2" type="submit">Đăng xuất</button>
-									</li>
+								<form action="?/logout" method="post" use:enhance class="block">
+									<button class="w-full" type="submit">
+										<li class="flex py-3 px-4 hover:bg-[#e5e5e5]">
+											<span class=""
+												><svg
+													xmlns="http://www.w3.org/2000/svg"
+													fill="none"
+													viewBox="0 0 24 24"
+													stroke-width="1.5"
+													stroke="currentColor"
+													class="w-6 h-6"
+												>
+													<path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+													/>
+												</svg>
+											</span>
+											<p class="ml-2">Đăng xuất</p>
+										</li>
+									</button>
 								</form>
 							</ul>
 						</div>
