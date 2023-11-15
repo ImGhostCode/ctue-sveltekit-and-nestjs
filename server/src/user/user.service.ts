@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { ResponseData } from 'src/global';
+import { PAGE_SIZE, ResponseData } from 'src/global';
 import { UpdateProfileDto, VerifyCodeDto, UpdatePasswordDto, ResetPasswordDto, ToggleFavoriteDto } from './dto';
 import * as argon2 from 'argon2';
 import { Account } from '@prisma/client';
@@ -19,9 +19,22 @@ export class UserService {
         }
     }
 
-    async getAllUsers() {
+    async getAllUsers(option: { page: number }) {
+        let pageSize = PAGE_SIZE.PAGE_USER
         try {
+            let { page } = option
+            const totalCount = await this.prismaService.account.count({
+                where: {
+                    accountType: 'user'
+                }
+            })
+            const totalPages = Math.ceil(totalCount / pageSize)
+            if (!page || page < 1) page = 1
+            if (page > totalPages) page = totalPages
+            let next = (page - 1) * pageSize
             const accounts = await this.prismaService.account.findMany({
+                skip: next,
+                take: pageSize,
                 select: {
                     email: true,
                     userId: true,
@@ -29,9 +42,15 @@ export class UserService {
                     authType: true,
                     isBan: true,
                     User: true
+                },
+                where: {
+                    accountType: 'user'
+                },
+                orderBy: {
+                    userId: 'asc'
                 }
             })
-            return new ResponseData<any>(accounts, 200, 'Tìm thấy các người dùng')
+            return new ResponseData<any>({ accounts, totalPages }, 200, 'Tìm thấy các người dùng')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }

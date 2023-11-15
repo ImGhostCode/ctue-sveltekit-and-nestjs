@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateSentenceDto, UpdateSentenceDto } from './dto';
-import { ResponseData } from '../global';
+import { PAGE_SIZE, ResponseData } from '../global';
 import { Sentence } from '@prisma/client';
 
 @Injectable()
@@ -36,11 +36,9 @@ export class SentenceService {
     }
 
     async findAll(option: { topic: [], type: number, page: number, sort: any }) {
+        let pageSize = PAGE_SIZE.PAGE_SENTENCE
         try {
             let { sort, type, topic, page } = option
-            let pageSize = 20
-            if (!page) page = 1
-            let next = (page - 1) * pageSize
             const totalCount = await this.prismaService.sentence.count({
                 where: {
                     typeId: type,
@@ -52,7 +50,9 @@ export class SentenceService {
                 }
             })
             const totalPages = Math.ceil(totalCount / pageSize)
-            if (page > totalPages) return new ResponseData<any>(null, 400, 'Số trang không hợp lệ')
+            if (!page || page < 1) page = 1
+            if (page > totalPages) page = totalPages
+            let next = (page - 1) * pageSize
             const sentences = await this.prismaService.sentence.findMany({
                 skip: next,
                 take: pageSize,
