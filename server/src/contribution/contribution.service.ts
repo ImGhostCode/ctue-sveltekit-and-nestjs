@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateContributionDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { CONSTANTS_MAX, CONTRIBUTION_STATUS, ResponseData } from '../global';
+import { CONSTANTS_MAX, ResponseData } from '../global';
 import { Account, Contribution } from '@prisma/client';
 import { WordService } from '../word/word.service';
 import { SentenceService } from '../sentence/sentence.service';

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateSentenceDto, UpdateSentenceDto } from './dto';
-import { ResponseData } from '../global';
+import { PAGE_SIZE, ResponseData } from '../global';
 import { Sentence } from '@prisma/client';
 
 @Injectable()
@@ -35,10 +35,32 @@ export class SentenceService {
         }
     }
 
-    async findAll(topic: []) {
+    async findAll(option: { topic: [], type: number, page: number, sort: any }) {
+        let pageSize = PAGE_SIZE.PAGE_SENTENCE
         try {
-            return new ResponseData<Sentence>(await this.prismaService.sentence.findMany({
+            let { sort, type, topic, page } = option
+            const totalCount = await this.prismaService.sentence.count({
                 where: {
+                    typeId: type,
+                    Topic: {
+                        some: {
+                            id: { in: topic }
+                        }
+                    }
+                }
+            })
+            const totalPages = Math.ceil(totalCount / pageSize)
+            if (!page || page < 1) page = 1
+            if (page > totalPages) page = totalPages
+            let next = (page - 1) * pageSize
+            const sentences = await this.prismaService.sentence.findMany({
+                skip: next,
+                take: pageSize,
+                orderBy: {
+                    content: sort
+                },
+                where: {
+                    typeId: type,
                     Topic: {
                         some: {
                             id: {
@@ -49,11 +71,11 @@ export class SentenceService {
                 },
                 include: {
                     Practice: true,
-                    User: true,
                     Topic: true,
                     Type: true
                 }
-            }), 200, 'Tìm thành công')
+            })
+            return new ResponseData<any>({ sentences, totalPages }, 200, 'Tìm thành công')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }

@@ -20,7 +20,7 @@
 		isLoading = false;
 		if (!data?.user || !data?.token) {
 			goto('/login'); // Redirect to the login page if not authenticated
-		} else newName = data.user.user.name;
+		} else newName = data.user.User.name;
 	});
 
 	// console.log(data);
@@ -33,15 +33,6 @@
 	$: if (form?.noToken) {
 		goto('/login'); // Redirect to the login page if not authenticated
 	}
-
-	// $: console.log('profile :: ', $isLoadingForm);
-
-	// let isLoadingFormTest = false;
-
-	// const unsubscribe = isLoadingForm.subscribe((value) => {
-	// 	isLoadingFormTest = value;
-	// 	console.log('profile subscribe::.svelte::::', isLoadingFormTest);
-	// });
 
 	let isEditing = false;
 	let avt: any = null;
@@ -75,11 +66,11 @@
 								src={URL.createObjectURL(avt)}
 								alt={URL.createObjectURL(avt)}
 							/>
-						{:else if data.user.user.avt}
+						{:else if data.user.User.avt}
 							<img
 								class="h-[150px] w-[150px] mx-auto rounded-full border-2 border-blue-500"
-								src={data.user.user.avt}
-								alt={data.user.user.avt}
+								src={data.user.User.avt}
+								alt={data.user.User.avt}
 							/>
 						{:else}
 							<img
@@ -131,7 +122,7 @@
 									class="hidden"
 									name="userId"
 									id="userId"
-									bind:value={data.user.user.id}
+									bind:value={data.user.User.id}
 								/>
 							</div>
 						{/if}
@@ -151,13 +142,13 @@
 							/>
 						</div>
 					{:else}
-						<h2 class="leading-12 text-2xl break-words">{data.user.user.name}</h2>
+						<h2 class="leading-12 text-2xl break-words">{data.user.User.name}</h2>
 					{/if}
 
 					<!-- <h4 class="leading-6 mb-6 font-light">test35e724</h4> -->
 					<p class="font-light">{data.user.email}</p>
 					<p class="font-light mb-4">
-						Đã tham gia vào {moment(data.user.user.createdAt).format('DD/MM/YYYY')}
+						Đã tham gia vào {moment(data.user.User.createdAt).format('DD/MM/YYYY')}
 					</p>
 
 					{#if isEditing}
@@ -165,7 +156,7 @@
 							<button
 								type="button"
 								on:click={() => (
-									(isEditing = false), (newName = data.user.user.name), (avt = null)
+									(isEditing = false), (newName = data.user.User.name), (avt = null)
 								)}
 								class="w-full mr-1 px-6 py-2 flex justify-center items-center bg-none hover:bg-gray-100 rounded-sm shadow border-red-600 border text-red-600 font-semibold"
 							>
@@ -174,10 +165,10 @@
 							<button
 								type="submit"
 								class="w-full ml-1 px-6 py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 border border-blue-600 rounded-sm shadow text-white font-semibold"
-								class:disable={$isLoadingForm || (!avt && newName === data.user.user.name)}
-								disabled={$isLoadingForm || (!avt && newName === data.user.user.name)}
+								class:disable={$isLoadingForm || (!avt && newName === data.user.User.name)}
+								disabled={$isLoadingForm || (!avt && newName === data.user.User.name)}
 								class:cursor-not-allowed={$isLoadingForm ||
-									(!avt && newName === data.user.user.name)}
+									(!avt && newName === data.user.User.name)}
 							>
 								{#if $isLoadingForm}
 									<span class="loading loading-ring loading-md" />

@@ -19,7 +19,7 @@
 		const toast = toasts.add({
 			title: 'Success',
 			description: form?.message,
-			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			duration: 800, // Set the duration to 0 to keep it open until manually closed
 			placement: 'bottom-right',
 			type: 'success',
 			theme: 'dark',

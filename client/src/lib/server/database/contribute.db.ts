@@ -33,4 +33,33 @@ export async function getContribution(accessToken: string, type: string) {
         throw error;
     }
 }
+export async function getListContribution(accessToken: string, status: number) {
+
+    try {
+        const response = await axiosClient.get(`${URL}/?status=${status}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function verifyContribute(accessToken: any, id: number, data: any) {
+
+    try {
+        const response = await axiosClient.patch(`${URL}/${id}`, data, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
+
+    } catch (error) {
+        throw error;
+    }
+}
 

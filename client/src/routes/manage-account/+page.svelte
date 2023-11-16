@@ -1,30 +1,48 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Pagination from '../../components/Pagination.svelte';
+	import type { ActionData, PageData } from './$types';
+	import { enhance } from '$app/forms';
+	import { toasts } from 'svelte-toasts';
+	import moment from 'moment';
+
 	let myModal4: HTMLDialogElement;
 
-	let users = [
-		{
-			id: 1,
-			username: 'admin',
-			email: 'admin@example.com',
-			role: 'admin'
-		},
-		{
-			id: 2,
-			username: 'user1',
-			email: 'user1@example.com',
-			role: 'user'
-		}
-	];
+	export let data: PageData;
+	export let form: ActionData;
+
+	let users: any[] = [];
+
+	let currentPage: number = 1;
+	let totalPages: number;
 
 	onMount(() => {
-		// fetch('/api/users')
-		// 	.then((response) => response.json())
-		// 	.then((data) => {
-		// 		users = data;
-		// 	});
+		let intervalId = setInterval(() => {
+			if (data.users.length !== 0) {
+				users = data.users;
+				totalPages = data.totalPages;
+				clearInterval(intervalId);
+			}
+		}, 50);
 	});
+
+	$: if (form?.success) {
+		users = form.users;
+		currentPage = form.currentPage;
+		totalPages = form.totalPages;
+	}
+
+	$: if (form?.invalidCredential) {
+		const toast = toasts.add({
+			title: 'Error',
+			description: form?.message,
+			placement: 'bottom-right',
+			type: 'error',
+			theme: 'dark',
+			showProgress: true,
+			onClick: () => {},
+			onRemove: () => {}
+		});
+	}
 
 	function deleteUser(id: number) {
 		const confirm = window.confirm('Bạn có chắc chắn muốn xóa tài khoản này không?');
@@ -62,36 +80,78 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
+				<th>STT</th>
 				<th>ID</th>
 				<th>Tên người dùng</th>
 				<th>Email</th>
-				<th>Vai trò</th>
+				<th>Ngày đăng ký</th>
 				<th>Hành động</th>
 			</tr>
 		</thead>
 		<tbody>
-			{#each users as user}
-				<tr class="hover">
-					<td>{user.id}</td>
-					<td>{user.username}</td>
-					<td>{user.email}</td>
-					<td>{user.role}</td>
-					<td>
-						<button
-							class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
-							on:click={() => deleteUser(user.id)}>Xóa</button
-						>
-						<button class="btn btn-sm btn-warning" on:click={() => myModal4.showModal()}>Cấm</button
-						>
-						<button class="btn btn-sm btn-primary" on:click={() => editUser(user.id)}>Sửa</button>
-					</td>
-				</tr>
-			{/each}
+			{#if users.length}
+				{#each users as user, i}
+					<tr class="hover">
+						<td>{i}</td>
+						<td>{user.userId}</td>
+						<td>{user.User.name}</td>
+						<td>{user.email}</td>
+						<td>{moment(data.user.User.createdAt).format('DD/MM/YYYY')}</td>
+						<td>
+							<button
+								class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
+								on:click={() => deleteUser(user.userId)}>Xóa</button
+							>
+							<button class="btn btn-sm btn-warning" on:click={() => myModal4.showModal()}
+								>Cấm</button
+							>
+							<button class="btn btn-sm btn-primary" on:click={() => editUser(user.userId)}
+								>Sửa</button
+							>
+						</td>
+					</tr>
+				{/each}
+			{/if}
 		</tbody>
 	</table>
-
-	<!-- Pagination -->
-	<Pagination />
+	<div class="join flex gap-1 w-max mx-auto mt-6">
+		<form method="post" action="?/prePage" use:enhance>
+			<input
+				type="number"
+				name="currentPage"
+				id="currentPage"
+				class="hidden"
+				bind:value={currentPage}
+			/>
+			<button
+				class:disable={currentPage == 1}
+				disabled={currentPage == 1}
+				class:cursor-not-allowed={currentPage == 1}
+				type="submit"
+				class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
+			>
+				Trang sau
+			</button>
+		</form>
+		<form method="post" action="?/nextPage" use:enhance>
+			<input
+				type="number"
+				name="currentPage"
+				id="currentPage"
+				class="hidden"
+				bind:value={currentPage}
+			/>
+			<button
+				class:disable={currentPage == totalPages}
+				disabled={currentPage == totalPages}
+				class:cursor-not-allowed={currentPage == totalPages}
+				type="submit"
+				class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
+			>
+				Trang tiếp theo
+			</button>
+		</form>
+	</div>
 </div>
 
 <dialog bind:this={myModal4} id="my_modal_4" class="modal">
@@ -99,7 +159,6 @@
 		<form action="" method="post">
 			<h3 class="font-bold text-xl text-orange-600 mb-2">Cấm tài khoản người dùng</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="">
 				<div class="form-control w-full mb-3">
 					<label class="label" for="feedback">
@@ -112,12 +171,9 @@
 					/>
 				</div>
 			</div>
-
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="modal-action">
 				<form method="dialog">
-					<!-- if there is a button, it will close the modal -->
 					<button class="btn">Close</button>
 					<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
 				</form>

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { ResponseData } from 'src/global';
+import { PAGE_SIZE, ResponseData } from 'src/global';
 import { UpdateProfileDto, VerifyCodeDto, UpdatePasswordDto, ResetPasswordDto, ToggleFavoriteDto } from './dto';
 import * as argon2 from 'argon2';
 import { Account } from '@prisma/client';
@@ -19,19 +19,38 @@ export class UserService {
         }
     }
 
-    async getAllUsers() {
+    async getAllUsers(option: { page: number }) {
+        let pageSize = PAGE_SIZE.PAGE_USER
         try {
+            let { page } = option
+            const totalCount = await this.prismaService.account.count({
+                where: {
+                    accountType: 'user'
+                }
+            })
+            const totalPages = Math.ceil(totalCount / pageSize)
+            if (!page || page < 1) page = 1
+            if (page > totalPages) page = totalPages
+            let next = (page - 1) * pageSize
             const accounts = await this.prismaService.account.findMany({
+                skip: next,
+                take: pageSize,
                 select: {
                     email: true,
                     userId: true,
                     accountType: true,
                     authType: true,
                     isBan: true,
-                    user: true
+                    User: true
+                },
+                where: {
+                    accountType: 'user'
+                },
+                orderBy: {
+                    userId: 'asc'
                 }
             })
-            return new ResponseData<any>(accounts, 200, 'Tìm thấy các người dùng')
+            return new ResponseData<any>({ accounts, totalPages }, 200, 'Tìm thấy các người dùng')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
@@ -107,7 +126,7 @@ export class UserService {
             await this.prismaService.account.delete({
                 where: { email: account.email },
                 include: {
-                    user: true
+                    User: true
                 }
             })
             await this.prismaService.user.delete({
@@ -151,7 +170,7 @@ export class UserService {
     async sendVerifyCode(verifyCodeDto: VerifyCodeDto) {
         try {
             const { email } = verifyCodeDto
-            const account = await this.prismaService.account.findUnique({ where: { email }, include: { user: true } })
+            const account = await this.prismaService.account.findUnique({ where: { email }, include: { User: true } })
             if (!account) return new ResponseData<any>(null, 400, 'Email này chưa đăng ký')
             await this.prismaService.verifyCode.deleteMany({ where: { email: email } })
             const code = this.random6DigitNumber()
@@ -164,10 +183,10 @@ export class UserService {
             if (!verifyCode) return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
             const emailSend = await this.mailerService.sendMail({
                 to: email,
-                subject: 'Mã xác minh tài khoản của Ứng dụng hỗ  trợ học tiếng anh',
+                subject: 'Mã OTP để thiết lập mật khẩu mới hoặc tài khoản Ứng dụng hỗ  trợ học tiếng anh',
                 template: './verifycode',
                 context: {
-                    name: account.user.name,
+                    name: account.User.name,
                     code: code
                 }
             })

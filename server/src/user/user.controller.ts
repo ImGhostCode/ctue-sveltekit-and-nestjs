@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { GetAccount, Roles } from '../auth/decorator';
 import { MyJWTGuard, RolesGuard } from '../auth/guard';
@@ -23,8 +23,8 @@ export class UserController {
     @UseGuards(MyJWTGuard, RolesGuard)
     @Roles(ACCOUNT_TYPES.ADMIN)
     @Get()
-    getAllUsers() {
-        return this.userService.getAllUsers()
+    getAllUsers(@Query() option: { page: number }) {
+        return this.userService.getAllUsers(option)
     }
 
     @UseGuards(MyJWTGuard, RolesGuard)
