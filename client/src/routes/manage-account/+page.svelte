@@ -3,6 +3,7 @@
 	import type { ActionData, PageData } from './$types';
 	import { FlatToast, ToastContainer, toasts } from 'svelte-toasts';
 	import moment from 'moment';
+	import Pagination from '../../components/Pagination.svelte';
 
 	let myModal4: HTMLDialogElement;
 
@@ -48,8 +49,10 @@
 	let totalPages: number;
 
 	onMount(async () => {
-		await getAllUser(1);
+		await getAllUser(currentPage);
 	});
+
+	$: getAllUser(currentPage);
 
 	async function deleteUser(event: Event) {
 		const confirm = window.confirm('Bạn có chắc chắn muốn xóa tài khoản này không?');
@@ -112,6 +115,16 @@
 		feedback = '';
 		myModal4.close();
 		banId = 0;
+	}
+
+	function handlePrePAge() {
+		document.body.scrollIntoView();
+		currentPage = currentPage - 1;
+	}
+
+	function handleNextPage() {
+		document.body.scrollIntoView();
+		currentPage = currentPage + 1;
 	}
 </script>
 
@@ -188,34 +201,7 @@
 			{/if}
 		</tbody>
 	</table>
-	<div class="join flex gap-1 w-max mx-auto mt-6">
-		<button
-			on:click={async () => {
-				currentPage = currentPage - 1;
-				await getAllUser(currentPage);
-			}}
-			class:disable={currentPage == 1}
-			disabled={currentPage == 1}
-			class:cursor-not-allowed={currentPage == 1}
-			type="submit"
-			class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
-		>
-			Trang sau
-		</button>
-		<button
-			on:click={async () => {
-				currentPage = currentPage + 1;
-				await getAllUser(currentPage);
-			}}
-			class:disable={currentPage == totalPages}
-			disabled={currentPage == totalPages}
-			class:cursor-not-allowed={currentPage == totalPages}
-			type="submit"
-			class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
-		>
-			Trang tiếp theo
-		</button>
-	</div>
+	<Pagination {totalPages} {currentPage} on:next={handleNextPage} on:pre={handlePrePAge} />
 </div>
 <dialog bind:this={myModal4} id="my_modal_4" class="modal">
 	<div class="modal-box w-11/12 max-w-5xl">

@@ -2,13 +2,14 @@
 
 ### Create topic
 POST  {{urlDev}}/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE3MDAxMjIwMTMsImV4cCI6MTcwMDEyOTIxM30.Bk2atfgkKQ27p74vbqPRaO8zH41v_vzpmU9VUfpeJgE
 Content-Type: application/json
 
 {
 
-    // "name": "Giao tiếp thông dụng" ,
-    // "isWord": false,
-    // "image": ""
+    //"name": "Giao tiếp thông dụng" ,
+    //"isWord": false,
+    //"image": ""
  
     // "name": "Chào hỏi",
     // "isWord": false,
@@ -74,7 +75,7 @@ Content-Type: application/json
     // "isWord": false,
     // "image": ""
 
-    //"name": "Khác"
+    //"name": "Khác",
     // "isWord": false,
     // "image": ""
 
