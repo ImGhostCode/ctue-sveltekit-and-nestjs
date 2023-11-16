@@ -5,7 +5,6 @@
 	import type { ActionData, LayoutServerData } from './$types';
 	import { onDestroy, onMount } from 'svelte';
 	import { enhance } from '$app/forms';
-	import { onMount } from 'svelte';
 	import { isLoading, audioSettings } from '$lib/store';
 	import { goto } from '$app/navigation';
 

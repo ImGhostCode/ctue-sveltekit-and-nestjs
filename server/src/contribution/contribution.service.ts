@@ -43,7 +43,7 @@ export class ContributionService {
       const contribution = await this.prismaService.contribution.create({
         data: {
           userId: userId,
-          content: JSON.parse(String(createContributionDto.content)),
+          content: contentContribution,
           type: createContributionDto.type,
           status: -1
         }
@@ -57,7 +57,7 @@ export class ContributionService {
   async findAll(type: string, status: number) {
     try {
       let contributions = await this.prismaService.contribution.findMany({ where: { type, status } })
-      contributions.forEach((contribution) => contribution.content = JSON.parse(contribution.content as string))
+      //contributions.forEach((contribution) => contribution.content = JSON.parse(contribution.content as string))
       return new ResponseData<Contribution>(contributions, 200, 'Tìm thành công')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
@@ -96,13 +96,13 @@ export class ContributionService {
         return new ResponseData<string>(null, 400, "Từ đã được xác minh")
       }
       if (body.status === 1) {
-        const { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, synonyms, antonyms, picture } = contribution.content as any
+        const { typeId, topicId, levelId, specializationId, content, mean, note, phonetic, examples, synonyms, antonyms, picture } = JSON.parse(JSON.stringify(contribution.content))
         const { userId } = contribution
         let value: any
         if (contribution.type === 'word') {
-          value = await this.wordService.create({ typeId, topicId, levelId, specializationId, content, mean, note, phonetic, synonyms, antonyms, userId, examples, picture }, null)
+          value = await this.wordService.create({ typeId, topicId: topicId.length ? topicId.map(id => Number(id)) : [], levelId, specializationId, content, mean, note, phonetic, synonyms: synonyms.split('\r\n'), antonyms: antonyms.split('\r\n'), userId, examples: examples.split('\r\n'), picture }, null)
         } else {
-          value = await this.sentenceService.create({ typeId, topicId, content, mean, note, userId })
+          value = await this.sentenceService.create({ typeId, topicId: topicId.map(id => Number(id)), content, mean, note, userId })
         }
         if (value.statusCode === 200) {
           await this.prismaService.contribution.update({ where: { id }, data: { status: body.status, feedback: '' } })
@@ -135,7 +135,7 @@ export class ContributionService {
   async findById(id: number) {
     const contribution = await this.prismaService.contribution.findUnique({ where: { id: id } })
     if (!contribution) return null
-    contribution.content = JSON.parse(contribution.content as string)
+    //contribution.content = JSON.parse(contribution.content as string)
     return contribution
   }
 }

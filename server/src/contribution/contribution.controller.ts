@@ -26,7 +26,7 @@ export class ContributionController {
   }
 
   @Get('user')
-  @Roles(ACCOUNT_TYPES.USER)
+  @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
   findAllByUser(@Query("type") type: string, @GetAccount() account: Account) {
     return this.contributionService.findAllByUser(type, account.userId);
   }
