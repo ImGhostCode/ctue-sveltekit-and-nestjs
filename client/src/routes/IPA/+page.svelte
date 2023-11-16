@@ -36,6 +36,8 @@
 	import au from '$lib/assets/audios/ipa/diphthongs/au.mp3';
 
 	import { HandlerSpeaker } from '$lib/store';
+	import Speaker from '../../components/Speaker.svelte';
+	import PlayAudio from '../../components/PlayAudio.svelte';
 
 	let isChecked = false;
 </script>
@@ -53,77 +55,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ɪ /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(i_short);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={i_short} />
 					<p class="my-3">i ngắn, đọc dứt khoát như đang kêu ai đó, miệng không căng</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							ship <span class="text-blue-700">/ʃɪp/</span>
-							<button
-								class="py-1 px-1"
-								on:click={() => {
-									HandlerSpeaker.onTextToSpeech('ship');
-								}}
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'ship'} />
 						</li>
 						<li class="my-1">
 							hit <span class="text-blue-700">/hɪt/</span>
-							<button
-								class="py-1 px-1"
-								on:click={() => {
-									HandlerSpeaker.onTextToSpeech('hit');
-								}}
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'hit'} />
 						</li>
 					</ul>
 				</div>
@@ -134,71 +76,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ i: /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(i_long);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={i_long} />
 					<p class="my-3">i dài, miệng cười, nhấn mạnh, nặng và căng</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							sheep <span class="text-blue-700">/ʃi:p/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('sheep');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'sheep'} />
 						</li>
 						<li class="my-1">
 							heat <span class="text-blue-700">/hi:t/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('heat');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'heat'} />
 						</li>
 					</ul>
 				</div>
@@ -208,7 +96,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 2 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -218,71 +105,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ʊ /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(u_short);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={u_short} />
 					<p class="my-3">u ngắn, tròn môi nhẹ, dứt khoát, không căng</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							foot <span class="text-blue-700">/fʊt/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('foot');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'foot'} />
 						</li>
 						<li class="my-1">
 							put <span class="text-blue-700">/pʊt/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('put');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'put'} />
 						</li>
 					</ul>
 				</div>
@@ -293,71 +126,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ u: /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(u_long);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={u_long} />
 					<p class="my-3">u dài, chu và tròn môi, căng và mạnh</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							blue <span class="text-blue-700">/blu:/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('blue');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg></button
-							>
+							<Speaker key={'blue'} />
 						</li>
 						<li class="my-1">
 							group <span class="text-blue-700">/gru:p/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('group');
-							}}>
-							<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg></button
-							>
+							<Speaker key={'group'} />
 						</li>
 					</ul>
 				</div>
@@ -367,7 +146,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 3 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -377,71 +155,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ɔ: /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(o);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={o} />
 					<p class="my-3">Như o dài hoặc ô, nặng và nhấn mạnh</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							law <span class="text-blue-700">/lɔ:/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('law');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'law'} />
 						</li>
 						<li class="my-1">
 							thought <span class="text-blue-700">/θɔ:t/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('thought');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'thought'} />
 						</li>
 					</ul>
 				</div>
@@ -452,66 +176,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ɒ /</p>
-					<button class="py-1 px-1" on:click={() => HandlerSpeaker.onPlayAudio(o_uk)}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg></button
-					>
+					<PlayAudio key={o_uk} />
 					<p class="my-3">Đọc như o ngắn, dứt khoát. Âm này trong UK như ɔ: còn US như ɑ:</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							got <span class="text-blue-700">/ɡɒt/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('got');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'got'} />
 						</li>
 						<li class="my-1">
 							shot <span class="text-blue-700">/ʃɒt/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('shot');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'shot'} />
 						</li>
 					</ul>
 				</div>
@@ -521,7 +196,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 4 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -531,71 +205,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ e /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(e);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={e} />
 					<p class="my-3">Mở miệng vừa, đọc như e. Giữ trọng tâm</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							ten <span class="text-blue-700">/ten//</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('ten');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'ten'} />
 						</li>
 						<li class="my-1">
 							medal <span class="text-blue-700">/medəl/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('medal');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'medal'} />
 						</li>
 					</ul>
 				</div>
@@ -603,31 +223,10 @@
 					<img src={ipa_e} alt={ipa_e} />
 				</div>
 			</div>
-
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ æ /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(ae);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={ae} />
 					<p class="my-3">
 						Mở miệng đọc nhẹ e nối liền a, bắt đầu với e và kết thúc a. Giữ trọng tâm
 					</p>
@@ -635,45 +234,11 @@
 					<ul>
 						<li class="my-1">
 							back <span class="text-blue-700">/bæk/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('back');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'back'} />
 						</li>
 						<li class="my-1">
 							trap <span class="text-blue-700">/træp/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('trap');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'trap'} />
 						</li>
 					</ul>
 				</div>
@@ -684,71 +249,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ɑ: /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(a_long);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={a_long} />
 					<p class="my-3">Đọc là a nhưng dài, nặng, nhấn mạnh. Giữ trọng tâm</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							fast <span class="text-blue-700">/fɑ:st/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('fast');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'fast'} />
 						</li>
 						<li class="my-1">
 							arm <span class="text-blue-700">/ɑ:m/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('arm');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'arm'} />
 						</li>
 					</ul>
 				</div>
@@ -759,71 +270,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ʌ /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(aa);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={aa} />
 					<p class="my-3">Đọc như â. Giữ trọng tâm</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							cup <span class="text-blue-700">/kʌp/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('cup');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'cup'} />
 						</li>
 						<li class="my-1">
 							drum <span class="text-blue-700">/drʌm/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('drum');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'drum'} />
 						</li>
 					</ul>
 				</div>
@@ -833,7 +290,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 5 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -843,71 +299,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ə /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(ow);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={ow} />
 					<p class="my-3">Đọc như ơ, cong nhẹ lưỡi nếu có r, dứt khoát</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							ago <span class="text-blue-700">/əˈɡəʊ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('ago');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'ago'} />
 						</li>
 						<li class="my-1">
 							never <span class="text-blue-700">/ˈnevə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('never');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'never'} />
 						</li>
 					</ul>
 				</div>
@@ -918,71 +320,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ɜ: /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(ow_long);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={ow_long} />
 					<p class="my-3">Đọc như ơ dài, cong lưỡi, nhấn mạnh</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							bird <span class="text-blue-700">/bɜ:d/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('bird');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'bird'} />
 						</li>
 						<li class="my-1">
 							nurse <span class="text-blue-700">/nɜ:s/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('nurse');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'nurse'} />
 						</li>
 					</ul>
 				</div>
@@ -997,7 +345,6 @@
 		Chúng ta có 8 nguyên âm đôi, mình chia làm 3 nhóm, phát âm theo nguyên tắc 7/3, 7 phần cho âm
 		đầu và 3 phần âm sau:
 	</p>
-	<!-- 1 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -1007,71 +354,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ iə /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(iow);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={iow} />
 					<p class="my-3">Đọc là iơ hoặc ia, cong lưỡi nếu có r</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							here <span class="text-blue-700">/hiə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('here');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'here'} />
 						</li>
 						<li class="my-1">
 							near <span class="text-blue-700">/niə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('near');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'near'} />
 						</li>
 					</ul>
 				</div>
@@ -1082,71 +375,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ʊə /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(uow);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={uow} />
 					<p class="my-3">Đọc là uơ hoặc ua, cong lưỡi nếu có r</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							pure <span class="text-blue-700">/pjʊə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('pure');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'pure'} />
 						</li>
 						<li class="my-1">
 							tour <span class="text-blue-700">/tʊə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('tour');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'tour'} />
 						</li>
 					</ul>
 				</div>
@@ -1157,71 +396,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ eə /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(eow);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={eow} />
 					<p class="my-3">Đọc là eơ liền nhau, nhanh, ơ hơi câm</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							care <span class="text-blue-700">/keə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('care');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'care'} />
 						</li>
 						<li class="my-1">
 							hair <span class="text-blue-700">/heə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('hair');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'hair'} />
 						</li>
 					</ul>
 				</div>
@@ -1231,7 +416,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 2 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -1241,71 +425,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ eɪ /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(ei);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={ei} />
 					<p class="my-3">Đọc là êi hoặc ây</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							page <span class="text-blue-700">/peɪdʒ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('page');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'page'} />
 						</li>
 						<li class="my-1">
 							say <span class="text-blue-700">/seɪ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('say');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'say'} />
 						</li>
 					</ul>
 				</div>
@@ -1316,71 +446,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ aɪ /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(ai);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={ai} />
 					<p class="my-3">Đọc là ai</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							five <span class="text-blue-700">/faɪv/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('five');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'five'} />
 						</li>
 						<li class="my-1">
 							sky <span class="text-blue-700">/skaɪ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('sky');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'sky'} />
 						</li>
 					</ul>
 				</div>
@@ -1391,71 +467,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ɔi /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(oi);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={oi} />
 					<p class="my-3">Đọc là oi</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							boy <span class="text-blue-700">/bɔi/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('boy');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'boy'} />
 						</li>
 						<li class="my-1">
 							join <span class="text-blue-700">/dʒɔin/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('join');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'join'} />
 						</li>
 					</ul>
 				</div>
@@ -1465,7 +487,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 3 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -1475,71 +496,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ əʊ /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(owu);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={owu} />
 					<p class="my-3">Đọc là âu, chu môi</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							home <span class="text-blue-700">/həʊm/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('home');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'home'} />
 						</li>
 						<li class="my-1">
 							low <span class="text-blue-700">/ləʊ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('low');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'low'} />
 						</li>
 					</ul>
 				</div>
@@ -1550,71 +517,17 @@
 			<div class="basis-1/2 flex justify-between mx-3">
 				<div class="">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ aʊ /</p>
-					<button
-						class="py-1 px-1"
-						on:click={() => {
-							HandlerSpeaker.onPlayAudio(au);
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-							/>
-						</svg>
-					</button>
+					<PlayAudio key={au} />
 					<p class="my-3">Đọc như ao</p>
 					<p class="underline font-bold">Ví dụ:</p>
 					<ul>
 						<li class="my-1">
 							house <span class="text-blue-700">/haʊs/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('house');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'house'} />
 						</li>
 						<li class="my-1">
 							flower <span class="text-blue-700">/ˈflaʊə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('flower');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'flower'} />
 						</li>
 					</ul>
 				</div>
@@ -1631,7 +544,6 @@
 		thở đi từ họng, qua lưỡi, răng sau đó ra ngoài là cách phát âm của các âm này, dây thanh quản bị
 		rung.
 	</p>
-	<!-- 1 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -1646,45 +558,11 @@
 					<ul>
 						<li class="my-1">
 							man <span class="text-blue-700">/mæn/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('man');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'man'} />
 						</li>
 						<li class="my-1">
 							some <span class="text-blue-700">/sʌm/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('some');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'some'} />
 						</li>
 					</ul>
 				</div>
@@ -1700,45 +578,11 @@
 					<ul>
 						<li class="my-1">
 							park <span class="text-blue-700">/pɑːk/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('park');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'park'} />
 						</li>
 						<li class="my-1">
 							soup <span class="text-blue-700">/suːp/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('soup');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'soup'} />
 						</li>
 					</ul>
 				</div>
@@ -1754,45 +598,11 @@
 					<ul>
 						<li class="my-1">
 							bad <span class="text-blue-700">/bæd/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('bad');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'bad'} />
 						</li>
 						<li class="my-1">
 							web <span class="text-blue-700">/web/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('web');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'web'} />
 						</li>
 					</ul>
 				</div>
@@ -1802,7 +612,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 2 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -1817,45 +626,11 @@
 					<ul>
 						<li class="my-1">
 							fall <span class="text-blue-700">/fɔ:l/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('fall');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'fall'} />
 						</li>
 						<li class="my-1">
 							safe <span class="text-blue-700">/seɪf/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('safe');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'safe'} />
 						</li>
 					</ul>
 				</div>
@@ -1871,45 +646,11 @@
 					<ul>
 						<li class="my-1">
 							voice <span class="text-blue-700">/vɔɪs/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('voice');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'voice'} />
 						</li>
 						<li class="my-1">
 							save <span class="text-blue-700">/seɪv/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('save');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'save'} />
 						</li>
 					</ul>
 				</div>
@@ -1919,7 +660,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 3 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -1937,45 +677,11 @@
 					<ul>
 						<li class="my-1">
 							think <span class="text-blue-700">/θɪŋk/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('think');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'think'} />
 						</li>
 						<li class="my-1">
 							thank <span class="text-blue-700">/θæŋk/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('thank');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'thank'} />
 						</li>
 					</ul>
 				</div>
@@ -1994,45 +700,11 @@
 					<ul>
 						<li class="my-1">
 							there <span class="text-blue-700">/ðeə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('there');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'there'} />
 						</li>
 						<li class="my-1">
 							then <span class="text-blue-700">/ðen/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('then');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'then'} />
 						</li>
 					</ul>
 				</div>
@@ -2042,7 +714,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 4 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -2057,45 +728,11 @@
 					<ul>
 						<li class="my-1">
 							tea <span class="text-blue-700">/tiː/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('tea');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'tea'} />
 						</li>
 						<li class="my-1">
 							sent <span class="text-blue-700">/sent/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('sent');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'sent'} />
 						</li>
 					</ul>
 				</div>
@@ -2111,45 +748,11 @@
 					<ul>
 						<li class="my-1">
 							sand <span class="text-blue-700">/sænd/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('sand');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'sand'} />
 						</li>
 						<li class="my-1">
 							stand <span class="text-blue-700">/stænd/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('stand');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'stand'} />
 						</li>
 					</ul>
 				</div>
@@ -2165,45 +768,11 @@
 					<ul>
 						<li class="my-1">
 							say <span class="text-blue-700">/seɪ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('say');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'say'} />
 						</li>
 						<li class="my-1">
 							rice <span class="text-blue-700">/raɪs/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('rice');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'rice'} />
 						</li>
 					</ul>
 				</div>
@@ -2219,45 +788,11 @@
 					<ul>
 						<li class="my-1">
 							rose <span class="text-blue-700">/rəʊz/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('rose');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'rose'} />
 						</li>
 						<li class="my-1">
 							zoo <span class="text-blue-700">/zuː/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('zoo');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'zoo'} />
 						</li>
 					</ul>
 				</div>
@@ -2273,45 +808,11 @@
 					<ul>
 						<li class="my-1">
 							no <span class="text-blue-700">/nəʊ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('no');
-							}}> 
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'no'} />
 						</li>
 						<li class="my-1">
 							button <span class="text-blue-700">/ˈbʌtn/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('button');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'button'} />
 						</li>
 					</ul>
 				</div>
@@ -2327,45 +828,11 @@
 					<ul>
 						<li class="my-1">
 							leg <span class="text-blue-700">/leɡ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('leg');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'leg'} />
 						</li>
 						<li class="my-1">
 							call <span class="text-blue-700">/kɔːl/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('call');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'call'} />
 						</li>
 					</ul>
 				</div>
@@ -2375,7 +842,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 5 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -2390,45 +856,11 @@
 					<ul>
 						<li class="my-1">
 							she <span class="text-blue-700">/ʃiː/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('she');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'she'} />
 						</li>
 						<li class="my-1">
 							wash <span class="text-blue-700">/wɒʃ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('wash');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'wash'} />
 						</li>
 					</ul>
 				</div>
@@ -2444,45 +876,11 @@
 					<ul>
 						<li class="my-1">
 							casual <span class="text-blue-700">/ˈkæʒuəl/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('casual');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'casual'} />
 						</li>
 						<li class="my-1">
 							vision <span class="text-blue-700">/ˈvɪʒn/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('vision');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'vision'} />
 						</li>
 					</ul>
 				</div>
@@ -2498,45 +896,11 @@
 					<ul>
 						<li class="my-1">
 							chuck <span class="text-blue-700">/tʃʌk/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('chuck');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'chuck'} />
 						</li>
 						<li class="my-1">
 							match <span class="text-blue-700">/mætʃ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('match');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'match'} />
 						</li>
 					</ul>
 				</div>
@@ -2552,45 +916,11 @@
 					<ul>
 						<li class="my-1">
 							june <span class="text-blue-700">/dʒuːn/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('june');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'june'} />
 						</li>
 						<li class="my-1">
 							page <span class="text-blue-700">/peɪdʒ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('page');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'page'} />
 						</li>
 					</ul>
 				</div>
@@ -2606,45 +936,11 @@
 					<ul>
 						<li class="my-1">
 							red <span class="text-blue-700">/red/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('red');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'red'} />
 						</li>
 						<li class="my-1">
 							per <span class="text-blue-700">/pə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('per');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'per'} />
 						</li>
 					</ul>
 				</div>
@@ -2654,7 +950,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 6 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -2671,45 +966,11 @@
 					<ul>
 						<li class="my-1">
 							yes <span class="text-blue-700">/jes/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('yes');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'yes'} />
 						</li>
 						<li class="my-1">
 							menu <span class="text-blue-700">/ˈmenjuː/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('menu');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'menu'} />
 						</li>
 					</ul>
 				</div>
@@ -2725,45 +986,11 @@
 					<ul>
 						<li class="my-1">
 							why <span class="text-blue-700">/waɪ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('why');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'why'} />
 						</li>
 						<li class="my-1">
 							question <span class="text-blue-700">/ˈkwestʃən/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('question');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'question'} />
 						</li>
 					</ul>
 				</div>
@@ -2773,7 +1000,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 7 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -2788,45 +1014,11 @@
 					<ul>
 						<li class="my-1">
 							cat <span class="text-blue-700">/kæt/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('cat');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'cat'} />
 						</li>
 						<li class="my-1">
 							dark <span class="text-blue-700">/dɑːk/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('dark');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'dark'} />
 						</li>
 					</ul>
 				</div>
@@ -2842,45 +1034,11 @@
 					<ul>
 						<li class="my-1">
 							go <span class="text-blue-700">/ɡəʊ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('go');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'go'} />
 						</li>
 						<li class="my-1">
 							bag <span class="text-blue-700">/bæg/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('bag');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'bag'} />
 						</li>
 					</ul>
 				</div>
@@ -2896,45 +1054,11 @@
 					<ul>
 						<li class="my-1">
 							singer <span class="text-blue-700">/ˈsɪŋə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('singer');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'singer'} />
 						</li>
 						<li class="my-1">
 							tongue <span class="text-blue-700">/tʌŋ/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('tongue');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'tongue'} />
 						</li>
 					</ul>
 				</div>
@@ -2944,7 +1068,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 8 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title text-xl font-medium text-green-600">
@@ -2959,45 +1082,11 @@
 					<ul>
 						<li class="my-1">
 							her <span class="text-blue-700">/hə(r)/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('her');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'her'} />
 						</li>
 						<li class="my-1">
 							who <span class="text-blue-700">/huː/</span>
-							<button class="py-1 px-1" on:click={() => {
-								HandlerSpeaker.onTextToSpeech('who');
-							}}>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-									/>
-								</svg>
-							</button>
+							<Speaker key={'who'} />
 						</li>
 					</ul>
 				</div>
