@@ -144,8 +144,6 @@
 		}
 	}
 
-	console.log(data.listPendingContribution);
-
 	$: renderContribution = data.listPendingContribution.filter((con: any) => {
 		return category !== '' ? con.type === category : true;
 	});
@@ -424,9 +422,6 @@
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="modal-action">
-				<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white mr-2"
-					>Đồng ý</button
-				>
 				<form method="dialog">
 					<button
 						class="btn"
@@ -438,6 +433,9 @@
 						Đóng
 					</button>
 				</form>
+				<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white mr-2"
+					>Đồng ý</button
+				>
 			</div>
 		</form>
 	</div>
