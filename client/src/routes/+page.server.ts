@@ -13,13 +13,13 @@ export const load: PageServerLoad = async ({ cookies, request }) => {
 
 
 export const actions = {
-    logout: async ({ request, cookies }) => {
-        try {
-            cookies.delete('accessToken');
-            redirect(300, '/')
-        } catch (error) {
-            throw error
-        }
+    // logout: async ({ request, cookies }) => {
+    //     try {
+    //         cookies.delete('accessToken');
+    //         redirect(300, '/')
+    //     } catch (error) {
+    //         throw error
+    //     }
 
-    }
+    // }
 } satisfies Actions;

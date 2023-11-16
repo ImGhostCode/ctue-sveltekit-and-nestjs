@@ -4,8 +4,7 @@ import { GetAccount, Roles } from '../auth/decorator';
 import { MyJWTGuard, RolesGuard } from '../auth/guard';
 import { Account } from '@prisma/client';
 import { ACCOUNT_TYPES } from '../global';
-import { UpdateProfileDto, UpdatePasswordDto, VerifyCodeDto, ToggleFavoriteDto } from './dto';
-import { ResetPasswordDto } from './dto/resetPassword.dto';
+import { UpdateProfileDto, UpdatePasswordDto, VerifyCodeDto, ToggleBanUserDto, ResetPasswordDto } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 
@@ -30,8 +29,8 @@ export class UserController {
     @UseGuards(MyJWTGuard, RolesGuard)
     @Roles(ACCOUNT_TYPES.ADMIN)
     @Patch('toggle-ban/:id')
-    toggleBanUser(@Param('id', ParseIntPipe) id: number) {
-        return this.userService.toggleBanUser(id)
+    toggleBanUser(@Param('id', ParseIntPipe) id: number, @Body() toggleBanUserDto: ToggleBanUserDto) {
+        return this.userService.toggleBanUser(id, toggleBanUserDto)
     }
 
     @UseGuards(MyJWTGuard, RolesGuard)

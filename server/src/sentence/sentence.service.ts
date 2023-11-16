@@ -49,7 +49,8 @@ export class SentenceService {
                     }
                 }
             })
-            const totalPages = Math.ceil(totalCount / pageSize)
+            let totalPages = Math.ceil(totalCount / pageSize)
+            if (!totalPages) totalPages = 1
             if (!page || page < 1) page = 1
             if (page > totalPages) page = totalPages
             let next = (page - 1) * pageSize

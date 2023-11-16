@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateIrregularVerbDto, UpdateIrregularVerbDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { ResponseData } from '../global';
+import { PAGE_SIZE, ResponseData } from '../global';
 import { IrregularVerb } from '@prisma/client';
 
 @Injectable()
@@ -19,16 +19,49 @@ export class IrregularVerbService {
           v3: createIrregularVerbDto.v3,
           mean: createIrregularVerbDto.mean
         }
-      }), 200, 'Tạo thành công đọngo từ')
+      }), 200, 'Tạo thành công động từ bất quy tắc')
     } catch (error) {
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }
   }
 
-  async findAll() {
+  async findAll(option: { page: number, sort: any, key: string }) {
+    let pageSize = PAGE_SIZE.PAGE_IRREGULAR
     try {
-      return new ResponseData<IrregularVerb>(await this.prismaService.irregularVerb.findMany({}), 200, 'Tìm thành công')
+      let { key, page, sort } = option
+      const totalCount = await this.prismaService.irregularVerb.count({
+        where: {
+          OR: [
+            { v1: { contains: key } },
+            { v2: { contains: key } },
+            { v3: { contains: key } },
+          ]
+        }
+      })
+      let totalPages = Math.ceil(totalCount / pageSize)
+      if (!totalPages) totalPages = 1
+      if (!page || page < 1) page = 1
+      if (page > totalPages) page = totalPages
+      let next = (page - 1) * pageSize
+      const irregularVerb = await this.prismaService.irregularVerb.findMany({
+        orderBy: {
+          v1: sort
+        },
+        skip: next,
+        take: pageSize,
+        where: {
+          OR: [
+            { v1: { contains: key } },
+            { v2: { contains: key } },
+            { v3: { contains: key } },
+            { mean: { contains: key } },
+          ]
+        },
+      })
+      return new ResponseData<any>({ data: irregularVerb, totalPages }, 200, 'Tìm thành công')
     } catch (error) {
+      console.log(error);
+
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }
   }
@@ -91,32 +124,32 @@ export class IrregularVerbService {
     return this.prismaService.irregularVerb.findUnique({ where: { id } })
   }
 
-  async searchByKey(key: string) {
-    try {
-      const data = await this.prismaService.irregularVerb.findMany({
-        where: {
-          OR: [
-            {
-              v1: { contains: key }
-            },
-            {
-              v2: { contains: key }
-            },
-            {
-              v3: { contains: key }
-            },
-            {
-              mean: { contains: key }
-            },
-          ]
-        }
-      })
-      if (data.length === 0) {
-        return new ResponseData<IrregularVerb>([], 400, 'Không tìm thấy từ');
-      }
-      return new ResponseData<IrregularVerb>(data, 200, 'Tìm thấy từ');
-    } catch (error) {
-      return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
-    }
-  }
+  // async searchByKey(key: string) {
+  //   try {
+  //     const data = await this.prismaService.irregularVerb.findMany({
+  //       where: {
+  //         OR: [
+  //           {
+  //             v1: { contains: key }
+  //           },
+  //           {
+  //             v2: { contains: key }
+  //           },
+  //           {
+  //             v3: { contains: key }
+  //           },
+  //           {
+  //             mean: { contains: key }
+  //           },
+  //         ]
+  //       }
+  //     })
+  //     if (data.length === 0) {
+  //       return new ResponseData<IrregularVerb>([], 400, 'Không tìm thấy từ');
+  //     }
+  //     return new ResponseData<IrregularVerb>(data, 200, 'Tìm thấy từ');
+  //   } catch (error) {
+  //     return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
+  //   }
+  // }
 }
