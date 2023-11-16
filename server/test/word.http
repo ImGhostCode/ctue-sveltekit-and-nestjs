@@ -2,7 +2,7 @@
 
 ### Create word
 POST  {{urlDev}}/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2OTk3OTU0MjQsImV4cCI6MTY5OTgwMjYyNH0.mpyrIaj4J8XI3e-k--iHLrPqS5b-5GHS7-1Hmx9k-nw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE3MDAxMjIwMTMsImV4cCI6MTcwMDEyOTIxM30.Bk2atfgkKQ27p74vbqPRaO8zH41v_vzpmU9VUfpeJgE
 Content-Type: application/json
 
 {
@@ -10,8 +10,8 @@ Content-Type: application/json
     "topicId": [2],          
     "levelId": 2,
     "specializationId": 2,
-    "content": "dddd",
-    "mean": "test word 1",
+    "content": "76ffffdf",
+    "mean": " f cdsd",
     "note": "test",
     "examples": ["test", "test1"]
 }
