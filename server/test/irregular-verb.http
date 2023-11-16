@@ -1,12 +1,14 @@
-@urlDev=http://localhost:8000/communication-phrase
+@urlDev=http://localhost:8000/apis/irregular-verb
 
 ### Create comunication phrase
 POST  {{urlDev}}/
 Content-Type: application/json
 
 {
-    "content": "test2",
-    "mean": "test1"
+    "v1": "lm02",
+    "v2": "argerdf",
+    "v3": "hg",
+    "mean": "reecvr"
 }
 
 ### Get all comunication phrases

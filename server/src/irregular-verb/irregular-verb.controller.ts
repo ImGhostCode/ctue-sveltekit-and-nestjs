@@ -17,8 +17,8 @@ export class IrregularVerbController {
   }
 
   @Get()
-  findAll() {
-    return this.irregularVerbService.findAll();
+  findAll(@Query() option: { page: number, sort: any, key: string }) {
+    return this.irregularVerbService.findAll(option);
   }
 
   @Get(':id')
@@ -40,8 +40,8 @@ export class IrregularVerbController {
     return this.irregularVerbService.remove(id);
   }
 
-  @Get('seach/:key')
-  searchByKey(@Param('key') key: string) {
-    return this.irregularVerbService.searchByKey(key)
-  }
+  // @Get('seach/:key')
+  // searchByKey(@Param('key') key: string) {
+  //   return this.irregularVerbService.searchByKey(key)
+  // }
 }

@@ -1,17 +1,19 @@
 <script lang="ts">
 	import '../app.css';
 	import default_image from '$lib/assets/images/default-image.png';
-	import bgCtu from '$lib/assets/images/CTU_Blank_white.png';
 	import ctueLogo from '$lib/assets/images/ctue-high-resolution-logo-transparent3.png';
 	import type { ActionData, LayoutServerData } from './$types';
 	import { onDestroy, onMount } from 'svelte';
 	import { enhance } from '$app/forms';
+	import { onMount } from 'svelte';
 	import { isLoading, audioSettings } from '$lib/store';
+	import { goto } from '$app/navigation';
 
 	export let data: LayoutServerData;
 	export let form: ActionData;
 
 	let showNavBar = false;
+	let userData: any = null;
 
 	let voices: SpeechSynthesisVoice[];
 
@@ -90,6 +92,17 @@
 			hidden = true;
 		}
 	}
+	async function logout() {
+		userData = null;
+		goto('/');
+		await fetch(`/`, {
+			method: 'GET'
+		});
+	}
+
+	$: if (data.user) {
+		userData = data.user;
+	}
 </script>
 
 {#if $isLoading}
@@ -157,14 +170,13 @@
 							/>
 						</div>
 					</div>
-
-					{#if data.user}
+					{#if userData}
 						<div class="relative w-12 h-12 avatar-user z-10 group cursor-pointer">
-							{#if data.user.User.avt}
+							{#if userData.User.avt}
 								<img
 									class="h-full w-full rounded-full border-2 border-sky-400"
-									src={data.user.User.avt}
-									alt={data.user.User.avt}
+									src={userData.User.avt}
+									alt={userData.User.avt}
 								/>
 							{:else}
 								<img
@@ -197,7 +209,7 @@
 										<span class="ml-2">Thông tin cá nhân</span>
 									</li></a
 								>
-								{#if data.user.accountType === 'admin'}
+								{#if userData.accountType === 'admin'}
 									<a href="/manage-account">
 										<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
 											<span class="inline-block"
@@ -286,31 +298,28 @@
 											</svg>
 										</span>
 										<span class="ml-2">Liên hệ - Giúp đỡ</span>
-									</li></a
-								>
-								<form action="?/logout" method="post" use:enhance class="block">
-									<button class="w-full" type="submit">
-										<li class="flex py-3 px-4 hover:bg-[#e5e5e5]">
-											<span class=""
-												><svg
-													xmlns="http://www.w3.org/2000/svg"
-													fill="none"
-													viewBox="0 0 24 24"
-													stroke-width="1.5"
-													stroke="currentColor"
-													class="w-6 h-6"
-												>
-													<path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-													/>
-												</svg>
-											</span>
-											<p class="ml-2">Đăng xuất</p>
-										</li>
-									</button>
-								</form>
+									</li>
+								</a>
+								<!-- svelte-ignore a11y-click-events-have-key-events -->
+								<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]" on:click={logout}>
+									<span class="inline-block">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+											/>
+										</svg>
+									</span>
+									<button class="ml-2" type="submit">Đăng xuất</button>
+								</li>
 							</ul>
 						</div>
 					{:else}
@@ -318,16 +327,15 @@
 							<button
 								type="button"
 								class="text-white border border-white bg-transparent leading-6 focus:ring-4 outline-none focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-								>Đăng nhập</button
-							></a
-						>
+							>
+								Đăng nhập
+							</button>
+						</a>
 					{/if}
 				</div>
 			</div>
 		</nav>
-
 		<slot class="row content " />
-
 		<div class="row footer group fixed bottom-0 right-0 p-2 flex items-end justify-end w-24 h-24">
 			<!-- main -->
 			<div
