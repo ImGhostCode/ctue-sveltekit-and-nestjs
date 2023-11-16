@@ -224,14 +224,17 @@
 				name="typeId"
 				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0"
-					>Chưa xác định</option
-				>
 				{#if types}
 					{#each types as type (type.id)}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}
-							>{type.name}</option
-						>
+						{#if type.name === 'Chưa xác định'}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={type.id}
+								>{type.name}</option
+							>
+						{:else}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}
+								>{type.name}</option
+							>
+						{/if}
 					{/each}
 				{:else}
 					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
@@ -246,14 +249,17 @@
 				name="levelId"
 				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0"
-					>Chưa xác định</option
-				>
 				{#if levels}
 					{#each levels as level (level.id)}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}
-							>{level.name}</option
-						>
+						{#if level.name === 'Chưa xác định'}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={level.id}
+								>{level.name}</option
+							>
+						{:else}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}
+								>{level.name}</option
+							>
+						{/if}
 					{/each}
 				{:else}
 					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
@@ -268,14 +274,19 @@
 				name="specializationId"
 				class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 			>
-				<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0"
-					>Chưa xác định</option
-				>
 				{#if specializations}
 					{#each specializations as specialization (specialization.id)}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}
-							>{specialization.name}</option
-						>
+						{#if specialization.name === 'Chưa xác định'}
+							<option
+								class="block bg-base-200 text-[16px] px-4 py-2"
+								selected
+								value={specialization.id}>{specialization.name}</option
+							>
+						{:else}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}
+								>{specialization.name}</option
+							>
+						{/if}
 					{/each}
 				{:else}
 					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>

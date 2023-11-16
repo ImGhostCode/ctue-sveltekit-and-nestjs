@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
 
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
@@ -58,17 +59,21 @@
 	import Pagination from '../../components/Pagination.svelte';
 	import type { ActionData } from './$types';
 	import moment from 'moment';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
+	import { list } from 'postcss';
 
 	export let form: ActionData;
 	/** @type {import('./$types').PageData} */
 	export let data: any;
 
-	let showTopics = false;
+	let selectedId: number | undefined;
+	let isLoadingForm = false;
+	let banId: number;
+	let feedback: string = '';
+	let category: string = '';
 
-	let topicsSentence = [
-		{ id: 1, name: 'Giao tiếp thông dụng', selected: false },
-		{ id: 2, name: 'Chào hỏi', selected: false }
-	];
+	let renderContribution: any[] = [];
 
 	let myModal4: HTMLDialogElement;
 	let myModal5: HTMLDialogElement;
@@ -80,19 +85,9 @@
 		'1': { status: 'Đã duyệt', color: 'text-green-600' }
 	};
 
-	onMount(() => {});
-
-	function classifyContribution(contributionId: number) {
-		// TODO: classify contribution
-	}
-
-	function confirmContribution(contributionId: number) {
-		// TODO: confirm contribution
-	}
-
-	function deleteContribution(contributionId: number) {
-		// TODO: delete contribution
-	}
+	onMount(() => {
+		renderContribution = data.listPendingContribution;
+	});
 
 	let dataDetail: any;
 	function getTypeName(typeId: number) {
@@ -102,7 +97,6 @@
 		} else {
 			foundType = data.typesSentence.find((type: any) => type.id === typeId);
 		}
-		console.log(foundType);
 
 		return foundType ? foundType.name : 'Không xác định';
 	}
@@ -126,19 +120,78 @@
 
 		return foundSpe ? foundSpe.name : 'Không xác định';
 	}
+	function getLevelName(levelId: string[]) {
+		let foundLevel: any;
+
+		foundLevel = data.levels.find((level: any) => level.id === levelId);
+
+		return foundLevel ? foundLevel.name : 'Không xác định';
+	}
 
 	// Hàm mở Modal và truyền dữ liệu chi tiết của đóng góp vào
 	function openModal(modal: HTMLDialogElement, contribution: any) {
-		console.log(contribution);
-
 		modal.showModal();
 		dataDetail = contribution;
 		dataDetail.typeId = getTypeName(dataDetail.typeId);
 		dataDetail.topics = getTopicNames(dataDetail.topicId);
 		dataDetail.specializationId = getSpecializationName(dataDetail.specializationId);
-		dataDetail.examples = dataDetail.examples.split(/\r?\n/);
-		dataDetail.synonyms = dataDetail.synonyms.split(/\r?\n/).join(',');
-		dataDetail.antonyms = dataDetail.antonyms.split(/\r?\n/).join(',');
+		dataDetail.levelId = getLevelName(dataDetail.levelId);
+
+		if (dataDetail.type === 'word') {
+			dataDetail.examples = dataDetail.examples.split(/\r?\n/);
+			dataDetail.synonyms = dataDetail.synonyms.split(/\r?\n/).join(',');
+			dataDetail.antonyms = dataDetail.antonyms.split(/\r?\n/).join(',');
+		}
+	}
+
+	console.log(data.listPendingContribution);
+
+	$: renderContribution = data.listPendingContribution.filter((con: any) => {
+		return category !== '' ? con.type === category : true;
+	});
+
+	$: if (form?.noToken) {
+		goto('/login'); // Redirect to the login page if not authenticated
+	}
+
+	$: if (form?.success) {
+		if (myModal6) {
+			myModal6.close();
+			banId = 0;
+		}
+		const toast = toasts.add({
+			title: 'Success',
+			description: form?.message,
+			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			placement: 'top-right',
+			type: 'success',
+			theme: 'dark',
+			showProgress: true,
+			// type: 'success',
+			// theme: 'dark',
+			onClick: () => {},
+			onRemove: () => {
+				// goto('/'); // Use goto to redirect to the '/login' route.
+			}
+			//component: BootstrapToast // You can customize the toast component here
+		});
+	}
+
+	$: if (form?.error) {
+		const toast = toasts.add({
+			title: 'Error',
+			description: form?.message,
+			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			placement: 'top-right',
+			type: 'error',
+			theme: 'dark',
+			showProgress: true,
+			// type: 'error',
+			// theme: 'dark',
+			onClick: () => {},
+			onRemove: () => {}
+			//component: BootstrapToast // You can customize the toast component here
+		});
 	}
 </script>
 
@@ -154,12 +207,13 @@
 			<label tabindex="0" class="btn m-1 bg-sky-500 hover:bg-sky-600 text-white">Phân loại</label>
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-				<li><button>Từ</button></li>
-				<li><button>Câu</button></li>
+				<li><button on:click={() => (category = 'word')}>Từ</button></li>
+				<li><button on:click={() => (category = 'sentence')}>Câu</button></li>
+				<li><button on:click={() => (category = '')}>Tất cả</button></li>
 			</ul>
 		</div>
 	</div>
-	{#if data.listPendingContribution.length}
+	{#if renderContribution.length}
 		<table class=" mt-10 table table-hover">
 			<thead>
 				<tr>
@@ -172,7 +226,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each data.listPendingContribution as con (con.id)}
+				{#each renderContribution as con (con.id)}
 					<tr class="hover">
 						<td>{moment(con.createdAt).format('DD/MM/YYYY')}</td>
 						<td>{con.type === 'word' ? 'Từ' : 'Câu'}</td>
@@ -197,13 +251,33 @@
 							>{statusCon[con.status].status}</td
 						>
 						<td>
-							<button
+							<form
+								method="post"
+								use:enhance={() => {
+									isLoadingForm = true;
+									return async ({ update }) => {
+										isLoadingForm = false;
+										update();
+									};
+								}}
+								action="?/verify-contribution"
 								class="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
-								on:click={() => confirmContribution(1)}>Xác nhận</button
 							>
+								<!-- <button
+									class="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
+									on:click={(e) => handleAccept(e, 1, { status: 1, feedback: '' })}>Xác nhận</button
+								> -->
+								<input class="hidden" type="number" name="conId" value={con.id} />
+								<input class="hidden" type="number" name="status" value="1" />
+								<input class="hidden" type="text" name="feedback" value="" />
+								<button class="" type="submit">Xác nhận</button>
+							</form>
 							<button
 								class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
-								on:click={() => myModal6.showModal()}>Từ chối</button
+								on:click={() => {
+									selectedId = con.id;
+									myModal6.showModal();
+								}}>Từ chối</button
 							>
 						</td>
 					</tr>
@@ -218,7 +292,7 @@
 	<Pagination />
 </div>
 
-<dialog bind:this={myModal5} id="my_modal_3" class="modal">
+<dialog bind:this={myModal5} id="my_modal_" class="modal">
 	{#if dataDetail}
 		<div class="modal-box">
 			<form method="dialog">
@@ -234,23 +308,24 @@
 				Loại câu: <span class="font-normal">{dataDetail.typeId}</span>
 			</p>
 			<p class="font-bold">Chủ đề:</p>
-			<div class="flex flex-wrap p-3">
-				{#each dataDetail.topics as topic, index (topic)}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div
-						class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 text-slate-700"
-					>
-						<span class="pr-1 text-sm">{topic}</span>
-					</div>
-				{/each}
-			</div>
-
+			{#if dataDetail.topics.length}
+				<div class="flex flex-wrap p-3">
+					{#each dataDetail.topics as topic, index (index)}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<div
+							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 text-slate-700"
+						>
+							<span class="pr-1 text-sm">{topic}</span>
+						</div>
+					{/each}
+				</div>
+			{/if}
 			<p class="font-bold">Ghi chú: <span class="font-normal">{dataDetail.note}</span></p>
 		</div>
 	{/if}
 </dialog>
 
-<dialog bind:this={myModal4} id="my_modal_3" class="modal">
+<dialog bind:this={myModal4} id="my_modal_4" class="modal">
 	{#if dataDetail}
 		<div class="modal-box">
 			<form method="dialog">
@@ -260,7 +335,11 @@
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="flex my-4">
-				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<img
+					src={dataDetail.picture}
+					alt={dataDetail.content}
+					class="h-[50px] w-[50px] inline-block"
+				/>
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
 						<p class="mr-2 text-green-600 text-xl font-semibold">{dataDetail.content}</p>
@@ -269,28 +348,32 @@
 					<p>{dataDetail.mean}</p>
 				</div>
 			</div>
-			<p class="font-bold">Cấp độ: <span class="font-normal">A2</span></p>
+			<p class="font-bold">Cấp độ: <span class="font-normal">{dataDetail.levelId}</span></p>
 			<p class="font-bold">Câu ví dụ:</p>
-			<ol>
-				{#each dataDetail.examples as example, index (index)}
-					<li>{example}</li>
-				{/each}
-			</ol>
+			{#if dataDetail?.examples?.length}
+				<ol>
+					{#each dataDetail.examples as example, index (index)}
+						<li>{example}</li>
+					{/each}
+				</ol>
+			{/if}
 			<p class="font-bold">
 				Thuộc chuyên ngành: <span class="font-normal">{dataDetail.specializationId}</span>
 			</p>
 			<p class="font-bold">Chủ đề:</p>
 			<div class="p-2 flex flex-wrap rounded-md">
-				{#each dataDetail.topics as topic, index (topic.name)}
-					{#if topic.name !== 'Không xác định'}
-						<div
-							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border border-teal-500"
-						>
-							<img class="mr-1" src={`${imgTopics[topic.image]}`} alt={topic.name} />
-							<span class="pr-1 text-sm">{topic.name}</span>
-						</div>
-					{/if}
-				{/each}
+				{#if dataDetail.topics.length}
+					{#each dataDetail.topics as topic, index (index)}
+						{#if topic.name !== 'Không xác định'}
+							<div
+								class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border border-teal-500"
+							>
+								<img class="mr-1" src={`${imgTopics[topic.image]}`} alt={topic.name} />
+								<span class="pr-1 text-sm">{topic.name}</span>
+							</div>
+						{/if}
+					{/each}
+				{/if}
 			</div>
 			<p class="font-bold">
 				Các từ đồng nghĩa: <span class="font-normal">{dataDetail.synonyms}</span>
@@ -303,9 +386,19 @@
 	{/if}
 </dialog>
 
-<dialog bind:this={myModal6} id="my_modal_4" class="modal">
+<dialog bind:this={myModal6} id="my_modal_6" class="modal">
 	<div class="modal-box w-11/12 max-w-5xl">
-		<form action="" method="post">
+		<form
+			method="post"
+			use:enhance={() => {
+				isLoadingForm = true;
+				return async ({ update }) => {
+					isLoadingForm = false;
+					update();
+				};
+			}}
+			action="?/verify-contribution"
+		>
 			<h3 class="font-bold text-xl text-orange-600 mb-2">Từ chối đóng góp</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
@@ -315,6 +408,9 @@
 						<span class="label-text">Lý do (*)</span>
 					</label>
 					<textarea
+						bind:value={feedback}
+						required
+						maxlength="200"
 						class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
 						id="feedback"
 						name="feedback"
@@ -322,15 +418,32 @@
 				</div>
 			</div>
 
+			<input class="hidden" type="number" name="conId" value={selectedId} />
+			<input class="hidden" type="number" name="status" value="0" />
+
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="modal-action">
+				<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white mr-2"
+					>Đồng ý</button
+				>
 				<form method="dialog">
-					<!-- if there is a button, it will close the modal -->
-					<button class="btn">Close</button>
-					<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
+					<button
+						class="btn"
+						on:click={() => {
+							banId = 0;
+							feedback = '';
+						}}
+					>
+						Đóng
+					</button>
 				</form>
 			</div>
 		</form>
 	</div>
 </dialog>
+
+<ToastContainer placement="bottom-right" let:data>
+	<FlatToast {data} />
+	<!-- Provider template for your toasts -->
+</ToastContainer>

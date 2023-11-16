@@ -13,15 +13,13 @@
 	export let data: any;
 
 	const statusCon: { [key: string]: { status: string; color: string } } = {
-		'-1': { status: 'Chờ duyệt', color: 'text-yellow-600' },
-		'0': { status: 'Từ chối', color: 'text-red-600' },
-		'1': { status: 'Đã duyệt', color: 'text-green-600' }
+		'-1': { status: 'Chờ duyệt', color: 'yellow' },
+		'0': { status: 'Từ chối', color: 'red' },
+		'1': { status: 'Đã duyệt', color: 'green' }
 	};
 
 	let sentenceScreen = true;
 	$: missingFields = form?.missingFields;
-
-	console.log(data.conHistory);
 
 	$: if (form?.noToken) {
 		goto('/login'); // Redirect to the login page if not authenticated
@@ -134,17 +132,23 @@
 						<tr class="hover">
 							<td>{moment(con.createdAt).format('DD/MM/YYYY')}</td>
 							<td>{con.type === 'word' ? 'Từ' : 'Câu'}</td>
-							<td>
-								{con.content.content} - {con.content.mean}
+							<td class="max-w-xs">
+								<p class="truncate">
+									{con.content.content} - {con.content.mean}
+								</p>
 							</td>
 							<td
-								class="text-yellow-400 font-semibold"
+								class=" font-semibold"
 								class:text-red-600={statusCon[con.status].color === 'red'}
-								class:text-yellow-600={statusCon[con.status].color === 'yellow'}
+								class:text-yellow-400={statusCon[con.status].color === 'yellow'}
 								class:text-green-600={statusCon[con.status].color === 'green'}
 								>{statusCon[con.status].status}</td
 							>
-							<td>{con.feedback ?? ''}</td>
+							<td class="max-w-xs">
+								<p class="break-words">
+									{con.feedback ?? ''}
+								</p>
+							</td>
 						</tr>
 					{/each}
 				</tbody>

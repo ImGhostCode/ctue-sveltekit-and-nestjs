@@ -34,10 +34,8 @@ export const actions = {
         }
 
 
-        // console.log(email, name, password);
 
         const result = await db.register(data)
-        // console.log(result.data);
 
         if (result.data.statusCode == 400) {
 

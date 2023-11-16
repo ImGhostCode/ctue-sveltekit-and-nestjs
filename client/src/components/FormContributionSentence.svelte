@@ -97,14 +97,20 @@
 					name="typeId"
 					class="w-full select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block p-2.5"
 				>
-					<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0"
+					<!-- <option class="block bg-base-200 text-[16px] px-4 py-2" selected value=""
 						>Chưa xác định</option
-					>
+					> -->
 					{#if types}
 						{#each types as type (type.id)}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}
-								>{type.name}</option
-							>
+							{#if type.name === 'Chưa xác định'}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={type.id}
+									>{type.name}</option
+								>
+							{:else}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}
+									>{type.name}</option
+								>
+							{/if}
 						{/each}
 					{:else}
 						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option
