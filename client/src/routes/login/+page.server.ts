@@ -28,7 +28,7 @@ export const actions = {
         }
 
         const result = await db.login(data)
-        // console.log(result.data);
+
 
         if (result.data.statusCode == 400) {
 

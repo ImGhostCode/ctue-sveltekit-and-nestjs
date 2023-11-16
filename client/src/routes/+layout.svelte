@@ -2,12 +2,15 @@
 	import '../app.css';
 	import default_image from '$lib/assets/images/default-image.png';
 	import ctueLogo from '$lib/assets/images/ctue-high-resolution-logo-transparent3.png';
-	import type { LayoutServerData } from './$types';
+	import type { ActionData, LayoutServerData } from './$types';
+	import { onDestroy, onMount } from 'svelte';
+	import { enhance } from '$app/forms';
 	import { onMount } from 'svelte';
 	import { isLoading, audioSettings } from '$lib/store';
 	import { goto } from '$app/navigation';
 
 	export let data: LayoutServerData;
+	export let form: ActionData;
 
 	let showNavBar = false;
 	let userData: any = null;

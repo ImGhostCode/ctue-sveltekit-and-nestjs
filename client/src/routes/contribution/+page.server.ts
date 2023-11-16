@@ -104,13 +104,14 @@ export const actions = {
                 content: formData.content,
                 mean: formData.mean,
                 typeId: Number(formData.typeId),
-                topicId: String(formData.topicId).split(','),
+                topicId: formData.topicId ? String(formData.topicId).split(',') : [],
                 levelId: Number(formData.levelId),
                 specializationId: Number(formData.specializationId),
                 examples: formData.examples,
                 synonyms: formData.synonyms,
                 antonyms: formData.antonyms,
-                note: formData.note
+                note: formData.note,
+                phonetic: formData.phonetic
             };
 
             formDataWithFile.append('type', 'word');
@@ -130,7 +131,7 @@ export const actions = {
             isLoadingForm.set(false)
             console.log('error:::', error);
 
-            // throw error
+            throw error
         } finally {
             isLoadingForm.set(false)
         }
@@ -186,7 +187,7 @@ export const actions = {
                 content: formData.content,
                 mean: formData.mean,
                 typeId: Number(formData.typeId),
-                topicId: String(formData.topicId).split(','),
+                topicId: formData.topicId ? String(formData.topicId).split(',') : [],
                 levelId: Number(formData.levelId),
                 specializationId: Number(formData.specializationId),
                 examples: formData.examples,
@@ -209,7 +210,6 @@ export const actions = {
             }
         } catch (error) {
             isLoadingForm.set(false)
-            // console.log(error);
 
             throw error
         } finally {

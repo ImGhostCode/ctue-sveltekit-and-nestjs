@@ -34,15 +34,6 @@
 		goto('/login'); // Redirect to the login page if not authenticated
 	}
 
-	// $: console.log('profile :: ', $isLoadingForm);
-
-	// let isLoadingFormTest = false;
-
-	// const unsubscribe = isLoadingForm.subscribe((value) => {
-	// 	isLoadingFormTest = value;
-	// 	console.log('profile subscribe::.svelte::::', isLoadingFormTest);
-	// });
-
 	let isEditing = false;
 	let avt: any = null;
 
