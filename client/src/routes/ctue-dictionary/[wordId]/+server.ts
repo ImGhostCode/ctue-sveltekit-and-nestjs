@@ -1,9 +1,12 @@
-import { json } from '@sveltejs/kit'
+import { json, redirect } from '@sveltejs/kit'
 import * as db from '$lib/server/database';
 
 export async function PATCH(event) {
     const wordId = await event.params.wordId
     const token = event.cookies.get('accessToken');
+    if (!token) {
+        throw redirect(307, '/login');
+    }
     const result = await db.toggleFavorite(token, wordId)
     return json(result)
 }
