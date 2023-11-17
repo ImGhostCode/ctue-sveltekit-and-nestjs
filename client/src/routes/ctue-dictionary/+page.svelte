@@ -428,9 +428,15 @@
 				</div>
 			</div>
 			<p class="font-bold">
+				Loại từ:
+				<span class="font-normal">
+					{wordDetails?.Type ? wordDetails.Type.name : ''}
+				</span>
+			</p>
+			<p class="font-bold">
 				Cấp độ:
 				<span class="font-normal">
-					{wordDetails?.level ? wordDetails.level : ''}
+					{wordDetails?.Level ? wordDetails.Level.name : ''}
 				</span>
 			</p>
 			<p class="font-bold">Câu ví dụ:</p>
@@ -449,14 +455,16 @@
 			</p>
 			<p class="font-bold">Chủ đề:</p>
 			<div class="p-2 flex flex-wrap rounded-md">
-				{#each topics as topic}
-					<div
-						class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border border-teal-500"
-					>
-						<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
-						<span class="pr-1 text-sm">{topic.name}</span>
-					</div>
-				{/each}
+				{#if wordDetails.Topic}
+					{#each wordDetails.Topic as topic}
+						<div
+							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border border-teal-500"
+						>
+							<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
+							<span class="pr-1 text-sm">{topic.name}</span>
+						</div>
+					{/each}
+				{/if}
 			</div>
 			<p class="font-bold">Các từ đồng nghĩa:</p>
 			<ol>
