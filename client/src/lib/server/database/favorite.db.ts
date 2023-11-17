@@ -31,3 +31,18 @@ export async function toggleFavorite(accessToken: string, wordId: number) {
         throw error;
     }
 }
+
+export async function getAllFavoriteByUserId(accessToken: string, key: string, page: number, sort: any) {
+    try {
+        let parameter = `page=${page}&&key=${key}`
+        if (sort !== 'null') parameter += `&&sort=${sort}`
+        const response = await axiosClient.get(`${URL}?${parameter}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}

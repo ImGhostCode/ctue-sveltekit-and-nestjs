@@ -66,10 +66,18 @@ export class FavoriteItemService {
         },
         include: {
           Word: {
-            orderBy: sort,
             where: { content: { contains: key } },
             take: pageSize,
-            skip: next
+            skip: next,
+            orderBy: {
+              content: sort
+            },
+            include: {
+              Topic: true,
+              Level: true,
+              Specialization: true,
+              Type: true
+            }
           }
         }
       })
