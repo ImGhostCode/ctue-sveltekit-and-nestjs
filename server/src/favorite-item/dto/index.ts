@@ -1,2 +1,1 @@
-export * from './addToFavoritesList.dto'
-export * from './removeToFavoritesList.dto'
+export * from './toggleFavoritesList.dto'
