@@ -19,7 +19,7 @@ export class WordController {
     }
 
     @Get()
-    findAll(@Query() option: { sort: any, type: number, level: number, specialization: number, topic: [], page: number }) {
+    findAll(@Query() option: { sort: any, type: number, level: number, specialization: number, topic: [], page: number, key: string }) {
         return this.wordServive.findAll(option)
     }
 

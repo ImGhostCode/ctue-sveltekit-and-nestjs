@@ -50,21 +50,32 @@ export class WordService {
         }
     }
 
-    async findAll(option: { sort: any, type: number, level: number, specialization: number, topic: [], page: number }) {
+    async findAll(option: { sort: any, type: number, level: number, specialization: number, topic: [], page: number, key: string }) {
         let pageSize = PAGE_SIZE.PAGE_WORD
         try {
-            let { sort, type, level, specialization, topic, page } = option
-            const totalCount = await this.prismaService.word.count({
-                where: {
-                    typeId: type,
-                    levelId: level,
-                    specializationId: specialization,
-                    Topic: {
-                        some: {
-                            id: { in: topic }
-                        }
-                    }
+            let { sort, type, level, specialization, topic, page, key } = option
+            let whereCondition: any = {
+                OR: [
+                    { content: { contains: key } },
+                    { mean: { contains: key } }
+                ]
+            };
+            if (type) whereCondition.typeId = Number(type);
+            if (level) whereCondition.levelId = Number(level);
+            if (specialization) whereCondition.specializationId = Number(specialization);
+            if (topic) {
+                if (topic.length > 1) {
+                    whereCondition.Topic = {
+                        some: { id: { in: topic.map(topic => Number(topic)) } }
+                    };
+                } else {
+                    whereCondition.Topic = {
+                        some: { id: Number(topic) }
+                    };
                 }
+            }
+            const totalCount = await this.prismaService.word.count({
+                where: whereCondition
             })
             let totalPages = Math.ceil(totalCount / pageSize)
             if (!totalPages) totalPages = 1
@@ -77,16 +88,7 @@ export class WordService {
                 orderBy: {
                     content: sort
                 },
-                where: {
-                    typeId: type,
-                    levelId: level,
-                    specializationId: specialization,
-                    Topic: {
-                        some: {
-                            id: { in: topic }
-                        }
-                    }
-                },
+                where: whereCondition,
                 include: {
                     Topic: true,
                     Type: true,
