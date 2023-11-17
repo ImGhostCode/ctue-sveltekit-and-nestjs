@@ -89,6 +89,7 @@
 	let totalPages: number = 1;
 	let words: any[] = [];
 	let key: string = '';
+	let wordDetails: any = {};
 
 	$: {
 		if (data.topics) topics = data.topics;
@@ -353,7 +354,13 @@
 	<div class="border rounded-md p-4">
 		{#each words as word}
 			<div class="flex border-b-2 hover:border-green-600 mb-4">
-				<button class="flex hover:cursor-pointer grow" on:click={() => myModal4.showModal()}>
+				<button
+					class="flex hover:cursor-pointer grow"
+					on:click={() => {
+						myModal4.showModal();
+						wordDetails = word;
+					}}
+				>
 					<img src={word.picture} alt={word.content} class="h-[50px] w-[50px] inline-block" />
 					<div class="inline-block ml-4">
 						<div class="flex justify-center items-center">
@@ -387,31 +394,48 @@
 	</div>
 	<Pagination {totalPages} {currentPage} on:next={handleNextPage} on:pre={handlePrePAge} />
 	<dialog bind:this={myModal4} id="my_modal_3" class="modal">
-		<div class="modal-box">
+		<div class="modal-box no-scrollbar">
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 			</form>
-			<h3 class="font-bold text-2xl text-title mb-2">Chi Tiết Từ "Add"</h3>
+			<h3 class="font-bold text-2xl text-title mb-2">Chi Tiết Từ "{wordDetails.content}"</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="flex my-4">
-				<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+				<img
+					src={wordDetails.picture}
+					alt={wordDetails.picture}
+					class="h-[50px] w-[50px] inline-block"
+				/>
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
-						<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
-						<span class="mr-2 text-blue-600">/æd/</span>
+						<p class="mr-2 text-green-600 text-xl font-semibold">{wordDetails.content}</p>
+						<span class="mr-2 text-blue-600">
+							{wordDetails.phonetic ? wordDetails.phonetic : ''}
+						</span>
+						<Speaker key={wordDetails.content} />
 					</div>
-					<p>Thêm</p>
+					<p>{wordDetails.mean}</p>
 				</div>
 			</div>
-			<p class="font-bold">Cấp độ: <span class="font-normal">A2</span></p>
+			<p class="font-bold">
+				Cấp độ:
+				<span class="font-normal">
+					{wordDetails?.level ? wordDetails.level : ''}
+				</span>
+			</p>
 			<p class="font-bold">Câu ví dụ:</p>
 			<ol>
-				<li>1. add some words</li>
-				<li>1. add some words</li>
+				{#if wordDetails?.examples}
+					{#each wordDetails.examples as example, i}
+						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {example}</li>
+					{/each}
+				{/if}
 			</ol>
 			<p class="font-bold">
-				Thuộc chuyên ngành: <span class="font-normal">Công nghệ thực phẩm (Food Technology)</span>
+				Thuộc chuyên ngành:
+				<span class="font-normal">
+					{wordDetails.Specialization ? wordDetails?.Specialization.name : ''}
+				</span>
 			</p>
 			<p class="font-bold">Chủ đề:</p>
 			<div class="p-2 flex flex-wrap rounded-md">
@@ -424,11 +448,24 @@
 					</div>
 				{/each}
 			</div>
-			<p class="font-bold">
-				Các từ đồng nghĩa: <span class="font-normal">plus</span>
-			</p>
+			<p class="font-bold">Các từ đồng nghĩa:</p>
+			<ol>
+				{#if wordDetails?.synonyms}
+					{#each wordDetails?.synonyms as synonym, i}
+						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {synonym}</li>
+					{/each}
+				{/if}
+			</ol>
+			<p class="font-bold">Các từ trái nghĩa:</p>
+			<ol>
+				{#if wordDetails?.antonyms}
+					{#each wordDetails?.antonyms as antonym, i}
+						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {antonym}</li>
+					{/each}
+				{/if}
+			</ol>
 			<p class="font-bold">Ghi chú:</p>
-			<p>dfs</p>
+			<p>{wordDetails.note ? wordDetails.note : ''}</p>
 		</div>
 	</dialog>
 </div>
