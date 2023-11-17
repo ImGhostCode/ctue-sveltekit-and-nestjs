@@ -204,39 +204,38 @@ export class WordService {
     async getWordsPack(option: { type: number, level: number, specialization: number, topic: [], numSentence: number }) {
         try {
             let { topic, type, level, specialization, numSentence } = option
-            const totalWordspack = await this.prismaService.word.count({
-                where: {
-                    levelId: level,
-                    typeId: type,
-                    specializationId: specialization,
-                    Topic: {
-                        some: {
-                            id: {
-                                in: topic
-                            }
-                        }
-                    }
+            let whereCondition: any = {
+            };
+            if (type) whereCondition.typeId = Number(type);
+            if (level) whereCondition.levelId = Number(level);
+            if (specialization) whereCondition.specializationId = Number(specialization);
+            if (topic) {
+                if (Array.isArray(topic) && topic.length > 1) {
+                    whereCondition.Topic = {
+                        some: { id: { in: topic.map(topic => Number(topic)) } }
+                    };
+                } else {
+                    whereCondition.Topic = {
+                        some: { id: Number(topic) }
+                    };
                 }
+            }
+
+            const totalWordspack = await this.prismaService.word.count({
+                where: whereCondition
             })
-            if (totalWordspack <= numSentence) return new ResponseData<Word>(null, 400, 'Không đủ gói từ vựng');
-            const maxRandomIndex = totalWordspack - numSentence;
+            if (totalWordspack <= Number(numSentence)) return new ResponseData<Word>(null, 400, 'Không đủ gói từ vựng');
+            const maxRandomIndex = totalWordspack - Number(numSentence);
             const randomPackIndex = Math.floor(Math.random() * (maxRandomIndex + 1))
             const wordspack = await this.prismaService.word.findMany({
-                where: {
-                    levelId: level,
-                    typeId: type,
-                    specializationId: specialization,
-                    Topic: {
-                        some: {
-                            id: { in: topic }
-                        }
-                    }
-                },
-                take: numSentence,
+                where: whereCondition,
+                take: Number(numSentence),
                 skip: randomPackIndex
             })
             return new ResponseData<Word>(wordspack, 200, 'Tìm gói từ vựng thành công')
         } catch (error) {
+            console.log(error);
+
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
     }

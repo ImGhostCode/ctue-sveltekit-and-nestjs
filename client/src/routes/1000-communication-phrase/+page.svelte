@@ -1,18 +1,77 @@
 <script lang="ts">
 	import Speaker from '../../components/Speaker.svelte';
 	import Pagination from '../../components/Pagination.svelte';
+	import type { ActionData } from './$types';
+	import { onMount } from 'svelte';
 
-	let showTopics = false;
-	let topics = [
-		{ id: 1, name: 'Giao tiếp thông dụng', selected: false },
-		{ id: 2, name: 'Chào hỏi', selected: false }
-	];
+	export let form: ActionData;
+	/** @type {import('./$types').PageData} */
+	export let data: any;
 
 	function toggleSelected(index: number) {
-		topics[index].selected = !topics[index].selected;
+		data.topicsSentence[index].selected = !data.topicsSentence[index].selected;
 	}
 
+	// Function to handle filter confirmation
+	function handleFilterConfirmation() {
+		const selectedTopics = data.topicsSentence
+			.filter((topic: any) => topic.selected)
+			.map((topic: any) => topic.id); // Adjust to get the correct property for the topic ID
+
+		console.log(selectedTopics);
+
+		// Call the function to fetch filtered data based on selected topics
+		getSentences(selectedTopics, type, currentPage);
+	}
+
+	let totalPages: Number = 1;
+	// let key: string = '';
+	let type: number | null = null;
+	let topic: number[] = [];
+	let currentPage: number = 1;
+	// let sort: string = 'asc';
+	let sentences: any[] = [];
+
+	async function getSentences(topic: number[], type: number | null, page: number | null) {
+		const topicsString = topic.map((id) => `topic=${id}`).join('&&');
+		const typeParameter = type !== null && !isNaN(type) ? `type=${type}&&` : '';
+
+		const response = await fetch(
+			`/1000-communication-phrase?${typeParameter}&&${topicsString ?? +topicsString}&&page=${page}`,
+			{
+				method: 'GET'
+			}
+		);
+		const result = await response.json();
+
+		console.log(result);
+
+		if (!result) {
+			sentences = [];
+			totalPages = 1;
+		} else {
+			sentences = result.sentences;
+			totalPages = result.totalPages;
+		}
+	}
+
+	onMount(async () => {
+		await getSentences(topic, type, currentPage);
+	});
+
+	$: getSentences(topic, type, currentPage);
+
 	let myModal4: HTMLDialogElement;
+	let myModal5: HTMLDialogElement;
+
+	let dataDetail: any;
+
+	// Hàm mở Modal và truyền dữ liệu chi tiết của đóng góp vào
+	function openModal(modal: HTMLDialogElement, sentence: any) {
+		modal.showModal();
+		dataDetail = sentence;
+		dataDetail.topics = dataDetail.Topic.length ? dataDetail.Topic.map((t: any) => t.name) : [];
+	}
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
@@ -43,16 +102,16 @@
 				<div class="h-[1px] w-full border border-gray-200" />
 
 				<div class="flex flex-wrap p-3">
-					{#each topics as topic, index (topic.name)}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<div
-							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
+					{#each data.topicsSentence as topic, index (index)}
+						<button
+							type="button"
+							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
 							class:bg-green-500={topic.selected}
 							class:text-white={topic.selected}
 							on:click={() => toggleSelected(index)}
 						>
 							<span class="pr-1 text-sm">{topic.name}</span>
-						</div>
+						</button>
 					{/each}
 				</div>
 
@@ -61,8 +120,11 @@
 				<div class="modal-action">
 					<form method="dialog">
 						<!-- if there is a button, it will close the modal -->
-						<button class="btn">Close</button>
-						<button class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
+						<button class="btn mr-2">Đóng</button>
+						<button
+							class="btn bg-green-600 hover:bg-green-700 text-white"
+							on:click={handleFilterConfirmation}>Đồng ý</button
+						>
 					</form>
 				</div>
 			</div>
@@ -70,37 +132,97 @@
 	</div>
 	<div class="h-[1px] w-full border border-gray-200" />
 
-	<div class="overflow-x-auto">
-		<table class="table">
-			<!-- head -->
-			<thead>
-				<tr>
-					<th />
-					<th class="text-green-700 text-lg">Câu</th>
-					<th class="text-green-700 text-lg">Nghĩa</th>
-				</tr>
-			</thead>
-			<tbody class="">
-				<!-- row 1 -->
-				<tr class="hover:bg-base-200">
-					<th>1</th>
-					<td><Speaker /> How do you do? </td>
-					<td>Dạo này bạn thế nào?</td>
-				</tr>
-				<!-- row 2 -->
-				<tr class="hover:bg-base-200">
-					<th>2</th>
-					<td><Speaker /> Good morning/Good afternoon/Good evening! </td>
-					<td>Buổi sáng/trưa/chiều tốt lành! </td>
-				</tr>
-				<!-- row 3 -->
-				<tr class="hover:bg-base-200">
-					<th>3</th>
-					<td><Speaker /> It’s a pleasure to meet you </td>
-					<td>Rất vinh hạnh khi được gặp bạn </td>
-				</tr>
-			</tbody>
-		</table>
+	{#if sentences.length}
+		<div class="overflow-x-auto">
+			<table class="table">
+				<!-- head -->
+				<thead>
+					<tr>
+						<th />
+						<th class="text-green-700 text-lg">Câu</th>
+						<th class="text-green-700 text-lg">Nghĩa</th>
+						<th class="text-green-700 text-lg">Chi tiết</th>
+					</tr>
+				</thead>
+				<tbody class="">
+					{#each sentences as sentence, index (index)}
+						<tr class="hover:bg-base-200">
+							<th>{index + 1}</th>
+							<td><Speaker content={sentence.content} /> {sentence.content} </td>
+							<td>{sentence.mean}</td>
+							<td
+								><button
+									type="button"
+									class="btn btn-info btn-sm text-white"
+									on:click={() => openModal(myModal5, sentence)}>Chi tiết</button
+								></td
+							>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{:else}
+		<div class="py-4 text-center text-lg text-slate-600 font-semibold">Danh sách rỗng</div>
+	{/if}
+
+	<!-- <Pagination /> -->
+
+	<div class="join grid grid-cols-2 w-max mx-auto mt-6">
+		<button
+			on:click={async () => {
+				currentPage = currentPage - 1;
+			}}
+			class:disable={currentPage == 1}
+			disabled={currentPage == 1}
+			class:cursor-not-allowed={currentPage == 1}
+			class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
+		>
+			Trang sau
+		</button>
+		<button
+			on:click={async () => {
+				currentPage = currentPage + 1;
+			}}
+			class:disable={currentPage == totalPages}
+			disabled={currentPage == totalPages}
+			class:cursor-not-allowed={currentPage == totalPages}
+			class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
+		>
+			Trang tiếp theo
+		</button>
 	</div>
-	<Pagination />
 </div>
+
+<dialog bind:this={myModal5} id="my_modal_" class="modal">
+	{#if dataDetail}
+		<div class="modal-box">
+			<form method="dialog">
+				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
+			</form>
+			<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi tiết câu</h3>
+			<div class="h-[1px] w-full border border-gray-200" />
+
+			<div class="mt-2"><b>Câu: </b> {dataDetail.content}</div>
+			<div class=""><b>Nghĩa: </b> {dataDetail.mean}</div>
+
+			<p class="font-bold">
+				Loại câu: <span class="font-normal">{dataDetail.typeId}</span>
+			</p>
+			<p class="font-bold">Chủ đề:</p>
+			{#if dataDetail.topics.length}
+				<div class="flex flex-wrap p-3">
+					{#each dataDetail.topics as topic, index (index)}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<div
+							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 text-slate-700"
+						>
+							<span class="pr-1 text-sm">{topic}</span>
+						</div>
+					{/each}
+				</div>
+			{/if}
+			<p class="font-bold">Ghi chú: <span class="font-normal">{dataDetail.note}</span></p>
+		</div>
+	{/if}
+</dialog>
