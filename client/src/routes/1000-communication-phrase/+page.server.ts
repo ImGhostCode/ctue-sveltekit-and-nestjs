@@ -11,11 +11,11 @@ type Topics = { id: number, name: string, isWord: boolean, selected: boolean }
 
 export const load: PageServerLoad = async ({ cookies }) => {
 
-    const token: string | undefined = cookies.get('accessToken');
+    // const token: string | undefined = cookies.get('accessToken');
 
-    if (!token) {
-        throw redirect(307, '/login');
-    }
+    // if (!token) {
+    //     throw redirect(307, '/login');
+    // }
 
     // const typesWord: Types = await db.getTypes(true)
     const typesSentence: Types = await db.getTypes(false)
@@ -39,7 +39,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
     })
 
     return {
-        token, typesSentence, topicsSentence
+        typesSentence, topicsSentence
     };
 };
 

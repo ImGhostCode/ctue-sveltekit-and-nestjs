@@ -23,10 +23,17 @@ export class WordController {
         return this.wordServive.findAll(option)
     }
 
-    @Get(':id')
-    findOne(@Param('id', ParseIntPipe) id: number) {
-        return this.wordServive.findOne(id)
+    @Get('words-pack')
+    @UseGuards(MyJWTGuard, RolesGuard)
+    @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
+    getWordsPack(@Query() option: { type: number, level: number, specialization: number, topic: [], numSentence: number }) {
+        return this.wordServive.getWordsPack(option)
     }
+
+    // @Get('id:id')
+    // findOne(@Param('id', ParseIntPipe) id: number) {
+    //     return this.wordServive.findOne(id)
+    // }
 
     @Patch(':id')
     @UseGuards(MyJWTGuard, RolesGuard)
@@ -43,12 +50,7 @@ export class WordController {
         return this.wordServive.delete(id)
     }
 
-    @Get('words-pack')
-    @UseGuards(MyJWTGuard, RolesGuard)
-    @Roles(ACCOUNT_TYPES.USER)
-    getWordsPack(@Query() option: { type: number, level: number, specialization: number, topic: [], numSentence: number }) {
-        return this.wordServive.getWordsPack(option)
-    }
+
 
     @Get('look-up-dictionary/:key')
     lookUpDictionary(@Param('key') key: string) {

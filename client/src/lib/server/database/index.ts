@@ -7,4 +7,5 @@ export * from './topic.db'
 export * from './contribute.db'
 export * from './irregular-verb.db'
 export * from './sentence.db'
+export * from './word.db'
 
