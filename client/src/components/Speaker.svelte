@@ -1,4 +1,14 @@
-<button class="py-1 px-1 hover:text-blue-600"
+<script lang="ts">
+	import { HandlerSpeaker } from '$lib/store';
+
+	export let content: string;
+</script>
+
+<button
+	class="py-1 px-1 hover:text-blue-600"
+	on:click={() => {
+		HandlerSpeaker.onTextToSpeech(content);
+	}}
 	><svg
 		xmlns="http://www.w3.org/2000/svg"
 		fill="none"
