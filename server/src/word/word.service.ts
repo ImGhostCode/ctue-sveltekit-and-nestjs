@@ -42,7 +42,6 @@ export class WordService {
                     picture
                 },
                 include: {
-                    User: true,
                     Topic: true,
                     Type: true,
                     Specialization: true,
@@ -164,7 +163,6 @@ export class WordService {
                     picture
                 },
                 include: {
-                    User: true,
                     Topic: true,
                     Type: true,
                     Specialization: true,

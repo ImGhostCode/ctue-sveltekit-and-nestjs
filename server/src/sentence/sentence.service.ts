@@ -3,7 +3,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateSentenceDto, UpdateSentenceDto } from './dto';
 import { PAGE_SIZE, ResponseData } from '../global';
 import { Sentence } from '@prisma/client';
-import { log } from 'console';
 
 @Injectable()
 export class SentenceService {
@@ -11,21 +10,23 @@ export class SentenceService {
 
     async create(createSentenceDto: CreateSentenceDto) {
         try {
+            let { topicId, typeId, content, mean, note, userId } = createSentenceDto
             const isExisted = await this.isExisted(createSentenceDto.content)
             if (isExisted) return new ResponseData<string>(null, 400, 'Câu đã tồn tại')
+            topicId = topicId.map((id) => Number(id))
+            topicId = topicId.filter((id) => id !== 0)
             const sentence = await this.prismaService.sentence.create({
                 data: {
-                    typeId: createSentenceDto.typeId,
-                    userId: createSentenceDto.userId,
-                    content: createSentenceDto.content,
-                    mean: createSentenceDto.mean,
-                    note: createSentenceDto.note,
+                    typeId: typeId,
+                    userId: userId,
+                    content: content,
+                    mean: mean,
+                    note: note,
                     Topic: {
-                        connect: createSentenceDto.topicId.map((id) => ({ id }))
+                        connect: topicId.map((id) => ({ id }))
                     }
                 },
                 include: {
-                    User: true,
                     Type: true,
                     Topic: true
                 }
@@ -104,7 +105,7 @@ export class SentenceService {
             let { typeId, content, mean, note, topicId } = updateSentenceDto
             const sentence = await this.findById(id)
             if (!sentence) return new ResponseData<string>(null, 400, 'Câu không tồn tại')
-            if (content) {
+            if (content && sentence.content !== content) {
                 const isExisted = await this.isExisted(content)
                 if (isExisted) return new ResponseData<string>(null, 400, 'Câu này đã tồn tại')
             }
@@ -115,8 +116,11 @@ export class SentenceService {
                         Topic: { disconnect: sentence.Topic.map((id) => id) }
                     }
                 })
+                topicId = topicId.map((id) => Number(id))
+                topicId = topicId.filter((id) => id !== 0)
+            } else {
+                topicId = []
             }
-            topicId = []
             const newSentence = await this.prismaService.sentence.update({
                 where: { id: id },
                 data: {
@@ -128,7 +132,6 @@ export class SentenceService {
                 },
                 include: {
                     Practice: true,
-                    User: true,
                     Topic: true,
                     Type: true
                 }
