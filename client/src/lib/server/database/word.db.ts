@@ -1,7 +1,6 @@
 import { config } from "dotenv";
 import axiosClient from "./api.config";
 
-
 const URL = '/word';
 
 export async function getWords(page: number, sort: string | null, topic: any[], specialization: any, type: any, level: any, key: string) {
@@ -22,6 +21,29 @@ export async function getWords(page: number, sort: string | null, topic: any[], 
         throw error;
     }
 }
+
+
+export async function postWord(accessToken: string, data: any) {
+    try {
+        const response = await axiosClient.postForm(`${URL}`, data, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function deleteWord(accessToken: string, id: number) {
+    try {
+        const response = await axiosClient.delete(`${URL}/${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
 
 
 export async function getWordPack(accessToken: string, type: any, level: any, specialization: any, topic: any[], numSentence: number) {
@@ -46,3 +68,15 @@ export async function getWordPack(accessToken: string, type: any, level: any, sp
     }
 }
 
+export async function editWord(accessToken: string, id: number, data: any) {
+    try {
+        const response = await axiosClient.patchForm(`${URL}/${id}`, data, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}

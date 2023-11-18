@@ -1,8 +1,11 @@
-import { json } from '@sveltejs/kit'
+import { json, redirect } from '@sveltejs/kit'
 import * as db from '$lib/server/database';
 
 export async function GET(event) {
     const token = event.cookies.get('accessToken');
+    if (!token) {
+        throw redirect(307, '/login');
+    }
     const query = event.url.search
     const params = new URLSearchParams(query);
     const page = params.get('page')

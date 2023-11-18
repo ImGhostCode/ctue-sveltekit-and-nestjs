@@ -13,10 +13,10 @@ export class CreateWordDto {
 
     @IsNotEmpty()
     @IsArray()
-    @Transform((params: TransformFnParams) => {
-        return params.value.map(item => parseInt(item, 10));
-    })
-    @IsNumber({}, { each: true })
+    // @Transform((params: TransformFnParams) => {
+    //     return params.value.map(item => parseInt(item, 10));
+    // })
+    // @IsNumber({}, { each: true })
     topicId: number[]
 
     @IsNumber()
