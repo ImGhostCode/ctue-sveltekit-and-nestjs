@@ -18,6 +18,11 @@ export class WordService {
                 const file = await this.cloudinaryService.uploadFile(pictureFile)
                 picture = file.url
             }
+            topicId = topicId.map((id) => Number(id))
+            if (examples) examples = examples.filter(example => example !== '')
+            if (antonyms) antonyms = antonyms.filter(antonym => antonym !== '')
+            if (synonyms) synonyms = synonyms.filter(synonym => synonym !== '')
+
             const word = await this.prismaService.word.create({
                 data: {
                     userId,
@@ -122,11 +127,13 @@ export class WordService {
                 const file = await this.cloudinaryService.uploadFile(pictureFile)
                 picture = file.url
             }
-            if (content) {
+            if (content && content !== word.content) {
                 const isExisted = await this.isExisted(content)
                 if (isExisted) return new ResponseData<string>(null, 400, 'Từ này đã tồn tại')
             }
+
             if (topicId) {
+                topicId = topicId.map((id) => Number(id))
                 await this.prismaService.word.update({
                     where: { id: id },
                     data: {
@@ -136,6 +143,9 @@ export class WordService {
             } else {
                 topicId = []
             }
+            if (examples) examples = examples.filter(example => example !== '')
+            if (antonyms) antonyms = antonyms.filter(antonym => antonym !== '')
+            if (synonyms) synonyms = synonyms.filter(synonym => synonym !== '')
             const newWord = await this.prismaService.word.update({
                 where: { id: id },
                 data: {

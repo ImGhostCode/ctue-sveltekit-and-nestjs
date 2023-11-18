@@ -38,5 +38,6 @@ export enum PAGE_SIZE {
     PAGE_USER = 20,
     PAGE_WORD = 20,
     PAGE_SENTENCE = 20,
-    PAGE_IRREGULAR = 20
+    PAGE_IRREGULAR = 20,
+    PAGE_FAVORITE = 20
 }

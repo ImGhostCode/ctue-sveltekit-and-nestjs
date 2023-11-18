@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Body, Patch, UseGuards, Query, ParseIntPipe } from '@nestjs/common';
 import { FavoriteItemService } from './favorite-item.service';
-import { AddToFavoritesListDto, RemoveToFavoritesListDto } from './dto';
+import { ToggleFavoritesListDto } from './dto';
 import { GetAccount, Roles } from '../auth/decorator';
 import { Account } from '@prisma/client';
 import { MyJWTGuard, RolesGuard } from '../auth/guard';
@@ -11,27 +11,21 @@ import { ACCOUNT_TYPES } from '../global';
 export class FavoriteItemController {
   constructor(private favoriteItemService: FavoriteItemService) { }
 
-  @Patch('add')
+  @Patch()
   @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
-  addToFavoritesList(@Body() addToFavoritesListDto: AddToFavoritesListDto, @GetAccount() account: Account) {
-    return this.favoriteItemService.addToFavoritesList(addToFavoritesListDto, account.userId);
-  }
-
-  @Patch('remove')
-  @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
-  deleteToFavoritesList(@Body() removeToFavoritesListDto: RemoveToFavoritesListDto, @GetAccount() account: Account) {
-    return this.favoriteItemService.deleteToFavoritesList(removeToFavoritesListDto, account.userId);
+  addToFavoritesList(@Body() toggleFavoritesListDto: ToggleFavoritesListDto, @GetAccount() account: Account) {
+    return this.favoriteItemService.toggleFavoritesList(toggleFavoritesListDto, account.userId);
   }
 
   @Get()
   @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
-  findAllByUserId(@GetAccount() accout: Account, @Query() option: { sort: any }) {
-    return this.favoriteItemService.findAllByUserId(accout.userId, option);
+  findAllByUserId(@GetAccount() accout: Account, @Query('sort') sort: string, @Query('key') key: string, @Query('page', ParseIntPipe) page: number) {
+    return this.favoriteItemService.findAllByUserId(accout.userId, sort, key, page);
   }
 
-  @Get('search/:key')
+  @Get('user')
   @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
-  searchByKey(@GetAccount() accout: Account, @Query('key') key: string) {
-    return this.favoriteItemService.searchByKey(accout.userId, key)
+  findAllByUser(@GetAccount() accout: Account) {
+    return this.favoriteItemService.findAllByUser(accout.userId);
   }
 }
