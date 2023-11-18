@@ -13,9 +13,9 @@ export async function getWords(page: number, sort: string | null, topic: any[], 
         const topicsString = topic
             .map((topic) => `topic=${encodeURIComponent(topic)}`)
             .join('&&');
-      
+
         const response = await axiosClient.get(`${URL}?&&${topicsString}${parameter}`)
-      
+
         return response.data
     } catch (error) {
         throw error;
@@ -44,7 +44,10 @@ export async function deleteWord(accessToken: string, id: number) {
             },
         })
         return response.data;
-
+    } catch (error) {
+        throw error;
+    }
+}
 
 export async function getWordPack(accessToken: string, type: any, level: any, specialization: any, topic: any[], numSentence: number) {
     try {
