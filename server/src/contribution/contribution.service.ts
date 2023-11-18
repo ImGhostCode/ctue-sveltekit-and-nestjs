@@ -15,9 +15,6 @@ export class ContributionService {
 
     const contentContribution = JSON.parse(String(createContributionDto.content))
 
-    console.log(contentContribution);
-
-
     const { levelId, specializationId, content, mean, note } = contentContribution
     try {
       if (createContributionDto.type === 'word') {
@@ -70,8 +67,6 @@ export class ContributionService {
       // contributions.forEach((contribution) => contribution.content = JSON.parse(String(contribution.content)))
       return new ResponseData<Contribution>(contributions, 200, 'Tìm thành công')
     } catch (error) {
-      console.log(error);
-
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }
   }

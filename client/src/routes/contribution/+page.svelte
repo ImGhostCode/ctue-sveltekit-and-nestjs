@@ -165,7 +165,7 @@
 </ToastContainer>
 
 <style>
-	.form-control input:focus + label .label-text {
+	/* .form-control input:focus + label .label-text {
 		color: green;
-	}
+	} */
 </style>

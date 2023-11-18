@@ -20,3 +20,14 @@ export async function GET(event) {
 
     return json(result)
 }
+
+export async function POST(event) {
+    const token = event.cookies.get('accessToken');
+
+    if (!token) {
+        return json({ error: 'Hết hạn đăng nhập. Vui lòng đăng nhập lại' })
+    }
+    const body = await event.request.json();
+    const result = await db.createPractice(token, body)
+    return json(result)
+}

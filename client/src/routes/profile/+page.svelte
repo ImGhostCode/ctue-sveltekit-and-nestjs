@@ -23,8 +23,6 @@
 		} else newName = data.user.User.name;
 	});
 
-	// console.log(data);
-
 	$: if (form?.success) {
 		// isLoadingForm = false;
 		isEditing = false;
@@ -41,7 +39,6 @@
 		if (e.currentTarget.files == null) return; // files can be null, handle however appropriate
 
 		avt = e.currentTarget.files[0];
-		console.log(URL.createObjectURL(avt));
 	};
 
 	// onDestroy(unsubscribe);

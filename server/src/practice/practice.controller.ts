@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { PracticeService } from './practice.service';
 import { GetAccount, Roles } from '../auth/decorator';
 import { Account } from '@prisma/client';
@@ -14,7 +14,7 @@ export class PracticeController {
     @Post()
     @UseGuards(MyJWTGuard, RolesGuard)
     @Roles(ACCOUNT_TYPES.ADMIN, ACCOUNT_TYPES.USER)
-    createPractice(@GetAccount() account: Account, createPracticeDto: CreatePraticeDto) {
+    createPractice(@GetAccount() account: Account, @Body() createPracticeDto: CreatePraticeDto) {
         return this.practiceService.createPractice(account.userId, createPracticeDto)
     }
 }

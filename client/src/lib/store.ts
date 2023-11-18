@@ -1,5 +1,7 @@
 import { subscribe } from "svelte/internal";
 import { writable } from "svelte/store";
+import correctAudio from '$lib/assets/audios/correct.mp3';
+import incorrectAudio from '$lib/assets/audios/incorrect.mp3';
 
 export const isLoading = writable(false)
 export const isLoadingForm = writable(false)
@@ -36,5 +38,24 @@ export const HandlerSpeaker = {
     onPlayAudio: (audioSrc: string) => {
         const audio = new Audio(audioSrc);
         audio.play();
+    },
+
+    playSoundAnswer: function (
+        word = '',
+        isCorrect = true,
+        speakDelay = 1000,
+    ) {
+
+        let audio = new Audio();
+
+        audio.volume = volume / 100;
+        audio.playbackRate = speed;
+        audio.src = isCorrect ? correctAudio : incorrectAudio;
+        audio.play();
+
+        setTimeout(() => {
+            this.onTextToSpeech(word);
+        }, speakDelay);
     }
 }
+

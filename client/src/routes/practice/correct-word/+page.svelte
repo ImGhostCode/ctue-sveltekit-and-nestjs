@@ -32,6 +32,9 @@
 	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
 	import { CONFUSING_LIST, DELAY_ANSWER } from '../../../constants/practice';
 	import CorrectWordResult from '../../../components/CorrectWordResult.svelte';
+	import RightIcon from '../../../components/RightIcon.svelte';
+	import WrongIcon from '../../../components/WrongIcon.svelte';
+	import { HandlerSpeaker } from '$lib/store';
 
 	type Types = { id: number; name: string; isWord: boolean };
 	type Levels = { id: number; name: string };
@@ -42,7 +45,7 @@
 	let myModal5: HTMLDialogElement;
 
 	export let data: PageData;
-	export let form: ActionData;
+	// export let form: ActionData;
 
 	onMount(() => {
 		myModal4.showModal();
@@ -146,7 +149,6 @@
 			}
 		);
 		const result = await response.json();
-		console.log(result);
 
 		if (result.data) {
 			myModal4.close();
@@ -163,9 +165,6 @@
 					: [],
 				answerIndex: -1
 			};
-
-			console.log(wordPack);
-			console.log(state);
 		} else if (result.error) {
 			const toast = toasts.add({
 				title: 'Lỗi',
@@ -311,8 +310,9 @@
 	const nRightConsecutive = { current: { top: 0, n: 0 } };
 
 	const onAnswer = (answer: string, answerIndex: number) => {
+		// HandlerSpeaker.onTextToSpeech(word);
 		if (answer === word) {
-			//playSoundAnswer(word, true, voice, volume, speed);
+			HandlerSpeaker.playSoundAnswer(word, true);
 			state = {
 				...state,
 				nRight: state.nRight + 1,
@@ -321,7 +321,8 @@
 			};
 			nRightConsecutive.current.n++;
 		} else {
-			// playSoundAnswer(word, false, voice, volume, speed);
+			HandlerSpeaker.playSoundAnswer(word, false);
+			// HandlerSpeaker.onTextToSpeech(word);
 			state = {
 				...state,
 				nWrong: state.nWrong + 1,
@@ -586,36 +587,14 @@
 					<div class="flex justify-center items-center font-thin">
 						<b class="font-bold text-green-600">{state.nRight}&nbsp;</b>
 						Đúng
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							class="w-6 h-6 mx-1 fill-[#29a322]"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-								clip-rule="evenodd"
-							/>
-						</svg>
+						<RightIcon />
 
 						-&nbsp;<b class="font-bold text-red-600">{state.nWrong}&nbsp;</b>Sai
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							class="w-6 h-6 mx-1 fill-[#d6493c]"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
-								clip-rule="evenodd"
-							/>
-						</svg>
+						<WrongIcon />
 					</div>
 				</div>
 
-				<div class="grid text-center grid-flow-row">
+				<div class="grid text-center grid-flow-row" class:disable={state.status !== 0}>
 					<div class="flex flex-col justify-center items-center row-span-4">
 						<p class="text-2xl font-bold text-slate-500 mb-1">{mean}</p>
 						<div class="" class:visible={state.status !== 0} class:hidden={state.status === 0}>
@@ -654,6 +633,9 @@
 			{:else}
 				<div class="invisible" />
 				<CorrectWordResult
+					{data}
+					words={words.map((word) => word.id)}
+					{selected}
 					onReplay={handleReplay}
 					nRight={state.nRight}
 					nWrong={state.nWrong}

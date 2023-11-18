@@ -19,7 +19,7 @@ export class PracticeService {
                     numOfSentence: createPracticeDto.numOfSentence,
                     nRight: createPracticeDto.nRight,
                     nWrong: createPracticeDto.nWrong,
-                    nRightConsecitive: createPracticeDto.nRightConsecitive,
+                    nRightConsecutive: createPracticeDto.nRightConsecutive,
                     Words: {
                         connect: createPracticeDto.words.map((id) => ({ id }))
                     }

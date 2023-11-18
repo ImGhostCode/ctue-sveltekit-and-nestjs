@@ -129,7 +129,6 @@
 			}
 		);
 		const result = await response.json();
-		console.log(result);
 
 		if (result.data) {
 			myModal4.close();
@@ -206,8 +205,6 @@
 	const originSplit: string[] = splitWord(word.toLocaleLowerCase());
 
 	const handleSelectCharacter = (index: number): void => {
-		// console.log('click');
-
 		const newUserSplit = [...userSplit, { index, ch: originSplit[index] }];
 		userSplit = newUserSplit;
 		// console.log(newUserSplit);
@@ -587,7 +584,7 @@
 						<p class="text-2xl font-semibold mb-2 text-slate-600">Test</p>
 						<p class="text-red-500 text-sm">Sai rồi</p>
 					</div>
-					<Speaker content={'add'} />
+					<Speaker key={'add'} />
 				</div>
 
 				<!-- Select to answer -->
