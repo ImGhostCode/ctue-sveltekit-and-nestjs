@@ -206,13 +206,13 @@
 											</svg>
 										</span>
 										<span class="ml-2">Thông tin cá nhân</span>
-									</li></a
-								>
+									</li>
+								</a>
 								{#if userData.accountType === 'admin'}
 									<a href="/manage-account">
 										<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
-											<span class="inline-block"
-												><svg
+											<span class="inline-block">
+												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													fill="none"
 													viewBox="0 0 24 24"
@@ -228,12 +228,12 @@
 												</svg>
 											</span>
 											<span class="ml-2">Quản lý người dùng</span>
-										</li></a
-									>
+										</li>
+									</a>
 									<a href="/manage-contribution">
 										<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
-											<span class="inline-block"
-												><svg
+											<span class="inline-block">
+												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													fill="none"
 													viewBox="0 0 24 24"
@@ -249,8 +249,29 @@
 												</svg>
 											</span>
 											<span class="ml-2">Quản lý đóng góp</span>
-										</li></a
-									>
+										</li>
+									</a>
+									<a href="/manage-word">
+										<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
+											<span class="inline-block">
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													fill="none"
+													viewBox="0 0 24 24"
+													stroke-width="1.5"
+													stroke="currentColor"
+													class="w-6 h-6"
+												>
+													<path
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+													/>
+												</svg>
+											</span>
+											<span class="ml-2">Quản lý từ vựng</span>
+										</li>
+									</a>
 								{/if}
 								<button class="w-full" on:click={() => myModal4.showModal()}>
 									<li class=" py-3 px-4 flex hover:bg-[#e5e5e5]">
