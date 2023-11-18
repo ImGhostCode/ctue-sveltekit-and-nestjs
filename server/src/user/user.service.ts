@@ -94,8 +94,6 @@ export class UserService {
             })
             return new ResponseData<any>(null, 200, 'Cập nhật thông tin thành công')
         } catch (error) {
-            console.log(error);
-
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
     }

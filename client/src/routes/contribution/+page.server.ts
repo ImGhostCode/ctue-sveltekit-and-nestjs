@@ -129,8 +129,6 @@ export const actions = {
             }
         } catch (error) {
             isLoadingForm.set(false)
-            console.log('error:::', error);
-
             throw error
         } finally {
             isLoadingForm.set(false)

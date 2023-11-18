@@ -20,7 +20,6 @@ export const actions = {
             const formData = Object.fromEntries(await request.formData());
             const token: string | undefined = cookies.get('accessToken');
             const userId = Number(formData.userId)
-            // console.log(formData);
             delete formData.userId
 
             if (!token) {

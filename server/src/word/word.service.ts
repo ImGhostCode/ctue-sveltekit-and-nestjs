@@ -103,7 +103,6 @@ export class WordService {
             })
             return new ResponseData<any>({ words, totalPages }, 200, 'Tìm thành công')
         } catch (error) {
-            console.log(error);
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
     }
@@ -244,8 +243,6 @@ export class WordService {
             })
             return new ResponseData<Word>(wordspack, 200, 'Tìm gói từ vựng thành công')
         } catch (error) {
-            console.log(error);
-
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }
     }

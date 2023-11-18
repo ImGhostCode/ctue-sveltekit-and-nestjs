@@ -188,7 +188,7 @@ model Practice {
 
   nRight            Int
   nWrong            Int
-  nRightConsecitive Int
+  nRightConsecutive Int
   numOfSentence     Int
   createdAt         DateTime @default(now())
 

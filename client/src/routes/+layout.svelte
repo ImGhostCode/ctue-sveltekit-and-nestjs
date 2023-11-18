@@ -9,7 +9,7 @@
 	import { goto } from '$app/navigation';
 
 	export let data: LayoutServerData;
-	export let form: ActionData;
+	// export let form: ActionData;
 
 	let showNavBar = false;
 	let userData: any = null;

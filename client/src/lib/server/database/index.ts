@@ -8,4 +8,6 @@ export * from './contribute.db'
 export * from './irregular-verb.db'
 export * from './sentence.db'
 export * from './word.db'
+export * from './practice.db'
 export * from './favorite.db'
+

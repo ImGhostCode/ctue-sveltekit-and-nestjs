@@ -53,9 +53,6 @@ export const actions = {
 
             const formData = Object.fromEntries(await request.formData());
 
-            console.log(formData);
-
-
             const res = await db.verifyContribute(token, Number(formData.conId), { status: Number(formData.status), feedback: formData.feedback })
 
             if (res.data?.statusCode == 400) {
@@ -67,8 +64,6 @@ export const actions = {
             }
         } catch (error) {
             isLoadingForm.set(false)
-            // console.log(error);
-
             throw error
         } finally {
             isLoadingForm.set(false)

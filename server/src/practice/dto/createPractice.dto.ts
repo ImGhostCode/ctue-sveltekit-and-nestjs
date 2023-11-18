@@ -1,15 +1,16 @@
-import { IsArray, IsNotEmpty, IsNumber } from "class-validator"
+import { Optional } from "@nestjs/common"
+import { IsArray, IsNotEmpty, IsNumber, IsOptional } from "class-validator"
 
 export class CreatePraticeDto {
-    @IsNotEmpty()
+    @IsOptional()
     @IsNumber()
     typeId: number
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsNumber()
     levelId: number
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsNumber()
     specializationId: number
 
@@ -23,7 +24,7 @@ export class CreatePraticeDto {
 
     @IsNotEmpty()
     @IsNumber()
-    nRightConsecitive: number
+    nRightConsecutive: number
 
     @IsNotEmpty()
     @IsNumber()

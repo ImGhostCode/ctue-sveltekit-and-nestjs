@@ -1,7 +1,7 @@
 <script lang="ts">
 	import correctWord from '$lib/assets/icons/games/correct-word.png';
 	import type { ActionData, PageData } from './$types';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 	import animal from '$lib/assets/icons/topics/animal.png';
@@ -30,6 +30,11 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import { CONFUSING_LIST, DELAY_ANSWER } from '../../../constants/practice';
+	import CorrectWordResult from '../../../components/CorrectWordResult.svelte';
+	import RightIcon from '../../../components/RightIcon.svelte';
+	import WrongIcon from '../../../components/WrongIcon.svelte';
+	import { HandlerSpeaker } from '$lib/store';
 
 	type Types = { id: number; name: string; isWord: boolean };
 	type Levels = { id: number; name: string };
@@ -40,7 +45,7 @@
 	let myModal5: HTMLDialogElement;
 
 	export let data: PageData;
-	export let form: ActionData;
+	// export let form: ActionData;
 
 	onMount(() => {
 		myModal4.showModal();
@@ -113,6 +118,17 @@
 		topics[index].selected = !topics[index].selected;
 	}
 
+	let wordPack: any[] = [];
+	let errMinNum = false;
+	let state: any = {
+		current: 0,
+		nRight: 0,
+		nWrong: 0,
+		status: 0,
+		answerList: [],
+		answerIndex: -1
+	};
+
 	async function getWordPack(
 		type: any,
 		level: any,
@@ -120,6 +136,11 @@
 		topics: any[],
 		numSentence: any
 	) {
+		if (numSentence < 5) {
+			errMinNum = true;
+			return;
+		}
+
 		const topicsString = topics.map((topic) => `topic=${encodeURIComponent(topic)}`).join('&&');
 		const response = await fetch(
 			`/practice/correct-word?numSentence=${numSentence}&&specialization=${specialization}&&level=${level}&&type=${type}&&${topicsString}`,
@@ -128,14 +149,25 @@
 			}
 		);
 		const result = await response.json();
-		console.log(result);
 
 		if (result.data) {
 			myModal4.close();
 			words = result.data;
+			wordPack = randomWordQuestionPack(words, words.length);
+			state = {
+				current: 0,
+				nRight: 0,
+				nWrong: 0,
+				// status 0 - reading question, 1 - show right result, 2 - show wrong result
+				status: 0,
+				answerList: wordPack?.length
+					? shuffleAnswers(wordPack[0]?.word, wordPack[0]?.phonetic, wordPack[0]?.wrongList)
+					: [],
+				answerIndex: -1
+			};
 		} else if (result.error) {
 			const toast = toasts.add({
-				title: 'Error',
+				title: 'Lỗi',
 				description: result.error,
 				duration: 1500, // Set the duration to 0 to keep it open until manually closed
 				placement: 'top-right',
@@ -152,7 +184,7 @@
 			});
 		} else {
 			const toast = toasts.add({
-				title: 'Error',
+				title: 'Lỗi',
 				description: result.message,
 				duration: 1500, // Set the duration to 0 to keep it open until manually closed
 				placement: 'top-right',
@@ -169,6 +201,178 @@
 			return;
 		}
 	}
+
+	const generateWrongWordList = (
+		word: string = '',
+		synonyms: [] = [],
+		list: any[] = [],
+		isCheck: boolean = false
+	) => {
+		const n: number = list.length;
+		if (!n || n <= 3) {
+			return [];
+		}
+
+		// check if the list is already a confusing list ?
+		const filteredList = isCheck ? list : list.filter((i: any) => i.content !== word);
+
+		if (synonyms && synonyms.length === 0) {
+			return filteredList
+				.map((i: any) => ({ word: i.content, phonetic: i.phonetic }))
+				.sort(() => Math.random() - 0.5)
+				.slice(0, 3);
+		}
+
+		let flag = true,
+			count = 0; // prevent stack overflow because of infinite loop
+
+		while (flag) {
+			const resList = filteredList.sort(() => Math.random() - 0.5).slice(0, 3);
+			let isOk = true;
+
+			resList.forEach((i: any) => {
+				if (synonyms.findIndex((w: any) => w === i.content) !== -1) isOk = false;
+			});
+
+			if (isOk) {
+				flag = false;
+				return resList.map((i: any) => ({ word: i.content, phonetic: i.phonetic }));
+			}
+
+			if (count > 100) {
+				return [];
+			}
+
+			++count;
+		}
+	};
+
+	const randomWordQuestionPack = (list: any[] = [], amount = 100) => {
+		const n = amount < list.length ? amount : list.length;
+		let result = [];
+
+		// shuffle list and generate seed list
+		const seedList = list.sort(() => Math.random() - 0.5).slice(0, n);
+		let confusingList: AnalyserNode[] = list.slice(n + 1);
+		const isEnough = confusingList.length > CONFUSING_LIST;
+
+		for (let i = 0; i < n; ++i) {
+			const { content, mean, phonetic, synonyms } = seedList[i];
+			result.push({
+				word: content,
+				mean,
+				phonetic,
+				// If size of confusing list too small then use all item of list
+				wrongList: isEnough
+					? generateWrongWordList(content, synonyms, confusingList, true)
+					: generateWrongWordList(content, synonyms, list, false)
+			});
+		}
+
+		return result;
+	};
+
+	function shuffleAnswers(word: string, phonetic: string, wrongList: []) {
+		let mergeList = [...wrongList, { word, phonetic }];
+		return mergeList.sort(() => Math.random() - 0.5);
+	}
+
+	function addClassAnswerItem(
+		status: number,
+		answerIndex: number,
+		index: number,
+		word: string,
+		answer: string
+	) {
+		if (status !== 0) {
+			if (word === answer) return 'border-4 border-green-600';
+			if (answerIndex === index) return 'border-4 border-red-600';
+		}
+		return '';
+	}
+
+	let isDone: boolean = false;
+	let isSubscribe = true;
+
+	onDestroy(() => {
+		isSubscribe = false;
+	});
+
+	$: nQuestion = wordPack.length;
+
+	let word = '',
+		mean = '';
+
+	$: if (wordPack.length) {
+		word = wordPack[state.current].word;
+		mean = wordPack[state.current].mean;
+	}
+	const nRightConsecutive = { current: { top: 0, n: 0 } };
+
+	const onAnswer = (answer: string, answerIndex: number) => {
+		// HandlerSpeaker.onTextToSpeech(word);
+		if (answer === word) {
+			HandlerSpeaker.playSoundAnswer(word, true);
+			state = {
+				...state,
+				nRight: state.nRight + 1,
+				status: 1,
+				answerIndex
+			};
+			nRightConsecutive.current.n++;
+		} else {
+			HandlerSpeaker.playSoundAnswer(word, false);
+			// HandlerSpeaker.onTextToSpeech(word);
+			state = {
+				...state,
+				nWrong: state.nWrong + 1,
+				status: 2,
+				answerIndex
+			};
+
+			const { top, n } = nRightConsecutive.current;
+			if (top < n) nRightConsecutive.current.top = n;
+		}
+
+		// wait to speak the word if not last question
+		if (state.current !== wordPack.length - 1) {
+			setTimeout(() => {
+				const newAnswerList = shuffleAnswers(
+					wordPack[state.current + 1]?.word,
+					wordPack[state.current + 1]?.phonetic,
+					wordPack[state.current + 1]?.wrongList
+				);
+
+				if (isSubscribe) {
+					state = {
+						...state,
+						status: 0,
+						answerIndex: -1,
+						current: state.current + 1,
+						answerList: newAnswerList
+					};
+				}
+			}, DELAY_ANSWER);
+		} else {
+			setTimeout(() => {
+				isSubscribe ? (isDone = true) : isDone;
+			}, DELAY_ANSWER);
+		}
+	};
+
+	const handleReplay = () => {
+		isDone = false;
+		state = {
+			current: 0,
+			nRight: 0,
+			nWrong: 0,
+			// status 0 - reading question, 1 - show right result, 2 - show wrong result
+			status: 0,
+			answerList: shuffleAnswers(wordPack[0]?.word, wordPack[0]?.phonetic, wordPack[0]?.wrongList),
+			answerIndex: -1
+		};
+		nRightConsecutive.current = { top: 0, n: 0 };
+	};
 </script>
 
 <dialog bind:this={myModal4} id="" class="modal">
@@ -296,8 +500,12 @@
 						class="input input-bordered focus:border-green-600 focus:outline-none"
 						id="number-sentence"
 						name="numberOfSentence"
+						min="5"
 						bind:value={selected.numSentence}
 					/>
+					{#if errMinNum}
+						<p class="text-xs text-error mt-2 font-semibold">Vui lòng chọn ít nhất 5 câu</p>
+					{/if}
 				</div>
 			</div>
 
@@ -357,7 +565,7 @@
 	</div>
 </dialog>
 
-{#if !myModal4}
+{#if wordPack.length}
 	<div class="flex flex-col justify-start items-center min-h-screen max-h-max">
 		<div
 			class="practice grid grid-flow-row max-w-screen-xl w-screen shadow-lg py-6 px-9 border mx-auto mt-10 grid-cols-1 rounded-lg"
@@ -368,74 +576,72 @@
 			</div>
 			<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
 
-			<div class="flex justify-between items-center text-lg my-[14px]">
-				<div class="">Câu <b class="text-sky-600">1</b> / <b class="">5</b></div>
-				<div class="flex justify-center items-center font-thin">
-					<b class="font-bold text-green-600">0&nbsp;</b>
-					Đúng
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						class="w-6 h-6 mx-1 fill-[#29a322]"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-							clip-rule="evenodd"
-						/>
-					</svg>
+			{#if !isDone}
+				<div class="flex justify-between items-center text-lg my-[14px]">
+					<!--  -->
+					<div class="">
+						Câu <b class="text-sky-600">{state.current + 1}</b>&nbsp;/&nbsp;<b class=""
+							>{nQuestion}</b
+						>
+					</div>
+					<div class="flex justify-center items-center font-thin">
+						<b class="font-bold text-green-600">{state.nRight}&nbsp;</b>
+						Đúng
+						<RightIcon />
 
-					-&nbsp;<b class="font-bold text-red-600">0&nbsp;</b>Sai
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						class="w-6 h-6 mx-1 fill-[#d6493c]"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
-							clip-rule="evenodd"
-						/>
-					</svg>
+						-&nbsp;<b class="font-bold text-red-600">{state.nWrong}&nbsp;</b>Sai
+						<WrongIcon />
+					</div>
 				</div>
-			</div>
 
-			<div class="grid text-center grid-flow-row">
-				<div class="flex flex-col justify-center items-center row-span-4">
-					<p class="text-2xl font-bold text-slate-500 mb-1">Kiem tra</p>
-					<p class="text-green-500 text-sm">Chính xác</p>
+				<div class="grid text-center grid-flow-row" class:disable={state.status !== 0}>
+					<div class="flex flex-col justify-center items-center row-span-4">
+						<p class="text-2xl font-bold text-slate-500 mb-1">{mean}</p>
+						<div class="" class:visible={state.status !== 0} class:hidden={state.status === 0}>
+							{#if state.status === 1}
+								<p class="text-green-500 text-sm">Chính xác</p>
+							{:else}
+								<p class="text-red-500 text-sm">Sai rồi</p>
+							{/if}
+						</div>
+					</div>
+					<div
+						class="grid grid-cols-2 grid-rows-2 gap-10 w-full max-w-[50%] mx-auto my-0 py-6 row-span-6"
+					>
+						{#each state.answerList as answer, index (index)}
+							<button
+								type="button"
+								disabled={state.status !== 0}
+								class:disable={state.status !== 0}
+								class:cursor-not-allowed={state.status !== 0}
+								on:click={() => onAnswer(answer.word, index)}
+								class={`${addClassAnswerItem(
+									state.status,
+									state.answerIndex,
+									index,
+									word,
+									answer.word
+								)}
+								' bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer'`}
+							>
+								<p class="text-2xl font-semibold text-white">{answer.word}</p>
+								<span class="text-lg text-blue-800">{answer.phonetic}</span>
+							</button>
+						{/each}
+					</div>
 				</div>
-				<div
-					class="grid grid-cols-2 grid-rows-2 gap-10 w-full max-w-[50%] mx-auto my-0 py-6 row-span-6"
-				>
-					<div
-						class="bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer"
-					>
-						<p class="text-2xl font-semibold text-white">push</p>
-						<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
-					</div>
-					<div
-						class="bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer"
-					>
-						<p class="text-2xl font-semibold text-white">check</p>
-						<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
-					</div>
-					<div
-						class="bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer"
-					>
-						<p class="text-2xl font-semibold text-white">make</p>
-						<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
-					</div>
-					<div
-						class="bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer"
-					>
-						<p class="text-2xl font-semibold text-white">run</p>
-						<span class="text-lg text-blue-800">/'ɪʌɔɪʊə/</span>
-					</div>
-				</div>
-			</div>
+			{:else}
+				<div class="invisible" />
+				<CorrectWordResult
+					{data}
+					words={words.map((word) => word.id)}
+					{selected}
+					onReplay={handleReplay}
+					nRight={state.nRight}
+					nWrong={state.nWrong}
+					nRightConsecutive={nRightConsecutive.current.top}
+				/>
+			{/if}
 		</div>
 	</div>
 {:else}
@@ -451,4 +657,11 @@
 	.practice {
 		grid-template-rows: 1fr 1fr 11fr;
 	}
+
+	/* .right {
+		border: solid 2px green;
+	}
+	.wrong {
+		border: solid 2px red;
+	} */
 </style>
