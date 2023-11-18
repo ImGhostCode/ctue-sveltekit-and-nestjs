@@ -3,39 +3,43 @@
 	import Pagination from '../../components/Pagination.svelte';
 	import type { ActionData } from './$types';
 	import { onMount } from 'svelte';
+	import FormAddSentence from '../../components/FormAddSentence.svelte';
+	import { FlatToast, ToastContainer, toasts } from 'svelte-toasts';
+	import FormEditSentence from '../../components/FormEditSentence.svelte';
 
 	export let form: ActionData;
 	/** @type {import('./$types').PageData} */
 	export let data: any;
 
+	let topics: any[] = [];
+	let types: any[] = [];
+	let currentSentence: any = {};
+
 	function toggleSelected(index: number) {
-		data.topicsSentence[index].selected = !data.topicsSentence[index].selected;
+		topics[index].selected = !data.topicsSentence[index].selected;
 	}
 
-	// Function to handle filter confirmation
+	$: {
+		if (data.topicsSentence) topics = data.topicsSentence;
+		if (data.typesSentence) types = data.typesSentence;
+	}
+
 	function handleFilterConfirmation() {
 		const selectedTopics = data.topicsSentence
 			.filter((topic: any) => topic.selected)
-			.map((topic: any) => topic.id); // Adjust to get the correct property for the topic ID
-
-		console.log(selectedTopics);
-
-		// Call the function to fetch filtered data based on selected topics
+			.map((topic: any) => topic.id);
 		getSentences(selectedTopics, type, currentPage);
 	}
 
-	let totalPages: Number = 1;
-	// let key: string = '';
+	let totalPages: number = 1;
 	let type: number | null = null;
 	let topic: number[] = [];
 	let currentPage: number = 1;
-	// let sort: string = 'asc';
 	let sentences: any[] = [];
 
 	async function getSentences(topic: number[], type: number | null, page: number | null) {
 		const topicsString = topic.map((id) => `topic=${id}`).join('&&');
 		const typeParameter = type !== null && !isNaN(type) ? `type=${type}&&` : '';
-
 		const response = await fetch(
 			`/1000-communication-phrase?${typeParameter}&&${topicsString ?? +topicsString}&&page=${page}`,
 			{
@@ -60,46 +64,115 @@
 
 	let myModal4: HTMLDialogElement;
 	let myModal5: HTMLDialogElement;
+	let myModal7: HTMLDialogElement;
+	let myModal6: HTMLDialogElement;
 
 	let dataDetail: any;
 
-	// Hàm mở Modal và truyền dữ liệu chi tiết của đóng góp vào
 	function openModal(modal: HTMLDialogElement, sentence: any) {
 		modal.showModal();
 		dataDetail = sentence;
 		dataDetail.topics = dataDetail.Topic.length ? dataDetail.Topic.map((t: any) => t.name) : [];
 	}
+
+	function handlePrePAge() {
+		document.body.scrollIntoView();
+		currentPage = currentPage - 1;
+	}
+
+	function handleNextPage() {
+		document.body.scrollIntoView();
+		currentPage = currentPage + 1;
+	}
+
+	function handleCancel() {
+		myModal6.close();
+		myModal7.close();
+	}
+	$: if (form?.success) {
+		toasts.add({
+			title: 'Success',
+			description: form?.message,
+			duration: 1500,
+			placement: 'top-right',
+			type: 'success',
+			theme: 'dark',
+			showProgress: true,
+			onClick: () => {},
+			onRemove: () => {}
+		});
+		getSentences(topic, type, currentPage);
+		myModal6.close();
+		myModal7.close();
+	}
+
+	$: if (form?.error) {
+		toasts.add({
+			title: 'Error',
+			description: form?.message,
+			duration: 1500,
+			placement: 'top-right',
+			type: 'error',
+			theme: 'dark',
+			showProgress: true,
+			onClick: () => {},
+			onRemove: () => {}
+		});
+	}
+
+	const handleDeleteSentence = async (id: number) => {
+		const confirm = window.confirm('Bạn có chắc chắn muốn xóa câu này không?');
+		if (confirm) {
+			const response = await fetch(`/manage-sentence/${id}`, {
+				method: 'DELETE'
+			});
+			const result = await response.json();
+			if (result.statusCode == 200) {
+				getSentences(topic, type, currentPage);
+			}
+		}
+	};
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<div class="flex justify-between items-center mb-4">
 		<h1 class="header-page">1000+ Cụm từ giao tiếp</h1>
-
-		<!-- You can open the modal using ID.showModal() method -->
-		<button class="" on:click={() => myModal4.showModal()}
-			><svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
-				class="w-6 h-6"
+		<div class="flex items-center gap-5">
+			<button
+				class="btn btn-sm bg-green-500 hover:bg-green-700 text-white"
+				on:click={() => myModal6.showModal()}
 			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
-				/>
-				<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-			</svg></button
-		>
+				Thêm
+			</button>
+			<button class="" on:click={() => myModal4.showModal()}>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-6 h-6"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+					/>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+					/>
+				</svg>
+			</button>
+		</div>
 		<dialog bind:this={myModal4} id="my_modal_4" class="modal">
 			<div class="modal-box w-11/12 max-w-5xl">
 				<h3 class="font-bold text-xl text-orange-600 mb-2">Chọn chủ đề</h3>
 				<div class="h-[1px] w-full border border-gray-200" />
 
 				<div class="flex flex-wrap p-3">
-					{#each data.topicsSentence as topic, index (index)}
+					{#each topics as topic, index (index)}
 						<button
 							type="button"
 							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
@@ -116,7 +189,6 @@
 
 				<div class="modal-action">
 					<form method="dialog">
-						<!-- if there is a button, it will close the modal -->
 						<button class="btn mr-2">Đóng</button>
 						<button
 							class="btn bg-green-600 hover:bg-green-700 text-white"
@@ -128,7 +200,6 @@
 		</dialog>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200" />
-
 	{#if sentences.length}
 		<div class="overflow-x-auto">
 			<table class="table">
@@ -138,7 +209,7 @@
 						<th class="text-green-700 text-lg">STT</th>
 						<th class="text-green-700 text-lg">Câu</th>
 						<th class="text-green-700 text-lg">Nghĩa</th>
-						<th class="text-green-700 text-lg">Chi tiết</th>
+						<th class="text-green-700 text-lg text-center">Hành động</th>
 					</tr>
 				</thead>
 				<tbody class="">
@@ -147,16 +218,35 @@
 							<th>{index + 1}</th>
 							<td class="flex">
 								<Speaker key={sentence.content} />
-								<p class="text-lg">{sentence.content}</p></td
-							>
+								<p class="text-lg">{sentence.content}</p>
+							</td>
 							<td class="text-lg">{sentence.mean}</td>
-							<td
-								><button
+							<td class="text-center">
+								<button
 									type="button"
 									class="btn btn-info btn-sm text-white"
-									on:click={() => openModal(myModal5, sentence)}>Chi tiết</button
-								></td
-							>
+									on:click={() => openModal(myModal5, sentence)}
+								>
+									Chi tiết
+								</button>
+								<button
+									class="btn btn-sm btn-warning"
+									on:click={() => {
+										currentSentence = sentence;
+										myModal7.showModal();
+									}}
+								>
+									Sửa
+								</button>
+								<button
+									class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
+									on:click={async () => {
+										await handleDeleteSentence(sentence.id);
+									}}
+								>
+									Xóa
+								</button>
+							</td>
 						</tr>
 					{/each}
 				</tbody>
@@ -165,35 +255,14 @@
 	{:else}
 		<div class="py-4 text-center text-lg text-slate-600 font-semibold">Danh sách rỗng</div>
 	{/if}
-
-	<!-- <Pagination /> -->
-
-	<div class="join grid grid-cols-2 w-max mx-auto mt-6">
-		<button
-			on:click={async () => {
-				currentPage = currentPage - 1;
-			}}
-			class:disable={currentPage == 1}
-			disabled={currentPage == 1}
-			class:cursor-not-allowed={currentPage == 1}
-			class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
-		>
-			Trang sau
-		</button>
-		<button
-			on:click={async () => {
-				currentPage = currentPage + 1;
-			}}
-			class:disable={currentPage == totalPages}
-			disabled={currentPage == totalPages}
-			class:cursor-not-allowed={currentPage == totalPages}
-			class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
-		>
-			Trang tiếp theo
-		</button>
-	</div>
+	<Pagination {currentPage} {totalPages} on:next={handleNextPage} on:pre={handlePrePAge} />
 </div>
-
+<dialog bind:this={myModal6} id="my_modal_" class="modal">
+	<FormAddSentence {topics} {types} on:cancel={handleCancel} />
+</dialog>
+<dialog bind:this={myModal7} id="my_modal_" class="modal">
+	<FormEditSentence {topics} {types} {currentSentence} on:cancel={handleCancel} />
+</dialog>
 <dialog bind:this={myModal5} id="my_modal_" class="modal">
 	{#if dataDetail}
 		<div class="modal-box">
@@ -213,7 +282,6 @@
 			{#if dataDetail.topics.length}
 				<div class="flex flex-wrap p-3">
 					{#each dataDetail.topics as topic, index (index)}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<div
 							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 text-slate-700"
 						>
@@ -226,3 +294,6 @@
 		</div>
 	{/if}
 </dialog>
+<ToastContainer placement="bottom-right" let:data>
+	<FlatToast {data} />
+</ToastContainer>
