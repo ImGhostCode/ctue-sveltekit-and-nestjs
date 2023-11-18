@@ -80,7 +80,7 @@ export class IrregularVerbService {
     try {
       const verb = await this.findById(id)
       if (!verb) return new ResponseData<string>(null, 400, 'Động từ không tồn tại')
-      if (updateIrregularVerbDto.v1) {
+      if (updateIrregularVerbDto.v1 && updateIrregularVerbDto.v1 !== verb.v1) {
         const isExisted = await this.isExisted(updateIrregularVerbDto.v1)
         if (isExisted) return new ResponseData<string>(null, 400, 'Động từ đã tồn tại')
       }
