@@ -1,21 +1,174 @@
 <script lang="ts">
-	import tree from '$lib/assets/icons/topics/tree.png';
-	import social from '$lib/assets/icons/topics/social.png';
-
+	import correctWord from '$lib/assets/icons/games/correct-word.png';
 	import wordMatch from '$lib/assets/icons/games/word-match.png';
 	import Speaker from '../../../components/Speaker.svelte';
+	import type { ActionData, PageData } from './$types';
+	import { onMount } from 'svelte';
+	import tree from '$lib/assets/icons/topics/tree.png';
+	import social from '$lib/assets/icons/topics/social.png';
+	import animal from '$lib/assets/icons/topics/animal.png';
+	import academy from '$lib/assets/icons/topics/academy.png';
+	import body from '$lib/assets/icons/topics/body.png';
+	import color from '$lib/assets/icons/topics/color.png';
+	import clothes from '$lib/assets/icons/topics/clothes.png';
+	import culture from '$lib/assets/icons/topics/culture.png';
+	import entertainment from '$lib/assets/icons/topics/entertainment.png';
+	import exciting from '$lib/assets/icons/topics/exciting.png';
+	import family from '$lib/assets/icons/topics/family.png';
+	import flag from '$lib/assets/icons/topics/flag.png';
+	import food from '$lib/assets/icons/topics/food.png';
+	import health from '$lib/assets/icons/topics/health.png';
+	import hobby from '$lib/assets/icons/topics/hobby.png';
+	import ielts from '$lib/assets/icons/topics/ielts.png';
+	import job from '$lib/assets/icons/topics/job.png';
+	import nature from '$lib/assets/icons/topics/nature.png';
+	import others from '$lib/assets/icons/topics/others.png';
+	import skill from '$lib/assets/icons/topics/skill.png';
+	import spirituality from '$lib/assets/icons/topics/spirituality.png';
+	import sport from '$lib/assets/icons/topics/sport.png';
+	import technology from '$lib/assets/icons/topics/technology.png';
+	import toeic from '$lib/assets/icons/topics/toeic.png';
+	import travel from '$lib/assets/icons/topics/travel.png';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
+	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
 
+	type Types = { id: number; name: string; isWord: boolean };
+	type Levels = { id: number; name: string };
+	type Specializations = { id: number; name: string };
+	type Topics = { id: number; name: string; isWord: boolean; selected: boolean; image: string };
+
+	let myModal4: HTMLDialogElement;
+
+	export let data: PageData;
+	export let form: ActionData;
+
+	onMount(() => {
+		myModal4.showModal();
+	});
+
+	const imgTopics: { [key: string]: string } = {
+		tree,
+		social,
+		animal,
+		academy,
+		body,
+		color,
+		clothes,
+		culture,
+		entertainment,
+		exciting,
+		family,
+		flag,
+		food,
+		health,
+		hobby,
+		ielts,
+		job,
+		nature,
+		others,
+		skill,
+		spirituality,
+		sport,
+		technology,
+		toeic,
+		travel
+	};
+
+	let topics: Topics[] = [];
+	let types: Types[] = [];
+	let levels: Levels[] = [];
+	let specializations: Specializations[] = [];
 	let showTopics = false;
-	let topics = [
-		{ id: 1, name: 'Thực vật', selected: false, image: tree },
-		{ id: 2, name: 'Đời sống', selected: false, image: social },
-		{ id: 3, name: 'Đời sống 2', selected: false, image: social },
-		{ id: 4, name: 'Đời sống 3', selected: false, image: social },
-		{ id: 5, name: 'Đời sống 4', selected: false, image: social }
-	];
+	let selected: {
+		topics: number[];
+		type: number | null;
+		level: number | null;
+		specialization: number | null;
+		numSentence: number | null;
+	} = {
+		topics: [],
+		type: null,
+		specialization: null,
+		level: null,
+		numSentence: 10
+	};
+
+	let words: any[] = [];
+
+	$: {
+		if (data.topicsWord) topics = data.topicsWord;
+		if (data.typesWord) types = Array(data.typesWord);
+		if (data.specializations) specializations = Array(data.specializations);
+		if (data.levels) levels = Array(data.levels);
+	}
+
+	$: if (topics) {
+		selected.topics = [];
+		topics.forEach((i) => {
+			if (i.selected) selected.topics.push(i.id);
+		});
+	}
 
 	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
+	}
+
+	async function getWordPack(
+		type: any,
+		level: any,
+		specialization: any,
+		topics: any[],
+		numSentence: any
+	) {
+		const topicsString = topics.map((topic) => `topic=${encodeURIComponent(topic)}`).join('&&');
+		const response = await fetch(
+			`/practice/correct-word?numSentence=${numSentence}&&specialization=${specialization}&&level=${level}&&type=${type}&&${topicsString}`,
+			{
+				method: 'GET'
+			}
+		);
+		const result = await response.json();
+		console.log(result);
+
+		if (result.data) {
+			myModal4.close();
+			words = result.data;
+		} else if (result.error) {
+			const toast = toasts.add({
+				title: 'Error',
+				description: result.error,
+				duration: 1500, // Set the duration to 0 to keep it open until manually closed
+				placement: 'top-right',
+				type: 'error',
+				theme: 'dark',
+				showProgress: true,
+				// type: 'error',
+				// theme: 'dark',
+				onClick: () => {},
+				onRemove: () => {
+					goto('/login');
+				}
+				//component: BootstrapToast // You can customize the toast component here
+			});
+		} else {
+			const toast = toasts.add({
+				title: 'Error',
+				description: result.message,
+				duration: 1500, // Set the duration to 0 to keep it open until manually closed
+				placement: 'top-right',
+				type: 'error',
+				theme: 'dark',
+				showProgress: true,
+				// type: 'error',
+				// theme: 'dark',
+				onClick: () => {},
+				onRemove: () => {}
+				//component: BootstrapToast // You can customize the toast component here
+			});
+
+			return;
+		}
 	}
 
 	let myModal33: HTMLDialogElement;
@@ -82,10 +235,10 @@
 	};
 </script>
 
-<div class="absolute">
-	<dialog id="" class="modal">
-		<div class="modal-box max-w-3xl">
-			<h3 class="font-bold text-xl text-orange-600 mb-2">Lựa chọn gói từ vựng</h3>
+<dialog bind:this={myModal4} id="" class="modal">
+	<div class="modal-box max-w-3xl">
+		<form>
+			<h3 class="font-bold text-xl text-title mb-2">Lựa chọn gói từ vựng</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="grid grid-cols-2 gap-2 mt-4">
@@ -93,31 +246,16 @@
 					<label for="types" class="block mb-2 text-sm">Loại từ </label>
 					<select
 						id="types"
+						name="typeId"
+						bind:value={selected.type}
 						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="N"
-							>Noun - Danh từ</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Adj"
-							>Adjective - Tính từ</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Adv"
-							>Adverb - Trạng từ</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="V">Verb - Động từ</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Pro"
-							>Pronoun - Đại từ</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Con"
-							>Conjunction - Liên từ</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Pre"
-							>Preposition - Giới từ</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Det"
-							>Determiners - Hạn định từ</option
-						>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
+						{#each types as type}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+								{type.name}
+							</option>
+						{/each}
 					</select>
 				</div>
 
@@ -125,17 +263,16 @@
 					<label for="level" class="block mb-2 text-sm">Bặc của từ </label>
 					<select
 						id="level"
+						name="levelId"
+						bind:value={selected.level}
 						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="U"
-							>Chưa xác định</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="A1">A1</option>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="A2">A2</option>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="B1">B1</option>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="B2">B2</option>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="C1">C1</option>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="C2">C2</option>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
+						{#each levels as level}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+								{level.name}
+							</option>
+						{/each}
 					</select>
 				</div>
 
@@ -143,76 +280,23 @@
 					<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành </label>
 					<select
 						id="specialization"
+						name="specializationId"
+						bind:value={selected.specialization}
 						class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value="0">Không</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="1"
-							>Công nghệ sinh học (Biotechnology)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="2"
-							>Công nghệ thông tin (Information Technology)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="3"
-							>Công nghệ thực phẩm (Food Technology)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="4"
-							>Giải trí (Entertainment)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="5"
-							>Kinh tế học (Economics)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="6"
-							>Kế toán (Accounting)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="7"
-							>Kỹ thuật hoá học (Chemical Engineering)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="8"
-							>Mỹ thuật (Fine Arts Industry)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="9"
-							>Ngành Marketing</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="10"
-							>Quản trị khách sạn (Hotel Management)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="11"
-							>Quản trị kinh doanh (Business Adminstration)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="12"
-							>Quản trị nhân lực (Human Resource Management)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="13"
-							>Thiết kế (Design UI/UX)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="14"
-							>Thương mại quốc tế (International Trade)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="15"
-							>Thương mại điện tử (E-Commerce)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="16"
-							>Tiếng Anh thương mại (Business English)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="17"
-							>Tài chính ngân hàng (Finance & Banking)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="18"
-							>Văn hoá học (Culturology)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="19"
-							>Xây dựng (Construction Industry)</option
-						>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="20"
-							>Xã hội học (Sociology)</option
-						>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
+						{#each specializations as specialization}
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
+								{specialization.name}
+							</option>
+						{/each}
 					</select>
 				</div>
 
 				<div class="form-control w-full max-w-sm mb-3">
 					<div class="h-[28px]" />
 					<button
+						type="button"
 						on:click={() => (showTopics = !showTopics)}
 						class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
 						>Thêm chủ đề <span class="ml-2">
@@ -253,16 +337,16 @@
 				{#if showTopics}
 					<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-2">
 						{#each topics as topic, index (topic.name)}
-							<!-- svelte-ignore a11y-click-events-have-key-events -->
-							<div
-								class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
+							<button
+								type="button"
+								class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
 								class:bg-green-500={topic.selected}
 								class:text-white={topic.selected}
 								on:click={() => toggleSelected(index)}
 							>
-								<img class="mr-1" src={topic.image} alt={topic.name} />
+								<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
 								<span class="pr-1 text-sm">{topic.name}</span>
-							</div>
+							</button>
 						{/each}
 					</div>
 				{/if}
@@ -273,9 +357,10 @@
 					</label>
 					<input
 						type="number"
-						value="50"
 						class="input input-bordered focus:border-green-600 focus:outline-none"
 						id="number-sentence"
+						name="numberOfSentence"
+						bind:value={selected.numSentence}
 					/>
 				</div>
 			</div>
@@ -303,136 +388,147 @@
 							</svg> Quay lại</button
 						></a
 					>
-					<button class="btn btn-success ml-2"
-						><svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6 inline-block"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-							/>
-						</svg>
-						OK</button
-					>
 				</form>
-			</div>
-		</div>
-	</dialog>
-</div>
-
-<div class="flex flex-col justify-start items-center min-h-screen max-h-max">
-	<div
-		class="practice grid grid-flow-row max-w-screen-xl w-screen shadow-lg py-6 px-9 border mx-auto mt-10 grid-cols-1 rounded-lg"
-	>
-		<div class=" flex justify-start items-center">
-			<img src={wordMatch} alt={wordMatch} class="h-[56px] w-[56px] mr-2" />
-			<h1 class="text-2xl text-[#dd9210] font-bold">GHÉP TỪ</h1>
-		</div>
-		<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
-
-		<div class="flex justify-between items-center text-lg my-[14px]">
-			<div class="">Câu <b class="text-sky-600">1</b> / <b>5</b></div>
-			<div class="flex justify-center items-center font-thin">
-				<b class="font-bold text-green-600">0&nbsp;</b>
-				Đúng
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="currentColor"
-					class="w-6 h-6 mx-1 fill-[#29a322]"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-						clip-rule="evenodd"
-					/>
-				</svg>
-
-				-&nbsp;<b class="font-bold text-red-600">0&nbsp;</b>Sai
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 24 24"
-					fill="currentColor"
-					class="w-6 h-6 mx-1 fill-[#d6493c]"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
-						clip-rule="evenodd"
-					/>
-				</svg>
-			</div>
-		</div>
-
-		<div class="grid text-center grid-flow-row grid-rows-3">
-			<!-- Selected -->
-			<div class="flex justify-center items-center">
-				{#each userSplit as { index, ch }, idx (index)}
-					<button
-						class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
-						on:click={() => handleReturnCharacter(idx)}
-					>
-						{ch}
-					</button>
-				{/each}
-			</div>
-
-			<div class="flex justify-between items-start px-10 relative">
-				<span class="absolute left-0 rotate-180 cursor-pointer"
+				<button
+					class="btn btn-success ml-2 text-white"
+					type="button"
+					on:click={async () =>
+						await getWordPack(
+							selected.type,
+							selected.level,
+							selected.specialization,
+							selected.topics,
+							selected.numSentence
+						)}
 					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						class="w-6 h-6 fill-[#04a359] hover:fill-[rgb(0,129,69)]"
-					>
-						<path
-							d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"
-						/>
-					</svg>
-				</span>
-				<span class="absolute right-0 cursor-pointer"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						class="w-6 h-6 fill-[#04a359] hover:fill-[rgb(0,129,69)]"
-					>
-						<path
-							d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"
-						/>
-					</svg>
-				</span>
-
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<div
-					class="tooltip tooltip-bottom"
-					on:click={() => myModal33.showModal()}
-					data-tip="Xem đáp án"
-				>
-					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke-width="1.5"
 						stroke="currentColor"
-						class="w-6 h-6 fill-yellow-400 text-yellow-400"
+						class="w-6 h-6 inline-block"
 					>
 						<path
 							stroke-linecap="round"
 							stroke-linejoin="round"
-							d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+							d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
+						/>
+					</svg>
+					OK</button
+				>
+			</div>
+		</form>
+	</div>
+</dialog>
+
+{#if !myModal4}
+	<div class="flex flex-col justify-start items-center min-h-screen max-h-max">
+		<div
+			class="practice grid grid-flow-row max-w-screen-xl w-screen shadow-lg py-6 px-9 border mx-auto mt-10 grid-cols-1 rounded-lg"
+		>
+			<div class=" flex justify-start items-center">
+				<img src={wordMatch} alt={wordMatch} class="h-[56px] w-[56px] mr-2" />
+				<h1 class="text-2xl text-[#dd9210] font-bold">GHÉP TỪ</h1>
+			</div>
+			<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
+
+			<div class="flex justify-between items-center text-lg my-[14px]">
+				<div class="">Câu <b class="text-sky-600">1</b> / <b>5</b></div>
+				<div class="flex justify-center items-center font-thin">
+					<b class="font-bold text-green-600">0&nbsp;</b>
+					Đúng
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+						class="w-6 h-6 mx-1 fill-[#29a322]"
+					>
+						<path
+							fill-rule="evenodd"
+							d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+							clip-rule="evenodd"
+						/>
+					</svg>
+
+					-&nbsp;<b class="font-bold text-red-600">0&nbsp;</b>Sai
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+						class="w-6 h-6 mx-1 fill-[#d6493c]"
+					>
+						<path
+							fill-rule="evenodd"
+							d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
+							clip-rule="evenodd"
 						/>
 					</svg>
 				</div>
+			</div>
 
-				<!-- Answer -->
-				<div class="absolute">
+			<div class="grid text-center grid-flow-row grid-rows-3">
+				<!-- Selected -->
+				<div class="flex justify-center items-center">
+					{#each userSplit as { index, ch }, idx (index)}
+						<button
+							class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
+							on:click={() => handleReturnCharacter(idx)}
+						>
+							{ch}
+						</button>
+					{/each}
+				</div>
+
+				<div class="flex justify-between items-start px-10 relative">
+					<span class="absolute left-0 rotate-180 cursor-pointer"
+						><svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							class="w-6 h-6 fill-[#04a359] hover:fill-[rgb(0,129,69)]"
+						>
+							<path
+								d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"
+							/>
+						</svg>
+					</span>
+					<span class="absolute right-0 cursor-pointer"
+						><svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							class="w-6 h-6 fill-[#04a359] hover:fill-[rgb(0,129,69)]"
+						>
+							<path
+								d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"
+							/>
+						</svg>
+					</span>
+
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<div
+						class="tooltip tooltip-bottom"
+						on:click={() => myModal33.showModal()}
+						data-tip="Xem đáp án"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="w-6 h-6 fill-yellow-400 text-yellow-400"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+							/>
+						</svg>
+					</div>
+
+					<!-- Answer -->
+
 					<dialog bind:this={myModal33} id="my_modal_33" class="modal text-left">
 						<div class="modal-box">
 							<form method="dialog">
@@ -467,13 +563,16 @@
 							<p class="font-bold">Chủ đề:</p>
 							<div class="p-2 flex flex-wrap rounded-md">
 								{#each topics as topic, index (topic.name)}
-									<!-- svelte-ignore a11y-click-events-have-key-events -->
-									<div
-										class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border border-teal-500"
+									<button
+										type="button"
+										class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
+										class:bg-green-500={topic.selected}
+										class:text-white={topic.selected}
+										on:click={() => toggleSelected(index)}
 									>
-										<img class="mr-1" src={topic.image} alt={topic.name} />
+										<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
 										<span class="pr-1 text-sm">{topic.name}</span>
-									</div>
+									</button>
 								{/each}
 							</div>
 							<p class="font-bold">
@@ -483,36 +582,43 @@
 							<p>dfs</p>
 						</div>
 					</dialog>
+
+					<div class="">
+						<p class="text-2xl font-semibold mb-2 text-slate-600">Test</p>
+						<p class="text-red-500 text-sm">Sai rồi</p>
+					</div>
+					<Speaker content={'add'} />
 				</div>
 
-				<div class="">
-					<p class="text-2xl font-semibold mb-2 text-slate-600">Test</p>
-					<p class="text-red-500 text-sm">Sai rồi</p>
+				<!-- Select to answer -->
+				<div class="flex justify-center items-center">
+					{#each originSplit as ch, index (index)}
+						{#if isSelected(index)}
+							<button
+								class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg hover:bg-base-300 cursor-not-allowed"
+								disabled
+							/>
+						{:else}
+							<button
+								on:click={() => handleSelectCharacter(index)}
+								class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
+							>
+								{ch}
+							</button>
+						{/if}
+					{/each}
 				</div>
-				<Speaker />
-			</div>
-
-			<!-- Select to answer -->
-			<div class="flex justify-center items-center">
-				{#each originSplit as ch, index (index)}
-					{#if isSelected(index)}
-						<button
-							class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg hover:bg-base-300 cursor-not-allowed"
-							disabled
-						/>
-					{:else}
-						<button
-							on:click={() => handleSelectCharacter(index)}
-							class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
-						>
-							{ch}
-						</button>
-					{/if}
-				{/each}
 			</div>
 		</div>
 	</div>
-</div>
+{:else}
+	<div class="h-screen w-full" />
+{/if}
+
+<ToastContainer placement="bottom-right" let:data>
+	<FlatToast {data} />
+	<!-- Provider template for your toasts -->
+</ToastContainer>
 
 <style>
 	.practice {

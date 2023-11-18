@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateSentenceDto, UpdateSentenceDto } from './dto';
 import { PAGE_SIZE, ResponseData } from '../global';
 import { Sentence } from '@prisma/client';
+import { log } from 'console';
 
 @Injectable()
 export class SentenceService {
@@ -35,20 +36,35 @@ export class SentenceService {
         }
     }
 
-    async findAll(option: { topic: [], type: number, page: number, sort: any }) {
+    async findAll(option: { topic: [], type?: number, page: number, sort?: any }) {
         let pageSize = PAGE_SIZE.PAGE_SENTENCE
         try {
             let { sort, type, topic, page } = option
-            const totalCount = await this.prismaService.sentence.count({
-                where: {
-                    typeId: type,
-                    Topic: {
-                        some: {
-                            id: { in: topic }
-                        }
-                    }
+
+            const whereClause: any = {
+                Topic: {},
+            };
+
+            if (topic) {
+                if (topic.length > 1) {
+                    whereClause.Topic = {
+                        some: { id: { in: topic.map(topic => Number(topic)) } }
+                    };
+                } else {
+                    whereClause.Topic = {
+                        some: { id: Number(topic) }
+                    };
                 }
-            })
+            }
+
+            if (type) {
+                whereClause.typeId = Number(type);
+            }
+
+            const totalCount = await this.prismaService.sentence.count({
+                where: whereClause,
+            });
+
             let totalPages = Math.ceil(totalCount / pageSize)
             if (!totalPages) totalPages = 1
             if (!page || page < 1) page = 1
@@ -60,16 +76,7 @@ export class SentenceService {
                 orderBy: {
                     content: sort
                 },
-                where: {
-                    typeId: type,
-                    Topic: {
-                        some: {
-                            id: {
-                                in: topic
-                            }
-                        }
-                    }
-                },
+                where: whereClause,
                 include: {
                     Practice: true,
                     Topic: true,

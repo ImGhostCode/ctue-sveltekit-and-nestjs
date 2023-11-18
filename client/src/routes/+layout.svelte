@@ -571,8 +571,8 @@
 								</svg>
 								<input
 									type="range"
-									min="0"
-									max="3"
+									min="0.5"
+									max="1.5"
 									step="0.5"
 									class="range mx-3 range-xs range-primary"
 									bind:value={speedValue}
