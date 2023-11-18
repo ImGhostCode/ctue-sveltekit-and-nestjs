@@ -43,9 +43,6 @@
 			}
 		);
 		const result = await response.json();
-
-		console.log(result);
-
 		if (!result) {
 			sentences = [];
 			totalPages = 1;
@@ -138,7 +135,7 @@
 				<!-- head -->
 				<thead>
 					<tr>
-						<th />
+						<th class="text-green-700 text-lg">STT</th>
 						<th class="text-green-700 text-lg">Câu</th>
 						<th class="text-green-700 text-lg">Nghĩa</th>
 						<th class="text-green-700 text-lg">Chi tiết</th>
@@ -148,8 +145,11 @@
 					{#each sentences as sentence, index (index)}
 						<tr class="hover:bg-base-200">
 							<th>{index + 1}</th>
-							<td><Speaker content={sentence.content} /> {sentence.content} </td>
-							<td>{sentence.mean}</td>
+							<td class="flex">
+								<Speaker key={sentence.content} />
+								<p class="text-lg">{sentence.content}</p></td
+							>
+							<td class="text-lg">{sentence.mean}</td>
 							<td
 								><button
 									type="button"
@@ -207,7 +207,7 @@
 			<div class=""><b>Nghĩa: </b> {dataDetail.mean}</div>
 
 			<p class="font-bold">
-				Loại câu: <span class="font-normal">{dataDetail.typeId}</span>
+				Loại câu: <span class="font-normal">{dataDetail.Type.name}</span>
 			</p>
 			<p class="font-bold">Chủ đề:</p>
 			{#if dataDetail.topics.length}
