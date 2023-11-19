@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
@@ -114,17 +115,20 @@
 	let showPhonetic = false;
 	let imgEditlustrate: any = null;
 	let isLoadingForm: boolean = false;
-
-	$: topicIds = topics
-		.filter((topic) => topic.selected)
-		.map((topic) => topic.id)
-		.toString();
+	let current = writable({
+		phonetic: '',
+		example: '',
+		antonyms: '',
+		synonyms: ''
+	});
+	let phoneticValue = '';
+	let examplesValue = '';
+	let synonymsValue = '';
+	let antonymsValue = '';
 
 	function toggleSelected(index: number) {
 		topics[index].selected = !topics[index].selected;
 	}
-
-	let phoneticValue = '';
 
 	function handleInputFocus() {
 		showPhonetic = !showPhonetic;
@@ -135,11 +139,30 @@
 		imgEditlustrate = e.currentTarget.files[0];
 	};
 
+	$: topicIds = topics
+		.filter((topic) => topic.selected)
+		.map((topic) => topic.id)
+		.toString();
+
 	$: if (currentWord) {
-		if (currentWord.phonetic) {
-			phoneticValue = currentWord.phonetic;
-		}
+		current.set({
+			example: currentWord.examples,
+			phonetic: currentWord.phonetic,
+			antonyms: currentWord.antonyms,
+			synonyms: currentWord.synonyms
+		});
 	}
+
+	current.subscribe((e: any) => {
+		if (e.phonetic) phoneticValue = e.phonetic;
+		else phoneticValue = '';
+		if (e.example) examplesValue = e.example.join('\n');
+		else examplesValue = '';
+		if (e.antonyms) antonymsValue = e.antonyms.join('\n');
+		else antonymsValue = '';
+		if (e.synonyms) synonymsValue = e.synonyms.join('\n');
+		else synonymsValue = '';
+	});
 
 	function handleSetTopic() {
 		topics.forEach((e) => (e.selected = false));
@@ -157,7 +180,7 @@
 <div class="shadow-lg px-5 py-5 rounded-lg my-10 bg-white w-[1200px]">
 	<div class=" flex justify-between items-center">
 		<h1 class="text-3xl text-title font-bold">Thêm từ mới của bạn vào CTUE</h1>
-		<button class="text-lg" on:click={handleCancel}>x</button>
+		<button class="text-2xl" on:click={handleCancel}>x</button>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form
@@ -317,7 +340,7 @@
 				<span class="label-text">Câu ví dụ</span>
 			</label>
 			<textarea
-				bind:value={currentWord.examples}
+				bind:value={examplesValue}
 				rows="10"
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="examples"
@@ -329,7 +352,7 @@
 				<span class="label-text">Các từ đồng nghĩa</span>
 			</label>
 			<textarea
-				bind:value={currentWord.synonyms}
+				bind:value={synonymsValue}
 				rows="10"
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="synonyms"
@@ -341,7 +364,7 @@
 				<span class="label-text">Các từ trái nghĩa</span>
 			</label>
 			<textarea
-				bind:value={currentWord.antonyms}
+				bind:value={antonymsValue}
 				rows="10"
 				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="antonyms"
@@ -496,7 +519,7 @@
 					Sửa
 				</button>
 			{/if}
-			<button class="btn btn-outline btn-error" on:click={handleCancel}>Đóng</button>
+			<button type="button" class="btn btn-outline btn-error" on:click={handleCancel}>Đóng</button>
 		</div>
 		<input type="text" class="hidden" name="topicId" id="topics" bind:value={topicIds} />
 	</form>
