@@ -51,7 +51,7 @@ export class AuthService {
             if (!account) return new ResponseData<string>(null, 400, 'Tài khoản không tồn tại')
             const passwordMatched = await argon2.verify(account.password, loginDto.password)
             if (!passwordMatched) return new ResponseData<string>(null, 400, 'Mật khẩu không chính xác')
-            if (account.isBan) return new ResponseData<string>(null, 400, 'Tài khoản đã bị khóa')
+            if (account.isBan) return new ResponseData<any>({ feedback: account.feedback }, 403, 'Tài khoản đã bị khóa')
             const data = await this.signJwtToken(account.userId, account.email)
             return new ResponseData<any>(data, 200, 'Đăng nhập thành công')
         } catch (error) {
