@@ -21,7 +21,7 @@
 		class:disable={currentPage == 1}
 		disabled={currentPage == 1}
 		class:cursor-not-allowed={currentPage == 1}
-		class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
+		class="join-item md:btn-md btn-sm btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
 	>
 		Trang sau
 	</button>
@@ -30,7 +30,7 @@
 		class:disable={currentPage == totalPages}
 		disabled={currentPage == totalPages}
 		class:cursor-not-allowed={currentPage == totalPages}
-		class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
+		class="join-item md:btn-md btn-sm btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
 	>
 		Trang tiếp theo
 	</button>

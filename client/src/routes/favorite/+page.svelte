@@ -118,11 +118,11 @@
 			placeholder="Nhập từ..."
 		/>
 
-		<div class="dropdown">
+		<div class="dropdown dropdown-end">
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<!-- svelte-ignore a11y-label-has-associated-control -->
 			<label tabindex="0" class="btn btn-ghost m-1">
-				Sắp xếp
+				<span class="md:block hidden">Sắp xếp</span>
 				<span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -172,8 +172,12 @@
 					/>
 					<div class="inline-block ml-4">
 						<div class="flex justify-center items-center">
-							<p class="mr-2 text-green-600 text-xl font-semibold">{favorite.content}</p>
-							<span class="mr-2 text-blue-600">{favorite.phonetic ? favorite.phonetic : ''}</span>
+							<p class="mr-2 text-green-600 md:text-xl text-base font-semibold">
+								{favorite.content}
+							</p>
+							<span class="mr-2 text-blue-600"
+								>{favorite.phonetic ? '/' + favorite.phonetic + '/' : ''}</span
+							>
 						</div>
 						<p class="text-left">{favorite.mean}</p>
 					</div>
@@ -189,88 +193,100 @@
 			</div>
 		{/each}
 	</div>
-	<Pagination {currentPage} {totalPages} on:next={handleNextPage} on:pre={handlePrePAge} />
-	<dialog bind:this={myModal4} id="my_modal_3" class="modal">
-		<div class="modal-box no-scrollbar">
-			<form method="dialog">
-				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
-			</form>
-			<h3 class="font-bold text-2xl text-title mb-2">Chi Tiết Từ "{wordDetails.content}"</h3>
-			<div class="h-[1px] w-full border border-gray-200" />
-			<div class="flex my-4">
-				<img
-					src={wordDetails.picture}
-					alt={wordDetails.picture}
-					class="h-[50px] w-[50px] inline-block"
-				/>
-				<div class="inline-block ml-4">
-					<div class="flex justify-center items-center">
-						<p class="mr-2 text-green-600 text-xl font-semibold">{wordDetails.content}</p>
-						<span class="mr-2 text-blue-600">
-							{wordDetails.phonetic ? wordDetails.phonetic : ''}
-						</span>
-						<Speaker key={wordDetails.content} />
-					</div>
-					<p>{wordDetails.mean}</p>
-				</div>
-			</div>
-			<p class="font-bold">
-				Loại từ:
-				<span class="font-normal">
-					{wordDetails?.Type ? wordDetails.Type.name : ''}
-				</span>
-			</p>
-			<p class="font-bold">
-				Cấp độ:
-				<span class="font-normal">
-					{wordDetails?.Level ? wordDetails.Level.name : ''}
-				</span>
-			</p>
-			<p class="font-bold">Câu ví dụ:</p>
-			<ol>
-				{#if wordDetails?.examples}
-					{#each wordDetails.examples as example, i}
-						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {example}</li>
-					{/each}
-				{/if}
-			</ol>
-			<p class="font-bold">
-				Thuộc chuyên ngành:
-				<span class="font-normal">
-					{wordDetails.Specialization ? wordDetails?.Specialization.name : ''}
-				</span>
-			</p>
-			<p class="font-bold">Chủ đề:</p>
-			<div class="p-2 flex flex-wrap rounded-md">
-				{#if wordDetails.Topic}
-					{#each wordDetails.Topic as topic}
-						<div
-							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border border-teal-500"
-						>
-							<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
-							<span class="pr-1 text-sm">{topic.name}</span>
-						</div>
-					{/each}
-				{/if}
-			</div>
-			<p class="font-bold">Các từ đồng nghĩa:</p>
-			<ol>
-				{#if wordDetails?.synonyms}
-					{#each wordDetails?.synonyms as synonym, i}
-						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {synonym}</li>
-					{/each}
-				{/if}
-			</ol>
-			<p class="font-bold">Các từ trái nghĩa:</p>
-			<ol>
-				{#if wordDetails?.antonyms}
-					{#each wordDetails?.antonyms as antonym, i}
-						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {antonym}</li>
-					{/each}
-				{/if}
-			</ol>
-			<p class="font-bold">Ghi chú:</p>
-			<p>{wordDetails.note ? wordDetails.note : ''}</p>
-		</div>
-	</dialog>
+	{#if favorites?.length}
+		<Pagination {currentPage} {totalPages} on:next={handleNextPage} on:pre={handlePrePAge} />
+	{/if}
 </div>
+<dialog bind:this={myModal4} id="my_modal_3" class="modal">
+	<div class="modal-box no-scrollbar">
+		<form method="dialog">
+			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
+		</form>
+		<h3 class="font-bold md:text-2xl text-xl text-title mb-2">
+			Chi Tiết Từ "{wordDetails.content}"
+		</h3>
+		<div class="h-[1px] w-full border border-gray-200" />
+		<div class="flex my-4">
+			<img
+				src={wordDetails.picture}
+				alt={wordDetails.picture}
+				class="h-[50px] w-[50px] inline-block"
+			/>
+			<div class="inline-block ml-4">
+				<div class="flex justify-center items-center">
+					<p class="mr-2 text-green-600 md:text-xl text-base font-semibold">
+						{wordDetails.content}
+					</p>
+					<span class="mr-2 text-blue-600">
+						{wordDetails.phonetic ? '/' + wordDetails.phonetic + '/' : ''}
+					</span>
+					<Speaker key={wordDetails.content} />
+				</div>
+				<p>{wordDetails.mean}</p>
+			</div>
+		</div>
+		<p class="font-bold">
+			Loại từ:
+			<span class="font-normal">
+				{wordDetails?.Type ? wordDetails.Type.name : ''}
+			</span>
+		</p>
+		<p class="font-bold">
+			Cấp độ:
+			<span class="font-normal">
+				{wordDetails?.Level ? wordDetails.Level.name : ''}
+			</span>
+		</p>
+		<p class="font-bold">Câu ví dụ:</p>
+		<ol>
+			{#if wordDetails?.examples?.length}
+				{#each wordDetails.examples as example, i}
+					{#if example !== ''}
+						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {example}</li>
+					{/if}
+				{/each}
+			{/if}
+		</ol>
+		<p class="font-bold">
+			Thuộc chuyên ngành:
+			<span class="font-normal">
+				{wordDetails.Specialization ? wordDetails?.Specialization.name : ''}
+			</span>
+		</p>
+		<p class="font-bold">Chủ đề:</p>
+		<div class="p-2 flex flex-wrap rounded-md">
+			{#if wordDetails.Topic}
+				{#each wordDetails.Topic as topic}
+					<div
+						class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-teal-500"
+					>
+						<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
+						<span class="pr-1 text-sm">{topic.name}</span>
+					</div>
+				{/each}
+			{/if}
+		</div>
+		<p class="font-bold">Các từ đồng nghĩa:</p>
+		<ol>
+			{#if wordDetails?.synonyms}
+				{#each wordDetails?.synonyms as synonym, i}
+					{#if synonym !== ''}
+						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {synonym}</li>
+					{/if}
+				{/each}
+			{/if}
+		</ol>
+		<p class="font-bold">Các từ trái nghĩa:</p>
+		<ol>
+			{#if wordDetails?.antonyms}
+				{#each wordDetails?.antonyms as antonym, i}
+					{#if antonym !== ''}
+						<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {antonym}</li>
+					{/if}
+				{/each}
+			{/if}
+		</ol>
+		<p class="font-bold">Ghi chú:</p>
+		<p>{wordDetails.note ? wordDetails.note : ''}</p>
+	</div>
+</dialog>

@@ -4,7 +4,7 @@
 	import type { ActionData } from './$types';
 	import { onMount } from 'svelte';
 
-	export let form: ActionData;
+	// export let form: ActionData;
 	/** @type {import('./$types').PageData} */
 	export let data: any;
 
@@ -73,7 +73,7 @@
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<div class="flex justify-between items-center mb-4">
-		<h1 class="header-page">1000+ Cụm từ giao tiếp</h1>
+		<h1 class="header-page md:">1000+ Cụm từ giao tiếp</h1>
 
 		<!-- You can open the modal using ID.showModal() method -->
 		<button class="" on:click={() => myModal4.showModal()}
@@ -94,11 +94,11 @@
 			</svg></button
 		>
 		<dialog bind:this={myModal4} id="my_modal_4" class="modal">
-			<div class="modal-box w-11/12 max-w-5xl">
+			<div class="modal-box w-11/12 max-w-5xl px-6 py-4">
 				<h3 class="font-bold text-xl text-orange-600 mb-2">Chọn chủ đề</h3>
 				<div class="h-[1px] w-full border border-gray-200" />
 
-				<div class="flex flex-wrap p-3">
+				<div class="flex flex-wrap py-4">
 					{#each data.topicsSentence as topic, index (index)}
 						<button
 							type="button"
@@ -117,9 +117,9 @@
 				<div class="modal-action">
 					<form method="dialog">
 						<!-- if there is a button, it will close the modal -->
-						<button class="btn mr-2">Đóng</button>
+						<button class="btn btn-sm md:btn-md mr-2">Đóng</button>
 						<button
-							class="btn bg-green-600 hover:bg-green-700 text-white"
+							class="btn btn-sm md:btn-md bg-green-600 hover:bg-green-700 text-white"
 							on:click={handleFilterConfirmation}>Đồng ý</button
 						>
 					</form>
@@ -135,10 +135,10 @@
 				<!-- head -->
 				<thead>
 					<tr>
-						<th class="text-green-700 text-lg">STT</th>
-						<th class="text-green-700 text-lg">Câu</th>
-						<th class="text-green-700 text-lg">Nghĩa</th>
-						<th class="text-green-700 text-lg">Chi tiết</th>
+						<th class="text-green-700 md:text-lg text-base">STT</th>
+						<th class="text-green-700 md:text-lg text-base">Câu</th>
+						<th class="text-green-700 md:text-lg text-base">Nghĩa</th>
+						<th class="text-green-700 md:text-lg text-base">Chi tiết</th>
 					</tr>
 				</thead>
 				<tbody class="">
@@ -147,13 +147,17 @@
 							<th>{index + 1}</th>
 							<td class="flex">
 								<Speaker key={sentence.content} />
-								<p class="text-lg">{sentence.content}</p></td
+								<p class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs">
+									{sentence.content}
+								</p></td
 							>
-							<td class="text-lg">{sentence.mean}</td>
+							<td class="">
+								<p class="md:text-lg text-base break-words max-w-xs">{sentence.mean}</p>
+							</td>
 							<td
 								><button
 									type="button"
-									class="btn btn-info btn-sm text-white"
+									class="btn btn-info btn-sm md:btn-md text-white"
 									on:click={() => openModal(myModal5, sentence)}>Chi tiết</button
 								></td
 							>
@@ -162,36 +166,36 @@
 				</tbody>
 			</table>
 		</div>
+
+		<div class="join grid grid-cols-2 w-max mx-auto mt-6">
+			<button
+				on:click={async () => {
+					currentPage = currentPage - 1;
+				}}
+				class:disable={currentPage == 1}
+				disabled={currentPage == 1}
+				class:cursor-not-allowed={currentPage == 1}
+				class="join-item btn md:btn-md btn-sm btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
+			>
+				Trang sau
+			</button>
+			<button
+				on:click={async () => {
+					currentPage = currentPage + 1;
+				}}
+				class:disable={currentPage == totalPages}
+				disabled={currentPage == totalPages}
+				class:cursor-not-allowed={currentPage == totalPages}
+				class="join-item btn md:btn-md btn-sm btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
+			>
+				Trang tiếp theo
+			</button>
+		</div>
 	{:else}
 		<div class="py-4 text-center text-lg text-slate-600 font-semibold">Danh sách rỗng</div>
 	{/if}
 
 	<!-- <Pagination /> -->
-
-	<div class="join grid grid-cols-2 w-max mx-auto mt-6">
-		<button
-			on:click={async () => {
-				currentPage = currentPage - 1;
-			}}
-			class:disable={currentPage == 1}
-			disabled={currentPage == 1}
-			class:cursor-not-allowed={currentPage == 1}
-			class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
-		>
-			Trang sau
-		</button>
-		<button
-			on:click={async () => {
-				currentPage = currentPage + 1;
-			}}
-			class:disable={currentPage == totalPages}
-			disabled={currentPage == totalPages}
-			class:cursor-not-allowed={currentPage == totalPages}
-			class="join-item btn btn-outline border-sky-400 hover:border-sky-500 hover:bg-sky-500"
-		>
-			Trang tiếp theo
-		</button>
-	</div>
 </div>
 
 <dialog bind:this={myModal5} id="my_modal_" class="modal">
@@ -200,7 +204,7 @@
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 			</form>
-			<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi tiết câu</h3>
+			<h3 class="font-bold md:text-2xl text-xl text-orange-600 mb-2">Chi tiết câu</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="mt-2"><b>Câu: </b> {dataDetail.content}</div>

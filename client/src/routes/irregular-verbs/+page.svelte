@@ -62,7 +62,7 @@
 				}}
 				class="btn outline-none border-none bg-transparent hover:bg-transparent hover:opacity-100 opacity-70"
 			>
-				Sắp xếp
+				<span class="md:block hidden">Sắp xếp</span>
 				<span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -87,10 +87,10 @@
 			<thead>
 				<tr>
 					<th />
-					<th class="text-green-700 text-lg">Nguyên mẫu (V1)</th>
-					<th class="text-green-700 text-lg">Quá khứ đơn (V2)</th>
-					<th class="text-green-700 text-lg">Quá khứ phân từ (V3)</th>
-					<th class="text-green-700 text-lg">Nghĩa</th>
+					<th class="text-green-700 md:text-lg text-base">Nguyên mẫu (V1)</th>
+					<th class="text-green-700 md:text-lg text-base">Quá khứ đơn (V2)</th>
+					<th class="text-green-700 md:text-lg text-base">Quá khứ phân từ (V3)</th>
+					<th class="text-green-700 md:text-lg text-base">Nghĩa</th>
 				</tr>
 			</thead>
 			<tbody class="">
@@ -98,18 +98,23 @@
 					<tr class="hover:bg-base-200">
 						<th>{i + 1}</th>
 						<td>
-							{word.v1}
-							<Speaker key={word.v1} />
+							<span class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs">
+								<Speaker key={word.v1} showIcon={false} />
+							</span>
 						</td>
 						<td>
-							{word.v2}
-							<Speaker key={word.v2} />
+							<span class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs">
+								<Speaker key={word.v2} showIcon={false} />
+							</span>
 						</td>
 						<td>
-							{word.v3}
-							<Speaker key={word.v3} />
+							<span class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs">
+								<Speaker key={word.v3} showIcon={false} />
+							</span>
 						</td>
-						<td>{word.mean}</td>
+						<td>
+							<span class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs" />{word.mean}
+						</td>
 					</tr>
 				{/each}
 			</tbody>

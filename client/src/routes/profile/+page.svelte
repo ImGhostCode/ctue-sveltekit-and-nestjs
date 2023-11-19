@@ -139,12 +139,12 @@
 							/>
 						</div>
 					{:else}
-						<h2 class="leading-12 text-2xl break-words">{data.user.User.name}</h2>
+						<h2 class="leading-12 md:text-2xl text-xl break-words">{data.user.User.name}</h2>
 					{/if}
 
 					<!-- <h4 class="leading-6 mb-6 font-light">test35e724</h4> -->
-					<p class="font-light">{data.user.email}</p>
-					<p class="font-light mb-4">
+					<p class="md:text-base text-sm font-light">{data.user.email}</p>
+					<p class="md:text-base text-sm font-light mb-4">
 						Đã tham gia vào {moment(data.user.User.createdAt).format('DD/MM/YYYY')}
 					</p>
 
@@ -155,13 +155,13 @@
 								on:click={() => (
 									(isEditing = false), (newName = data.user.User.name), (avt = null)
 								)}
-								class="w-full mr-1 px-6 py-2 flex justify-center items-center bg-none hover:bg-gray-100 rounded-sm shadow border-red-600 border text-red-600 font-semibold"
+								class="text-sm md:text-base w-full mr-1 px-6 py-2 flex justify-center items-center bg-none hover:bg-gray-100 rounded-sm shadow border-red-600 border text-red-600 font-semibold"
 							>
 								<span class="">Huỷ bỏ</span>
 							</button>
 							<button
 								type="submit"
-								class="w-full ml-1 px-6 py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 border border-blue-600 rounded-sm shadow text-white font-semibold"
+								class="text-sm md:text-base w-full ml-1 px-6 py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 border border-blue-600 rounded-sm shadow text-white font-semibold"
 								class:disable={$isLoadingForm || (!avt && newName === data.user.User.name)}
 								disabled={$isLoadingForm || (!avt && newName === data.user.User.name)}
 								class:cursor-not-allowed={$isLoadingForm ||
@@ -178,7 +178,7 @@
 						<button
 							on:click={() => (isEditing = true)}
 							type="button"
-							class="w-full px-6 py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 rounded-sm shadow text-white font-semibold"
+							class="text-sm md:text-base w-full px-6 py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 rounded-sm shadow text-white font-semibold"
 						>
 							<span class="inline-block"
 								><svg

@@ -113,64 +113,19 @@
 		<nav class=" bg-indigo-600 text-primary-content shadow-md row header">
 			<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
 				<a href="/" class="flex items-center">
-					<img src={ctueLogo} class="h-12 mr-3" alt="CTUe Logo" />
+					<img src={ctueLogo} class="md:h-12 h-8 mr-3" alt="CTUe Logo" />
 				</a>
 
 				<div class="flex">
-					<div class="flex mr-4 my-auto">
-						<button
-							type="button"
-							data-collapse-toggle="navbar-search"
-							aria-controls="navbar-search"
-							aria-expanded="false"
-							class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1"
-						>
-							<svg
-								class="w-5 h-5"
-								aria-hidden="true"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 20 20"
-							>
-								<path
-									stroke="currentColor"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-								/>
-							</svg>
-							<span class="sr-only">Search</span>
-						</button>
-						<div class="relative hidden md:block">
-							<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-								<svg
-									class="w-4 h-4 text-slate-600"
-									aria-hidden="true"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 20 20"
-								>
-									<path
-										stroke="currentColor"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-									/>
-								</svg>
-								<span class="sr-only">Search icon</span>
-							</div>
-							<input
-								type="text"
-								id="search-navbar"
-								class="block w-full p-2 pl-10 text-sm text-slate-600 placeholder:text-slate-600 border-2 outline-none rounded-lg bg-white"
-								placeholder="Tìm kiếm..."
-							/>
-						</div>
+					<div class="form-control">
+						<input
+							type="text"
+							placeholder="Tìm kiếm..."
+							class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 my-1 mr-2"
+						/>
 					</div>
 					{#if userData}
-						<div class="relative w-12 h-12 avatar-user z-10 group cursor-pointer">
+						<div class="relative md:w-12 md:h-12 h-10 w-10 avatar-user z-10 group cursor-pointer">
 							{#if userData.User.avt}
 								<img
 									class="h-full w-full rounded-full border-2 border-sky-400"
@@ -388,7 +343,7 @@
 						<a href="/login">
 							<button
 								type="button"
-								class="text-white border border-white bg-transparent leading-6 focus:ring-4 outline-none focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+								class="md:btn-md btn-sm text-white border border-white bg-transparent leading-6 focus:ring-4 outline-none focus:outline-none focus:ring-blue-300 font-medium rounded-lg md:text-sm text-xs text-center md:mr-3 mr-0"
 							>
 								Đăng nhập
 							</button>
@@ -487,12 +442,12 @@
 
 	<dialog bind:this={myModal4} id="my_modal_4" class="modal">
 		<div class="modal-box w-11/12 max-w-5xl">
-			<h3 class="font-bold text-2xl text-orange-600 mb-2">Cài đặt</h3>
+			<h3 class="font-bold md:text-2xl text-xl text-orange-600 mb-2">Cài đặt</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
-			<div class="px-6 py-3">
+			<div class="md:px-6 md:py-3">
 				<div class="border rounded-md my-4 p-4">
-					<p class="text-lg">Chủ Đề</p>
+					<p class="md:text-lg text-base">Chủ Đề</p>
 					<div class="flex">
 						<button class="rounded-full border border-green-500 p-2 mx-2 hover:bg-base-300">
 							<svg
@@ -529,12 +484,12 @@
 					</div>
 				</div>
 				<div class="border rounded-md my-4 p-4">
-					<h1 class="text-lg mb-3">Giọng Đọc</h1>
-					<div class="grid grid-cols-3 gap-7">
+					<h1 class="md:text-lg text-base mb-3">Giọng Đọc</h1>
+					<div class="grid md:grid-cols-3 grid-cols-1 gap-7">
 						<div class="col-span-1 flex flex-col">
-							<p class="text-light text-slate-500 my-2">Giọng</p>
+							<p class="text-light text-slate-500 my-2 md:text-base text-sm">Giọng</p>
 							<select
-								class="border border-slate-500 select w-full max-w-xs"
+								class="border md:select-md select-sm border-slate-500 select w-full max-w-xs"
 								bind:value={indexVoice}
 							>
 								{#if voices}
@@ -546,7 +501,7 @@
 							</select>
 						</div>
 						<div class="col-span-1 flex flex-col">
-							<p class="text-light text-slate-500 my-2">Âm lượng</p>
+							<p class="text-light text-slate-500 my-2 md:text-base text-sm">Âm lượng</p>
 							<div class="h-auto flex justify-between items-center grow shrink-0">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -573,7 +528,7 @@
 							</div>
 						</div>
 						<div class="col-span-1 flex flex-col">
-							<p class="text-light text-slate-500 my-2">Tốc độ đọc</p>
+							<p class="text-light text-slate-500 my-2 md:text-base text-sm">Tốc độ đọc</p>
 
 							<div class="h-auto flex justify-between items-center grow shrink-0">
 								<svg
@@ -604,22 +559,24 @@
 					</div>
 				</div>
 				<div class="border rounded-md my-4 p-4">
-					<p class="text-lg mb-3">Cài Đặt Khác</p>
-					<p class="text-slate-500 my-2">Hiện/Ẩn thanh điều hướng</p>
+					<p class="md:text-lg text-base mb-3">Cài Đặt Khác</p>
+
+					<p class="text-slate-500 my-2 md:text-base text-sm">Hiện/Ẩn thanh điều hướng</p>
 					<input type="checkbox" class="toggle toggle-success" bind:checked={showNavBar} />
 				</div>
 			</div>
 			<div class="h-[1px] w-full border border-gray-200" />
 			<div class="modal-action">
 				<form method="dialog">
-					<button class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
+					<button class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">OK</button
+					>
 				</form>
 			</div>
 		</div>
 	</dialog>
 {/if}
 
-<footer class="footer footer-center p-10 bg-indigo-500 text-primary-content">
+<footer class="footer footer-center md:p-10 p-4 bg-indigo-500 text-primary-content">
 	<aside>
 		<a href="/" class="flex items-center">
 			<img src={ctueLogo} class="h-8 mr-3" alt="CTUe Logo" />
