@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { PracticeService } from './practice.service';
 import { GetAccount, Roles } from '../auth/decorator';
 import { Account } from '@prisma/client';
@@ -16,5 +16,12 @@ export class PracticeController {
     @Roles(ACCOUNT_TYPES.ADMIN, ACCOUNT_TYPES.USER)
     createPractice(@GetAccount() account: Account, @Body() createPracticeDto: CreatePraticeDto) {
         return this.practiceService.createPractice(account.userId, createPracticeDto)
+    }
+
+    @UseGuards(MyJWTGuard, RolesGuard)
+    @Get('user')
+    @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
+    findAllByUser(@Query("page") page: number, @GetAccount() account: Account) {
+        return this.practiceService.findAllByUser(page, account.userId);
     }
 }
