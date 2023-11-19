@@ -3,10 +3,11 @@
 	import gg_icon from '$lib/assets/icons/gg-icon.png';
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
-	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
-	import { beforeNavigate, goto } from '$app/navigation';
+	import { toasts, ToastContainer, FlatToast } from 'svelte-toasts';
+	import { goto } from '$app/navigation';
 	import { isLoading } from '$lib/store';
-	import { onMount } from 'svelte';
+
+	let myModal20: HTMLDialogElement;
 
 	let showInput1: boolean = false;
 
@@ -14,41 +15,56 @@
 
 	export let form: ActionData;
 	let redirectOnToastClose = false;
+	let feedback: string = '';
 
 	$: if (form?.success) {
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Success',
 			description: form?.message,
-			duration: 800, // Set the duration to 0 to keep it open until manually closed
+			duration: 800,
 			placement: 'bottom-right',
 			type: 'success',
 			theme: 'dark',
 			showProgress: true,
-			// type: 'success',
-			// theme: 'dark',
 			onClick: () => {},
 			onRemove: () => {
-				goto('/'); // Use goto to redirect to the '/login' route.
+				goto('/');
 			}
-			//component: BootstrapToast // You can customize the toast component here
 		});
+		feedback = '';
 	}
 
 	$: if (form?.invalidCredential) {
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Error',
 			description: form?.message,
-			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			duration: 1500,
 			placement: 'bottom-right',
 			type: 'error',
 			theme: 'dark',
 			showProgress: true,
-			// type: 'error',
-			// theme: 'dark',
 			onClick: () => {},
 			onRemove: () => {}
-			//component: BootstrapToast // You can customize the toast component here
 		});
+		feedback = '';
+	}
+
+	$: if (form?.isBan) {
+		toasts.add({
+			title: 'Error',
+			description: form?.message,
+			duration: 1500,
+			placement: 'bottom-right',
+			type: 'error',
+			theme: 'dark',
+			showProgress: true,
+			onClick: () => {},
+			onRemove: () => {}
+		});
+		feedback = form.feedback;
+		if (feedback != '') {
+			myModal20.showModal();
+		}
 	}
 </script>
 
@@ -86,13 +102,6 @@
 					<label class="block text-gray-700 text-sm font-bold mb-2" for="password">
 						Mật khẩu
 					</label>
-					<!-- <input
-					class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-					id="password"
-					type="password"
-					placeholder="******************"
-				/>
-				<p class="text-red-500 text-xs italic">Please choose a password.</p> -->
 					<div class="flex relative">
 						<input
 							type={showInput1 ? 'text' : 'password'}
@@ -149,7 +158,6 @@
 					{#if form?.passIsInvalid}
 						<p class="text-xs text-error mt-2">Vui lòng nhập mật khẩu ít nhất 6 ký tự</p>
 					{/if}
-					<!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
 				</div>
 				<div class="flex items-center justify-between mb-6">
 					<button
@@ -165,7 +173,7 @@
 						Quên mật khẩu?
 					</a>
 				</div>
-				<div class="mb-2 text-center text-sm">Hoặc</div>
+				<!-- <div class="mb-2 text-center text-sm">Hoặc</div>
 				<div class="flex justify-between">
 					<button
 						class="flex w-1/2 border-2 mr-2 text-sm hover:bg-gray-100 text-black font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
@@ -181,7 +189,7 @@
 						<div class="inline-block"><img class="h-7 w-7" src={gg_icon} alt={gg_icon} /></div>
 						<span class="leading-8">Google</span>
 					</button>
-				</div>
+				</div> -->
 			</form>
 			<p class="text-center text-gray-500 text-sm">
 				Bạn chưa có tài khoản? <a class="text-blue-700" href="/register">Đăng ký</a>
@@ -189,7 +197,21 @@
 		</div>
 	</main>
 {/if}
+<dialog bind:this={myModal20} id="my_modal_20" class="modal">
+	<div class="modal-box w-11/12 max-w-5xl">
+		{#if feedback !== ''}
+			<h1 class="text-lg">Tài khoản của bạn đã bị khóa với lý do:</h1>
+			<h1 class="text-2xl text-red-500 text-center my-4">{feedback}</h1>
+			<h1 class="text-lg">
+				Vui lòng liên hệ qua email: <span class="text-green-500">help.ctue@gmail.com</span>, để được
+				hổ trợ.
+			</h1>
+			<form method="dialog" class="text-end">
+				<button class="btn">Đóng</button>
+			</form>
+		{/if}
+	</div>
+</dialog>
 <ToastContainer placement="bottom-right" let:data>
 	<FlatToast {data} />
-	<!-- Provider template for your toasts -->
 </ToastContainer>

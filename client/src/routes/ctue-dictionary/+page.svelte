@@ -314,8 +314,8 @@
 				<div class="h-[1px] w-full border border-gray-200" />
 				<div class="modal-action">
 					<form method="dialog">
-						<button class="btn">Close</button>
-						<button class="btn bg-green-600 hover:bg-green-700 text-white">OK</button>
+						<button class="btn">Đóng</button>
+						<button class="btn bg-green-600 hover:bg-green-700 text-white">Đồng ý</button>
 					</form>
 				</div>
 			</div>
