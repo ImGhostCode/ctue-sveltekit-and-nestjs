@@ -31,7 +31,7 @@
 	import { goto } from '$app/navigation';
 	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
 	import { CONFUSING_LIST, DELAY_ANSWER } from '../../../constants/practice';
-	import CorrectWordResult from '../../../components/CorrectWordResult.svelte';
+	import PracticeResult from '../../../components/PracticeResult.svelte';
 	import RightIcon from '../../../components/RightIcon.svelte';
 	import WrongIcon from '../../../components/WrongIcon.svelte';
 	import { HandlerSpeaker } from '$lib/store';
@@ -102,9 +102,9 @@
 
 	$: {
 		if (data.topicsWord) topics = data.topicsWord;
-		if (data.typesWord) types = Array(data.typesWord);
-		if (data.specializations) specializations = Array(data.specializations);
-		if (data.levels) levels = Array(data.levels);
+		if (data.typesWord) types = data.typesWord;
+		if (data.specializations) specializations = data.specializations;
+		if (data.levels) levels = data.levels;
 	}
 
 	$: if (topics) {
@@ -386,15 +386,18 @@
 					<label for="types" class="block mb-2 text-sm">Loại từ </label>
 					<select
 						id="types"
-						name="typeId"
 						bind:value={selected.type}
 						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each types as type}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
-								{type.name}
-							</option>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#each types as type (type.id)}
+							{#if type.name !== 'Chưa xác định'}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+									{type.name}
+								</option>
+							{/if}
 						{/each}
 					</select>
 				</div>
@@ -403,15 +406,18 @@
 					<label for="level" class="block mb-2 text-sm">Bặc của từ </label>
 					<select
 						id="level"
-						name="levelId"
 						bind:value={selected.level}
 						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each levels as level}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
-								{level.name}
-							</option>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#each levels as level (level.id)}
+							{#if level.name !== 'Chưa xác định'}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+									{level.name}
+								</option>
+							{/if}
 						{/each}
 					</select>
 				</div>
@@ -420,16 +426,21 @@
 					<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành </label>
 					<select
 						id="specialization"
-						name="specializationId"
 						bind:value={selected.specialization}
 						class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each specializations as specialization}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
-								{specialization.name}
-							</option>
-						{/each}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#if specializations.length}
+							{#each specializations as specialization (specialization.id)}
+								{#if specialization.name !== 'Chưa xác định'}
+									<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
+										{specialization.name}
+									</option>
+								{/if}
+							{/each}
+						{/if}
 					</select>
 				</div>
 
@@ -500,12 +511,8 @@
 						class="input input-bordered focus:border-green-600 focus:outline-none"
 						id="number-sentence"
 						name="numberOfSentence"
-						min="5"
 						bind:value={selected.numSentence}
 					/>
-					{#if errMinNum}
-						<p class="text-xs text-error mt-2 font-semibold">Vui lòng chọn ít nhất 5 câu</p>
-					{/if}
 				</div>
 			</div>
 
@@ -632,7 +639,7 @@
 				</div>
 			{:else}
 				<div class="invisible" />
-				<CorrectWordResult
+				<PracticeResult
 					{data}
 					words={words.map((word) => word.id)}
 					{selected}

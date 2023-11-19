@@ -237,7 +237,8 @@ export class WordService {
             const wordspack = await this.prismaService.word.findMany({
                 where: whereCondition,
                 take: Number(numSentence),
-                skip: randomPackIndex
+                skip: randomPackIndex,
+                include: { Topic: true, Level: true, Specialization: true, Type: true }
             })
             return new ResponseData<Word>(wordspack, 200, 'Tìm gói từ vựng thành công')
         } catch (error) {

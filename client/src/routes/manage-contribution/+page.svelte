@@ -287,7 +287,7 @@
 	{/if}
 
 	<!-- Pagination -->
-	<Pagination />
+	<!-- <Pagination /> -->
 </div>
 
 <dialog bind:this={myModal5} id="my_modal_" class="modal">

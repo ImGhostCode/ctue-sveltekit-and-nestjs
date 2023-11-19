@@ -1,9 +1,8 @@
 <script lang="ts">
-	import correctWord from '$lib/assets/icons/games/correct-word.png';
-	import wordMatch from '$lib/assets/icons/games/word-match.png';
-	import Speaker from '../../../components/Speaker.svelte';
 	import type { ActionData, PageData } from './$types';
 	import { onMount } from 'svelte';
+	import wordMatch from '$lib/assets/icons/games/word-match.png';
+	import Speaker from '../../../components/Speaker.svelte';
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 	import animal from '$lib/assets/icons/topics/animal.png';
@@ -32,6 +31,14 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import SplitWord from '../../../components/SplitWord.svelte';
+	import { DELAY_ANSWER } from '../../../constants/practice';
+	import RightIcon from '../../../components/RightIcon.svelte';
+	import WrongIcon from '../../../components/WrongIcon.svelte';
+	import PracticeResult from '../../../components/PracticeResult.svelte';
+	import { HandlerSpeaker } from '$lib/store';
+	import correctAudio from '$lib/assets/audios/correct.mp3';
+	import incorrectAudio from '$lib/assets/audios/incorrect.mp3';
 
 	type Types = { id: number; name: string; isWord: boolean };
 	type Levels = { id: number; name: string };
@@ -42,10 +49,6 @@
 
 	export let data: PageData;
 	export let form: ActionData;
-
-	onMount(() => {
-		myModal4.showModal();
-	});
 
 	const imgTopics: { [key: string]: string } = {
 		tree,
@@ -94,14 +97,19 @@
 		numSentence: 10
 	};
 
-	let words: any[] = [];
+	// let words: any[] = [];
+	let wordPack: any[] = [];
 
 	$: {
 		if (data.topicsWord) topics = data.topicsWord;
-		if (data.typesWord) types = Array(data.typesWord);
-		if (data.specializations) specializations = Array(data.specializations);
-		if (data.levels) levels = Array(data.levels);
+		if (data.typesWord) types = data.typesWord;
+		if (data.specializations) specializations = data.specializations;
+		if (data.levels) levels = data.levels;
 	}
+
+	onMount(() => {
+		myModal4.showModal();
+	});
 
 	$: if (topics) {
 		selected.topics = [];
@@ -132,7 +140,7 @@
 
 		if (result.data) {
 			myModal4.close();
-			words = result.data;
+			wordPack = result.data.sort((_: any) => Math.random() - 0.5).slice(0, selected.numSentence);
 		} else if (result.error) {
 			const toast = toasts.add({
 				title: 'Error',
@@ -170,65 +178,87 @@
 		}
 	}
 
-	let myModal33: HTMLDialogElement;
+	let state: any = {
+		current: 0,
+		nRight: 0,
+		nWrong: 0,
+		resetFlag: -1
+	};
 
-	let word: string = 'Test';
-	let isCheck: boolean = false;
+	$: nQuestion = wordPack.length;
 
-	const userSplitId = 'userSplitId';
+	let isDelay: boolean = false;
+	let isDone: boolean = false;
+	// const { current, nRight, nWrong, resetFlag } = state;
+	const nRightConsecutive = { current: { top: 0, n: 0 } };
 
-	let userSplit: { index: number; ch: string }[] = [];
+	const handleDone = () => {
+		isDone = true;
+	};
 
-	function splitWord(word = '') {
-		let splitArr: string[] = [];
-		let failFlag = 1;
-
-		while (failFlag) {
-			// Prevent infinite loop
-			if (failFlag >= 50) {
-				break;
-			}
-
-			splitArr = word.split('').sort(() => Math.random() - 0.5);
-
-			if (splitArr.join('') === word) {
-				failFlag++;
+	const handleCorrect = () => {
+		// playSoundAnswer(list[current].word, true, voice, volume, speed);
+		HandlerSpeaker.playSoundAnswer(wordPack[state.current].content, true);
+		isDelay = true;
+		nRightConsecutive.current.n++;
+		if (nRightConsecutive.current.n > nRightConsecutive.current.top) {
+			nRightConsecutive.current.top = nRightConsecutive.current.n;
+		}
+		setTimeout(() => {
+			if (state.current >= nQuestion) {
+				handleDone();
 			} else {
-				failFlag = 0;
-				break;
+				isDelay = false;
+				state = {
+					current: state.current + 1,
+					nRight: state.nRight + 1,
+					resetFlag: state.current,
+					nWrong: state.nWrong
+				};
 			}
-		}
-
-		return splitArr;
-	}
-
-	const originSplit: string[] = splitWord(word.toLocaleLowerCase());
-
-	const handleSelectCharacter = (index: number): void => {
-		const newUserSplit = [...userSplit, { index, ch: originSplit[index] }];
-		userSplit = newUserSplit;
-		// console.log(newUserSplit);
-
-		if (newUserSplit.length === word.length) {
-			isCheck = true;
-		}
+		}, DELAY_ANSWER);
 	};
 
-	const handleReturnCharacter = (index: number): void => {
-		if (isCheck) {
-			isCheck = false;
+	let preNWrong: number = state.nWrong;
+
+	const handleWrong = () => {
+		nRightConsecutive.current.n = 0;
+
+		HandlerSpeaker.onPlayAudio(incorrectAudio);
+		preNWrong = state.nWrong;
+		state = { ...state, nWrong: state.nWrong + 1 };
+	};
+
+	const handleNext = () => {
+		if (preNWrong === state.nWrong) {
+			HandlerSpeaker.onPlayAudio(incorrectAudio);
 		}
 
-		const newUserSplit = userSplit.slice(0, index);
-		userSplit = newUserSplit;
+		if (state.current + 1 >= nQuestion) {
+			state = { ...state, nWrong: state.nWrong + 1 };
+			handleDone();
+		} else {
+			state = {
+				...state,
+				current: state.current + 1,
+				nWrong: state.nWrong + 1,
+				resetFlag: state.current
+			};
+		}
+
+		preNWrong = state.nWrong;
 	};
 
-	$: isSelected = (index: number) => {
-		return userSplit.findIndex((item) => index === item.index) !== -1;
-	};
+	const handleReplay = () => {
+		isDone = false;
 
-	const correctClass = (item: { index: number; ch: string }, key: number) => {
-		return item.ch === word.toLowerCase()[key] ? 'right' : 'wrong';
+		state = {
+			current: 0,
+			nRight: 0,
+			nWrong: 0,
+			resetFlag: -1
+		};
+		nRightConsecutive.current = { top: 0, n: 0 };
 	};
 </script>
 
@@ -243,15 +273,18 @@
 					<label for="types" class="block mb-2 text-sm">Loại từ </label>
 					<select
 						id="types"
-						name="typeId"
 						bind:value={selected.type}
 						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each types as type}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
-								{type.name}
-							</option>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#each types as type (type.id)}
+							{#if type.name !== 'Chưa xác định'}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+									{type.name}
+								</option>
+							{/if}
 						{/each}
 					</select>
 				</div>
@@ -260,15 +293,18 @@
 					<label for="level" class="block mb-2 text-sm">Bặc của từ </label>
 					<select
 						id="level"
-						name="levelId"
 						bind:value={selected.level}
 						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each levels as level}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
-								{level.name}
-							</option>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#each levels as level (level.id)}
+							{#if level.name !== 'Chưa xác định'}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+									{level.name}
+								</option>
+							{/if}
 						{/each}
 					</select>
 				</div>
@@ -277,16 +313,21 @@
 					<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành </label>
 					<select
 						id="specialization"
-						name="specializationId"
 						bind:value={selected.specialization}
 						class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each specializations as specialization}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
-								{specialization.name}
-							</option>
-						{/each}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#if specializations.length}
+							{#each specializations as specialization (specialization.id)}
+								{#if specialization.name !== 'Chưa xác định'}
+									<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
+										{specialization.name}
+									</option>
+								{/if}
+							{/each}
+						{/if}
 					</select>
 				</div>
 
@@ -418,7 +459,7 @@
 	</div>
 </dialog>
 
-{#if !myModal4}
+{#if wordPack.length}
 	<div class="flex flex-col justify-start items-center min-h-screen max-h-max">
 		<div
 			class="practice grid grid-flow-row max-w-screen-xl w-screen shadow-lg py-6 px-9 border mx-auto mt-10 grid-cols-1 rounded-lg"
@@ -429,183 +470,55 @@
 			</div>
 			<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
 
-			<div class="flex justify-between items-center text-lg my-[14px]">
-				<div class="">Câu <b class="text-sky-600">1</b> / <b>5</b></div>
-				<div class="flex justify-center items-center font-thin">
-					<b class="font-bold text-green-600">0&nbsp;</b>
-					Đúng
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						class="w-6 h-6 mx-1 fill-[#29a322]"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-							clip-rule="evenodd"
-						/>
-					</svg>
-
-					-&nbsp;<b class="font-bold text-red-600">0&nbsp;</b>Sai
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						class="w-6 h-6 mx-1 fill-[#d6493c]"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
-							clip-rule="evenodd"
-						/>
-					</svg>
-				</div>
-			</div>
-
-			<div class="grid text-center grid-flow-row grid-rows-3">
-				<!-- Selected -->
-				<div class="flex justify-center items-center">
-					{#each userSplit as { index, ch }, idx (index)}
-						<button
-							class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
-							on:click={() => handleReturnCharacter(idx)}
-						>
-							{ch}
-						</button>
-					{/each}
-				</div>
-
-				<div class="flex justify-between items-start px-10 relative">
-					<span class="absolute left-0 rotate-180 cursor-pointer"
-						><svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							class="w-6 h-6 fill-[#04a359] hover:fill-[rgb(0,129,69)]"
-						>
-							<path
-								d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"
-							/>
-						</svg>
-					</span>
-					<span class="absolute right-0 cursor-pointer"
-						><svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							class="w-6 h-6 fill-[#04a359] hover:fill-[rgb(0,129,69)]"
-						>
-							<path
-								d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"
-							/>
-						</svg>
-					</span>
-
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<div
-						class="tooltip tooltip-bottom"
-						on:click={() => myModal33.showModal()}
-						data-tip="Xem đáp án"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6 fill-yellow-400 text-yellow-400"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
-							/>
-						</svg>
-					</div>
-
-					<!-- Answer -->
-
-					<dialog bind:this={myModal33} id="my_modal_33" class="modal text-left">
-						<div class="modal-box">
-							<form method="dialog">
-								<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl"
-									>✕</button
-								>
-							</form>
-							<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi Tiết Từ "Add"</h3>
-							<div class="h-[1px] w-full border border-gray-200" />
-
-							<div class="flex my-4">
-								<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
-								<div class="inline-block ml-4">
-									<div class="flex justify-center items-center">
-										<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
-										<span class="mr-2 text-blue-600">/æd/</span>
-									</div>
-									<p>Thêm</p>
-								</div>
-							</div>
-							<p class="font-bold">Cấp độ: <span class="font-normal">A2</span></p>
-							<p class="font-bold">Câu ví dụ:</p>
-							<ol>
-								<li>1. add some words</li>
-								<li>1. add some words</li>
-							</ol>
-							<p class="font-bold">
-								Thuộc chuyên ngành: <span class="font-normal"
-									>Công nghệ thực phẩm (Food Technology)</span
-								>
-							</p>
-							<p class="font-bold">Chủ đề:</p>
-							<div class="p-2 flex flex-wrap rounded-md">
-								{#each topics as topic, index (topic.name)}
-									<button
-										type="button"
-										class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
-										class:bg-green-500={topic.selected}
-										class:text-white={topic.selected}
-										on:click={() => toggleSelected(index)}
-									>
-										<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
-										<span class="pr-1 text-sm">{topic.name}</span>
-									</button>
-								{/each}
-							</div>
-							<p class="font-bold">
-								Các từ đồng nghĩa: <span class="font-normal">plus</span>
-							</p>
-							<p class="font-bold">Ghi chú:</p>
-							<p>dfs</p>
-						</div>
-					</dialog>
-
+			{#if !isDone}
+				<div class="flex justify-between items-center text-lg my-[14px]">
 					<div class="">
-						<p class="text-2xl font-semibold mb-2 text-slate-600">Test</p>
-						<p class="text-red-500 text-sm">Sai rồi</p>
+						Câu <b class="text-sky-600">{state.current + 1}</b>&nbsp;/&nbsp<b>{nQuestion}</b>
 					</div>
-					<Speaker key={'add'} />
-				</div>
+					<div class="flex justify-center items-center font-thin">
+						<b class="font-bold text-green-600">{state.nRight}&nbsp;</b>
+						Đúng
+						<RightIcon />
 
-				<!-- Select to answer -->
-				<div class="flex justify-center items-center">
-					{#each originSplit as ch, index (index)}
-						{#if isSelected(index)}
-							<button
-								class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg hover:bg-base-300 cursor-not-allowed"
-								disabled
-							/>
-						{:else}
-							<button
-								on:click={() => handleSelectCharacter(index)}
-								class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
-							>
-								{ch}
-							</button>
-						{/if}
-					{/each}
+						-&nbsp;<b class="font-bold text-red-600">{state.nWrong}&nbsp;</b>Sai
+						<WrongIcon />
+					</div>
 				</div>
-			</div>
+				{#if wordPack?.length}
+					<SplitWord
+						mean={wordPack[state.current]?.mean}
+						word={wordPack[state.current]?.content}
+						onCorrect={handleCorrect}
+						onWrong={handleWrong}
+						resetFlag={state.resetFlag}
+						wordDetail={wordPack[state.current]}
+					/>
+				{:else}
+					<h3 class="flex justify-center items-end notfound-title">
+						Gói từ vựng hiện tại không khả dụng, vui lòng thử lại sau. Cảm ơn !
+					</h3>
+				{/if}
+
+				{#if state.current < nQuestion}
+					<button
+						disabled={isDelay}
+						class="btn bg-sky-500 max-w-xs mx-auto hover:bg-blue-600 text-white"
+						on:click={handleNext}
+						>{state.current < nQuestion - 1 ? 'Câu tiếp theo' : 'Nộp bài'}</button
+					>
+				{/if}
+			{:else}
+				<div class="invisible" />
+				<PracticeResult
+					{data}
+					words={wordPack.map((word) => word.id)}
+					{selected}
+					onReplay={handleReplay}
+					nRight={state.nRight}
+					nWrong={state.nWrong}
+					nRightConsecutive={nRightConsecutive.current.top}
+				/>
+			{/if}
 		</div>
 	</div>
 {:else}
