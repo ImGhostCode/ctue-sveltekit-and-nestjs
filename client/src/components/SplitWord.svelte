@@ -55,7 +55,6 @@
 		toeic,
 		travel
 	};
-	type Topics = { id: number; name: string; isWord: boolean; selected: boolean; image: string };
 
 	let myModal33: HTMLDialogElement;
 	export let word: string;
@@ -63,9 +62,10 @@
 	export let onCorrect: () => void;
 	export let onWrong: () => void;
 	export let resetFlag: number;
-	export let topics: Topics[];
+	console.log(resetFlag);
+	export let wordDetail: any;
+	// export let data: any;
 
-	// let word: string = 'Test';
 	let isCheck: boolean = false;
 
 	const userSplitId = 'userSplitId';
@@ -120,109 +120,43 @@
 		return userSplit.findIndex((item) => index === item.index) !== -1;
 	};
 
-	const correctClass = (item: { index: number; ch: string }, key: number) => {
-		return item.ch === word.toLowerCase()[key] ? 'right' : 'wrong';
-	};
-	//   const renderOriginSplit = () => {
-	//     return originSplit.current.map((ch, index) => {
-	//       const isSelected =
-	//         userSplit.findIndex((item) => index === item.index) !== -1;
-
-	//       return (
-	//         <div
-	//           key={index}
-	//           className={`${classes.char} ${
-	//             isSelected ? ` ${aniStyle.slideAni} disabled` : ''
-	//           }`}
-	//           onClick={() => handleSelectCharacter(index)}>
-	//           {isSelected ? '' : ch}
-	//         </div>
-	//       );
-	//     });
-	//   };
-
-	//   const renderUserSplit = () => {
-	//     return userSplit.map((item, key) => {
-	//       const correctClass =
-	//         item.ch === word.toLowerCase()[key] ? 'right' : 'wrong';
-	//       return (
-	//         <div
-	//           key={key}
-	//           className={`${classes.char} ${isCheck ? correctClass : ''}`}
-	//           onClick={() => handleReturnCharacter(key)}>
-	//           {item.ch}
-	//         </div>
-	//       );
-	//     });
-	//   };
-
 	let isCorrect: boolean = false;
-	let modal: any = {
-		show: false,
-		loading: false,
-		data: null
-	};
 
 	// check is correct
-
-	$: () => {
+	$: {
 		let isSub = true;
-
-		if (!isCheck) {
-			return;
+		if (isCheck) {
+			const answer = userSplit.map((i) => i.ch).join('');
+			if (answer.toLowerCase() === word.toLowerCase()) {
+				isSub ? (isCorrect = true) : isCorrect;
+				onCorrect();
+			} else {
+				isSub ? (isCorrect = false) : isCorrect;
+				onWrong();
+			}
 		}
-
-		const answer = userSplit.map((i) => i.ch).join('');
-		if (answer.toLowerCase() === word.toLowerCase()) {
-			isSub ? (isCorrect = true) : isCorrect;
-			onCorrect();
-		} else {
-			isSub ? (isCorrect = false) : isCorrect;
-			onWrong();
-		}
-
-		return () => {
-			isSub = false;
-		};
-	};
+		isSub = false;
+	}
 
 	// reset when next or prev
-	$: () => {
+	$: {
 		let isSub = true;
-		if (resetFlag === -1) {
-			return;
-		}
-
-		if (isSub) {
+		if (resetFlag !== -1) {
 			isCheck = false;
 			isCorrect = false;
 			userSplit = [];
 			originSplit = splitWord(word.toLowerCase());
-			// originSplit.current = splitWord(word.toLowerCase());
+			console.log(originSplit);
 		}
 
-		return () => (isSub = false);
-	};
+		isSub = false;
+	}
 
-	// get word detail
-	$: () => {
-		let isSub = true;
-
-		if (modal.show && modal.loading) {
-			// (async function () {
-			// 	try {
-			// 		const apiRes = await wordApi.getWordDetails(word);
-			// 		if (apiRes.status === 200 && isSub) {
-			// 			setModal({ show: true, loading: false, data: { ...apiRes.data } });
-			// 		}
-			// 	} catch (error) {
-			// 		isSub && setModal({ show: false, loading: false, data: null });
-			// 	}
-			// })();
-		}
-
-		return () => (isSub = false);
-	};
+	// wordDetail.examples = wordDetail.examples?.[0] !== '' ? wordDetail.examples.split(/\r?\n/) : [];
+	// wordDetail.synonyms =
+	// 	wordDetail.examples?.[0] !== '' ? wordDetail.synonyms.split(/\r?\n/).join(',') : [];
+	// wordDetail.antonyms =
+	// 	wordDetail.examples?.[0] !== '' ? wordDetail.antonyms.split(/\r?\n/).join(',') : [];
 </script>
 
 <div class="grid text-center grid-flow-row grid-rows-3">
@@ -239,33 +173,9 @@
 	</div>
 
 	<div class="flex justify-between items-start px-10 relative">
-		<!-- <span class="absolute left-0 rotate-180 cursor-pointer"
-			><svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				fill="currentColor"
-				class="w-6 h-6 fill-[#04a359] hover:fill-[rgb(0,129,69)]"
-			>
-				<path
-					d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"
-				/>
-			</svg>
-		</span>
-		<span class="absolute right-0 cursor-pointer"
-			><svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				fill="currentColor"
-				class="w-6 h-6 fill-[#04a359] hover:fill-[rgb(0,129,69)]"
-			>
-				<path
-					d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"
-				/>
-			</svg>
-		</span> -->
-
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<div
+		<!-- modal = { loading: true, data: null, show: true } -->
+		<button
+			type="button"
 			class="tooltip tooltip-bottom"
 			on:click={() => myModal33.showModal()}
 			data-tip="Xem đáp án"
@@ -284,7 +194,7 @@
 					d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
 				/>
 			</svg>
-		</div>
+		</button>
 
 		<!-- Answer -->
 
@@ -293,60 +203,83 @@
 				<form method="dialog">
 					<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 				</form>
-				<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi Tiết Từ "Add"</h3>
+				<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi Tiết Từ "{wordDetail.content}"</h3>
 				<div class="h-[1px] w-full border border-gray-200" />
 
 				<div class="flex my-4">
-					<img src={tree} alt={tree} class="h-[50px] w-[50px] inline-block" />
+					<img
+						src={wordDetail.picture}
+						alt={wordDetail.content}
+						class="h-[50px] w-[50px] inline-block"
+					/>
 					<div class="inline-block ml-4">
 						<div class="flex justify-center items-center">
-							<p class="mr-2 text-green-600 text-xl font-semibold">add</p>
-							<span class="mr-2 text-blue-600">/æd/</span>
+							<p class="mr-2 text-green-600 text-xl font-semibold">{wordDetail.content}</p>
+							<span class="mr-2 text-blue-600">/{wordDetail.phonetic}/</span>
 						</div>
-						<p>Thêm</p>
+						<p>{wordDetail.mean}</p>
 					</div>
 				</div>
-				<p class="font-bold">Cấp độ: <span class="font-normal">A2</span></p>
+				<p class="font-bold">Loại từ: <span class="font-normal">{wordDetail.Type.name}</span></p>
+				<p class="font-bold">Cấp độ: <span class="font-normal">{wordDetail.Level.name}</span></p>
 				<p class="font-bold">Câu ví dụ:</p>
-				<ol>
-					<li>1. add some words</li>
-					<li>1. add some words</li>
-				</ol>
+				{#if wordDetail?.examples?.length}
+					{#if wordDetail.examples[0] !== ''}
+						<ol>
+							{#each wordDetail.examples as example, index (index)}
+								<li class="ml-2">{example}</li>
+							{/each}
+						</ol>
+					{:else}
+						<span class="ml-2">Không có</span>
+					{/if}
+				{/if}
 				<p class="font-bold">
-					Thuộc chuyên ngành: <span class="font-normal">Công nghệ thực phẩm (Food Technology)</span>
+					Thuộc chuyên ngành: <span class="font-normal">{wordDetail.Specialization.name}</span>
 				</p>
 				<p class="font-bold">Chủ đề:</p>
 				<div class="p-2 flex flex-wrap rounded-md">
-					{#each topics as topic, index (topic.name)}
-						<button
-							type="button"
-							class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
-							class:bg-green-500={topic.selected}
-							class:text-white={topic.selected}
-						>
-							<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
-							<span class="pr-1 text-sm">{topic.name}</span>
-						</button>
-					{/each}
+					{#if wordDetail?.Topic?.length}
+						{#each wordDetail.Topic as topic, index (index)}
+							{#if topic.name !== 'Không xác định'}
+								<div
+									class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-teal-500"
+								>
+									<img class="mr-1" src={`${imgTopics[topic.image]}`} alt={topic.name} />
+									<span class="pr-1 text-sm">{topic.name}</span>
+								</div>
+							{/if}
+						{/each}
+					{:else}
+						<span>Chưa xác định</span>
+					{/if}
 				</div>
 				<p class="font-bold">
-					Các từ đồng nghĩa: <span class="font-normal">plus</span>
+					Các từ đồng nghĩa: <span class="font-normal">{wordDetail.synonyms?.join(',')}</span>
 				</p>
-				<p class="font-bold">Ghi chú:</p>
-				<p>dfs</p>
+				<p class="font-bold">
+					Các từ trái nghĩa: <span class="font-normal">{wordDetail.antonyms?.join(',')}</span>
+				</p>
+				<p class="font-bold">
+					Ghi chú: <span class="font-normal"
+						>{wordDetail.note ? wordDetail.note : 'Không có'}
+					</span>
+				</p>
 			</div>
 		</dialog>
 
-		<p class="text-2xl font-semibold mb-2 text-slate-600">{mean}</p>
-		{#if isCheck}
-			<div class="">
-				{#if isCorrect}
-					<p class="text-green-500 text-sm">Chính xác</p>
-				{:else}
-					<p class="text-red-500 text-sm">Sai rồi</p>
-				{/if}
-			</div>
-		{/if}
+		<p class="text-2xl font-semibold mb-2 text-slate-600">
+			{mean}
+			{#if isCheck}
+				<div class="">
+					{#if isCorrect}
+						<p class="text-green-500 text-sm">Chính xác</p>
+					{:else}
+						<p class="text-red-500 text-sm">Sai rồi</p>
+					{/if}
+				</div>
+			{/if}
+		</p>
 		<Speaker key={word} />
 	</div>
 

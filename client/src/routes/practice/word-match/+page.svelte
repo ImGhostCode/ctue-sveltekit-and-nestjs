@@ -35,6 +35,10 @@
 	import { DELAY_ANSWER } from '../../../constants/practice';
 	import RightIcon from '../../../components/RightIcon.svelte';
 	import WrongIcon from '../../../components/WrongIcon.svelte';
+	import PracticeResult from '../../../components/PracticeResult.svelte';
+	import { HandlerSpeaker } from '$lib/store';
+	import correctAudio from '$lib/assets/audios/correct.mp3';
+	import incorrectAudio from '$lib/assets/audios/incorrect.mp3';
 
 	type Types = { id: number; name: string; isWord: boolean };
 	type Levels = { id: number; name: string };
@@ -45,10 +49,6 @@
 
 	export let data: PageData;
 	export let form: ActionData;
-
-	onMount(() => {
-		myModal4.showModal();
-	});
 
 	const imgTopics: { [key: string]: string } = {
 		tree,
@@ -97,15 +97,19 @@
 		numSentence: 10
 	};
 
-	let words: any[] = [];
+	// let words: any[] = [];
 	let wordPack: any[] = [];
 
 	$: {
 		if (data.topicsWord) topics = data.topicsWord;
-		if (data.typesWord) types = Array(data.typesWord);
-		if (data.specializations) specializations = Array(data.specializations);
-		if (data.levels) levels = Array(data.levels);
+		if (data.typesWord) types = data.typesWord;
+		if (data.specializations) specializations = data.specializations;
+		if (data.levels) levels = data.levels;
 	}
+
+	onMount(() => {
+		myModal4.showModal();
+	});
 
 	$: if (topics) {
 		selected.topics = [];
@@ -136,7 +140,6 @@
 
 		if (result.data) {
 			myModal4.close();
-			words = result.data;
 			wordPack = result.data.sort((_: any) => Math.random() - 0.5).slice(0, selected.numSentence);
 		} else if (result.error) {
 			const toast = toasts.add({
@@ -195,6 +198,7 @@
 
 	const handleCorrect = () => {
 		// playSoundAnswer(list[current].word, true, voice, volume, speed);
+		HandlerSpeaker.playSoundAnswer(wordPack[state.current].content, true);
 		isDelay = true;
 		nRightConsecutive.current.n++;
 		if (nRightConsecutive.current.n > nRightConsecutive.current.top) {
@@ -215,14 +219,21 @@
 		}, DELAY_ANSWER);
 	};
 
+	let preNWrong: number = state.nWrong;
+
 	const handleWrong = () => {
 		nRightConsecutive.current.n = 0;
-		// onPlayAudio(incorrectAudio);
+
+		HandlerSpeaker.onPlayAudio(incorrectAudio);
+		preNWrong = state.nWrong;
 		state = { ...state, nWrong: state.nWrong + 1 };
 	};
 
 	const handleNext = () => {
-		// onPlayAudio(incorrectAudio);
+		if (preNWrong === state.nWrong) {
+			HandlerSpeaker.onPlayAudio(incorrectAudio);
+		}
+
 		if (state.current + 1 >= nQuestion) {
 			state = { ...state, nWrong: state.nWrong + 1 };
 			handleDone();
@@ -234,6 +245,8 @@
 				resetFlag: state.current
 			};
 		}
+
+		preNWrong = state.nWrong;
 	};
 
 	const handleReplay = () => {
@@ -260,15 +273,18 @@
 					<label for="types" class="block mb-2 text-sm">Loại từ </label>
 					<select
 						id="types"
-						name="typeId"
 						bind:value={selected.type}
 						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each types as type}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
-								{type.name}
-							</option>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#each types as type (type.id)}
+							{#if type.name !== 'Chưa xác định'}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+									{type.name}
+								</option>
+							{/if}
 						{/each}
 					</select>
 				</div>
@@ -277,15 +293,18 @@
 					<label for="level" class="block mb-2 text-sm">Bặc của từ </label>
 					<select
 						id="level"
-						name="levelId"
 						bind:value={selected.level}
 						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each levels as level}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
-								{level.name}
-							</option>
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#each levels as level (level.id)}
+							{#if level.name !== 'Chưa xác định'}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+									{level.name}
+								</option>
+							{/if}
 						{/each}
 					</select>
 				</div>
@@ -294,16 +313,21 @@
 					<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành </label>
 					<select
 						id="specialization"
-						name="specializationId"
 						bind:value={selected.specialization}
 						class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
-						{#each specializations as specialization}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
-								{specialization.name}
-							</option>
-						{/each}
+						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+							Tất cả
+						</option>
+						{#if specializations.length}
+							{#each specializations as specialization (specialization.id)}
+								{#if specialization.name !== 'Chưa xác định'}
+									<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
+										{specialization.name}
+									</option>
+								{/if}
+							{/each}
+						{/if}
 					</select>
 				</div>
 
@@ -435,7 +459,7 @@
 	</div>
 </dialog>
 
-{#if words.length}
+{#if wordPack.length}
 	<div class="flex flex-col justify-start items-center min-h-screen max-h-max">
 		<div
 			class="practice grid grid-flow-row max-w-screen-xl w-screen shadow-lg py-6 px-9 border mx-auto mt-10 grid-cols-1 rounded-lg"
@@ -448,24 +472,26 @@
 
 			{#if !isDone}
 				<div class="flex justify-between items-center text-lg my-[14px]">
-					<div class="">Câu <b class="text-sky-600">1</b> / <b>5</b></div>
+					<div class="">
+						Câu <b class="text-sky-600">{state.current + 1}</b>&nbsp;/&nbsp<b>{nQuestion}</b>
+					</div>
 					<div class="flex justify-center items-center font-thin">
-						<b class="font-bold text-green-600">0&nbsp;</b>
+						<b class="font-bold text-green-600">{state.nRight}&nbsp;</b>
 						Đúng
 						<RightIcon />
 
-						-&nbsp;<b class="font-bold text-red-600">0&nbsp;</b>Sai
+						-&nbsp;<b class="font-bold text-red-600">{state.nWrong}&nbsp;</b>Sai
 						<WrongIcon />
 					</div>
 				</div>
 				{#if wordPack?.length}
 					<SplitWord
-						mean={wordPack[state.current].mean}
-						word={wordPack[state.current].content}
+						mean={wordPack[state.current]?.mean}
+						word={wordPack[state.current]?.content}
 						onCorrect={handleCorrect}
 						onWrong={handleWrong}
-						{topics}
 						resetFlag={state.resetFlag}
+						wordDetail={wordPack[state.current]}
 					/>
 				{:else}
 					<h3 class="flex justify-center items-end notfound-title">
@@ -482,7 +508,16 @@
 					>
 				{/if}
 			{:else}
-				<div class="">result</div>
+				<div class="invisible" />
+				<PracticeResult
+					{data}
+					words={wordPack.map((word) => word.id)}
+					{selected}
+					onReplay={handleReplay}
+					nRight={state.nRight}
+					nWrong={state.nWrong}
+					nRightConsecutive={nRightConsecutive.current.top}
+				/>
 			{/if}
 		</div>
 	</div>
