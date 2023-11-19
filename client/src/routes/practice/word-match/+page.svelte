@@ -48,7 +48,7 @@
 	let myModal4: HTMLDialogElement;
 
 	export let data: PageData;
-	export let form: ActionData;
+	// export let form: ActionData;
 
 	const imgTopics: { [key: string]: string } = {
 		tree,

@@ -62,7 +62,6 @@
 	export let onCorrect: () => void;
 	export let onWrong: () => void;
 	export let resetFlag: number;
-	console.log(resetFlag);
 	export let wordDetail: any;
 	// export let data: any;
 
@@ -146,7 +145,6 @@
 			isCorrect = false;
 			userSplit = [];
 			originSplit = splitWord(word.toLowerCase());
-			console.log(originSplit);
 		}
 
 		isSub = false;
