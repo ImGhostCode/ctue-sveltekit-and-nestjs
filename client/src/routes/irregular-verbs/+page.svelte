@@ -83,37 +83,37 @@
 		</div>
 	</div>
 	<div class="overflow-x-auto">
-		<table class="table">
+		<table class="table w-full">
 			<thead>
 				<tr>
-					<th />
-					<th class="text-green-700 md:text-lg text-base">Nguyên mẫu (V1)</th>
-					<th class="text-green-700 md:text-lg text-base">Quá khứ đơn (V2)</th>
-					<th class="text-green-700 md:text-lg text-base">Quá khứ phân từ (V3)</th>
-					<th class="text-green-700 md:text-lg text-base">Nghĩa</th>
+					<!-- <th /> -->
+					<th class="text-green-700 md:text-lg text-xs">Nguyên mẫu (V1)</th>
+					<th class="text-green-700 md:text-lg text-xs">Quá khứ đơn (V2)</th>
+					<th class="text-green-700 md:text-lg text-xs">Quá khứ phân từ (V3)</th>
+					<th class="text-green-700 md:text-lg text-xs">Nghĩa</th>
 				</tr>
 			</thead>
 			<tbody class="">
 				{#each words as word, i}
 					<tr class="hover:bg-base-200">
-						<th>{i + 1}</th>
+						<!-- <th>{i + 1}</th> -->
 						<td>
-							<span class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs">
+							<span class="md:text-lg text-xs break-words max-w-[160px] md:max-w-xs">
 								<Speaker key={word.v1} showIcon={false} />
 							</span>
 						</td>
 						<td>
-							<span class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs">
+							<span class="md:text-lg text-xs break-words max-w-[160px] md:max-w-xs">
 								<Speaker key={word.v2} showIcon={false} />
 							</span>
 						</td>
 						<td>
-							<span class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs">
+							<span class="md:text-lg text-xs break-words max-w-[160px] md:max-w-xs">
 								<Speaker key={word.v3} showIcon={false} />
 							</span>
 						</td>
 						<td>
-							<span class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs" />{word.mean}
+							<span class="md:text-lg text-xs break-words max-w-[160px] md:max-w-xs" />{word.mean}
 						</td>
 					</tr>
 				{/each}

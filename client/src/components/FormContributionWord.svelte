@@ -81,8 +81,7 @@
 		'ð',
 		'ʃ',
 		'ŋ',
-		'ʒ',
-		'ʃ'
+		'ʒ'
 	];
 
 	type Types = { id: number; name: string; isWord: boolean };
@@ -130,7 +129,7 @@
 </script>
 
 <div class="shadow-lg px-7 py-8 rounded-lg my-10">
-	<h1 class="text-3xl text-title font-bold">Thêm từ mới của bạn vào CTUE</h1>
+	<h1 class="md:text-3xl text-xl text-title font-bold">Thêm từ mới của bạn vào CTUE</h1>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form
 		method="post"
@@ -143,7 +142,7 @@
 		}}
 		enctype="multipart/form-data"
 		action="?/contribute"
-		class="grid grid-cols-3"
+		class="grid md:grid-cols-3 grid-cols-1"
 	>
 		<div class="form-control w-full max-w-sm mb-3">
 			<label class="label" for="new-word">
@@ -152,7 +151,7 @@
 			<input
 				type="text"
 				placeholder="..."
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none"
 				class:border-red-600={missingFields?.content}
 				id="new-word"
 				name="content"
@@ -168,7 +167,7 @@
 			<input
 				type="text"
 				placeholder="..."
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none"
 				class:border-red-600={missingFields?.mean}
 				id="mean"
 				name="mean"
@@ -184,7 +183,7 @@
 			<input
 				type="text"
 				placeholder="..."
-				class="input-phonetic input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input-phonetic input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none"
 				class:border-red-600={missingFields?.phonetic}
 				id="phonetic"
 				name="phonetic"
@@ -197,14 +196,14 @@
 		</div>
 
 		<div
+			class="form-control md:col-span-3 col-span-1 rounded-md md:p-3 p-2 bg-white shadow-lg mb-4 grid md:grid-cols-10 grid-cols-6 gap-2 border"
 			class:hidden={!showPhonetic}
-			class="col-span-3 rounded-md p-3 bg-white shadow-lg mb-4 flex flex-row gap-2 flex-wrap"
 		>
 			{#each phonetics as phonetic, index (index)}
 				<button
 					type="button"
 					on:click={() => (phoneticValue += phonetic)}
-					class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer transition-all"
+					class="p-2 w-full text-center text-base bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer transition-all"
 					>{phonetic}</button
 				>
 			{/each}
@@ -212,7 +211,7 @@
 			<button
 				type="button"
 				on:click={handleInputFocus}
-				class=" btn-outline btn-error p-2 max-w-[90px] w-full text-center h-10 border rounded-md cursor-pointer transition-all"
+				class=" btn-outline btn-error text-base w-full text-center border rounded-md cursor-pointer transition-all"
 				>Đóng</button
 			>
 		</div>
@@ -222,74 +221,85 @@
 			<select
 				id="types"
 				name="typeId"
-				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class="select select-bordered md:select-md select-sm md:text-base text-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none rounded-lg block w-full max-w-sm"
 			>
 				{#if types}
 					{#each types as type (type.id)}
 						{#if type.name === 'Chưa xác định'}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={type.id}
-								>{type.name}</option
+							<option
+								class="block bg-base-200 md:text-base text-sm px-4 py-2"
+								selected
+								value={type.id}>{type.name}</option
 							>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}
+							<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value={type.id}
 								>{type.name}</option
 							>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value="Loading"
+						>Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
 
-		<div class="mb-3">
+		<div class="mb-3 form-control">
 			<label for="level" class="block mb-2 text-sm">Bậc của từ (*)</label>
 			<select
 				id="level"
 				name="levelId"
-				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class="select select-bordered md:select-md select-sm md:text-base border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 			>
 				{#if levels}
 					{#each levels as level (level.id)}
 						{#if level.name === 'Chưa xác định'}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={level.id}
-								>{level.name}</option
+							<option
+								class="block bg-base-200 md:text-base text-sm px-4 py-2"
+								selected
+								value={level.id}>{level.name}</option
 							>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}
+							<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value={level.id}
 								>{level.name}</option
 							>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value="Loading"
+						>Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
 
-		<div class="mb-3">
+		<div class="mb-3 form-control">
 			<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành (*)</label>
 			<select
 				id="specialization"
 				name="specializationId"
-				class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class=" select select-bordered md:select-md select-sm md:text-base text-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 			>
 				{#if specializations}
 					{#each specializations as specialization (specialization.id)}
 						{#if specialization.name === 'Chưa xác định'}
 							<option
-								class="block bg-base-200 text-[16px] px-4 py-2"
+								class="block bg-base-200 md:text-base text-sm px-4 py-2"
 								selected
 								value={specialization.id}>{specialization.name}</option
 							>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}
-								>{specialization.name}</option
+							<option
+								class="block bg-base-200 md:text-base text-sm px-4 py-2"
+								value={specialization.id}>{specialization.name}</option
 							>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value="Loading"
+						>Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
@@ -300,7 +310,7 @@
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="examples"
 				name="examples"
 			/>
@@ -312,7 +322,7 @@
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="synonyms"
 				name="synonyms"
 			/>
@@ -324,7 +334,7 @@
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="antonyms"
 				name="antonyms"
 			/>
@@ -336,17 +346,19 @@
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="note"
 				name="note"
 			/>
 		</div>
 
 		<div class="form-control w-full max-w-sm mb-3">
-			<div class="h-[36px]" />
+			<div class="md:h-[36px] h-5" />
 
 			{#if imgIlustrate instanceof File}
-				<div class="h-16 input input-bordered flex justify-between items-center">
+				<div
+					class="h-16 input input-bordered md:input-md input-sm flex justify-between items-center"
+				>
 					<img class="h-14 w-14" src={URL.createObjectURL(imgIlustrate)} alt="Preview" />
 					<span class="truncate">{imgIlustrate.name}</span>
 					<button type="button" on:click={() => (imgIlustrate = null)}
@@ -367,7 +379,7 @@
 			<label class="" class:hidden={imgIlustrate instanceof File} for="img-ilustrate">
 				<div
 					class:border-red-600={missingFields?.ilustrate}
-					class="flex justify-center items-center w-full max-w-sm input input-bordered hover:bg-gray-100 hover:cursor-pointer"
+					class="flex justify-center items-center w-full max-w-sm input input-bordered md:input-md input-sm hover:bg-gray-100 hover:cursor-pointer"
 				>
 					<div class="flex">
 						<span class="label-text mr-3">Thêm ảnh minh hoạ</span>
@@ -403,11 +415,11 @@
 		</div>
 
 		<div class="form-control w-full max-w-sm mb-3">
-			<div class="h-[36px]" />
+			<div class="md:h-[36px] h-4" />
 			<button
 				type="button"
 				on:click={() => (showTopics = !showTopics)}
-				class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
 				>Thêm chủ đề <span class="ml-2">
 					{#if showTopics}
 						<svg
@@ -440,11 +452,13 @@
 			>
 		</div>
 		{#if showTopics}
-			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-3">
+			<div
+				class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md md:col-span-3 col-span-1 shadow-sm"
+			>
 				{#each topics as topic, index (topic.name)}
 					<button
 						type="button"
-						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
+						class="topic-item md:px-2 px-1 md:py-1 md:m-2 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
@@ -456,12 +470,12 @@
 			</div>
 			<input type="text" id="topics" name="topics" bind:value={topics} class="hidden" />
 		{/if}
-		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
+		<div class="h-[1px] w-full border border-gray-200 mt-8 md:col-span-3 col-span-1" />
 
-		<div class="mt-4 col-span-3 text-right">
+		<div class="mt-4 md:col-span-3 col-span-1 text-right">
 			{#if isLoadingForm}
 				<button
-					class="btn mr-2 btn-info"
+					class="btn md:btn-md btn-sm mr-2 btn-info"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
 					>&nbsp;
@@ -473,12 +487,12 @@
 					type="submit"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
-					class=" btn btn-accent text-white mr-2"
+					class=" btn md:btn-md btn-sm btn-accent text-white mr-2"
 				>
 					Gửi yêu cầu
 				</button>
 			{/if}
-			<button type="reset" class="btn btn-outline btn-error">Loại bỏ</button>
+			<button type="reset" class="btn md:btn-md btn-sm btn-outline btn-error">Loại bỏ</button>
 		</div>
 
 		<input type="text" class="hidden" name="topicId" id="topics" bind:value={topicIds} />

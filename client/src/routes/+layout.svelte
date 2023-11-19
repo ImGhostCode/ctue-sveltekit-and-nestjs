@@ -121,7 +121,7 @@
 						<input
 							type="text"
 							placeholder="Tìm kiếm..."
-							class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 my-1 mr-2"
+							class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 md:mt-0 mt-[3px] mr-2"
 						/>
 					</div>
 					{#if userData}

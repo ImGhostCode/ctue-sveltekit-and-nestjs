@@ -81,7 +81,7 @@
 			class:bg-green-600={sentenceScreen}
 			class:text-white={sentenceScreen}
 			class:text-gray-500={sentenceScreen === false}
-			class="uppercase outline-none border-none px-5 py-2 rounded-tr-md rounded-tl-md font-semibold"
+			class="uppercase outline-none border-none px-5 py-2 md:text-base text-sm rounded-tr-md rounded-tl-md font-semibold"
 			>Thêm từ</button
 		>
 		<button
@@ -89,7 +89,7 @@
 			class:text-white={sentenceScreen === false}
 			class:text-gray-500={sentenceScreen}
 			on:click={() => handleSwitchTab()}
-			class="uppercase outline-none border-none px-5 py-2 rounded-tr-md rounded-tl-md font-semibold"
+			class="uppercase outline-none border-none px-5 py-2 md:text-base text-sm rounded-tr-md rounded-tl-md font-semibold"
 			>Thêm câu</button
 		>
 	</div>
@@ -112,47 +112,49 @@
 	{/if}
 
 	<div class="">
-		<h1 class="text-3xl text-title font-bold mb-2">Lịch sử đóng góp</h1>
+		<h1 class="md:text-3xl text-xl text-title font-bold mb-2">Lịch sử đóng góp</h1>
 
 		<div class="h-[1px] w-full border border-gray-200" />
 
 		{#if data.conHistory.length}
-			<table class="table table-hover mt-4">
-				<thead>
-					<tr>
-						<th>Thời gian</th>
-						<th>Loại đóng góp</th>
-						<th>Nội dung</th>
-						<th>Trạng thái</th>
-						<th>Phản hồi</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each data.conHistory as con (con.id)}
-						<tr class="hover">
-							<td>{moment(con.createdAt).format('DD/MM/YYYY')}</td>
-							<td>{con.type === 'word' ? 'Từ' : 'Câu'}</td>
-							<td class="max-w-xs">
-								<p class="truncate">
-									{con.content.content} - {con.content.mean}
-								</p>
-							</td>
-							<td
-								class=" font-semibold"
-								class:text-red-600={statusCon[con.status].color === 'red'}
-								class:text-yellow-400={statusCon[con.status].color === 'yellow'}
-								class:text-green-600={statusCon[con.status].color === 'green'}
-								>{statusCon[con.status].status}</td
-							>
-							<td class="max-w-xs">
-								<p class="break-words">
-									{con.feedback ?? ''}
-								</p>
-							</td>
+			<div class="overflow-x-auto">
+				<table class="table table-hover mt-4">
+					<thead>
+						<tr>
+							<th class="md:text-base text-sm">Thời gian</th>
+							<th class="md:text-base text-sm">Loại đóng góp</th>
+							<th class="md:text-base text-sm">Nội dung</th>
+							<th class="md:text-base text-sm">Trạng thái</th>
+							<th class="md:text-base text-sm">Phản hồi</th>
 						</tr>
-					{/each}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{#each data.conHistory as con (con.id)}
+							<tr class="hover">
+								<td class="md:text-base text-xs">{moment(con.createdAt).format('DD/MM/YYYY')}</td>
+								<td class="md:text-base text-xs">{con.type === 'word' ? 'Từ' : 'Câu'}</td>
+								<td class="max-w-xs">
+									<p class="truncate md:text-base text-xs">
+										{con.content.content} - {con.content.mean}
+									</p>
+								</td>
+								<td
+									class="md:text-base text-xs font-semibold"
+									class:text-red-600={statusCon[con.status].color === 'red'}
+									class:text-yellow-400={statusCon[con.status].color === 'yellow'}
+									class:text-green-600={statusCon[con.status].color === 'green'}
+									>{statusCon[con.status].status}</td
+								>
+								<td class="max-w-xs">
+									<p class="break-words md:text-base text-xs">
+										{con.feedback ?? ''}
+									</p>
+								</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</div>
 		{:else}
 			<p class="text-center text-base my-4 text-slate-600">Bạn chưa có đóng góp nào</p>
 		{/if}

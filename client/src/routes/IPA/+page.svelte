@@ -295,7 +295,7 @@
 		<div class="collapse-title md:text-xl text-lg font-medium text-green-600">
 			😝 Nhóm âm ơ &nbsp;<b>/ ə /, / ɜ: /</b>
 		</div>
-		<div class="collapse-content flex">
+		<div class="collapse-content grid md:grid-cols-2 grid-cols-1 gap-8">
 			<div class="md:basis-1/2 flex justify-between md:mx-3 md:items-start items-center">
 				<div class="basis-3/4">
 					<p class="text-red-700 text-2xl font-bold inline-block leading-10">/ ə /</p>

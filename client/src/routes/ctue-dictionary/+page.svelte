@@ -297,11 +297,13 @@
 				<select
 					bind:value={selected.type}
 					id="types"
-					class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+					class="select select-bordered md:select-md select-sm text-[16px] border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 				>
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
+					<option class="block bg-base-200 text-sm md:text-base px-4 py-2" value={null}>
+						Tất cả
+					</option>
 					{#each types as type}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+						<option class="block bg-base-200 text-sm md:text-base px-4 py-2" value={type.id}>
 							{type.name}
 						</option>
 					{/each}
@@ -312,13 +314,13 @@
 				<select
 					bind:value={selected.level}
 					id="level"
-					class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+					class="select select-bordered md:select-md select-sm text-[16px] border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 				>
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}>
+					<option class="block bg-base-200 text-sm md:text-base px-4 py-2" value={null}>
 						Chưa xác định
 					</option>
 					{#each levels as level}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+						<option class="block bg-base-200 text-sm md:text-base px-4 py-2" value={level.id}>
 							{level.name}
 						</option>
 					{/each}
@@ -329,21 +331,26 @@
 				<select
 					bind:value={selected.specialization}
 					id="specialization"
-					class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+					class=" select select-bordered md:select-md select-sm text-[16px] border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 				>
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
+					<option class="block bg-base-200 text-sm md:text-base px-4 py-2" value={null}>
+						Tất cả
+					</option>
 					{#each specializations as specialization}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
+						<option
+							class="block bg-base-200 text-sm md:text-base px-4 py-2"
+							value={specialization.id}
+						>
 							{specialization.name}
 						</option>
 					{/each}
 				</select>
 			</div>
 			<div class="form-control w-full max-w-sm mb-3">
-				<div class="h-[28px]" />
+				<div class="md:h-[28px]" />
 				<button
 					on:click={() => (showTopics = !showTopics)}
-					class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
+					class="input input-bordered md:input-md input-sm w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
 				>
 					Thêm chủ đề
 					<span class="ml-2">
@@ -383,7 +390,7 @@
 			</div>
 			{#if showTopics}
 				<div
-					class="topics md:px-3 md:py-6 px-2 py-4 bg-base-200 flex flex-wrap rounded-md col-span-2"
+					class="topics md:px-3 md:py-6 px-2 py-4 bg-base-200 flex flex-wrap rounded-md md:col-span-2"
 				>
 					{#each topics as topic, index}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
