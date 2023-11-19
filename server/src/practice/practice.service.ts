@@ -40,21 +40,22 @@ export class PracticeService {
                 by: ['userId'],
                 where: { createdAt: { gte: firstDayOfMonth } },
                 _sum: { nRight: true },
-                orderBy: { _sum: { nRight: 'asc' } },
+                orderBy: { _sum: { nRight: 'desc' } },
                 take: take
             })
             const userIds = groupByNRight.map(entry => entry.userId);
             const users = await this.prismaService.user.findMany({
                 where: { id: { in: userIds } }
             });
-            const topNRight = users.map(user => {
+            let topNRight = users.map(user => {
                 const correspondingSumEntry = groupByNRight.find(entry => entry.userId === user.id);
                 return { ...user, _sum: correspondingSumEntry ? correspondingSumEntry._sum : null };
             });
+            topNRight = topNRight.sort((a, b) => b._sum.nRight - a._sum.nRight)
 
             const topNRightConsecutive = await this.prismaService.practice.findMany({
                 where: { createdAt: { gte: firstDayOfMonth } },
-                orderBy: { nRightConsecutive: 'asc' },
+                orderBy: { nRightConsecutive: 'desc' },
                 take: take,
                 include: { User: true }
             })
@@ -76,8 +77,7 @@ export class PracticeService {
                 return { ...user, result: Results };
             });
             topCoin = topCoin.sort((a, b) => b.result.coin - a.result.coin)
-
-            return new ResponseData<any>({ topNRight, topNRightConsecutive, topCoin }, 200, 'Lấy thành công bảng xếp hạng')
+            return new ResponseData<any>({ topNRight, topNRightConsecutive, topCoin, currenMonth: currentDate.getMonth() + 1 }, 200, 'Lấy thành công bảng xếp hạng')
         } catch (error) {
             return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
         }

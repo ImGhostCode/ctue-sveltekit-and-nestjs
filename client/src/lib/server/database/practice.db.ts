@@ -18,3 +18,12 @@ export async function createPractice(accessToken: string, data: any) {
         throw error;
     }
 }
+
+export async function getLeaderboard() {
+    try {
+        const response = await axiosClient.get(`${URL}`)
+        return response.data
+    } catch (error) {
+        throw error;
+    }
+}
