@@ -41,4 +41,8 @@ export enum PAGE_SIZE {
     PAGE_IRREGULAR = 20,
     PAGE_FAVORITE = 20,
     PAGE_PRACTICE = 20
+
+}
+export enum PRACTICE_SIZE {
+    PRACTICE_SELECT = 5
 }

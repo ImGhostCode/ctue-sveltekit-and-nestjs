@@ -18,10 +18,16 @@ export class PracticeController {
         return this.practiceService.createPractice(account.userId, createPracticeDto)
     }
 
+
     @UseGuards(MyJWTGuard, RolesGuard)
     @Get('user')
     @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
     findAllByUser(@Query("page") page: number, @GetAccount() account: Account) {
         return this.practiceService.findAllByUser(page, account.userId);
+    }
+  
+    @Get()
+    getLeaderboard() {
+        return this.practiceService.getLeaderboard()
     }
 }

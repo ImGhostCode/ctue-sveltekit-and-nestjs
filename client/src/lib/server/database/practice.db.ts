@@ -19,6 +19,7 @@ export async function createPractice(accessToken: string, data: any) {
     }
 }
 
+
 export async function getAllPractices(accessToken: string, page: number) {
     try {
         const response = await axiosClient.get(`${URL}/user?page=${page}`, {
@@ -27,6 +28,15 @@ export async function getAllPractices(accessToken: string, page: number) {
             },
         })
         return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getLeaderboard() {
+    try {
+        const response = await axiosClient.get(`${URL}`)
+        return response.data
     } catch (error) {
         throw error;
     }
