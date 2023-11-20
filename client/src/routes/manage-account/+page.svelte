@@ -129,84 +129,88 @@
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
-	<h1 class="text-2xl text-orange-600 mb-2">Quản lý tài khoản</h1>
+	<h1 class="md:text-2xl text-lg text-orange-600 mb-2">Quản lý tài khoản</h1>
 	<div class="h-[1px] w-full border border-gray-200" />
-
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>STT</th>
-				<th>ID</th>
-				<th>Tên người dùng</th>
-				<th>Email</th>
-				<th>Ngày đăng ký</th>
-				<th>Trạng thái</th>
-				<th class="text-center w-[100px]">Hành động</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#if users.length}
-				{#each users as user, i}
-					<tr class="hover">
-						<td>{i + 1}</td>
-						<td>{user.userId}</td>
-						<td>{user.User.name}</td>
-						<td>{user.email}</td>
-						<td>{moment(data.user.User.createdAt).format('DD/MM/YYYY')}</td>
-						<td>
-							{#if !user.isBan}
-								<p class="text-cyan-500 font-semibold">Hoạt động</p>
-							{:else}
-								<p class="text-red-500 font-semibold">Khóa</p>
-							{/if}
-						</td>
-						<td class="text-center flex justify-between gap-3">
-							<form on:submit|preventDefault={deleteUser} class="inline">
-								<input
-									name="userId"
-									id="userId"
-									type="text"
-									class="hidden"
-									bind:value={user.userId}
-								/>
-								<button type="submit" class="btn btn-sm bg-red-600 hover:bg-red-700 text-white">
-									Xóa
-								</button>
-							</form>
-							{#if !user.isBan}
-								<button
-									class="btn btn-sm btn-warning"
-									on:click={() => {
-										myModal4.showModal();
-										banId = user.userId;
-									}}
-								>
-									Khóa
-								</button>
-							{:else}
-								<form on:submit|preventDefault={unBanUser}>
+	<div class="overflow-x-auto">
+		<table class="table table-hover">
+			<thead>
+				<tr class="md:text-base text-sm">
+					<th>STT</th>
+					<th>ID</th>
+					<th>Tên người dùng</th>
+					<th>Email</th>
+					<th>Ngày đăng ký</th>
+					<th>Trạng thái</th>
+					<th class="text-center w-[100px]">Hành động</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#if users.length}
+					{#each users as user, i}
+						<tr class="hover md:text-base text-sm md:btn-md">
+							<td>{i + 1}</td>
+							<td>{user.userId}</td>
+							<td>{user.User.name}</td>
+							<td>{user.email}</td>
+							<td>{moment(data.user.User.createdAt).format('DD/MM/YYYY')}</td>
+							<td>
+								{#if !user.isBan}
+									<p class="text-cyan-500 font-semibold">Hoạt động</p>
+								{:else}
+									<p class="text-red-500 font-semibold">Khóa</p>
+								{/if}
+							</td>
+							<td class="text-center flex justify-between gap-3">
+								<form on:submit|preventDefault={deleteUser} class="inline">
 									<input
-										type="text"
 										name="userId"
 										id="userId"
+										type="text"
 										class="hidden"
 										bind:value={user.userId}
 									/>
-									<button class="btn btn-sm btn-primary"> Mở khóa </button>
+									<button
+										type="submit"
+										class="btn md:btn-md btn-sm bg-red-600 hover:bg-red-700 text-white"
+									>
+										Xóa
+									</button>
 								</form>
-							{/if}
-						</td>
-					</tr>
-				{/each}
-			{/if}
-		</tbody>
-	</table>
+								{#if !user.isBan}
+									<button
+										class="btn md:btn-md btn-sm btn-warning"
+										on:click={() => {
+											myModal4.showModal();
+											banId = user.userId;
+										}}
+									>
+										Khóa
+									</button>
+								{:else}
+									<form on:submit|preventDefault={unBanUser}>
+										<input
+											type="text"
+											name="userId"
+											id="userId"
+											class="hidden"
+											bind:value={user.userId}
+										/>
+										<button class="btn btn-sm btn-primary"> Mở khóa </button>
+									</form>
+								{/if}
+							</td>
+						</tr>
+					{/each}
+				{/if}
+			</tbody>
+		</table>
+	</div>
 	<Pagination {totalPages} {currentPage} on:next={handleNextPage} on:pre={handlePrePAge} />
 </div>
 <dialog bind:this={myModal4} id="my_modal_4" class="modal">
-	<div class="modal-box w-11/12 max-w-5xl">
+	<div class="modal-box w-11/12 max-w-5xl md:p-6 px-3 py-4">
 		<form on:submit|preventDefault={banUser}>
-			<h3 class="font-bold text-xl text-orange-600 mb-2">Cấm tài khoản người dùng</h3>
+			<h3 class="font-bold md:text-xl text-lg text-orange-600 mb-2">Cấm tài khoản người dùng</h3>
 			<input type="text" name="userId" id="userId" class="hidden" bind:value={banId} />
 			<div class="h-[1px] w-full border border-gray-200" />
 			<div class="">
@@ -228,7 +232,7 @@
 			<div class="modal-action">
 				<form method="dialog">
 					<button
-						class="btn"
+						class="btn md:btn-md btn-sm"
 						on:click={() => {
 							banId = 0;
 							feedback = '';
@@ -237,7 +241,10 @@
 						Đóng
 					</button>
 				</form>
-				<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">Đồng ý</button>
+				<button
+					type="submit"
+					class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">Đồng ý</button
+				>
 			</div>
 		</form>
 	</div>

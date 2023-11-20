@@ -378,23 +378,23 @@
 <dialog bind:this={myModal4} id="" class="modal">
 	<div class="modal-box max-w-3xl">
 		<form>
-			<h3 class="font-bold text-xl text-title mb-2">Lựa chọn gói từ vựng</h3>
+			<h3 class="font-bold md:text-xl text-lg text-title mb-2">Lựa chọn gói từ vựng</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
-			<div class="grid grid-cols-2 gap-2 mt-4">
+			<div class="grid md:grid-cols-2 grid-cols-1 gap-2 mt-4">
 				<div class="mb-3 form-control">
 					<label for="types" class="block mb-2 text-sm">Loại từ </label>
 					<select
 						id="types"
 						bind:value={selected.type}
-						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+						class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+						<option class="block bg-base-200 md:text-base text-sm px-4 py-2" selected value={null}>
 							Tất cả
 						</option>
 						{#each types as type (type.id)}
 							{#if type.name !== 'Chưa xác định'}
-								<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+								<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value={type.id}>
 									{type.name}
 								</option>
 							{/if}
@@ -407,14 +407,14 @@
 					<select
 						id="level"
 						bind:value={selected.level}
-						class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+						class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+						<option class="block bg-base-200 md:text-base text-sm px-4 py-2" selected value={null}>
 							Tất cả
 						</option>
 						{#each levels as level (level.id)}
 							{#if level.name !== 'Chưa xác định'}
-								<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+								<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value={level.id}>
 									{level.name}
 								</option>
 							{/if}
@@ -427,15 +427,18 @@
 					<select
 						id="specialization"
 						bind:value={selected.specialization}
-						class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+						class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 					>
-						<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={null}>
+						<option class="block bg-base-200 md:text-base text-sm px-4 py-2" selected value={null}>
 							Tất cả
 						</option>
 						{#if specializations.length}
 							{#each specializations as specialization (specialization.id)}
 								{#if specialization.name !== 'Chưa xác định'}
-									<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
+									<option
+										class="block bg-base-200 md:text-base text-sm px-4 py-2"
+										value={specialization.id}
+									>
 										{specialization.name}
 									</option>
 								{/if}
@@ -445,11 +448,11 @@
 				</div>
 
 				<div class="form-control w-full max-w-sm mb-3">
-					<div class="h-[28px]" />
+					<div class="md:h-[28px]" />
 					<button
 						type="button"
 						on:click={() => (showTopics = !showTopics)}
-						class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
+						class="input input-bordered md:input-md input-sm w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
 						>Thêm chủ đề <span class="ml-2">
 							{#if showTopics}
 								<svg
@@ -486,11 +489,13 @@
 					>
 				</div>
 				{#if showTopics}
-					<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-2">
+					<div
+						class="topics md:px-3 md:py-6 px-2 py-4 bg-base-200 flex flex-wrap rounded-md md:col-span-2 col-span-1"
+					>
 						{#each topics as topic, index (topic.name)}
 							<button
 								type="button"
-								class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
+								class="topic-item md:px-2 px-1 md:py-1 md:m-2 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
 								class:bg-green-500={topic.selected}
 								class:text-white={topic.selected}
 								on:click={() => toggleSelected(index)}
@@ -503,12 +508,12 @@
 				{/if}
 
 				<div class="form-control mb-3 col-span-1">
-					<label class="label" for="number-sentence">
+					<label class="label block md:btn-md btn-sm text-sm" for="number-sentence">
 						<span class="label-text">Số câu</span>
 					</label>
 					<input
 						type="number"
-						class="input input-bordered focus:border-green-600 focus:outline-none"
+						class="input input-bordered md:input-md input-sm md:text-base text-sm focus:border-green-600 focus:outline-none"
 						id="number-sentence"
 						name="numberOfSentence"
 						bind:value={selected.numSentence}
@@ -522,7 +527,7 @@
 				<form method="dialog">
 					<!-- if there is a button, it will close the modal -->
 					<a href="/practice"
-						><button class="btn"
+						><button class="btn md:btn-md btn-sm"
 							><svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
@@ -541,7 +546,7 @@
 					>
 				</form>
 				<button
-					class="btn btn-success ml-2 text-white"
+					class="btn md:btn-md btn-sm btn-success ml-2 text-white"
 					type="button"
 					on:click={async () =>
 						await getWordPack(
@@ -579,12 +584,12 @@
 		>
 			<div class=" flex justify-start items-center">
 				<img src={correctWord} alt={correctWord} class="h-[56px] w-[56px]" />
-				<h1 class="text-2xl text-[#dd9210] font-bold">HÃY CHỌN TỪ ĐÚNG</h1>
+				<h1 class="md:text-2xl text-lg text-[#dd9210] font-bold">HÃY CHỌN TỪ ĐÚNG</h1>
 			</div>
 			<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
 
 			{#if !isDone}
-				<div class="flex justify-between items-center text-lg my-[14px]">
+				<div class="flex justify-between items-center my-[14px] md:text-base text-sm">
 					<!--  -->
 					<div class="">
 						Câu <b class="text-sky-600">{state.current + 1}</b>&nbsp;/&nbsp;<b class=""
@@ -603,7 +608,7 @@
 
 				<div class="grid text-center grid-flow-row" class:disable={state.status !== 0}>
 					<div class="flex flex-col justify-center items-center row-span-4">
-						<p class="text-2xl font-bold text-slate-500 mb-1">{mean}</p>
+						<p class="md:text-2xl text-lg font-bold text-slate-500 mb-1">{mean}</p>
 						<div class="" class:visible={state.status !== 0} class:hidden={state.status === 0}>
 							{#if state.status === 1}
 								<p class="text-green-500 text-sm">Chính xác</p>
@@ -613,7 +618,7 @@
 						</div>
 					</div>
 					<div
-						class="grid grid-cols-2 grid-rows-2 gap-10 w-full max-w-[50%] mx-auto my-0 py-6 row-span-6"
+						class="grid grid-cols-2 grid-rows-2 md:gap-10 gap-2 w-full md:max-w-[50%] mx-auto my-0 py-6 row-span-6"
 					>
 						{#each state.answerList as answer, index (index)}
 							<button
@@ -631,8 +636,8 @@
 								)}
 								' bg-sky-400 rounded-md flex flex-col justify-center items-center p-[10px] hover:bg-sky-500 hover:cursor-pointer'`}
 							>
-								<p class="text-2xl font-semibold text-white">{answer.word}</p>
-								<span class="text-lg text-blue-800">{answer.phonetic}</span>
+								<p class="md:text-2xl text-base font-semibold text-white">{answer.word}</p>
+								<span class="md:text-lg text-sm text-blue-800">{answer.phonetic}</span>
 							</button>
 						{/each}
 					</div>

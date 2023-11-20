@@ -121,7 +121,7 @@
 						<input
 							type="text"
 							placeholder="Tìm kiếm..."
-							class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 md:mt-0 mt-[3px] mr-2"
+							class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 mt-0 mt-[3px] mr-2 text-slate-600"
 						/>
 					</div>
 					{#if userData}
@@ -441,12 +441,12 @@
 	</div>
 
 	<dialog bind:this={myModal4} id="my_modal_4" class="modal">
-		<div class="modal-box w-11/12 max-w-5xl">
+		<div class="modal-box w-11/12 max-w-5xl md:p-6 px-3">
 			<h3 class="font-bold md:text-2xl text-xl text-orange-600 mb-2">Cài đặt</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="md:px-6 md:py-3">
-				<div class="border rounded-md my-4 p-4">
+				<!-- <div class="border rounded-md my-4 p-4">
 					<p class="md:text-lg text-base">Chủ Đề</p>
 					<div class="flex">
 						<button class="rounded-full border border-green-500 p-2 mx-2 hover:bg-base-300">
@@ -482,7 +482,7 @@
 							</svg>
 						</button>
 					</div>
-				</div>
+				</div> -->
 				<div class="border rounded-md my-4 p-4">
 					<h1 class="md:text-lg text-base mb-3">Giọng Đọc</h1>
 					<div class="grid md:grid-cols-3 grid-cols-1 gap-7">
@@ -558,12 +558,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="border rounded-md my-4 p-4">
+				<!-- <div class="border rounded-md my-4 p-4">
 					<p class="md:text-lg text-base mb-3">Cài Đặt Khác</p>
 
 					<p class="text-slate-500 my-2 md:text-base text-sm">Hiện/Ẩn thanh điều hướng</p>
 					<input type="checkbox" class="toggle toggle-success" bind:checked={showNavBar} />
-				</div>
+				</div> -->
 			</div>
 			<div class="h-[1px] w-full border border-gray-200" />
 			<div class="modal-action">

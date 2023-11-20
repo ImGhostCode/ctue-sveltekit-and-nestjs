@@ -74,7 +74,7 @@
 	}
 </script>
 
-<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
+<div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<div class="">
 		<button
 			on:click={() => handleSwitchTab()}

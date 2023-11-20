@@ -310,7 +310,7 @@
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="examples"
 				name="examples"
 			/>
@@ -322,7 +322,7 @@
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="synonyms"
 				name="synonyms"
 			/>
@@ -334,7 +334,7 @@
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="antonyms"
 				name="antonyms"
 			/>
@@ -346,7 +346,7 @@
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="note"
 				name="note"
 			/>
@@ -356,10 +356,12 @@
 			<div class="md:h-[36px] h-5" />
 
 			{#if imgIlustrate instanceof File}
-				<div
-					class="h-16 input input-bordered md:input-md input-sm flex justify-between items-center"
-				>
-					<img class="h-14 w-14" src={URL.createObjectURL(imgIlustrate)} alt="Preview" />
+				<div class="h-16 input input-bordered flex justify-between items-center">
+					<img
+						class="md:h-14 h-10 md:w-14 w-10"
+						src={URL.createObjectURL(imgIlustrate)}
+						alt="Preview"
+					/>
 					<span class="truncate">{imgIlustrate.name}</span>
 					<button type="button" on:click={() => (imgIlustrate = null)}
 						><svg
@@ -379,7 +381,7 @@
 			<label class="" class:hidden={imgIlustrate instanceof File} for="img-ilustrate">
 				<div
 					class:border-red-600={missingFields?.ilustrate}
-					class="flex justify-center items-center w-full max-w-sm input input-bordered md:input-md input-sm hover:bg-gray-100 hover:cursor-pointer"
+					class="flex justify-center items-center w-full max-w-sm input input-bordered hover:bg-gray-100 hover:cursor-pointer"
 				>
 					<div class="flex">
 						<span class="label-text mr-3">Thêm ảnh minh hoạ</span>

@@ -159,10 +159,10 @@
 
 <div class="grid text-center grid-flow-row grid-rows-3">
 	<!-- Selected -->
-	<div class="flex justify-center items-center">
+	<div class="flex flex-wrap justify-center items-center">
 		{#each userSplit as { index, ch }, idx (index)}
 			<button
-				class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
+				class="md:h-[42px] md:text-lg text-sm h-9 md:w-[42px] w-9 bg-base-200 rounded-lg shadow-md m-[6px] leading-10 cursor-pointer hover:bg-base-300"
 				on:click={() => handleReturnCharacter(idx)}
 			>
 				{ch}
@@ -197,51 +197,59 @@
 		<!-- Answer -->
 
 		<dialog bind:this={myModal33} id="my_modal_33" class="modal text-left">
-			<div class="modal-box">
+			<div class="modal-box md:p-6 py-4 p-2">
 				<form method="dialog">
 					<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 				</form>
-				<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi Tiết Từ "{wordDetail.content}"</h3>
+				<h3 class="font-bold md:text-2xl text-lg text-orange-600 mb-2">
+					Chi Tiết Từ "{wordDetail.content}"
+				</h3>
 				<div class="h-[1px] w-full border border-gray-200" />
 
 				<div class="flex my-4">
 					<img
 						src={wordDetail.picture}
 						alt={wordDetail.content}
-						class="h-[50px] w-[50px] inline-block"
+						class="md:h-[50px] h-11 md:w-[50px] w-11 inline-block"
 					/>
 					<div class="inline-block ml-4">
 						<div class="flex justify-center items-center">
-							<p class="mr-2 text-green-600 text-xl font-semibold">{wordDetail.content}</p>
-							<span class="mr-2 text-blue-600">/{wordDetail.phonetic}/</span>
+							<p class="mr-2 text-green-600 md:text-xl text-base font-semibold">
+								{wordDetail.content}
+							</p>
+							<span class="mr-2 text-blue-600 md:text-base text-sm">/{wordDetail.phonetic}/</span>
 						</div>
-						<p>{wordDetail.mean}</p>
+						<p class=" md:text-base text-sm">{wordDetail.mean}</p>
 					</div>
 				</div>
-				<p class="font-bold">Loại từ: <span class="font-normal">{wordDetail.Type.name}</span></p>
-				<p class="font-bold">Cấp độ: <span class="font-normal">{wordDetail.Level.name}</span></p>
-				<p class="font-bold">Câu ví dụ:</p>
+				<p class="font-bold md:text-base text-sm">
+					Loại từ: <span class="font-normal">{wordDetail.Type.name}</span>
+				</p>
+				<p class="font-bold md:text-base text-sm">
+					Cấp độ: <span class="font-normal">{wordDetail.Level.name}</span>
+				</p>
+				<p class="font-bold md:text-base text-sm">Câu ví dụ:</p>
 				{#if wordDetail?.examples?.length}
 					{#if wordDetail.examples[0] !== ''}
 						<ol>
 							{#each wordDetail.examples as example, index (index)}
-								<li class="ml-2">{example}</li>
+								<li class="ml-2 md:text-base text-sm">{example}</li>
 							{/each}
 						</ol>
 					{:else}
-						<span class="ml-2">Không có</span>
+						<span class="ml-2 md:text-base text-sm">Không có</span>
 					{/if}
 				{/if}
-				<p class="font-bold">
+				<p class="font-bold md:text-base text-sm">
 					Thuộc chuyên ngành: <span class="font-normal">{wordDetail.Specialization.name}</span>
 				</p>
-				<p class="font-bold">Chủ đề:</p>
-				<div class="p-2 flex flex-wrap rounded-md">
+				<p class="font-bold md:text-base text-sm">Chủ đề:</p>
+				<div class="p-2 flex flex-wrap rounded-md md:text-base text-sm">
 					{#if wordDetail?.Topic?.length}
 						{#each wordDetail.Topic as topic, index (index)}
 							{#if topic.name !== 'Không xác định'}
 								<div
-									class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-teal-500"
+									class="topic-item md:px-2 md:py-1 px-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-teal-500"
 								>
 									<img class="mr-1" src={`${imgTopics[topic.image]}`} alt={topic.name} />
 									<span class="pr-1 text-sm">{topic.name}</span>
@@ -252,13 +260,13 @@
 						<span>Chưa xác định</span>
 					{/if}
 				</div>
-				<p class="font-bold">
+				<p class="font-bold md:text-base text-sm">
 					Các từ đồng nghĩa: <span class="font-normal">{wordDetail.synonyms?.join(',')}</span>
 				</p>
-				<p class="font-bold">
+				<p class="font-bold md:text-base text-sm">
 					Các từ trái nghĩa: <span class="font-normal">{wordDetail.antonyms?.join(',')}</span>
 				</p>
-				<p class="font-bold">
+				<p class="font-bold md:text-base text-sm">
 					Ghi chú: <span class="font-normal"
 						>{wordDetail.note ? wordDetail.note : 'Không có'}
 					</span>
@@ -266,14 +274,16 @@
 			</div>
 		</dialog>
 
-		<p class="text-2xl font-semibold mb-2 text-slate-600">
-			{mean}
+		<p class=" font-semibold mb-2 text-slate-600">
+			<span class="md:text-2xl text-lg">
+				{mean}
+			</span>
 			{#if isCheck}
-				<div class="">
+				<div class=" text-sm">
 					{#if isCorrect}
-						<p class="text-green-500 text-sm">Chính xác</p>
+						<p class="text-green-500">Chính xác</p>
 					{:else}
-						<p class="text-red-500 text-sm">Sai rồi</p>
+						<p class="text-red-500">Sai rồi</p>
 					{/if}
 				</div>
 			{/if}
@@ -282,17 +292,17 @@
 	</div>
 
 	<!-- Select to answer -->
-	<div class="flex justify-center items-center">
+	<div class="flex flex-wrap justify-center md:items-center items-start">
 		{#each originSplit as ch, index (index)}
 			{#if isSelected(index)}
 				<button
-					class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg hover:bg-base-300 cursor-not-allowed"
+					class="md:h-[42px] h-9 md:w-[42px] w-9 bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg hover:bg-base-300 cursor-not-allowed"
 					disabled
 				/>
 			{:else}
 				<button
 					on:click={() => handleSelectCharacter(index)}
-					class="h-[42px] w-[42px] bg-base-200 rounded-lg shadow-md m-[6px] leading-10 text-lg cursor-pointer hover:bg-base-300"
+					class="md:h-[42px] md:text-lg text-sm h-9 md:w-[42px] w-9 bg-base-200 rounded-lg shadow-md m-[6px] leading-10 cursor-pointer hover:bg-base-300"
 				>
 					{ch}
 				</button>

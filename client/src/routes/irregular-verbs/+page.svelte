@@ -113,7 +113,9 @@
 							</span>
 						</td>
 						<td>
-							<span class="md:text-lg text-xs break-words max-w-[160px] md:max-w-xs" />{word.mean}
+							<span class="md:text-lg text-xs break-words max-w-[160px] md:max-w-xs"
+								>{word.mean}</span
+							>
 						</td>
 					</tr>
 				{/each}
