@@ -200,6 +200,126 @@
 				<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 			</svg>
 		</button>
+		<dialog bind:this={myModal5} id="my_modal_5" class="modal">
+			<div class="modal-box w-11/12 max-w-5xl">
+				<h3 class="font-bold text-xl text-title mb-2">Gói từ vựng</h3>
+				<div class="h-[1px] w-full border border-gray-200" />
+				<div class="grid grid-cols-2 gap-2 mt-4">
+					<div class="mb-3 form-control">
+						<label for="types" class="block mb-2 text-sm">Loại từ (*)</label>
+						<select
+							bind:value={selected.type}
+							id="types"
+							class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+						>
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
+							{#each types as type}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+									{type.name}
+								</option>
+							{/each}
+						</select>
+					</div>
+					<div class="mb-3">
+						<label for="level" class="block mb-2 text-sm">Bậc của từ (*)</label>
+						<select
+							bind:value={selected.level}
+							id="level"
+							class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+						>
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}>
+								Chưa xác định
+							</option>
+							{#each levels as level}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+									{level.name}
+								</option>
+							{/each}
+						</select>
+					</div>
+					<div class="mb-3">
+						<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành (*)</label>
+						<select
+							bind:value={selected.specialization}
+							id="specialization"
+							class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+						>
+							<option class="block bg-base-200 text-[16px] px-4 py-2" value={null}> Tất cả </option>
+							{#each specializations as specialization}
+								<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
+									{specialization.name}
+								</option>
+							{/each}
+						</select>
+					</div>
+					<div class="form-control w-full max-w-sm mb-3">
+						<div class="h-[28px]" />
+						<button
+							on:click={() => (showTopics = !showTopics)}
+							class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
+						>
+							Thêm chủ đề
+							<span class="ml-2">
+								{#if showTopics}
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										class="w-6 h-6"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M4.5 15.75l7.5-7.5 7.5 7.5"
+										/>
+									</svg>
+								{:else}
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										class="w-6 h-6"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+										/>
+									</svg>
+								{/if}
+							</span>
+						</button>
+					</div>
+					{#if showTopics}
+						<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-2">
+							{#each topics as topic, index}
+								<!-- svelte-ignore a11y-click-events-have-key-events -->
+								<div
+									class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border border-green-600 cursor-pointer"
+									class:bg-green-500={topic.selected}
+									class:text-white={topic.selected}
+									on:click={() => toggleSelected(index)}
+								>
+									<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
+									<span class="pr-1 text-sm">{topic.name}</span>
+								</div>
+							{/each}
+						</div>
+					{/if}
+				</div>
+				<div class="h-[1px] w-full border border-gray-200" />
+				<div class="modal-action">
+					<form method="dialog">
+						<button class="btn">Đóng</button>
+						<button class="btn bg-green-600 hover:bg-green-700 text-white">Đồng ý</button>
+					</form>
+				</div>
+			</div>
+		</dialog>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200" />
 	<div class="flex justify-between items-center">
