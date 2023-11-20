@@ -20,5 +20,5 @@ body {
 }
 
 .header-page {
-    @apply text-2xl text-title font-bold mb-2
+    @apply md:text-2xl text-xl text-title font-bold mb-2
 }

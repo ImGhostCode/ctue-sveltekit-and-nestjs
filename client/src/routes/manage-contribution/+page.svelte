@@ -199,10 +199,12 @@
 	<div class="h-[1px] w-full border border-gray-200" />
 
 	<div class="text-right my-2">
-		<div class="dropdown">
+		<div class="dropdown dropdown-end">
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<!-- svelte-ignore a11y-label-has-associated-control -->
-			<label tabindex="0" class="btn m-1 bg-sky-500 hover:bg-sky-600 text-white">Phân loại</label>
+			<label tabindex="0" class="btn md:btn-md btn-sm md:m-1 bg-sky-500 hover:bg-sky-600 text-white"
+				>Phân loại</label
+			>
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
 				<li><button on:click={() => (category = 'word')}>Từ</button></li>
@@ -212,76 +214,78 @@
 		</div>
 	</div>
 	{#if renderContribution.length}
-		<table class=" mt-10 table table-hover">
-			<thead>
-				<tr>
-					<!-- <th>ID</th> -->
-					<th>Thời gian</th>
-					<th>Loại</th>
-					<th>Nội dung</th>
-					<th>Trạng thái</th>
-					<th>Hành động</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each renderContribution as con (con.id)}
-					<tr class="hover">
-						<td>{moment(con.createdAt).format('DD/MM/YYYY')}</td>
-						<td>{con.type === 'word' ? 'Từ' : 'Câu'}</td>
-						<td class="max-w-xs">
-							<p class="truncate mb-2">
-								{con.content.content} - {con.content.mean}
-							</p>
-							<button
-								type="button"
-								class="btn btn-xs btn-info text-white"
-								on:click={() =>
-									con.type === 'word'
-										? openModal(myModal4, { ...con.content, type: con.type })
-										: openModal(myModal5, { ...con.content, type: con.type })}>Chi tiết</button
+		<div class="overflow-x-auto">
+			<table class="md:mt-10 mt-5 table table-hover">
+				<thead>
+					<tr class="md:text-base text-sm">
+						<!-- <th>ID</th> -->
+						<th>Thời gian</th>
+						<th>Loại</th>
+						<th>Nội dung</th>
+						<th>Trạng thái</th>
+						<th>Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each renderContribution as con (con.id)}
+						<tr class="hover md:text-base text-sm">
+							<td>{moment(con.createdAt).format('DD/MM/YYYY')}</td>
+							<td>{con.type === 'word' ? 'Từ' : 'Câu'}</td>
+							<td class="max-w-xs">
+								<p class="truncate mb-2">
+									{con.content.content} - {con.content.mean}
+								</p>
+								<button
+									type="button"
+									class="btn btn-xs md:px-2 px-0 btn-info text-white"
+									on:click={() =>
+										con.type === 'word'
+											? openModal(myModal4, { ...con.content, type: con.type })
+											: openModal(myModal5, { ...con.content, type: con.type })}>Chi tiết</button
+								>
+							</td>
+							<td
+								class="text-yellow-400 font-semibold"
+								class:text-red-600={statusCon[con.status].color === 'red'}
+								class:text-yellow-600={statusCon[con.status].color === 'yellow'}
+								class:text-green-600={statusCon[con.status].color === 'green'}
+								>{statusCon[con.status].status}</td
 							>
-						</td>
-						<td
-							class="text-yellow-400 font-semibold"
-							class:text-red-600={statusCon[con.status].color === 'red'}
-							class:text-yellow-600={statusCon[con.status].color === 'yellow'}
-							class:text-green-600={statusCon[con.status].color === 'green'}
-							>{statusCon[con.status].status}</td
-						>
-						<td>
-							<form
-								method="post"
-								use:enhance={() => {
-									isLoadingForm = true;
-									return async ({ update }) => {
-										isLoadingForm = false;
-										update();
-									};
-								}}
-								action="?/verify-contribution"
-								class="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
-							>
-								<!-- <button
+							<td>
+								<form
+									method="post"
+									use:enhance={() => {
+										isLoadingForm = true;
+										return async ({ update }) => {
+											isLoadingForm = false;
+											update();
+										};
+									}}
+									action="?/verify-contribution"
+									class="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
+								>
+									<!-- <button
 									class="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
 									on:click={(e) => handleAccept(e, 1, { status: 1, feedback: '' })}>Xác nhận</button
 								> -->
-								<input class="hidden" type="number" name="conId" value={con.id} />
-								<input class="hidden" type="number" name="status" value="1" />
-								<input class="hidden" type="text" name="feedback" value="" />
-								<button class="" type="submit">Xác nhận</button>
-							</form>
-							<button
-								class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
-								on:click={() => {
-									selectedId = con.id;
-									myModal6.showModal();
-								}}>Từ chối</button
-							>
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+									<input class="hidden" type="number" name="conId" value={con.id} />
+									<input class="hidden" type="number" name="status" value="1" />
+									<input class="hidden" type="text" name="feedback" value="" />
+									<button class="" type="submit">Xác nhận</button>
+								</form>
+								<button
+									class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
+									on:click={() => {
+										selectedId = con.id;
+										myModal6.showModal();
+									}}>Từ chối</button
+								>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
 	{:else}
 		<p class="text-center text-base my-4 text-slate-600">Chưa có đóng góp nào</p>
 	{/if}
@@ -292,11 +296,11 @@
 
 <dialog bind:this={myModal5} id="my_modal_" class="modal">
 	{#if dataDetail}
-		<div class="modal-box">
+		<div class="modal-box md:text-base text-sm">
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 			</form>
-			<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi tiết đóng góp</h3>
+			<h3 class="font-bold md:text-2xl text-lg text-orange-600 mb-2">Chi tiết đóng góp</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="mt-2"><b>Câu: </b> {dataDetail.content}</div>
@@ -311,7 +315,7 @@
 					{#each dataDetail.topics as topic, index (index)}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<div
-							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 text-slate-700"
+							class="topic-item md:px-2 px-1 md:py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 text-slate-700"
 						>
 							<span class="pr-1 text-sm">{topic}</span>
 						</div>
@@ -325,23 +329,25 @@
 
 <dialog bind:this={myModal4} id="my_modal_4" class="modal">
 	{#if dataDetail}
-		<div class="modal-box">
+		<div class="modal-box md:text-base text-sm">
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 			</form>
-			<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi tiết đóng góp</h3>
+			<h3 class="font-bold md:text-2xl text-lg text-orange-600 mb-2">Chi tiết đóng góp</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="flex my-4">
 				<img
 					src={dataDetail.picture}
 					alt={dataDetail.content}
-					class="h-[50px] w-[50px] inline-block"
+					class="md:h-[50px] h-10 w-md:[50px] w-10 inline-block"
 				/>
 				<div class="inline-block ml-4">
 					<div class="flex justify-center items-center">
-						<p class="mr-2 text-green-600 text-xl font-semibold">{dataDetail.content}</p>
-						<span class="mr-2 text-blue-600">{dataDetail.phonetic}</span>
+						<p class="mr-2 text-green-600 md:text-xl text-base font-semibold">
+							{dataDetail.content}
+						</p>
+						<span class="mr-2 text-blue-600">/{dataDetail.phonetic}/</span>
 					</div>
 					<p>{dataDetail.mean}</p>
 				</div>
@@ -364,7 +370,7 @@
 					{#each dataDetail.topics as topic, index (index)}
 						{#if topic.name !== 'Không xác định'}
 							<div
-								class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border border-teal-500"
+								class="topic-item md:px-2 px-1 md:py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-teal-500"
 							>
 								<img class="mr-1" src={`${imgTopics[topic.image]}`} alt={topic.name} />
 								<span class="pr-1 text-sm">{topic.name}</span>
@@ -397,7 +403,7 @@
 			}}
 			action="?/verify-contribution"
 		>
-			<h3 class="font-bold text-xl text-orange-600 mb-2">Từ chối đóng góp</h3>
+			<h3 class="font-bold md:text-xl text-lg text-orange-600 mb-2">Từ chối đóng góp</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="">
@@ -409,7 +415,7 @@
 						bind:value={feedback}
 						required
 						maxlength="200"
-						class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
+						class="input input-bordered md:text-base text-sm h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
 						id="feedback"
 						name="feedback"
 					/>
@@ -424,7 +430,7 @@
 			<div class="modal-action">
 				<form method="dialog">
 					<button
-						class="btn"
+						class="btn md:btn-md btn-sm"
 						on:click={() => {
 							banId = 0;
 							feedback = '';
@@ -433,7 +439,9 @@
 						Đóng
 					</button>
 				</form>
-				<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white mr-2"
+				<button
+					type="submit"
+					class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white mr-2"
 					>Đồng ý</button
 				>
 			</div>

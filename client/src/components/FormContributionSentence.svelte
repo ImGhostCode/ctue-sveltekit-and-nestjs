@@ -37,7 +37,7 @@
 </script>
 
 <div class="shadow-lg px-7 py-8 rounded-lg my-10">
-	<h1 class="text-3xl text-title font-bold">Thêm Câu Giao Tiếp Hay Mà Bạn Biết</h1>
+	<h1 class="md:text-3xl text-xl text-title font-bold">Thêm Câu Giao Tiếp Hay Mà Bạn Biết</h1>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form
 		method="post"
@@ -95,25 +95,28 @@
 				<select
 					id="types"
 					name="typeId"
-					class="w-full select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block p-2.5"
+					class="w-full select select-bordered md:select-md select-sm md:text-base border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block"
 				>
-					<!-- <option class="block bg-base-200 text-[16px] px-4 py-2" selected value=""
+					<!-- <option class="block bg-base-200 md:text-base text-xs px-4 py-2" selected value=""
 						>Chưa xác định</option
 					> -->
 					{#if types}
 						{#each types as type (type.id)}
 							{#if type.name === 'Chưa xác định'}
-								<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={type.id}
-									>{type.name}</option
+								<option
+									class="block bg-base-200 md:text-base text-xs px-4 py-2"
+									selected
+									value={type.id}>{type.name}</option
 								>
 							{:else}
-								<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}
+								<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}
 									>{type.name}</option
 								>
 							{/if}
 						{/each}
 					{:else}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option
+						<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading"
+							>Đang tải</option
 						>
 					{/if}
 				</select>
@@ -124,7 +127,7 @@
 				<button
 					type="button"
 					on:click={() => (showTopics = !showTopics)}
-					class="input input-bordered w-full flex justify-center items-center focus:outline-none"
+					class="input input-bordered md:input-md input-sm w-full flex justify-center items-center focus:outline-none"
 					class:border-green-600={showTopics}
 					>Thêm chủ đề <span class="ml-2">
 						{#if showTopics}
@@ -167,7 +170,7 @@
 				{#each topics as topic, index (topic.name)}
 					<button
 						type="button"
-						class="topic-item px-3 py-2 m-2 text-base text-slate-700 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer transition"
+						class="topic-item md:px-3 px-2 md:py-2 py-1 md:m-2 m-1 md:text-base text-xs text-slate-700 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer transition"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
@@ -182,7 +185,7 @@
 		<div class="mt-4 col-span-3 text-right">
 			{#if isLoadingForm}
 				<button
-					class="btn mr-2 btn-info"
+					class="btn md:btn-md btn-sm mr-2 btn-info"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
 					>&nbsp;
@@ -194,13 +197,15 @@
 					type="submit"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
-					class=" btn btn-accent text-white mr-2"
+					class=" btn md:btn-md btn-sm btn-accent text-white mr-2"
 				>
 					Gửi yêu cầu
 				</button>
 			{/if}
-			<button type="reset" class="btn btn-outline btn-error" on:click={() => resetSelectedTopics()}
-				>Loại bỏ</button
+			<button
+				type="reset"
+				class="btn md:btn-md btn-sm btn-outline btn-error"
+				on:click={() => resetSelectedTopics()}>Loại bỏ</button
 			>
 		</div>
 

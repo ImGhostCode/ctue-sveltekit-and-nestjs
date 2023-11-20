@@ -69,11 +69,11 @@
 </script>
 
 <div class="flex flex-col items-center m-auto text-lg text-slate-600">
-	<div class="h-20 w-20 mb-6">
+	<div class="md:h-20 h-16 md:w-20 w-16 md:mb-6 mb-4">
 		<img class="h-full w-full" src={cupIcon} alt="cup icon" />
 	</div>
 
-	<div class="flex flex-row">
+	<div class="flex flex-row md:text-base text-sm">
 		<RightIcon />
 		<b>{nRight}</b>&nbsp;Đúng &nbsp;-&nbsp;
 		<RightIcon />
@@ -100,12 +100,16 @@
 					/>
 				</svg>
 			</span>
-			Số coin kiếm được:&nbsp;<b class="text-xl">{convertQuesToCoin(nRight, nWrong)}</b>
+			<span class="md:text-base text-sm flex items-center">Số coin kiếm được</span>:&nbsp;<b
+				class="md:text-lg text-base">{convertQuesToCoin(nRight, nWrong)}</b
+			>
 		</div>
 	{/if}
 
 	<div class="mt-5">
-		<button class="btn btn-outline mr-3" on:click={onGoBack}> Quay về </button>
-		<button class="btn btn-info hover:bg-sky-500 text-white" on:click={onReplay}> Chơi lại </button>
+		<button class="btn md:btn-md btn-sm btn-outline mr-2" on:click={onGoBack}> Quay về </button>
+		<button class="btn md:btn-md btn-sm btn-info hover:bg-sky-500 text-white" on:click={onReplay}>
+			Chơi lại
+		</button>
 	</div>
 </div>

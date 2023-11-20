@@ -13,7 +13,7 @@ export class ContributionController {
   constructor(private readonly contributionService: ContributionService) { }
 
   @Post()
-  @Roles(ACCOUNT_TYPES.USER)
+  @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
   @UseInterceptors(FileInterceptor('picture'))
   create(@Body() createContributionDto: CreateContributionDto, @GetAccount() account: Account, @UploadedFile() picture: Express.Multer.File) {
     return this.contributionService.create(createContributionDto, account.userId, picture);
