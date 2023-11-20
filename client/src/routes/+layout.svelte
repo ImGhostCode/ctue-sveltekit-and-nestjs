@@ -116,12 +116,12 @@
 					<img src={ctueLogo} class="md:h-12 h-8 mr-3" alt="CTUe Logo" />
 				</a>
 
-				<div class="flex">
+				<div class="flex items-center">
 					<div class="form-control">
 						<input
 							type="text"
 							placeholder="Tìm kiếm..."
-							class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 mt-0 mt-[3px] mr-2 text-slate-600"
+							class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 mt-0 mr-2 text-slate-600"
 						/>
 					</div>
 					{#if userData}

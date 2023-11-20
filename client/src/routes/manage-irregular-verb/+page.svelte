@@ -98,7 +98,7 @@
 	<div class="flex justify-between items-center">
 		<h1 class="header-page">Quản lý động từ bất quy tắc</h1>
 		<button
-			class="btn btn-sm bg-green-500 hover:bg-green-700 text-white"
+			class="btn md:btn-md btn-sm bg-green-500 hover:bg-green-700 text-white"
 			on:click={() => myModal10.showModal()}
 		>
 			Thêm
@@ -107,7 +107,7 @@
 	<div class="flex justify-between items-center">
 		<input
 			bind:value={key}
-			class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+			class="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 			id="find-word"
 			type="text"
 			placeholder="Nhập từ..."
@@ -119,7 +119,7 @@
 				}}
 				class="btn outline-none border-none bg-transparent hover:bg-transparent hover:opacity-100 opacity-70"
 			>
-				Sắp xếp
+				<span class="md:block hidden">Sắp xếp</span>
 				<span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -143,17 +143,17 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th />
-					<th class="text-green-700 text-lg">Nguyên mẫu (V1)</th>
-					<th class="text-green-700 text-lg">Quá khứ đơn (V2)</th>
-					<th class="text-green-700 text-lg">Quá khứ phân từ (V3)</th>
-					<th class="text-green-700 text-lg">Nghĩa</th>
-					<th class="text-green-700 text-lg">Hành động</th>
+					<th class="text-green-700 md:text-lg text-base">STT</th>
+					<th class="text-green-700 md:text-lg text-base">Nguyên mẫu (V1)</th>
+					<th class="text-green-700 md:text-lg text-base">Quá khứ đơn (V2)</th>
+					<th class="text-green-700 md:text-lg text-base">Quá khứ phân từ (V3)</th>
+					<th class="text-green-700 md:text-lg text-base">Nghĩa</th>
+					<th class="text-green-700 md:text-lg text-base">Hành động</th>
 				</tr>
 			</thead>
 			<tbody class="">
 				{#each words as word, i}
-					<tr class="hover:bg-base-200">
+					<tr class="hover:bg-base-200 md:text-base text-sm">
 						<th>{i + 1}</th>
 						<td>
 							{word.v1}
@@ -168,22 +168,22 @@
 							<Speaker key={word.v3} />
 						</td>
 						<td>{word.mean}</td>
-						<td>
+						<td class="min-w-[230px]">
 							<button
-								class="btn btn-sm btn-warning"
+								class="btn md:btn-md btn-sm btn-primary"
 								on:click={() => {
 									currentWord = word;
 									myModal11.showModal();
 								}}
 							>
-								Sửa
+								Chỉnh sửa
 							</button>
 							<button
 								on:click={async () => {
 									await handleDeleteIreegular(word.id);
 								}}
 								type="submit"
-								class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
+								class="btn md:btn-md btn-sm bg-red-500 hover:bg-red-600 text-white"
 							>
 								Xóa
 							</button>
@@ -195,69 +195,68 @@
 	</div>
 	<dialog bind:this={myModal10} id="my_modal_5" class="modal">
 		<div class="modal-box w-11/12 max-w-lg">
-			<h3 class="font-bold text-xl text-title mb-2">Thêm động từ bất quy tắt</h3>
-			<form action="?/postIrregular" method="post" use:enhance>
-				<div>
-					<div class="form-control w-full max-w-sm mb-3">
-						<label class="label" for="v1">
-							<span class="label-text">Nguyên mẫu (V1)</span>
-						</label>
-						<input
-							class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
-							id="v1"
-							type="text"
-							placeholder="Nhập từ..."
-							name="v1"
-						/>
-					</div>
+			<h3 class="font-bold md:text-2xl text-lg text-title mb-2">Thêm động từ bất quy tắt</h3>
+			<form action="?/postIrregular" method="post" use:enhance class="w-full md:text-base text-sm">
+				<div class="form-control w-full mb-3">
+					<label class="label" for="v1">
+						<span class="label-text">Nguyên mẫu (V1)</span>
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						id="v1"
+						type="text"
+						placeholder="Nhập nguyên mẫu..."
+						name="v1"
+					/>
 				</div>
-				<div>
-					<div class="form-control w-full max-w-sm mb-3">
-						<label class="label" for="v2">
-							<span class="label-text">Quá khứ đơn (V2)</span>
-						</label>
-						<input
-							class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
-							id="v2"
-							type="text"
-							placeholder="Nhập từ..."
-							name="v2"
-						/>
-					</div>
+
+				<div class="form-control w-full mb-3">
+					<label class="label" for="v2">
+						<span class="label-text">Quá khứ đơn (V2)</span>
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						id="v2"
+						type="text"
+						placeholder="Nhập quá khứ đơn..."
+						name="v2"
+					/>
 				</div>
-				<div>
-					<div class="form-control w-full max-w-sm mb-3">
-						<label class="label" for="v3">
-							<span class="label-text">Quá khứ phân từ (V3)</span>
-						</label>
-						<input
-							class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
-							id="v3"
-							type="text"
-							placeholder="Nhập từ..."
-							name="v3"
-						/>
-					</div>
+
+				<div class="form-control w-full mb-3">
+					<label class="label" for="v3">
+						<span class="label-text">Quá khứ phân từ (V3)</span>
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						id="v3"
+						type="text"
+						placeholder="Nhập quá khứ phân từ..."
+						name="v3"
+					/>
 				</div>
-				<div>
-					<div class="form-control w-full max-w-sm mb-3">
-						<label class="label" for="mean">
-							<span class="label-text">Nghĩa</span>
-						</label>
-						<input
-							class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
-							id="mean"
-							type="text"
-							placeholder="Nhập từ..."
-							name="mean"
-						/>
-					</div>
+
+				<div class="form-control w-full mb-3">
+					<label class="label" for="mean">
+						<span class="label-text">Nghĩa</span>
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						id="mean"
+						type="text"
+						placeholder="Nhập nghĩa của từ..."
+						name="mean"
+					/>
 				</div>
+
 				<div class="modal-action">
 					<form method="dialog">
-						<button class="btn">Đóng</button>
+						<button class="btn md:btn-md btn-sm btn-error text-white">Đóng</button>
 					</form>
-					<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">Thêm</button>
+					<button
+						type="submit"
+						class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">Hoàn tất</button
+					>
 				</div>
 			</form>
 		</div>
@@ -265,73 +264,72 @@
 	<dialog bind:this={myModal11} id="my_modal_5" class="modal">
 		<div class="modal-box w-11/12 max-w-lg">
 			<h3 class="font-bold text-xl text-title mb-2">Sửa động từ bất quy tắt</h3>
-			<form action="?/patchIrregular" method="post" use:enhance>
+			<form action="?/patchIrregular" method="post" use:enhance class="w-full md:text-base text-sm">
 				<input type="text" name="id" class="hidden" bind:value={currentWord.id} />
-				<div>
-					<div class="form-control w-full max-w-sm mb-3">
-						<label class="label" for="v1">
-							<span class="label-text">Nguyên mẫu (V1)</span>
-						</label>
-						<input
-							bind:value={currentWord.v1}
-							class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
-							id="v1"
-							type="text"
-							placeholder="Nhập từ..."
-							name="v1"
-						/>
-					</div>
+				<div class="form-control w-full mb-3">
+					<label class="label" for="v1">
+						<span class="label-text">Nguyên mẫu (V1)</span>
+					</label>
+					<input
+						bind:value={currentWord.v1}
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						id="v1"
+						type="text"
+						placeholder="Nhập nguyên mẫu..."
+						name="v1"
+					/>
 				</div>
-				<div>
-					<div class="form-control w-full max-w-sm mb-3">
-						<label class="label" for="v2">
-							<span class="label-text">Quá khứ đơn (V2)</span>
-						</label>
-						<input
-							bind:value={currentWord.v2}
-							class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
-							id="v2"
-							type="text"
-							placeholder="Nhập từ..."
-							name="v2"
-						/>
-					</div>
+
+				<div class="form-control w-full mb-3">
+					<label class="label" for="v2">
+						<span class="label-text">Quá khứ đơn (V2)</span>
+					</label>
+					<input
+						bind:value={currentWord.v2}
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						id="v2"
+						type="text"
+						placeholder="Nhập quá khứ đơn..."
+						name="v2"
+					/>
 				</div>
-				<div>
-					<div class="form-control w-full max-w-sm mb-3">
-						<label class="label" for="v3">
-							<span class="label-text">Quá khứ phân từ (V3)</span>
-						</label>
-						<input
-							bind:value={currentWord.v3}
-							class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
-							id="v3"
-							type="text"
-							placeholder="Nhập từ..."
-							name="v3"
-						/>
-					</div>
+
+				<div class="form-control w-full mb-3">
+					<label class="label" for="v3">
+						<span class="label-text">Quá khứ phân từ (V3)</span>
+					</label>
+					<input
+						bind:value={currentWord.v3}
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						id="v3"
+						type="text"
+						placeholder="Nhập quá khứ phân từ..."
+						name="v3"
+					/>
 				</div>
-				<div>
-					<div class="form-control w-full max-w-sm mb-3">
-						<label class="label" for="mean">
-							<span class="label-text">Nghĩa</span>
-						</label>
-						<input
-							bind:value={currentWord.mean}
-							class="shadow appearance-none border rounded w-[450px] py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
-							id="mean"
-							type="text"
-							placeholder="Nhập từ..."
-							name="mean"
-						/>
-					</div>
+
+				<div class="form-control w-full mb-3">
+					<label class="label" for="mean">
+						<span class="label-text">Nghĩa</span>
+					</label>
+					<input
+						bind:value={currentWord.mean}
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						id="mean"
+						type="text"
+						placeholder="Nhập nghĩa của từ..."
+						name="mean"
+					/>
 				</div>
+
 				<div class="modal-action">
 					<form method="dialog">
-						<button class="btn">Đóng</button>
+						<button class="btn md:btn-md btn-sm btn-error text-white">Đóng</button>
 					</form>
-					<button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">Sửa</button>
+					<button
+						type="submit"
+						class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">Hoàn tất</button
+					>
 				</div>
 			</form>
 		</div>

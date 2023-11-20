@@ -45,7 +45,7 @@
 			action="?/register"
 			use:enhance
 		>
-			<div class="text-center text-2xl font-bold mb-4">
+			<div class="text-center md:text-2xl text-lg font-bold mb-4">
 				<h1>Tạo tài khoản</h1>
 			</div>
 			<div class="mb-4">
@@ -141,13 +141,13 @@
 			</div>
 			<div class="mb-4">
 				<button
-					class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"
+					class="btn md:btn-md btn-sm bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"
 					type="submit"
 				>
 					Đăng ký
 				</button>
 			</div>
-			<div class="mb-2 text-center text-sm">Hoặc</div>
+			<!-- <div class="mb-2 text-center text-sm">Hoặc</div>
 			<div class="flex justify-between">
 				<button
 					class="flex w-1/2 border-2 mr-2 text-sm hover:bg-gray-100 text-black font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
@@ -163,7 +163,7 @@
 					<div class="inline-block"><img class="h-7 w-7" src={gg_icon} alt={gg_icon} /></div>
 					<span class="leading-8">Google</span>
 				</button>
-			</div>
+			</div> -->
 		</form>
 		<p class="text-center text-gray-500 text-sm">
 			Bạn đã có tài khoản? <a class="text-blue-700" href="/login">Đăng nhập</a>

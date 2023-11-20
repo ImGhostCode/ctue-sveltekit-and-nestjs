@@ -88,7 +88,7 @@
 				};
 			}}
 		>
-			<div class="text-center text-2xl font-bold mb-4">
+			<div class="text-center md:text-2xl text-lg font-bold mb-4">
 				<h1>Lấy lại mật khẩu</h1>
 			</div>
 			<div class="mb-4">
@@ -271,7 +271,7 @@
 			</div>
 			<div class="mb-4">
 				<button
-					class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+					class="btn md:btn-md btn-sm w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 					type="submit"
 					class:disable={isLoadingResetPassword}
 					disabled={isLoadingResetPassword}

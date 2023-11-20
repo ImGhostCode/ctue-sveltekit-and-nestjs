@@ -227,18 +227,18 @@
 					{#each types as type (type.id)}
 						{#if type.name === 'Chưa xác định'}
 							<option
-								class="block bg-base-200 md:text-base text-sm px-4 py-2"
+								class="block bg-base-200 md:text-base text-xs px-4 py-2"
 								selected
 								value={type.id}>{type.name}</option
 							>
 						{:else}
-							<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value={type.id}
+							<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}
 								>{type.name}</option
 							>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value="Loading"
+					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading"
 						>Đang tải</option
 					>
 				{/if}
@@ -256,18 +256,18 @@
 					{#each levels as level (level.id)}
 						{#if level.name === 'Chưa xác định'}
 							<option
-								class="block bg-base-200 md:text-base text-sm px-4 py-2"
+								class="block bg-base-200 md:text-base text-xs px-4 py-2"
 								selected
 								value={level.id}>{level.name}</option
 							>
 						{:else}
-							<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value={level.id}
+							<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={level.id}
 								>{level.name}</option
 							>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value="Loading"
+					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading"
 						>Đang tải</option
 					>
 				{/if}
@@ -285,19 +285,19 @@
 					{#each specializations as specialization (specialization.id)}
 						{#if specialization.name === 'Chưa xác định'}
 							<option
-								class="block bg-base-200 md:text-base text-sm px-4 py-2"
+								class="block bg-base-200 md:text-base text-xs px-4 py-2"
 								selected
 								value={specialization.id}>{specialization.name}</option
 							>
 						{:else}
 							<option
-								class="block bg-base-200 md:text-base text-sm px-4 py-2"
+								class="block bg-base-200 md:text-base text-xs px-4 py-2"
 								value={specialization.id}>{specialization.name}</option
 							>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value="Loading"
+					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading"
 						>Đang tải</option
 					>
 				{/if}

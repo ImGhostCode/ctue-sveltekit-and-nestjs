@@ -129,7 +129,7 @@
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
-	<h1 class="md:text-2xl text-lg text-orange-600 mb-2">Quản lý tài khoản</h1>
+	<h1 class="md:text-2xl text-lg text-title font-bold mb-2">Quản lý tài khoản</h1>
 	<div class="h-[1px] w-full border border-gray-200" />
 	<div class="overflow-x-auto">
 		<table class="table table-hover">
@@ -171,7 +171,7 @@
 									/>
 									<button
 										type="submit"
-										class="btn md:btn-md btn-sm bg-red-600 hover:bg-red-700 text-white"
+										class="btn md:btn-md btn-sm bg-red-500 hover:bg-red-600 text-white"
 									>
 										Xóa
 									</button>
@@ -243,7 +243,7 @@
 				</form>
 				<button
 					type="submit"
-					class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">Đồng ý</button
+					class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">Hoàn tất</button
 				>
 			</div>
 		</form>

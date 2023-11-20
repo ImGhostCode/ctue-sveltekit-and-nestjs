@@ -95,7 +95,7 @@
 		>
 		<dialog bind:this={myModal4} id="my_modal_4" class="modal">
 			<div class="modal-box w-11/12 max-w-5xl px-6 py-4">
-				<h3 class="font-bold text-xl text-orange-600 mb-2">Chọn chủ đề</h3>
+				<h3 class="font-bold md:text-xl text-lg text-orange-600 mb-2">Chọn chủ đề</h3>
 				<div class="h-[1px] w-full border border-gray-200" />
 
 				<div class="flex flex-wrap py-4">
@@ -120,7 +120,7 @@
 						<button class="btn btn-sm md:btn-md mr-2">Đóng</button>
 						<button
 							class="btn btn-sm md:btn-md bg-green-600 hover:bg-green-700 text-white"
-							on:click={handleFilterConfirmation}>Đồng ý</button
+							on:click={handleFilterConfirmation}>Hoàn tất</button
 						>
 					</form>
 				</div>
@@ -144,17 +144,17 @@
 				<tbody class="">
 					{#each sentences as sentence, index (index)}
 						<tr class="hover:bg-base-200">
-							<th>{index + 1}</th>
-							<td class="flex">
-								<Speaker key={sentence.content} />
-								<p class="md:text-lg text-base break-words max-w-[160px] md:max-w-xs">
-									{sentence.content}
-								</p></td
-							>
-							<td class="">
-								<p class="md:text-lg text-base break-words max-w-xs">{sentence.mean}</p>
+							<td>{index + 1}</td>
+							<td class="h-full mx-auto max-w-sm min-w-[200px]">
+								<div class="flex">
+									<Speaker key={sentence.content} />
+									<p class="break-words">{sentence.content}</p>
+								</div>
 							</td>
-							<td
+							<td class="max-w-sm min-w-[200px]">
+								<p class="break-words">{sentence.mean}</p>
+							</td>
+							<td class="min-w-[150px]"
 								><button
 									type="button"
 									class="btn btn-info btn-sm md:btn-md text-white"
