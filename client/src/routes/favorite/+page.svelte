@@ -168,7 +168,7 @@
 					<img
 						src={favorite.picture}
 						alt={favorite.picture}
-						class="h-[50px] w-[50px] inline-block"
+						class="md:h-[50px] h-10 md:w-[50px] w-10 inline-block"
 					/>
 					<div class="inline-block ml-4">
 						<div class="flex justify-center items-center">
@@ -179,7 +179,7 @@
 								>{favorite.phonetic ? '/' + favorite.phonetic + '/' : ''}</span
 							>
 						</div>
-						<p class="text-left">{favorite.mean}</p>
+						<p class="text-left text-ms">{favorite.mean}</p>
 					</div>
 				</button>
 				<div class="grow-0">
@@ -198,7 +198,7 @@
 	{/if}
 </div>
 <dialog bind:this={myModal4} id="my_modal_3" class="modal">
-	<div class="modal-box no-scrollbar">
+	<div class="modal-box no-scrollbar md:text-base text-sm">
 		<form method="dialog">
 			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 		</form>

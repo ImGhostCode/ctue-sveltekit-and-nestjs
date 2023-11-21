@@ -88,7 +88,6 @@
 				<span class="label-text">Thêm ghi chú cho câu trên</span>
 			</label>
 			<textarea
-				required
 				maxlength="100"
 				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
 				id="note"
@@ -206,7 +205,7 @@
 					class:cursor-not-allowed={isLoadingForm}
 					class=" btn md:btn-md btn-sm btn-accent text-white mr-2"
 				>
-					Gửi yêu cầu
+					Hoàn tất
 				</button>
 			{/if}
 			<button

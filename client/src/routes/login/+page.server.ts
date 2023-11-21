@@ -23,7 +23,7 @@ export const actions = {
         } else if (result.data.statusCode == 403) {
             return fail(400, { feedback: result.data.data.feedback, isBan: true, message: result.data.message });
         } else {
-            cookies.set('accessToken', result.data.data.accessToken, { secure: true, httpOnly: true, maxAge: 60 * 15 });
+            cookies.set('accessToken', result.data.data.accessToken, { secure: true, httpOnly: true, maxAge: 60 * 60 * 24 });
             return { success: true, message: result.data.message };
         }
     },
