@@ -420,11 +420,11 @@
 </dialog>
 
 <dialog bind:this={myModal4} id="my_modal_3" class="modal">
-	<div class="modal-box no-scrollbar">
+	<div class="modal-box no-scrollbar md:text-base text-sm">
 		<form method="dialog">
 			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 		</form>
-		<h3 class="font-bold md:text-2xl text-xl text-title mb-2">
+		<h3 class="font-bold md:text-2xl text-lg text-title mb-2">
 			Chi Tiết Từ "{wordDetails.content}"
 		</h3>
 		<div class="h-[1px] w-full border border-gray-200" />
@@ -432,7 +432,7 @@
 			<img
 				src={wordDetails.picture}
 				alt={wordDetails.picture}
-				class="h-[50px] w-[50px] inline-block"
+				class="md:h-[50px] h-10 md:w-[50px] w-10 inline-block"
 			/>
 			<div class="inline-block ml-4">
 				<div class="flex justify-center items-center">

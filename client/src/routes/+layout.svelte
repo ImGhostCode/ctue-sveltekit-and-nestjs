@@ -8,6 +8,66 @@
 	import { isLoading, audioSettings } from '$lib/store';
 	import { goto } from '$app/navigation';
 
+	import tree from '$lib/assets/icons/topics/tree.png';
+	import social from '$lib/assets/icons/topics/social.png';
+	import animal from '$lib/assets/icons/topics/animal.png';
+	import academy from '$lib/assets/icons/topics/academy.png';
+	import body from '$lib/assets/icons/topics/body.png';
+	import color from '$lib/assets/icons/topics/color.png';
+	import clothes from '$lib/assets/icons/topics/clothes.png';
+	import culture from '$lib/assets/icons/topics/culture.png';
+	import entertainment from '$lib/assets/icons/topics/entertainment.png';
+	import exciting from '$lib/assets/icons/topics/exciting.png';
+	import family from '$lib/assets/icons/topics/family.png';
+	import flag from '$lib/assets/icons/topics/flag.png';
+	import food from '$lib/assets/icons/topics/food.png';
+	import health from '$lib/assets/icons/topics/health.png';
+	import hobby from '$lib/assets/icons/topics/hobby.png';
+	import ielts from '$lib/assets/icons/topics/ielts.png';
+	import job from '$lib/assets/icons/topics/job.png';
+	import nature from '$lib/assets/icons/topics/nature.png';
+	import others from '$lib/assets/icons/topics/others.png';
+	import skill from '$lib/assets/icons/topics/skill.png';
+	import spirituality from '$lib/assets/icons/topics/spirituality.png';
+	import sport from '$lib/assets/icons/topics/sport.png';
+	import technology from '$lib/assets/icons/topics/technology.png';
+	import toeic from '$lib/assets/icons/topics/toeic.png';
+	import travel from '$lib/assets/icons/topics/travel.png';
+	import Speaker from '../components/Speaker.svelte';
+
+	const imgTopics: { [key: string]: string } = {
+		tree,
+		social,
+		animal,
+		academy,
+		body,
+		color,
+		clothes,
+		culture,
+		entertainment,
+		exciting,
+		family,
+		flag,
+		food,
+		health,
+		hobby,
+		ielts,
+		job,
+		nature,
+		others,
+		skill,
+		spirituality,
+		sport,
+		technology,
+		toeic,
+		travel
+	};
+
+	type Types = { id: number; name: string; isWord: boolean };
+	type Levels = { id: number; name: string };
+	type Specializations = { id: number; name: string };
+	type Topics = { id: number; name: string; isWord: boolean; selected: boolean; image: string };
+
 	export let data: LayoutServerData;
 	// export let form: ActionData;
 
@@ -102,6 +162,38 @@
 	$: if (data.user) {
 		userData = data.user;
 	}
+
+	const debounce = (timer = null, cbFn: any, delay = 350) => {
+		if (timer) {
+			clearTimeout(timer);
+		}
+		return setTimeout(cbFn, delay);
+	};
+	let timer: any = null;
+	let searchResult: any = [];
+	function handleSearch(event: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+		timer = debounce(
+			timer,
+			async function () {
+				const key: string = event.target?.value;
+
+				if (!Boolean(key)) {
+					return;
+				}
+
+				searchResult = data.words.length
+					? data.words.filter((word: any) => word.content.includes(key))
+					: [];
+			},
+			350
+		);
+	}
+	let wordDetails: any = null;
+	let myModal5: HTMLDialogElement;
+	const openModal = (word: any) => {
+		wordDetails = word;
+		myModal5.showModal();
+	};
 </script>
 
 {#if $isLoading}
@@ -118,12 +210,40 @@
 
 				<div class="flex items-center">
 					<div class="form-control">
-						<input
-							type="text"
-							placeholder="Tìm kiếm..."
-							class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 mt-0 mr-2 text-slate-600"
-						/>
+						<div class="dropdown">
+							<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+							<label tabindex="0" class="m-1"
+								><input
+									type="text"
+									placeholder="Tìm kiếm..."
+									on:input={handleSearch}
+									class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 mt-0 mr-2 text-slate-600 input-search"
+								/></label
+							>
+							<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+							<ul
+								tabindex="0"
+								class:block={searchResult?.length}
+								class:hidden={searchResult?.length === 0}
+								class="dropdown-content z-[1] menu p-2 w-full md:max-w-md max-w-sm shadow bg-base-100 rounded-box mt-2 text-slate-600"
+							>
+								<!-- <li><button>Item 1</button></li> -->
+								{#each searchResult as word (word.id)}
+									<li class="">
+										<button class="block" type="button" on:click={() => openModal(word)}>
+											<p class="md:text-base text-sm text-green-600">
+												{word.content}&nbsp;<span class="text-xs text-blue-600"
+													>/{word.phonetic}/</span
+												>
+											</p>
+											<p class="text-xs">{word.mean}</p>
+										</button>
+									</li>
+								{/each}
+							</ul>
+						</div>
 					</div>
+
 					{#if userData}
 						<div class="relative md:w-12 md:h-12 h-10 w-10 avatar-user z-10 group cursor-pointer">
 							{#if userData.User.avt}
@@ -632,6 +752,102 @@
 </footer>
 
 <svelte:window on:scroll={handleOnScroll} />
+
+<dialog bind:this={myModal5} id="my_modal_3" class="modal">
+	{#if wordDetails}
+		<div class="modal-box no-scrollbar md:text-base text-sm">
+			<form method="dialog">
+				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
+			</form>
+			<h3 class="font-bold md:text-2xl text-lg text-title mb-2">
+				Chi Tiết Từ "{wordDetails.content}"
+			</h3>
+			<div class="h-[1px] w-full border border-gray-200" />
+			<div class="flex my-4">
+				<img
+					src={wordDetails.picture}
+					alt={wordDetails.picture}
+					class="md:h-[50px] h-10 md:w-[50px] w-10 inline-block"
+				/>
+				<div class="inline-block ml-4">
+					<div class="flex justify-center items-center">
+						<p class="mr-2 text-green-600 md:text-xl text-base font-semibold">
+							{wordDetails.content}
+						</p>
+						<span class="mr-2 text-blue-600">
+							{wordDetails.phonetic ? '/' + wordDetails.phonetic + '/' : ''}
+						</span>
+						<Speaker key={wordDetails.content} />
+					</div>
+					<p>{wordDetails.mean}</p>
+				</div>
+			</div>
+			<p class="font-bold">
+				Loại từ:
+				<span class="font-normal">
+					{wordDetails?.Type ? wordDetails.Type.name : ''}
+				</span>
+			</p>
+			<p class="font-bold">
+				Cấp độ:
+				<span class="font-normal">
+					{wordDetails?.Level ? wordDetails.Level.name : ''}
+				</span>
+			</p>
+			<p class="font-bold">Câu ví dụ:</p>
+			<ol>
+				{#if wordDetails?.examples?.length}
+					{#each wordDetails.examples as example, i}
+						{#if example !== ''}
+							<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {example}</li>
+						{/if}
+					{/each}
+				{/if}
+			</ol>
+			<p class="font-bold">
+				Thuộc chuyên ngành:
+				<span class="font-normal">
+					{wordDetails.Specialization ? wordDetails?.Specialization.name : ''}
+				</span>
+			</p>
+			<p class="font-bold">Chủ đề:</p>
+			<div class="p-2 flex flex-wrap rounded-md">
+				{#if wordDetails.Topic}
+					{#each wordDetails.Topic as topic}
+						<div
+							class="topic-item px-2 py-1 m-1 flex justify-between items-center w-fit rounded-full border-2 border-teal-500"
+						>
+							<img class="mr-1" src={imgTopics[topic.image]} alt={topic.name} />
+							<span class="pr-1 text-sm">{topic.name}</span>
+						</div>
+					{/each}
+				{/if}
+			</div>
+			<p class="font-bold">Các từ đồng nghĩa:</p>
+			<ol>
+				{#if wordDetails?.synonyms}
+					{#each wordDetails?.synonyms as synonym, i}
+						{#if synonym !== ''}
+							<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {synonym}</li>
+						{/if}
+					{/each}
+				{/if}
+			</ol>
+			<p class="font-bold">Các từ trái nghĩa:</p>
+			<ol>
+				{#if wordDetails?.antonyms}
+					{#each wordDetails?.antonyms as antonym, i}
+						{#if antonym !== ''}
+							<li class="indent-2"><span class="font-semibold">{i + 1}</span>. {antonym}</li>
+						{/if}
+					{/each}
+				{/if}
+			</ol>
+			<p class="font-bold">Ghi chú:</p>
+			<p>{wordDetails.note ? wordDetails.note : ''}</p>
+		</div>
+	{/if}
+</dialog>
 
 <!-- component -->
 

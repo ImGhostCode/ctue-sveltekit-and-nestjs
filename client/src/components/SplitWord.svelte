@@ -197,7 +197,7 @@
 		<!-- Answer -->
 
 		<dialog bind:this={myModal33} id="my_modal_33" class="modal text-left">
-			<div class="modal-box md:p-6 py-4 p-2">
+			<div class="modal-box md:p-6 py-4 p-2 md:text-base text-sm">
 				<form method="dialog">
 					<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 				</form>
