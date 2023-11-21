@@ -389,12 +389,12 @@
 						bind:value={selected.type}
 						class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 					>
-						<option class="block bg-base-200 md:text-base text-sm px-4 py-2" selected value={null}>
+						<option class="block bg-base-200 md:text-base text-xs px-4 py-2" selected value={null}>
 							Tất cả
 						</option>
 						{#each types as type (type.id)}
 							{#if type.name !== 'Chưa xác định'}
-								<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value={type.id}>
+								<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}>
 									{type.name}
 								</option>
 							{/if}
@@ -409,12 +409,12 @@
 						bind:value={selected.level}
 						class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 					>
-						<option class="block bg-base-200 md:text-base text-sm px-4 py-2" selected value={null}>
+						<option class="block bg-base-200 md:text-base text-xs px-4 py-2" selected value={null}>
 							Tất cả
 						</option>
 						{#each levels as level (level.id)}
 							{#if level.name !== 'Chưa xác định'}
-								<option class="block bg-base-200 md:text-base text-sm px-4 py-2" value={level.id}>
+								<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={level.id}>
 									{level.name}
 								</option>
 							{/if}
@@ -429,14 +429,14 @@
 						bind:value={selected.specialization}
 						class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 					>
-						<option class="block bg-base-200 md:text-base text-sm px-4 py-2" selected value={null}>
+						<option class="block bg-base-200 md:text-base text-xs px-4 py-2" selected value={null}>
 							Tất cả
 						</option>
 						{#if specializations.length}
 							{#each specializations as specialization (specialization.id)}
 								{#if specialization.name !== 'Chưa xác định'}
 									<option
-										class="block bg-base-200 md:text-base text-sm px-4 py-2"
+										class="block bg-base-200 md:text-base text-xs px-4 py-2"
 										value={specialization.id}
 									>
 										{specialization.name}

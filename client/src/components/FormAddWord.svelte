@@ -83,8 +83,7 @@
 		'ð',
 		'ʃ',
 		'ŋ',
-		'ʒ',
-		'ʃ'
+		'ʒ'
 	];
 
 	const dispatch = createEventDispatcher();
@@ -135,10 +134,12 @@
 	};
 </script>
 
-<div class="shadow-lg px-5 py-5 rounded-lg my-10 bg-white w-[1200px]">
+<div
+	class="shadow-lg px-5 py-5 rounded-lg my-10 bg-white md:mx-0 md:max-w-7xl max-w-sm w-full max-h-[70%] overflow-x-scroll"
+>
 	<div class=" flex justify-between items-center">
-		<h1 class="text-3xl text-title font-bold">Thêm từ mới của bạn vào CTUE</h1>
-		<button class="text-lg" on:click={handleCancel}>x</button>
+		<h1 class="md:text-3xl text-xl text-title font-bold">Thêm từ mới của bạn vào CTUE</h1>
+		<button class="md:text-lg text-lg" on:click={handleCancel}>x</button>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form
@@ -152,42 +153,42 @@
 		}}
 		enctype="multipart/form-data"
 		action="?/addWord"
-		class="grid grid-cols-3"
+		class="grid md:grid-cols-3 grid-cols-1 md:test-base text-sm"
 	>
-		<div class="form-control w-full max-w-sm mb-3">
+		<div class="form-control w-full md:max-w-sm mb-3">
 			<label class="label" for="new-word">
 				<span class="label-text">Từ mới (*)</span>
 			</label>
 			<input
 				type="text"
 				placeholder="..."
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input input-bordered md:input-md input-sm w-full md:max-w-sm focus:border-green-600 focus:outline-none"
 				id="new-word"
 				name="content"
 				required
 			/>
 		</div>
-		<div class="form-control w-full max-w-sm mb-3">
+		<div class="form-control w-full md:max-w-sm mb-3">
 			<label class="label" for="mean">
 				<span class="label-text">Nghĩa của từ (*)</span>
 			</label>
 			<input
 				type="text"
 				placeholder="..."
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input input-bordered md:input-md input-sm w-full md:max-w-sm focus:border-green-600 focus:outline-none"
 				id="mean"
 				name="mean"
 				required
 			/>
 		</div>
-		<div class="form-control w-full max-w-sm mb-3">
+		<div class="form-control w-full md:max-w-sm mb-3">
 			<label class="label" for="phonetic">
 				<span class="label-text">Phiên âm (*)</span>
 			</label>
 			<input
 				type="text"
 				placeholder="..."
-				class="input-phonetic input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input-phonetic input input-bordered md:input-md input-sm w-full md:max-w-sm focus:border-green-600 focus:outline-none"
 				id="phonetic"
 				name="phonetic"
 				on:focus={handleInputFocus}
@@ -196,47 +197,56 @@
 			/>
 		</div>
 		<div
+			class="form-control md:col-span-3 col-span-1 rounded-md md:p-3 p-2 bg-white shadow-lg mb-4 grid md:grid-cols-10 grid-cols-6 gap-2 border"
 			class:hidden={!showPhonetic}
-			class="col-span-3 rounded-md p-3 bg-white shadow-lg mb-4 flex flex-row gap-2 flex-wrap"
 		>
 			{#each phonetics as phonetic, index (index)}
 				<button
 					type="button"
 					on:click={() => (phoneticValue += phonetic)}
-					class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer transition-all"
+					class="p-2 w-full text-center text-base bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer transition-all"
+					>{phonetic}</button
 				>
-					{phonetic}
-				</button>
 			{/each}
+
 			<button
 				type="button"
 				on:click={handleInputFocus}
-				class=" btn-outline btn-error p-2 max-w-[90px] w-full text-center h-10 border rounded-md cursor-pointer transition-all"
+				class=" btn-outline btn-error text-base w-full text-center border rounded-md cursor-pointer transition-all"
+				>Đóng</button
 			>
-				Đóng
-			</button>
 		</div>
 		<div class="mb-3 form-control">
 			<label for="types" class="block mb-2 text-sm">Loại từ (*)</label>
 			<select
 				id="types"
 				name="typeId"
-				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full md:max-w-sm"
 			>
 				{#if types}
 					{#each types as type (type.id)}
 						{#if type.name === 'Chưa xác định'}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={type.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								selected
+								value={type.id}
+							>
 								{type.name}
 							</option>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								value={type.id}
+							>
 								{type.name}
 							</option>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option
+						class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+						value="Loading">Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
@@ -245,22 +255,32 @@
 			<select
 				id="level"
 				name="levelId"
-				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full md:max-w-sm"
 			>
 				{#if levels}
 					{#each levels as level (level.id)}
 						{#if level.name === 'Chưa xác định'}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={level.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								selected
+								value={level.id}
+							>
 								{level.name}
 							</option>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								value={level.id}
+							>
 								{level.name}
 							</option>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option
+						class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+						value="Loading">Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
@@ -269,79 +289,88 @@
 			<select
 				id="specialization"
 				name="specializationId"
-				class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class=" select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full md:max-w-sm"
 			>
 				{#if specializations}
 					{#each specializations as specialization (specialization.id)}
 						{#if specialization.name === 'Chưa xác định'}
 							<option
-								class="block bg-base-200 text-[16px] px-4 py-2"
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
 								selected
 								value={specialization.id}>{specialization.name}</option
 							>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}
-								>{specialization.name}</option
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								value={specialization.id}>{specialization.name}</option
 							>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option
+						class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+						value="Loading">Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
-		<div class="form-control w-full max-w-sm mb-3">
+		<div class="form-control w-full md:max-w-sm mb-3">
 			<label class="label" for="examples">
 				<span class="label-text">Câu ví dụ</span>
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full md:max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="examples"
 				name="examples"
 			/>
 		</div>
-		<div class="form-control w-full max-w-sm mb-3">
+		<div class="form-control w-full md:max-w-sm mb-3">
 			<label class="label" for="synonyms">
 				<span class="label-text">Các từ đồng nghĩa</span>
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full md:max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="synonyms"
 				name="synonyms"
 			/>
 		</div>
-		<div class="form-control w-full max-w-sm mb-3">
+		<div class="form-control w-full md:max-w-sm mb-3">
 			<label class="label" for="antonyms">
 				<span class="label-text">Các từ trái nghĩa</span>
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full md:max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="antonyms"
 				name="antonyms"
 			/>
 		</div>
-		<div class="form-control w-full max-w-sm mb-3">
+		<div class="form-control w-full md:max-w-sm mb-3">
 			<label class="label" for="note">
 				<span class="label-text">Ghi chú</span>
 			</label>
 			<textarea
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full md:max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
 				id="note"
 				name="note"
 			/>
 		</div>
 		<div class="form-control w-full max-w-sm mb-3">
-			<div class="h-[36px]" />
+			<div class="md:h-[36px] h-5" />
+
 			{#if imgIlustrate instanceof File}
 				<div class="h-16 input input-bordered flex justify-between items-center">
-					<img class="h-14 w-14" src={URL.createObjectURL(imgIlustrate)} alt="Preview" />
-					<span class="truncate">{imgIlustrate.name}</span>
-					<button type="button" on:click={() => (imgIlustrate = null)}>
-						<svg
+					<img
+						class="md:h-14 h-10 md:w-14 w-10"
+						src={URL.createObjectURL(imgIlustrate)}
+						alt="Preview"
+					/>
+					<span class="truncate md:text-base text-sm">{imgIlustrate.name}</span>
+					<button type="button" on:click={() => (imgIlustrate = null)}
+						><svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -354,6 +383,7 @@
 					</button>
 				</div>
 			{/if}
+
 			<label class="" class:hidden={imgIlustrate instanceof File} for="img-ilustrate">
 				<div
 					class="flex justify-center items-center w-full max-w-sm input input-bordered hover:bg-gray-100 hover:cursor-pointer"
@@ -387,15 +417,14 @@
 				</div>
 			</label>
 		</div>
+
 		<div class="form-control w-full max-w-sm mb-3">
-			<div class="h-[36px]" />
+			<div class="md:h-[36px] h-4" />
 			<button
 				type="button"
 				on:click={() => (showTopics = !showTopics)}
-				class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
-			>
-				Thêm chủ đề
-				<span class="ml-2">
+				class="input input-bordered md:input-md input-sm w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
+				>Thêm chủ đề <span class="ml-2">
 					{#if showTopics}
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -423,15 +452,17 @@
 							/>
 						</svg>
 					{/if}
-				</span>
-			</button>
+				</span></button
+			>
 		</div>
 		{#if showTopics}
-			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-3">
+			<div
+				class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md md:col-span-3 col-span-1 shadow-sm"
+			>
 				{#each topics as topic, index (topic.name)}
 					<button
 						type="button"
-						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
+						class="topic-item md:px-2 px-1 md:py-1 md:m-2 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
@@ -443,12 +474,12 @@
 			</div>
 			<input type="text" id="topics" name="topics" bind:value={topics} class="hidden" />
 		{/if}
-		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
+		<div class="h-[1px] w-full border border-gray-200 mt-8 md:col-span-3 col-span-1" />
 
-		<div class="mt-4 col-span-3 text-right">
+		<div class="mt-4 md:col-span-3 col-span-1 text-right">
 			{#if isLoadingForm}
 				<button
-					class="btn mr-2 btn-info"
+					class="btn mr-2 btn-info md:btn-md btn-sm"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
 					>&nbsp;
@@ -460,12 +491,12 @@
 					type="submit"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
-					class=" btn btn-accent text-white mr-2"
+					class=" btn btn-accent text-white mr-2 md:btn-md btn-sm"
 				>
-					Thêm
+					Hoàn tất
 				</button>
 			{/if}
-			<button type="reset" class="btn btn-outline btn-error">Loại bỏ</button>
+			<button type="reset" class="btn btn-outline md:btn-md btn-sm btn-error">Loại bỏ</button>
 		</div>
 		<input type="text" class="hidden" name="topicId" id="topics" bind:value={topicIds} />
 	</form>

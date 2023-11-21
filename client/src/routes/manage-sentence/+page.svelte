@@ -136,10 +136,10 @@
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<div class="flex justify-between items-center mb-4">
-		<h1 class="header-page">1000+ Cụm từ giao tiếp</h1>
+		<h1 class="header-page">Quản lý câu giao tiếp</h1>
 		<div class="flex items-center gap-5">
 			<button
-				class="btn btn-sm bg-green-500 hover:bg-green-700 text-white"
+				class="btn md:btn-md btn-sm bg-green-500 hover:bg-green-700 text-white"
 				on:click={() => myModal6.showModal()}
 			>
 				Thêm
@@ -167,8 +167,8 @@
 			</button>
 		</div>
 		<dialog bind:this={myModal4} id="my_modal_4" class="modal">
-			<div class="modal-box w-11/12 max-w-5xl">
-				<h3 class="font-bold text-xl text-orange-600 mb-2">Chọn chủ đề</h3>
+			<div class="modal-box w-11/12 max-w-5xl md:p-6 px-4 py-5">
+				<h3 class="font-bold md:text-xl text-lg text-orange-600 mb-2">Chọn chủ đề</h3>
 				<div class="h-[1px] w-full border border-gray-200" />
 
 				<div class="flex flex-wrap p-3">
@@ -189,10 +189,10 @@
 
 				<div class="modal-action">
 					<form method="dialog">
-						<button class="btn mr-2">Đóng</button>
+						<button class="btn md:btn-md btn-sm mr-2">Đóng</button>
 						<button
-							class="btn bg-green-600 hover:bg-green-700 text-white"
-							on:click={handleFilterConfirmation}>Đồng ý</button
+							class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white"
+							on:click={handleFilterConfirmation}>Hoàn tất</button
 						>
 					</form>
 				</div>
@@ -206,31 +206,35 @@
 				<!-- head -->
 				<thead>
 					<tr>
-						<th class="text-green-700 text-lg">STT</th>
-						<th class="text-green-700 text-lg">Câu</th>
-						<th class="text-green-700 text-lg">Nghĩa</th>
-						<th class="text-green-700 text-lg text-center">Hành động</th>
+						<th class="text-green-700 md:text-lg text-base">STT</th>
+						<th class="text-green-700 md:text-lg text-base">Câu</th>
+						<th class="text-green-700 md:text-lg text-base">Nghĩa</th>
+						<th class="text-green-700 md:text-lg text-base text-center">Hành động</th>
 					</tr>
 				</thead>
 				<tbody class="">
 					{#each sentences as sentence, index (index)}
-						<tr class="hover:bg-base-200">
-							<th>{index + 1}</th>
-							<td class="flex">
-								<Speaker key={sentence.content} />
-								<p class="text-lg">{sentence.content}</p>
+						<tr class="hover:bg-base-200 md:text-lg text-sm">
+							<td>{index + 1}</td>
+							<td class="h-full mx-auto max-w-sm min-w-[200px]">
+								<div class="flex">
+									<Speaker key={sentence.content} />
+									<p class="break-words">{sentence.content}</p>
+								</div>
 							</td>
-							<td class="text-lg">{sentence.mean}</td>
-							<td class="text-center">
+							<td class="max-w-sm min-w-[200px]">
+								<p class="break-words">{sentence.mean}</p>
+							</td>
+							<td class="text-center max-w-sm min-w-[260px]">
 								<button
 									type="button"
-									class="btn btn-info btn-sm text-white"
+									class="btn md:btn-md btn-info btn-sm text-white mr-1"
 									on:click={() => openModal(myModal5, sentence)}
 								>
 									Chi tiết
 								</button>
 								<button
-									class="btn btn-sm btn-warning"
+									class="btn md:btn-md btn-sm btn-primary mr-1"
 									on:click={() => {
 										currentSentence = sentence;
 										myModal7.showModal();
@@ -239,7 +243,7 @@
 									Sửa
 								</button>
 								<button
-									class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
+									class="btn md:btn-md btn-sm bg-red-500 hover:bg-red-600 text-white"
 									on:click={async () => {
 										await handleDeleteSentence(sentence.id);
 									}}
@@ -269,7 +273,7 @@
 			<form method="dialog">
 				<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-xl">✕</button>
 			</form>
-			<h3 class="font-bold text-2xl text-orange-600 mb-2">Chi tiết câu</h3>
+			<h3 class="font-bold md:text-2xl text-lg text-orange-600 mb-2">Chi tiết câu</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
 
 			<div class="mt-2"><b>Câu: </b> {dataDetail.content}</div>

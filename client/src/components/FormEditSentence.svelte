@@ -52,12 +52,19 @@
 	}
 </script>
 
-<div class="shadow-lg px-7 py-8 rounded-lg my-10 bg-white w-[500px] max-w-2xl">
+<div
+	class="shadow-lg px-5 py-5 rounded-lg my-10 bg-white md:mx-0 md:max-w-7xl max-w-sm w-full overflow-x-scroll max-h-[85%]"
+>
 	<div class="flex items-center justify-between">
-		<h1 class="text-3xl text-title font-bold">Thêm Câu Giao Tiếp</h1>
+		<h1 class="md:text-3xl text-lg text-title font-bold">Chỉnh sửa câu giao tiếp</h1>
 		<button class="text-2xl" on:click={handleCancel}>x</button>
 	</div>
-	<form method="post" use:enhance action="?/patchSentence" class="flex flex-col">
+	<form
+		method="post"
+		use:enhance
+		action="?/patchSentence"
+		class="flex flex-col md:text-base text-sm"
+	>
 		<div class="form-control w-full mb-3">
 			<label class="label" for="new-sentence">
 				<span class="label-text">Một câu bằng tiếng Anh (*)</span>
@@ -66,7 +73,7 @@
 				bind:value={currentSentence.content}
 				required
 				maxlength="200"
-				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
+				class="input input-bordered md:text-base text-sm md:h-[120px] h-20 w-full focus:border-green-600 focus:outline-none p-4"
 				id="new-sentence"
 				name="content"
 			/>
@@ -79,7 +86,7 @@
 				bind:value={currentSentence.mean}
 				required
 				maxlength="300"
-				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
+				class="input input-bordered md:text-base text-sm md:h-[120px] h-20 w-full focus:border-green-600 focus:outline-none p-4"
 				id="new-sentence-meaning"
 				name="mean"
 			/>
@@ -91,7 +98,7 @@
 			<textarea
 				bind:value={currentSentence.note}
 				maxlength="100"
-				class="input input-bordered h-[120px] w-full focus:border-green-600 focus:outline-none p-4"
+				class="input input-bordered md:text-base text-sm md:h-[120px] h-20 w-full focus:border-green-600 focus:outline-none p-4"
 				id="note"
 				name="note"
 			/>
@@ -103,20 +110,24 @@
 					bind:value={currentSentence.typeId}
 					id="types"
 					name="typeId"
-					class="w-full select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block p-2.5"
+					class="w-full select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block"
 				>
 					{#if types}
 						{#each types as type (type.id)}
 							{#if type.name === 'Chưa xác định'}
-								<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={type.id} />
+								<option
+									class="block bg-base-200 md:text-base text-xs px-4 py-2"
+									selected
+									value={type.id}>{type.name}</option
+								>
 							{:else}
-								<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+								<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}>
 									{type.name}
 								</option>
 							{/if}
 						{/each}
 					{:else}
-						<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">
+						<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading">
 							Đang tải
 						</option>
 					{/if}
@@ -130,7 +141,7 @@
 						showTopics = !showTopics;
 						handleSetTopic();
 					}}
-					class="input input-bordered w-full flex justify-center items-center focus:outline-none"
+					class="input input-bordered md:input-md input-sm w-full flex justify-center items-center focus:outline-none"
 					class:border-green-600={showTopics}
 				>
 					Thêm chủ đề
@@ -175,7 +186,7 @@
 				{#each topics as topic, index (topic.name)}
 					<button
 						type="button"
-						class="topic-item px-3 py-2 m-2 text-base text-slate-700 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer transition"
+						class="topic-item md:px-3 px-2 md:py-2 py-1 md:m-2 m-1 md:text-base text-xs text-slate-700 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer transition"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
@@ -185,7 +196,7 @@
 				{/each}
 			</div>
 		{/if}
-		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
+		<div class="h-[1px] w-full border border-gray-200 md:mt-8 mt-2 col-span-3" />
 		<div class="mt-4 col-span-3 text-right">
 			{#if isLoadingForm}
 				<button
@@ -201,12 +212,16 @@
 					type="submit"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
-					class=" btn btn-accent text-white mr-2"
+					class=" btn md:btn-md btn-sm btn-accent text-white mr-2"
 				>
-					Gửi yêu cầu
+					Hoàn tất
 				</button>
 			{/if}
-			<button type="reset" class="btn btn-outline btn-error" on:click={() => resetSelectedTopics()}>
+			<button
+				type="reset"
+				class="btn md:btn-md btn-sm btn-outline btn-error"
+				on:click={() => resetSelectedTopics()}
+			>
 				Loại bỏ
 			</button>
 		</div>

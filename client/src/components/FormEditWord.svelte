@@ -84,8 +84,7 @@
 		'ð',
 		'ʃ',
 		'ŋ',
-		'ʒ',
-		'ʃ'
+		'ʒ'
 	];
 
 	const dispatch = createEventDispatcher();
@@ -177,9 +176,11 @@
 	}
 </script>
 
-<div class="shadow-lg px-5 py-5 rounded-lg my-10 bg-white w-[1200px]">
+<div
+	class="hadow-lg px-5 py-5 rounded-lg my-10 bg-white md:mx-0 md:max-w-7xl max-w-sm w-full max-h-[70%] overflow-x-scroll md:text-base text-sm"
+>
 	<div class=" flex justify-between items-center">
-		<h1 class="text-3xl text-title font-bold">Thêm từ mới của bạn vào CTUE</h1>
+		<h1 class="md:text-2xl text-lg text-title font-bold">Chỉnh sửa từ</h1>
 		<button class="text-2xl" on:click={handleCancel}>x</button>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
@@ -194,7 +195,7 @@
 		}}
 		enctype="multipart/form-data"
 		action="?/editWord"
-		class="grid grid-cols-3"
+		class="grid md:grid-cols-3 grid-cols-1 md:test-base text-sm"
 	>
 		<input type="number" class="hidden" name="id" bind:value={currentWord.id} />
 		<div class="form-control w-full max-w-sm mb-3">
@@ -204,7 +205,7 @@
 			<input
 				bind:value={currentWord.content}
 				type="text"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="new-word"
 				name="content"
 				required
@@ -217,7 +218,7 @@
 			<input
 				bind:value={currentWord.mean}
 				type="text"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="mean"
 				name="mean"
 				required
@@ -230,7 +231,7 @@
 			<input
 				bind:value={phoneticValue}
 				type="text"
-				class="input-phonetic input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none"
+				class="input-phonetic input input-bordered md:input-md input-sm w-full max-w-sm focus:border-green-600 focus:outline-none"
 				id="phonetic"
 				name="phonetic"
 				on:focus={handleInputFocus}
@@ -238,25 +239,24 @@
 			/>
 		</div>
 		<div
+			class="form-control md:col-span-3 col-span-1 rounded-md md:p-3 p-2 bg-white shadow-lg mb-4 grid md:grid-cols-10 grid-cols-6 gap-2 border"
 			class:hidden={!showPhonetic}
-			class="col-span-3 rounded-md p-3 bg-white shadow-lg mb-4 flex flex-row gap-2 flex-wrap"
 		>
 			{#each phonetics as phonetic, index (index)}
 				<button
 					type="button"
 					on:click={() => (phoneticValue += phonetic)}
-					class="p-2 max-w-[90px] w-full text-center h-10 bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer transition-all"
+					class="p-2 w-full text-center text-base bg-base-200 hover:bg-green-600 hover:text-white rounded-md cursor-pointer transition-all"
+					>{phonetic}</button
 				>
-					{phonetic}
-				</button>
 			{/each}
+
 			<button
 				type="button"
 				on:click={handleInputFocus}
-				class=" btn-outline btn-error p-2 max-w-[90px] w-full text-center h-10 border rounded-md cursor-pointer transition-all"
+				class=" btn-outline btn-error text-base w-full text-center border rounded-md cursor-pointer transition-all"
+				>Đóng</button
 			>
-				Đóng
-			</button>
 		</div>
 		<div class="mb-3 form-control">
 			<label for="types" class="block mb-2 text-sm">Loại từ (*)</label>
@@ -264,22 +264,32 @@
 				bind:value={currentWord.typeId}
 				id="types"
 				name="typeId"
-				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 			>
 				{#if types}
 					{#each types as type (type.id)}
 						{#if type.name === 'Chưa xác định'}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={type.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								selected
+								value={type.id}
+							>
 								{type.name}
 							</option>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={type.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								value={type.id}
+							>
 								{type.name}
 							</option>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option
+						class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+						value="Loading">Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
@@ -289,22 +299,32 @@
 				bind:value={currentWord.levelId}
 				id="level"
 				name="levelId"
-				class="select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class="select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 			>
 				{#if levels}
 					{#each levels as level (level.id)}
 						{#if level.name === 'Chưa xác định'}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" selected value={level.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								selected
+								value={level.id}
+							>
 								{level.name}
 							</option>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={level.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								value={level.id}
+							>
 								{level.name}
 							</option>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option
+						class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+						value="Loading">Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
@@ -314,24 +334,30 @@
 				bind:value={currentWord.specializationId}
 				id="specialization"
 				name="specializationId"
-				class=" select select-bordered text-[16px] h-12 border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm p-2.5"
+				class=" select select-bordered md:select-md select-sm border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block w-full max-w-sm"
 			>
 				{#if specializations}
 					{#each specializations as specialization (specialization.id)}
 						{#if specialization.name === 'Chưa xác định'}
 							<option
-								class="block bg-base-200 text-[16px] px-4 py-2"
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
 								selected
 								value={specialization.id}>{specialization.name}</option
 							>
 						{:else}
-							<option class="block bg-base-200 text-[16px] px-4 py-2" value={specialization.id}>
+							<option
+								class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+								value={specialization.id}
+							>
 								{specialization.name}
 							</option>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 text-[16px] px-4 py-2" value="Loading">Đang tải</option>
+					<option
+						class="block bg-base-200 md:px-4 px-2 md:py-2 py-1 md:text-base text-sm"
+						value="Loading">Đang tải</option
+					>
 				{/if}
 			</select>
 		</div>
@@ -342,7 +368,7 @@
 			<textarea
 				bind:value={examplesValue}
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px] md:text-base text-sm"
 				id="examples"
 				name="examples"
 			/>
@@ -354,7 +380,7 @@
 			<textarea
 				bind:value={synonymsValue}
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px] md:text-base text-sm"
 				id="synonyms"
 				name="synonyms"
 			/>
@@ -366,7 +392,7 @@
 			<textarea
 				bind:value={antonymsValue}
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px] md:text-base text-sm"
 				id="antonyms"
 				name="antonyms"
 			/>
@@ -379,17 +405,21 @@
 			<textarea
 				bind:value={currentWord.note}
 				rows="10"
-				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px]"
+				class="input input-bordered w-full max-w-sm focus:border-green-600 focus:outline-none p-4 h-[90px] md:text-base text-sm"
 				id="note"
 				name="note"
 			/>
 		</div>
 		<div class="form-control w-full max-w-sm mb-3">
-			<div class="h-[36px]" />
+			<div class="md:h-[36px]" />
 			{#if imgEditlustrate instanceof File}
 				<div class="h-16 input input-bordered flex justify-between items-center">
-					<img class="h-14 w-14" src={URL.createObjectURL(imgEditlustrate)} alt="Preview" />
-					<span class="truncate">{imgEditlustrate.name}</span>
+					<img
+						class="md:h-14 md:w-14 h-12 w-12"
+						src={URL.createObjectURL(imgEditlustrate)}
+						alt="Preview"
+					/>
+					<span class="truncate md:text-base test-sm">{imgEditlustrate.name}</span>
 					<button type="button" on:click={() => (imgEditlustrate = null)}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -438,7 +468,7 @@
 			</label>
 		</div>
 		<div class="form-control w-full max-w-sm mb-3">
-			<div class="h-[36px]" />
+			<div class="md:h-[36px]" />
 			<button
 				type="button"
 				on:click={() => {
@@ -447,7 +477,7 @@
 						handleSetTopic();
 					}
 				}}
-				class="input input-bordered w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
+				class="input input-bordered md:input-md input-sm w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
 			>
 				Thêm chủ đề
 				<span class="ml-2">
@@ -482,11 +512,11 @@
 			</button>
 		</div>
 		{#if showTopics}
-			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md col-span-3">
+			<div class="topics px-3 py-6 bg-base-200 flex flex-wrap rounded-md md:col-span-3 col-span-1">
 				{#each topics as topic, index (topic.name)}
 					<button
 						type="button"
-						class="topic-item px-2 py-1 m-2 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
+						class="topic-item md:px-2 px-1 md:py-1 md:m-2 m-1 flex justify-between items-center w-fit rounded-full border-2 border-green-600 cursor-pointer"
 						class:bg-green-500={topic.selected}
 						class:text-white={topic.selected}
 						on:click={() => toggleSelected(index)}
@@ -498,11 +528,11 @@
 			</div>
 			<input type="text" id="topics" name="topics" bind:value={topics} class="hidden" />
 		{/if}
-		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
-		<div class="mt-4 col-span-3 text-right">
+		<div class="h-[1px] w-full border border-gray-200 mt-8 md:col-span-3 col-span-1" />
+		<div class="mt-4 md:col-span-3 col-span-1 text-right">
 			{#if isLoadingForm}
 				<button
-					class="btn mr-2 btn-info"
+					class="btn md:btn-md btn-sm mr-2 btn-info"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
 					>&nbsp;
@@ -514,12 +544,16 @@
 					type="submit"
 					disabled={isLoadingForm}
 					class:cursor-not-allowed={isLoadingForm}
-					class=" btn btn-accent text-white mr-2"
+					class=" btn md:btn-md btn-sm btn-accent text-white mr-2"
 				>
-					Sửa
+					Hoàn tất
 				</button>
 			{/if}
-			<button type="button" class="btn btn-outline btn-error" on:click={handleCancel}>Đóng</button>
+			<button
+				type="button"
+				class="btn md:btn-md btn-sm btn-outline btn-error"
+				on:click={handleCancel}>Đóng</button
+			>
 		</div>
 		<input type="text" class="hidden" name="topicId" id="topics" bind:value={topicIds} />
 	</form>

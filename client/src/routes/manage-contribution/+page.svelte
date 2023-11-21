@@ -194,7 +194,7 @@
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
-	<h1 class="text-2xl text-orange-600 mb-2">Quản lý đóng góp</h1>
+	<h1 class="text-2xl text-title font-bold mb-2">Quản lý đóng góp</h1>
 
 	<div class="h-[1px] w-full border border-gray-200" />
 
@@ -215,7 +215,7 @@
 	</div>
 	{#if renderContribution.length}
 		<div class="overflow-x-auto">
-			<table class="md:mt-10 mt-5 table table-hover">
+			<table class="md:mt-6 mt-5 table table-hover">
 				<thead>
 					<tr class="md:text-base text-sm">
 						<!-- <th>ID</th> -->
@@ -231,7 +231,7 @@
 						<tr class="hover md:text-base text-sm">
 							<td>{moment(con.createdAt).format('DD/MM/YYYY')}</td>
 							<td>{con.type === 'word' ? 'Từ' : 'Câu'}</td>
-							<td class="max-w-xs">
+							<td class="min-w-[150px] max-w-xs">
 								<p class="truncate mb-2">
 									{con.content.content} - {con.content.mean}
 								</p>
@@ -251,7 +251,7 @@
 								class:text-green-600={statusCon[con.status].color === 'green'}
 								>{statusCon[con.status].status}</td
 							>
-							<td>
+							<td class="min-w-[230px]">
 								<form
 									method="post"
 									use:enhance={() => {
@@ -262,7 +262,7 @@
 										};
 									}}
 									action="?/verify-contribution"
-									class="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
+									class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white"
 								>
 									<!-- <button
 									class="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
@@ -274,7 +274,7 @@
 									<button class="" type="submit">Xác nhận</button>
 								</form>
 								<button
-									class="btn btn-sm bg-red-600 hover:bg-red-700 text-white"
+									class="btn md:btn-md btn-sm bg-red-500 hover:bg-red-600 text-white"
 									on:click={() => {
 										selectedId = con.id;
 										myModal6.showModal();
@@ -435,14 +435,13 @@
 							banId = 0;
 							feedback = '';
 						}}
-					>
-						Đóng
+						>Đóng
 					</button>
 				</form>
 				<button
 					type="submit"
 					class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white mr-2"
-					>Đồng ý</button
+					>Hoàn tất</button
 				>
 			</div>
 		</form>
