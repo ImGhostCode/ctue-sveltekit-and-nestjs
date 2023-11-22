@@ -5,6 +5,7 @@
 	const dispatch = createEventDispatcher();
 
 	function handleCancel() {
+		showTopics = false;
 		dispatch('cancel');
 	}
 
@@ -57,7 +58,7 @@
 >
 	<div class="flex items-center justify-between">
 		<h1 class="md:text-3xl text-lg text-title font-bold">Chỉnh sửa câu giao tiếp</h1>
-		<button class="text-2xl" on:click={handleCancel}>x</button>
+		<button class="md:text-lg text-base btn md:btn-md btn-sm" on:click={handleCancel}>x</button>
 	</div>
 	<form
 		method="post"

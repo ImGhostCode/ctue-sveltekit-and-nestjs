@@ -107,7 +107,7 @@
 	<div class="flex justify-between items-center">
 		<input
 			bind:value={key}
-			class="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+			class="input input-sm md:input-md input-bordered shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 			id="find-word"
 			type="text"
 			placeholder="Nhập từ..."
@@ -202,11 +202,12 @@
 						<span class="label-text">Nguyên mẫu (V1)</span>
 					</label>
 					<input
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						class="inpput input-sm md:input-md input-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 						id="v1"
 						type="text"
 						placeholder="Nhập nguyên mẫu..."
 						name="v1"
+						required
 					/>
 				</div>
 
@@ -215,11 +216,12 @@
 						<span class="label-text">Quá khứ đơn (V2)</span>
 					</label>
 					<input
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						class="inpput input-sm md:input-md input-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 						id="v2"
 						type="text"
 						placeholder="Nhập quá khứ đơn..."
 						name="v2"
+						required
 					/>
 				</div>
 
@@ -228,11 +230,12 @@
 						<span class="label-text">Quá khứ phân từ (V3)</span>
 					</label>
 					<input
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						class="inpput input-sm md:input-md input-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 						id="v3"
 						type="text"
 						placeholder="Nhập quá khứ phân từ..."
 						name="v3"
+						required
 					/>
 				</div>
 
@@ -241,11 +244,12 @@
 						<span class="label-text">Nghĩa</span>
 					</label>
 					<input
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						class="inpput input-sm md:input-md input-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 						id="mean"
 						type="text"
 						placeholder="Nhập nghĩa của từ..."
 						name="mean"
+						required
 					/>
 				</div>
 
@@ -272,11 +276,12 @@
 					</label>
 					<input
 						bind:value={currentWord.v1}
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						class="input input-sm md:input-md input-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 						id="v1"
 						type="text"
 						placeholder="Nhập nguyên mẫu..."
 						name="v1"
+						required
 					/>
 				</div>
 
@@ -286,11 +291,12 @@
 					</label>
 					<input
 						bind:value={currentWord.v2}
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						class="input input-sm md:input-md input-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 						id="v2"
 						type="text"
 						placeholder="Nhập quá khứ đơn..."
 						name="v2"
+						required
 					/>
 				</div>
 
@@ -300,11 +306,12 @@
 					</label>
 					<input
 						bind:value={currentWord.v3}
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						class="input input-sm md:input-md input-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 						id="v3"
 						type="text"
 						placeholder="Nhập quá khứ phân từ..."
 						name="v3"
+						required
 					/>
 				</div>
 
@@ -314,11 +321,12 @@
 					</label>
 					<input
 						bind:value={currentWord.mean}
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
+						class="input input-sm md:input-md input-bordered shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:border-green-500 leading-tight focus:outline-none focus:shadow-outline"
 						id="mean"
 						type="text"
 						placeholder="Nhập nghĩa của từ..."
 						name="mean"
+						required
 					/>
 				</div>
 
