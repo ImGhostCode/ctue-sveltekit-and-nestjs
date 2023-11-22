@@ -343,8 +343,8 @@
 					<button
 						class="btn md:btn-md btn-sm btn-primary"
 						on:click={() => {
-							wordDetails = word;
 							myModal7.showModal();
+							wordDetails = word;
 						}}
 					>
 						Chỉnh sửa
@@ -507,7 +507,9 @@
 				{topics}
 				{specializations}
 				{types}
-				on:cancel={() => myModal7.close()}
+				on:cancel={() => {
+					myModal7.close();
+				}}
 				currentWord={wordDetails}
 			/>
 		{/if}

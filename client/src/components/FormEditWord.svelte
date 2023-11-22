@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	import tree from '$lib/assets/icons/topics/tree.png';
@@ -90,6 +90,7 @@
 	const dispatch = createEventDispatcher();
 
 	function handleCancel() {
+		showTopics = false;
 		dispatch('cancel');
 	}
 
@@ -181,7 +182,7 @@
 >
 	<div class=" flex justify-between items-center">
 		<h1 class="md:text-2xl text-lg text-title font-bold">Chỉnh sửa từ</h1>
-		<button class="text-2xl" on:click={handleCancel}>x</button>
+		<button class="md:text-lg text-base btn md:btn-md btn-sm" on:click={handleCancel}>x</button>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200 my-4" />
 	<form

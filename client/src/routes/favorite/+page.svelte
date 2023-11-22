@@ -105,7 +105,7 @@
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<div class="items-center mb-4">
-		<h1 class="header-page">Từ điển của bạn</h1>
+		<h1 class="header-page">Danh sách yêu thích của bạn</h1>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200" />
 
