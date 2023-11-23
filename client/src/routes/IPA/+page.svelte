@@ -35,7 +35,6 @@
 	import owu from '$lib/assets/audios/ipa/diphthongs/owu.mp3';
 	import au from '$lib/assets/audios/ipa/diphthongs/au.mp3';
 
-	import { HandlerSpeaker } from '$lib/store';
 	import Speaker from '../../components/Speaker.svelte';
 	import PlayAudio from '../../components/PlayAudio.svelte';
 
@@ -45,7 +44,6 @@
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8">
 	<h1 class="md:text-2xl text-xl text-orange-600 mb-2">1. Nguyên âm đơn (Vowels)</h1>
 	<p class=" text-slate-500 mb-4">Chúng ta có 12 nguyên âm đơn, mình chia làm 5 nhóm:</p>
-	<!-- 1 -->
 	<div class="collapse bg-base-200 mb-3">
 		<input type="checkbox" class="peer" />
 		<div class="collapse-title md:text-xl text-lg font-medium text-green-600">

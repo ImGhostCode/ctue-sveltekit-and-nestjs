@@ -1,6 +1,4 @@
 <script lang="ts">
-	import tree from '$lib/assets/icons/topics/tree.png';
-	import social from '$lib/assets/icons/topics/social.png';
 	import { enhance } from '$app/forms';
 
 	type Types = { id: number; name: string; isWord: boolean };
@@ -11,7 +9,6 @@
 		isWord: boolean;
 		image: string;
 	};
-	type SelectedTopics = { id: number; name: string; isWord: boolean; selected: boolean };
 
 	export let types: Types[];
 	export let topics: Topics[];
@@ -88,7 +85,6 @@
 				name="note"
 			/>
 		</div>
-
 		<div class="flex flex-row gap-6">
 			<div class="mb-3 form-control basis-1/2">
 				<label for="types" class="block mb-2 text-sm">Loại câu (*)</label>
@@ -97,9 +93,6 @@
 					name="typeId"
 					class="w-full select select-bordered md:select-md select-sm md:text-base border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none text-sm rounded-lg block"
 				>
-					<!-- <option class="block bg-base-200 md:text-base text-xs px-4 py-2" selected value=""
-						>Chưa xác định</option
-					> -->
 					{#if types}
 						{#each types as type (type.id)}
 							{#if type.name === 'Chưa xác định'}
@@ -109,19 +102,18 @@
 									value={type.id}>{type.name}</option
 								>
 							{:else}
-								<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}
-									>{type.name}</option
-								>
+								<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}>
+									{type.name}
+								</option>
 							{/if}
 						{/each}
 					{:else}
-						<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading"
-							>Đang tải</option
-						>
+						<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading">
+							Đang tải
+						</option>
 					{/if}
 				</select>
 			</div>
-
 			<div class="form-control mb-3 basis-1/2">
 				<div class="h-[28px]" />
 				<button
@@ -129,7 +121,9 @@
 					on:click={() => (showTopics = !showTopics)}
 					class="input input-bordered md:input-md input-sm w-full flex justify-center items-center focus:outline-none"
 					class:border-green-600={showTopics}
-					>Thêm chủ đề <span class="ml-2">
+				>
+					Thêm chủ đề
+					<span class="ml-2">
 						{#if showTopics}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -161,8 +155,8 @@
 								/>
 							</svg>
 						{/if}
-					</span></button
-				>
+					</span>
+				</button>
 			</div>
 		</div>
 		{#if showTopics}
@@ -181,7 +175,6 @@
 			</div>
 		{/if}
 		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
-
 		<div class="mt-4 col-span-3 text-right">
 			{#if isLoadingForm}
 				<button
@@ -208,7 +201,6 @@
 				on:click={() => resetSelectedTopics()}>Loại bỏ</button
 			>
 		</div>
-
 		<input type="text" class="hidden" name="topicId" id="topics" bind:value={topicIds} />
 	</form>
 </div>

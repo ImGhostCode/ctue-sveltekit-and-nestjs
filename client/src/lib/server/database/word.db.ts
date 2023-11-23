@@ -1,4 +1,3 @@
-import { config } from "dotenv";
 import axiosClient from "./api.config";
 
 const URL = '/word';
@@ -13,15 +12,12 @@ export async function getWords(page: number, sort: string | null, topic: any[], 
         const topicsString = topic
             .map((topic) => `topic=${encodeURIComponent(topic)}`)
             .join('&&');
-
         const response = await axiosClient.get(`${URL}?&&${topicsString}${parameter}`)
-
         return response.data
     } catch (error) {
         throw error;
     }
 }
-
 
 export async function postWord(accessToken: string, data: any) {
     try {
@@ -58,8 +54,6 @@ export async function getWordPack(accessToken: string, type: any, level: any, sp
         const topicsString = topic
             .map((topic) => `topic=${encodeURIComponent(topic)}`)
             .join('&&');
-
-
         const response = await axiosClient.get(`${URL}/words-pack?${topicsString}${topicsString ? '&&' + parameter : parameter}`, {
             headers: {
                 Authorization: `Bearer ${accessToken} `,

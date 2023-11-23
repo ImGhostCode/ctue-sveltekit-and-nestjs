@@ -37,12 +37,9 @@ export const actions = {
                 isLoadingForm.set(false)
                 throw redirect(307, '/login');
             }
-
             const formData = Object.fromEntries(await request.formData());
-
             const { ilustrate } = formData as { ilustrate: File };
             const ilustrateFile = ilustrate;
-
             const formDataWithFile = new FormData();
             if (
                 ((formData.ilustrate as File).name &&
@@ -61,7 +58,6 @@ export const actions = {
             const antonyms = formData.antonyms
             const note = formData.note
             const phonetic = formData.phonetic
-
             formDataWithFile.append('content', content);
             formDataWithFile.append('mean', mean);
             formDataWithFile.append('typeId', typeId);
@@ -139,12 +135,9 @@ export const actions = {
                 isLoadingForm.set(false)
                 throw redirect(307, '/login');
             }
-
             const formData = Object.fromEntries(await request.formData());
-
             const { ilustrate } = formData as { ilustrate: File };
             const ilustrateFile = ilustrate;
-
             const formDataWithFile = new FormData();
             if (
                 ((formData.ilustrate as File).name &&
@@ -164,7 +157,6 @@ export const actions = {
             const antonyms = formData.antonyms
             const note = formData.note
             const phonetic = formData.phonetic
-
             formDataWithFile.append('content', content);
             formDataWithFile.append('mean', mean);
             formDataWithFile.append('typeId', typeId);

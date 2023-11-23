@@ -135,7 +135,9 @@
 					on:click={() => (showTopics = !showTopics)}
 					class="input input-bordered md:input-md md:text-base text-sm input-sm w-full flex justify-center items-center focus:outline-none"
 					class:border-green-600={showTopics}
-					>Thêm chủ đề <span class="ml-2">
+				>
+					Thêm chủ đề
+					<span class="ml-2">
 						{#if showTopics}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -167,8 +169,8 @@
 								/>
 							</svg>
 						{/if}
-					</span></button
-				>
+					</span>
+				</button>
 			</div>
 		</div>
 		{#if showTopics}
@@ -187,7 +189,6 @@
 			</div>
 		{/if}
 		<div class="h-[1px] w-full border border-gray-200 mt-8 col-span-3" />
-
 		<div class="mt-4 col-span-3 text-right">
 			{#if isLoadingForm}
 				<button
@@ -214,7 +215,6 @@
 				on:click={() => resetSelectedTopics()}>Loại bỏ</button
 			>
 		</div>
-
 		<input type="text" class="hidden" name="topicId" id="topics" bind:value={topicIds} />
 	</form>
 </div>

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
+
 	import wordMatch from '$lib/assets/icons/games/word-match.png';
-	import Speaker from '../../../components/Speaker.svelte';
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 	import animal from '$lib/assets/icons/topics/animal.png';
@@ -28,9 +28,9 @@
 	import technology from '$lib/assets/icons/topics/technology.png';
 	import toeic from '$lib/assets/icons/topics/toeic.png';
 	import travel from '$lib/assets/icons/topics/travel.png';
-	import { enhance } from '$app/forms';
+
 	import { goto } from '$app/navigation';
-	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import { toasts, ToastContainer, FlatToast } from 'svelte-toasts';
 	import SplitWord from '../../../components/SplitWord.svelte';
 	import { DELAY_ANSWER } from '../../../constants/practice';
 	import RightIcon from '../../../components/RightIcon.svelte';
@@ -48,7 +48,6 @@
 	let myModal4: HTMLDialogElement;
 
 	export let data: PageData;
-	// export let form: ActionData;
 
 	const imgTopics: { [key: string]: string } = {
 		tree,
@@ -97,7 +96,6 @@
 		numSentence: 10
 	};
 
-	// let words: any[] = [];
 	let wordPack: any[] = [];
 
 	$: {
@@ -142,38 +140,31 @@
 			myModal4.close();
 			wordPack = result.data.sort((_: any) => Math.random() - 0.5).slice(0, selected.numSentence);
 		} else if (result.error) {
-			const toast = toasts.add({
+			toasts.add({
 				title: 'Error',
 				description: result.error,
-				duration: 1500, // Set the duration to 0 to keep it open until manually closed
+				duration: 1500,
 				placement: 'top-right',
 				type: 'error',
 				theme: 'dark',
 				showProgress: true,
-				// type: 'error',
-				// theme: 'dark',
 				onClick: () => {},
 				onRemove: () => {
 					goto('/login');
 				}
-				//component: BootstrapToast // You can customize the toast component here
 			});
 		} else {
-			const toast = toasts.add({
+			toasts.add({
 				title: 'Error',
 				description: result.message,
-				duration: 1500, // Set the duration to 0 to keep it open until manually closed
+				duration: 1500,
 				placement: 'top-right',
 				type: 'error',
 				theme: 'dark',
 				showProgress: true,
-				// type: 'error',
-				// theme: 'dark',
 				onClick: () => {},
 				onRemove: () => {}
-				//component: BootstrapToast // You can customize the toast component here
 			});
-
 			return;
 		}
 	}
@@ -189,7 +180,6 @@
 
 	let isDelay: boolean = false;
 	let isDone: boolean = false;
-	// const { current, nRight, nWrong, resetFlag } = state;
 	const nRightConsecutive = { current: { top: 0, n: 0 } };
 
 	const handleDone = () => {
@@ -197,7 +187,6 @@
 	};
 
 	const handleCorrect = () => {
-		// playSoundAnswer(list[current].word, true, voice, volume, speed);
 		HandlerSpeaker.playSoundAnswer(wordPack[state.current].content, true);
 		isDelay = true;
 		nRightConsecutive.current.n++;
@@ -223,7 +212,6 @@
 
 	const handleWrong = () => {
 		nRightConsecutive.current.n = 0;
-
 		HandlerSpeaker.onPlayAudio(incorrectAudio);
 		preNWrong = state.nWrong;
 		state = { ...state, nWrong: state.nWrong + 1 };
@@ -233,7 +221,6 @@
 		if (preNWrong === state.nWrong) {
 			HandlerSpeaker.onPlayAudio(incorrectAudio);
 		}
-
 		if (state.current + 1 >= nQuestion) {
 			state = { ...state, nWrong: state.nWrong + 1 };
 			handleDone();
@@ -245,13 +232,11 @@
 				resetFlag: state.current
 			};
 		}
-
 		preNWrong = state.nWrong;
 	};
 
 	const handleReplay = () => {
 		isDone = false;
-
 		state = {
 			current: 0,
 			nRight: 0,
@@ -267,7 +252,6 @@
 		<form>
 			<h3 class="font-bold md:text-xl text-lg text-title mb-2">Lựa chọn gói từ vựng</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="grid md:grid-cols-2 grid-cols-1 gap-2 mt-4">
 				<div class="mb-3 form-control">
 					<label for="types" class="block mb-2 text-sm">Loại từ </label>
@@ -288,7 +272,6 @@
 						{/each}
 					</select>
 				</div>
-
 				<div class="mb-3">
 					<label for="level" class="block mb-2 text-sm">Bặc của từ </label>
 					<select
@@ -308,7 +291,6 @@
 						{/each}
 					</select>
 				</div>
-
 				<div class="mb-3">
 					<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành </label>
 					<select
@@ -333,14 +315,15 @@
 						{/if}
 					</select>
 				</div>
-
 				<div class="form-control w-full max-w-sm mb-3">
 					<div class="md:h-[28px]" />
 					<button
 						type="button"
 						on:click={() => (showTopics = !showTopics)}
 						class="input input-bordered md:input-md input-sm w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
-						>Thêm chủ đề <span class="ml-2">
+					>
+						Thêm chủ đề
+						<span class="ml-2">
 							{#if showTopics}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -372,8 +355,8 @@
 									/>
 								</svg>
 							{/if}
-						</span></button
-					>
+						</span>
+					</button>
 				</div>
 				{#if showTopics}
 					<div
@@ -393,7 +376,6 @@
 						{/each}
 					</div>
 				{/if}
-
 				<div class="form-control mb-3 col-span-1">
 					<label class="label block md:btn-md btn-sm text-sm" for="number-sentence">
 						<span class="label-text">Số câu</span>
@@ -407,15 +389,12 @@
 					/>
 				</div>
 			</div>
-
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="modal-action">
 				<form method="dialog">
-					<!-- if there is a button, it will close the modal -->
-					<a href="/practice"
-						><button class="btn md:btn-md btn-sm"
-							><svg
+					<a href="/practice">
+						<button class="btn md:btn-md btn-sm">
+							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
 								viewBox="0 0 24 24"
@@ -428,9 +407,10 @@
 									stroke-linejoin="round"
 									d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
 								/>
-							</svg> Quay lại</button
-						></a
-					>
+							</svg>
+							Quay lại
+						</button>
+					</a>
 				</form>
 				<button
 					class="btn md:btn-md btn-sm btn-success ml-2 text-white"
@@ -443,7 +423,8 @@
 							selected.topics,
 							selected.numSentence
 						)}
-					><svg
+				>
+					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -457,13 +438,12 @@
 							d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
 						/>
 					</svg>
-					OK</button
-				>
+					OK
+				</button>
 			</div>
 		</form>
 	</div>
 </dialog>
-
 {#if wordPack.length}
 	<div class="flex flex-col justify-start items-center min-h-screen max-h-max">
 		<div
@@ -473,8 +453,6 @@
 				<img src={wordMatch} alt={wordMatch} class="h-[56px] w-[56px] mr-2" />
 				<h1 class="md:text-2xl text-lg text-[#dd9210] font-bold">GHÉP TỪ</h1>
 			</div>
-			<!-- <div class="h-[1px] w-full border border-gray-200 my-4" /> -->
-
 			{#if !isDone}
 				<div class="flex justify-between items-center my-[14px] md:text-lg text-sm">
 					<div class="">
@@ -484,7 +462,6 @@
 						<b class="font-bold text-green-600">{state.nRight}&nbsp;</b>
 						Đúng
 						<RightIcon />
-
 						-&nbsp;<b class="font-bold text-red-600">{state.nWrong}&nbsp;</b>Sai
 						<WrongIcon />
 					</div>
@@ -503,14 +480,14 @@
 						Gói từ vựng hiện tại không khả dụng, vui lòng thử lại sau. Cảm ơn !
 					</h3>
 				{/if}
-
 				{#if state.current < nQuestion}
 					<button
 						disabled={isDelay}
 						class="btn md:btn-md btn-sm bg-sky-500 max-w-xs mx-auto hover:bg-blue-600 text-white"
 						on:click={handleNext}
-						>{state.current < nQuestion - 1 ? 'Câu tiếp theo' : 'Nộp bài'}</button
 					>
+						{state.current < nQuestion - 1 ? 'Câu tiếp theo' : 'Nộp bài'}
+					</button>
 				{/if}
 			{:else}
 				<div class="invisible" />
@@ -529,10 +506,8 @@
 {:else}
 	<div class="h-screen w-full" />
 {/if}
-
 <ToastContainer placement="bottom-right" let:data>
 	<FlatToast {data} />
-	<!-- Provider template for your toasts -->
 </ToastContainer>
 
 <style>

@@ -60,8 +60,6 @@ export class IrregularVerbService {
       })
       return new ResponseData<any>({ data: irregularVerb, totalPages }, 200, 'Tìm thành công')
     } catch (error) {
-      console.log(error);
-
       return new ResponseData<string>(null, 500, 'Lỗi dịch vụ, thử lại sau')
     }
   }

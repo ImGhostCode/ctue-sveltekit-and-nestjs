@@ -4,9 +4,8 @@
 	import FormContributionWord from '../../components/FormContributionWord.svelte';
 	import type { ActionData } from './$types';
 	import { goto } from '$app/navigation';
-	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import { toasts, ToastContainer, FlatToast } from 'svelte-toasts';
 	import moment from 'moment';
-	import { text } from '@sveltejs/kit';
 
 	export let form: ActionData;
 	/** @type {import('./$types').PageData} */
@@ -22,12 +21,12 @@
 	$: missingFields = form?.missingFields;
 
 	$: if (form?.noToken) {
-		goto('/login'); // Redirect to the login page if not authenticated
+		goto('/login');
 	}
 
 	onMount(() => {
 		if (!data?.user) {
-			goto('/login', { replaceState: true }); // Redirect to the login page if not authenticated
+			goto('/login', { replaceState: true });
 			return;
 		}
 	});
@@ -38,38 +37,30 @@
 	}
 
 	$: if (form?.success) {
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Success',
 			description: form?.message,
-			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			duration: 1500,
 			placement: 'top-right',
 			type: 'success',
 			theme: 'dark',
 			showProgress: true,
-			// type: 'success',
-			// theme: 'dark',
 			onClick: () => {},
-			onRemove: () => {
-				// goto('/'); // Use goto to redirect to the '/login' route.
-			}
-			//component: BootstrapToast // You can customize the toast component here
+			onRemove: () => {}
 		});
 	}
 
 	$: if (form?.error) {
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Error',
 			description: form?.message,
-			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			duration: 1500,
 			placement: 'top-right',
 			type: 'error',
 			theme: 'dark',
 			showProgress: true,
-			// type: 'error',
-			// theme: 'dark',
 			onClick: () => {},
 			onRemove: () => {}
-			//component: BootstrapToast // You can customize the toast component here
 		});
 	}
 </script>

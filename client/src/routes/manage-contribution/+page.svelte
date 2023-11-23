@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import { toasts, ToastContainer, FlatToast } from 'svelte-toasts';
 
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
@@ -61,7 +61,6 @@
 	import moment from 'moment';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { list } from 'postcss';
 
 	export let form: ActionData;
 	/** @type {import('./$types').PageData} */
@@ -97,7 +96,6 @@
 		} else {
 			foundType = data.typesSentence.find((type: any) => type.id === typeId);
 		}
-
 		return foundType ? foundType.name : 'Không xác định';
 	}
 
@@ -113,22 +111,19 @@
 			}
 		});
 	}
+
 	function getSpecializationName(speId: string[]) {
 		let foundSpe: any;
-
 		foundSpe = data.specializations.find((spe: any) => spe.id === speId);
-
 		return foundSpe ? foundSpe.name : 'Không xác định';
 	}
+
 	function getLevelName(levelId: string[]) {
 		let foundLevel: any;
-
 		foundLevel = data.levels.find((level: any) => level.id === levelId);
-
 		return foundLevel ? foundLevel.name : 'Không xác định';
 	}
 
-	// Hàm mở Modal và truyền dữ liệu chi tiết của đóng góp vào
 	function openModal(modal: HTMLDialogElement, contribution: any) {
 		modal.showModal();
 		dataDetail = contribution;
@@ -136,7 +131,6 @@
 		dataDetail.topics = getTopicNames(dataDetail.topicId);
 		dataDetail.specializationId = getSpecializationName(dataDetail.specializationId);
 		dataDetail.levelId = getLevelName(dataDetail.levelId);
-
 		if (dataDetail.type === 'word') {
 			dataDetail.examples = dataDetail.examples.split(/\r?\n/);
 			dataDetail.synonyms = dataDetail.synonyms.split(/\r?\n/).join(',');
@@ -149,7 +143,7 @@
 	});
 
 	$: if (form?.noToken) {
-		goto('/login'); // Redirect to the login page if not authenticated
+		goto('/login');
 	}
 
 	$: if (form?.success) {
@@ -157,54 +151,47 @@
 			myModal6.close();
 			banId = 0;
 		}
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Success',
 			description: form?.message,
-			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			duration: 1500,
 			placement: 'top-right',
 			type: 'success',
 			theme: 'dark',
 			showProgress: true,
-			// type: 'success',
-			// theme: 'dark',
 			onClick: () => {},
-			onRemove: () => {
-				// goto('/'); // Use goto to redirect to the '/login' route.
-			}
-			//component: BootstrapToast // You can customize the toast component here
+			onRemove: () => {}
 		});
 	}
 
 	$: if (form?.error) {
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Error',
 			description: form?.message,
-			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			duration: 1500,
 			placement: 'top-right',
 			type: 'error',
 			theme: 'dark',
 			showProgress: true,
-			// type: 'error',
-			// theme: 'dark',
 			onClick: () => {},
 			onRemove: () => {}
-			//component: BootstrapToast // You can customize the toast component here
 		});
 	}
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<h1 class="text-2xl text-title font-bold mb-2">Quản lý đóng góp</h1>
-
 	<div class="h-[1px] w-full border border-gray-200" />
-
 	<div class="text-right my-2">
 		<div class="dropdown dropdown-end">
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<!-- svelte-ignore a11y-label-has-associated-control -->
-			<label tabindex="0" class="btn md:btn-md btn-sm md:m-1 bg-sky-500 hover:bg-sky-600 text-white"
-				>Phân loại</label
+			<label
+				tabindex="0"
+				class="btn md:btn-md btn-sm md:m-1 bg-sky-500 hover:bg-sky-600 text-white"
 			>
+				Phân loại
+			</label>
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
 				<li><button on:click={() => (category = 'word')}>Từ</button></li>
@@ -218,7 +205,6 @@
 			<table class="md:mt-6 mt-5 table table-hover">
 				<thead>
 					<tr class="md:text-base text-sm">
-						<!-- <th>ID</th> -->
 						<th>Thời gian</th>
 						<th>Loại</th>
 						<th>Nội dung</th>
@@ -249,8 +235,9 @@
 								class:text-red-600={statusCon[con.status].color === 'red'}
 								class:text-yellow-600={statusCon[con.status].color === 'yellow'}
 								class:text-green-600={statusCon[con.status].color === 'green'}
-								>{statusCon[con.status].status}</td
 							>
+								{statusCon[con.status].status}
+							</td>
 							<td class="min-w-[230px]">
 								<form
 									method="post"
@@ -264,10 +251,6 @@
 									action="?/verify-contribution"
 									class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white"
 								>
-									<!-- <button
-									class="btn btn-sm bg-green-600 hover:bg-green-700 text-white"
-									on:click={(e) => handleAccept(e, 1, { status: 1, feedback: '' })}>Xác nhận</button
-								> -->
 									<input class="hidden" type="number" name="conId" value={con.id} />
 									<input class="hidden" type="number" name="status" value="1" />
 									<input class="hidden" type="text" name="feedback" value="" />
@@ -289,11 +272,7 @@
 	{:else}
 		<p class="text-center text-base my-4 text-slate-600">Chưa có đóng góp nào</p>
 	{/if}
-
-	<!-- Pagination -->
-	<!-- <Pagination /> -->
 </div>
-
 <dialog bind:this={myModal5} id="my_modal_" class="modal">
 	{#if dataDetail}
 		<div class="modal-box md:text-base text-sm">
@@ -302,10 +281,8 @@
 			</form>
 			<h3 class="font-bold md:text-2xl text-lg text-orange-600 mb-2">Chi tiết đóng góp</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="mt-2"><b>Câu: </b> {dataDetail.content}</div>
 			<div class=""><b>Nghĩa: </b> {dataDetail.mean}</div>
-
 			<p class="font-bold">
 				Loại câu: <span class="font-normal">{dataDetail.typeId}</span>
 			</p>
@@ -326,7 +303,6 @@
 		</div>
 	{/if}
 </dialog>
-
 <dialog bind:this={myModal4} id="my_modal_4" class="modal">
 	{#if dataDetail}
 		<div class="modal-box md:text-base text-sm">
@@ -389,7 +365,6 @@
 		</div>
 	{/if}
 </dialog>
-
 <dialog bind:this={myModal6} id="my_modal_6" class="modal">
 	<div class="modal-box w-11/12 max-w-5xl">
 		<form
@@ -405,7 +380,6 @@
 		>
 			<h3 class="font-bold md:text-xl text-lg text-orange-600 mb-2">Từ chối đóng góp</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="">
 				<div class="form-control w-full mb-3">
 					<label class="label" for="feedback">
@@ -421,12 +395,9 @@
 					/>
 				</div>
 			</div>
-
 			<input class="hidden" type="number" name="conId" value={selectedId} />
 			<input class="hidden" type="number" name="status" value="0" />
-
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="modal-action">
 				<form method="dialog">
 					<button
@@ -447,8 +418,6 @@
 		</form>
 	</div>
 </dialog>
-
 <ToastContainer placement="bottom-right" let:data>
 	<FlatToast {data} />
-	<!-- Provider template for your toasts -->
 </ToastContainer>

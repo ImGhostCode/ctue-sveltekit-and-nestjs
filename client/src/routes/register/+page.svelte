@@ -1,41 +1,29 @@
 <script lang="ts">
-	import fb_icon from '$lib/assets/icons/fb-icon.png';
-	import gg_icon from '$lib/assets/icons/gg-icon.png';
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
-	import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
+	import { toasts, ToastContainer, FlatToast } from 'svelte-toasts';
 	import { goto } from '$app/navigation';
 	let showInput1: boolean = false;
 
 	export let data: PageData;
-
 	export let form: ActionData;
-	let redirectOnToastClose = false;
 
 	$: if (form?.success) {
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Success',
 			description: form?.message,
-			duration: 1500, // Set the duration to 0 to keep it open until manually closed
+			duration: 1500,
 			placement: 'bottom-right',
 			type: 'success',
 			theme: 'dark',
 			showProgress: true,
-			// type: 'success',
-			// theme: 'dark',
 			onClick: () => {},
 			onRemove: () => {
-				goto('/login'); // Use goto to redirect to the '/login' route.
+				goto('/login');
 			}
-			//component: BootstrapToast // You can customize the toast component here
 		});
 	}
 </script>
-
-<!-- {#if form?.success}
-
-	<p>Successfully logged in! Welcome back, {data.user.name}</p>
-{/if} -->
 
 <main class="flex justify-center item-center h-screen">
 	<div class="w-full max-w-xs flex flex-col justify-center items-center">
@@ -90,7 +78,6 @@
 						name="password"
 						class:border-red-500={form?.incorrectPassword}
 					/>
-
 					<button
 						id="eye"
 						class="absolute right-0 outline-none px-3 my-auto h-full"
@@ -137,7 +124,6 @@
 				{#if form?.incorrectPassword}
 					<p class="text-xs text-error mt-2">Vui lòng nhập mật khẩu ít nhất 6 ký tự</p>
 				{/if}
-				<!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
 			</div>
 			<div class="mb-4">
 				<button
@@ -147,31 +133,12 @@
 					Đăng ký
 				</button>
 			</div>
-			<!-- <div class="mb-2 text-center text-sm">Hoặc</div>
-			<div class="flex justify-between">
-				<button
-					class="flex w-1/2 border-2 mr-2 text-sm hover:bg-gray-100 text-black font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
-					type="button"
-				>
-					<div class="inline-block"><img class="h-7 w-7" src={fb_icon} alt={fb_icon} /></div>
-					<span class="leading-8">Facebook</span>
-				</button>
-				<button
-					class="flex w-1/2 border-2 ml-2 text-sm hover:bg-gray-100 text-black font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
-					type="button"
-				>
-					<div class="inline-block"><img class="h-7 w-7" src={gg_icon} alt={gg_icon} /></div>
-					<span class="leading-8">Google</span>
-				</button>
-			</div> -->
 		</form>
 		<p class="text-center text-gray-500 text-sm">
 			Bạn đã có tài khoản? <a class="text-blue-700" href="/login">Đăng nhập</a>
 		</p>
 	</div>
 </main>
-
 <ToastContainer placement="bottom-right" let:data>
 	<FlatToast {data} />
-	<!-- Provider template for your toasts -->
 </ToastContainer>

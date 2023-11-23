@@ -1,4 +1,3 @@
-import { config } from "dotenv";
 import axiosClient from "./api.config";
 
 const URL = '/favorite-item';

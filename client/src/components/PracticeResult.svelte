@@ -72,7 +72,6 @@
 	<div class="md:h-20 h-16 md:w-20 w-16 md:mb-6 mb-4">
 		<img class="h-full w-full" src={cupIcon} alt="cup icon" />
 	</div>
-
 	<div class="flex flex-row md:text-base text-sm">
 		<RightIcon />
 		<b>{nRight}</b>&nbsp;Đúng &nbsp;-&nbsp;
@@ -81,7 +80,6 @@
 		<WrongIcon />
 		<b>{nWrong}</b>&nbsp;Sai
 	</div>
-	<!-- '#C3AD1A' -->
 	{#if data.token}
 		<div class="mt-2 flex">
 			<span class="inline-block mr-2">
@@ -105,7 +103,6 @@
 			>
 		</div>
 	{/if}
-
 	<div class="mt-5">
 		<button class="btn md:btn-md btn-sm btn-outline mr-2" on:click={onGoBack}> Quay về </button>
 		<button class="btn md:btn-md btn-sm btn-info hover:bg-sky-500 text-white" on:click={onReplay}>

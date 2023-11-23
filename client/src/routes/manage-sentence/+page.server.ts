@@ -2,7 +2,6 @@ import type { PageServerLoad, Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import * as db from '$lib/server/database';
 
-
 type Types = { id: number, name: string, isWord: boolean }
 type Topics = { id: number, name: string, isWord: boolean, selected: boolean }
 

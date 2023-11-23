@@ -23,7 +23,6 @@
 		const result = await response.json();
 		practices = result.data.practices;
 		totalPages = result.data.totalPages;
-		console.log(totalPages);
 	}
 
 	function handlePrePAge() {
@@ -69,12 +68,9 @@
 			</a>
 		</div>
 	</div>
-
 	<div class="mt-6">
 		<h1 class="md:text-3xl text-xl text-title font-bold mb-2">Lịch sử ôn tập</h1>
-
 		<div class="h-[1px] w-full border border-gray-200" />
-
 		{#if practices.length}
 			<div class="overflow-x-auto">
 				<table class="table table-hover mt-4">

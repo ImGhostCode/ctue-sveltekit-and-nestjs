@@ -89,6 +89,7 @@
 		myModal6.close();
 		myModal7.close();
 	}
+
 	$: if (form?.success == true) {
 		toasts.add({
 			title: 'Success',
@@ -186,9 +187,7 @@
 						</button>
 					{/each}
 				</div>
-
 				<div class="h-[1px] w-full border border-gray-200" />
-
 				<div class="modal-action">
 					<form method="dialog">
 						<button class="btn md:btn-md btn-sm mr-2">Đóng</button>
@@ -205,7 +204,6 @@
 	{#if sentences.length}
 		<div class="overflow-x-auto">
 			<table class="table">
-				<!-- head -->
 				<thead>
 					<tr>
 						<th class="text-green-700 md:text-lg text-base">STT</th>
@@ -277,10 +275,8 @@
 			</form>
 			<h3 class="font-bold md:text-2xl text-lg text-orange-600 mb-2">Chi tiết câu</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="mt-2"><b>Câu: </b> {dataDetail.content}</div>
 			<div class=""><b>Nghĩa: </b> {dataDetail.mean}</div>
-
 			<p class="font-bold">
 				Loại câu: <span class="font-normal">{dataDetail.Type.name}</span>
 			</p>
