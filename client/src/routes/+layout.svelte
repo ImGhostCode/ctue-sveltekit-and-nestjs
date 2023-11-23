@@ -2,9 +2,8 @@
 	import '../app.css';
 	import default_image from '$lib/assets/images/default-image.png';
 	import ctueLogo from '$lib/assets/images/ctue-high-resolution-logo-transparent3.png';
-	import type { ActionData, LayoutServerData } from './$types';
-	import { onDestroy, onMount } from 'svelte';
-	import { enhance } from '$app/forms';
+	import type { LayoutServerData } from './$types';
+	import { onMount } from 'svelte';
 	import { isLoading, audioSettings } from '$lib/store';
 	import { goto } from '$app/navigation';
 
@@ -69,7 +68,6 @@
 	type Topics = { id: number; name: string; isWord: boolean; selected: boolean; image: string };
 
 	export let data: LayoutServerData;
-	// export let form: ActionData;
 
 	let showNavBar = false;
 	let userData: any = null;
@@ -176,11 +174,9 @@
 			timer,
 			async function () {
 				const key: string = event.target?.value;
-
 				if (!Boolean(key)) {
 					return;
 				}
-
 				searchResult = data.words.length
 					? data.words.filter((word: any) => word.content.includes(key))
 					: [];
@@ -207,19 +203,18 @@
 				<a href="/" class="flex items-center">
 					<img src={ctueLogo} class="md:h-12 h-8 mr-3" alt="CTUe Logo" />
 				</a>
-
 				<div class="flex items-center">
 					<div class="form-control">
 						<div class="dropdown">
 							<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-							<label tabindex="0" class="m-1"
-								><input
+							<label tabindex="0" class="m-1">
+								<input
 									type="text"
 									placeholder="Tìm kiếm..."
 									on:input={handleSearch}
 									class="input input-bordered md:input-md input-sm w-36 md:w-auto md:py-0 py-4 md:my-0 mt-0 mr-2 text-slate-600 input-search"
-								/></label
-							>
+								/>
+							</label>
 							<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 							<ul
 								tabindex="0"
@@ -227,14 +222,13 @@
 								class:hidden={searchResult?.length === 0}
 								class="dropdown-content z-[1] menu p-2 w-full md:max-w-md max-w-sm shadow bg-base-100 rounded-box mt-2 text-slate-600"
 							>
-								<!-- <li><button>Item 1</button></li> -->
 								{#each searchResult as word (word.id)}
 									<li class="">
 										<button class="block" type="button" on:click={() => openModal(word)}>
 											<p class="md:text-base text-sm text-green-600">
-												{word.content}&nbsp;<span class="text-xs text-blue-600"
-													>/{word.phonetic}/</span
-												>
+												{word.content}&nbsp;<span class="text-xs text-blue-600">
+													/{word.phonetic}/
+												</span>
 											</p>
 											<p class="text-xs">{word.mean}</p>
 										</button>
@@ -243,7 +237,6 @@
 							</ul>
 						</div>
 					</div>
-
 					{#if userData}
 						<div class="relative md:w-12 md:h-12 h-10 w-10 avatar-user z-10 group cursor-pointer">
 							{#if userData.User.avt}
@@ -474,7 +467,6 @@
 		</nav>
 		<slot class="row content " />
 		<div class="row footer group fixed bottom-0 right-0 p-2 flex items-end justify-end w-24 h-24">
-			<!-- main -->
 			<div
 				class="text-white shadow-xl flex items-center justify-center p-3 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 z-50 absolute"
 			>
@@ -498,7 +490,6 @@
 					/>
 				</svg>
 			</div>
-			<!-- sub left -->
 			<a
 				href="/"
 				class=" absolute rounded-full transition-all duration-[0.2s] ease-out scale-y-0 group-hover:scale-y-100 group-hover:-translate-x-16 flex p-2 hover:p-3 bg-green-300 scale-100 hover:bg-green-400 text-white"
@@ -520,7 +511,6 @@
 					</svg>
 				</div>
 			</a>
-			<!-- sub top -->
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
 				on:click={goTop}
@@ -537,7 +527,6 @@
 					<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
 				</svg>
 			</div>
-			<!-- sub middle -->
 			<button
 				on:click={() => myModal4.showModal()}
 				class="absolute rounded-full transition-all duration-[0.2s] ease-out scale-x-0 group-hover:scale-x-100 group-hover:-translate-y-14 group-hover:-translate-x-14 flex p-2 hover:p-3 bg-yellow-300 hover:bg-yellow-400 text-white"
@@ -559,50 +548,11 @@
 			</button>
 		</div>
 	</div>
-
 	<dialog bind:this={myModal4} id="my_modal_4" class="modal">
 		<div class="modal-box w-11/12 max-w-5xl md:p-6 px-3">
 			<h3 class="font-bold md:text-2xl text-xl text-orange-600 mb-2">Cài đặt</h3>
 			<div class="h-[1px] w-full border border-gray-200" />
-
 			<div class="md:px-6 md:py-3">
-				<!-- <div class="border rounded-md my-4 p-4">
-					<p class="md:text-lg text-base">Chủ Đề</p>
-					<div class="flex">
-						<button class="rounded-full border border-green-500 p-2 mx-2 hover:bg-base-300">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6 text-green-500"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-								/>
-							</svg>
-						</button>
-						<button class="rounded-full border p-2 mx-2 hover:bg-base-300">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
-								/>
-							</svg>
-						</button>
-					</div>
-				</div> -->
 				<div class="border rounded-md my-4 p-4">
 					<h1 class="md:text-lg text-base mb-3">Giọng Đọc</h1>
 					<div class="grid md:grid-cols-3 grid-cols-1 gap-7">
@@ -613,7 +563,6 @@
 								bind:value={indexVoice}
 							>
 								{#if voices}
-									<!-- <option selected value={null}>Mặc định</option> -->
 									{#each voices as voice, i}
 										<option value={i}>{voice.name}</option>
 									{/each}
@@ -649,7 +598,6 @@
 						</div>
 						<div class="col-span-1 flex flex-col">
 							<p class="text-light text-slate-500 my-2 md:text-base text-sm">Tốc độ đọc</p>
-
 							<div class="h-auto flex justify-between items-center grow shrink-0">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -678,18 +626,13 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="border rounded-md my-4 p-4">
-					<p class="md:text-lg text-base mb-3">Cài Đặt Khác</p>
-
-					<p class="text-slate-500 my-2 md:text-base text-sm">Hiện/Ẩn thanh điều hướng</p>
-					<input type="checkbox" class="toggle toggle-success" bind:checked={showNavBar} />
-				</div> -->
 			</div>
 			<div class="h-[1px] w-full border border-gray-200" />
 			<div class="modal-action">
 				<form method="dialog">
-					<button class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">OK</button
-					>
+					<button class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">
+						Đồng ý
+					</button>
 				</form>
 			</div>
 		</div>
@@ -750,9 +693,7 @@
 		</div>
 	</nav>
 </footer>
-
 <svelte:window on:scroll={handleOnScroll} />
-
 <dialog bind:this={myModal5} id="my_modal_3" class="modal">
 	{#if wordDetails}
 		<div class="modal-box no-scrollbar md:text-base text-sm">
@@ -849,26 +790,14 @@
 	{/if}
 </dialog>
 
-<!-- component -->
-
 <style>
 	.box {
 		display: flex;
 		flex-flow: column;
-		/* height: 100%; */
-	}
-
-	.box .row {
-		/* border: 1px dotted grey; */
 	}
 
 	.box .row.header {
 		flex: 0 1 auto;
-		/* The above is shorthand for:
-  flex-grow: 0,
-  flex-shrink: 1,
-  flex-basis: auto
-  */
 	}
 
 	.box .row.content {
@@ -881,9 +810,5 @@
 
 	.avatar-user:hover .sub-avatar-user {
 		display: block;
-	}
-
-	.content {
-		/* background: url(bgCtu); */
 	}
 </style>

@@ -1,7 +1,6 @@
 import type { PageServerLoad } from './$types';
 import * as db from '$lib/server/database';
 
-
 type Types = { id: number, name: string, isWord: boolean }
 type Levels = { id: number, name: string }
 type Specializations = { id: number, name: string }

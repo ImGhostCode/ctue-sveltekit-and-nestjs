@@ -7,9 +7,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
     if (!token) {
         throw redirect(307, '/login');
     }
-    return {
-
-    }
+    return {}
 };
 
 export const actions = {
@@ -25,7 +23,7 @@ export const actions = {
         const mean = formData.mean
         const res = await db.postIrregularVerb(token, { v1, v2, v3, mean })
         if (res.statusCode !== 200) {
-            return fail(400, { error: 'Error', message: res.message });
+            return fail(400, { error: true, message: res.message });
         } else {
             return { success: true, message: res.message }
         }
@@ -41,10 +39,9 @@ export const actions = {
         const v2 = formData.v2
         const v3 = formData.v3
         const mean = formData.mean
-
         const res = await db.patchIrregular(token, { v1, v2, v3, mean }, id)
         if (res.statusCode !== 200) {
-            return fail(400, { error: 'Error', message: res.message });
+            return fail(400, { error: true, message: res.message });
         } else {
             return { success: true, message: res.message }
         }

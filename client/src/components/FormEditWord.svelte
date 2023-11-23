@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	import tree from '$lib/assets/icons/topics/tree.png';
@@ -256,8 +256,9 @@
 				type="button"
 				on:click={handleInputFocus}
 				class=" btn-outline btn-error text-base w-full text-center border rounded-md cursor-pointer transition-all"
-				>Đóng</button
 			>
+				Đóng
+			</button>
 		</div>
 		<div class="mb-3 form-control">
 			<label for="types" class="block mb-2 text-sm">Loại từ (*)</label>

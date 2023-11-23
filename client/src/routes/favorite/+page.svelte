@@ -108,7 +108,6 @@
 		<h1 class="header-page">Danh sách yêu thích của bạn</h1>
 	</div>
 	<div class="h-[1px] w-full border border-gray-200" />
-
 	<div class="flex justify-between items-center mb-4">
 		<input
 			bind:value={key}
@@ -117,7 +116,6 @@
 			type="text"
 			placeholder="Nhập từ..."
 		/>
-
 		<div class="dropdown dropdown-end">
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<!-- svelte-ignore a11y-label-has-associated-control -->
@@ -154,7 +152,6 @@
 			</ul>
 		</div>
 	</div>
-	<!-- fill-red-500 text-red-500 -->
 	<div class="border rounded-md p-4">
 		{#each favorites as favorite}
 			<div class="flex border-b-2 hover:border-green-600 mb-4">

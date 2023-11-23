@@ -6,8 +6,8 @@ export class CreateSentenceDto {
     @IsNotEmpty()
     typeId: number
 
+    @IsOptional()
     @IsArray()
-    @IsNotEmpty()
     topicId: number[]
 
     @IsOptional()

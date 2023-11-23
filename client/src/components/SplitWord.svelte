@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	// import Speaker from '../../../components/Speaker.svelte';
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
 	import animal from '$lib/assets/icons/topics/animal.png';
@@ -63,11 +61,8 @@
 	export let onWrong: () => void;
 	export let resetFlag: number;
 	export let wordDetail: any;
-	// export let data: any;
 
 	let isCheck: boolean = false;
-
-	const userSplitId = 'userSplitId';
 
 	let userSplit: { index: number; ch: string }[] = [];
 
@@ -76,13 +71,10 @@
 		let failFlag = 1;
 
 		while (failFlag) {
-			// Prevent infinite loop
 			if (failFlag >= 50) {
 				break;
 			}
-
 			splitArr = word.split('').sort(() => Math.random() - 0.5);
-
 			if (splitArr.join('') === word) {
 				failFlag++;
 			} else {
@@ -90,7 +82,6 @@
 				break;
 			}
 		}
-
 		return splitArr;
 	}
 
@@ -99,8 +90,6 @@
 	const handleSelectCharacter = (index: number): void => {
 		const newUserSplit = [...userSplit, { index, ch: originSplit[index] }];
 		userSplit = newUserSplit;
-		// console.log(newUserSplit);
-
 		if (newUserSplit.length === word.length) {
 			isCheck = true;
 		}
@@ -110,7 +99,6 @@
 		if (isCheck) {
 			isCheck = false;
 		}
-
 		const newUserSplit = userSplit.slice(0, index);
 		userSplit = newUserSplit;
 	};
@@ -121,7 +109,6 @@
 
 	let isCorrect: boolean = false;
 
-	// check is correct
 	$: {
 		let isSub = true;
 		if (isCheck) {
@@ -137,7 +124,6 @@
 		isSub = false;
 	}
 
-	// reset when next or prev
 	$: {
 		let isSub = true;
 		if (resetFlag !== -1) {
@@ -149,16 +135,9 @@
 
 		isSub = false;
 	}
-
-	// wordDetail.examples = wordDetail.examples?.[0] !== '' ? wordDetail.examples.split(/\r?\n/) : [];
-	// wordDetail.synonyms =
-	// 	wordDetail.examples?.[0] !== '' ? wordDetail.synonyms.split(/\r?\n/).join(',') : [];
-	// wordDetail.antonyms =
-	// 	wordDetail.examples?.[0] !== '' ? wordDetail.antonyms.split(/\r?\n/).join(',') : [];
 </script>
 
 <div class="grid text-center grid-flow-row grid-rows-3">
-	<!-- Selected -->
 	<div class="flex flex-wrap justify-center items-center">
 		{#each userSplit as { index, ch }, idx (index)}
 			<button
@@ -171,7 +150,6 @@
 	</div>
 
 	<div class="flex justify-between items-start px-10 relative">
-		<!-- modal = { loading: true, data: null, show: true } -->
 		<button
 			type="button"
 			class="tooltip tooltip-bottom"
@@ -193,9 +171,6 @@
 				/>
 			</svg>
 		</button>
-
-		<!-- Answer -->
-
 		<dialog bind:this={myModal33} id="my_modal_33" class="modal text-left">
 			<div class="modal-box md:p-6 py-4 p-2 md:text-base text-sm">
 				<form method="dialog">
@@ -267,13 +242,13 @@
 					Các từ trái nghĩa: <span class="font-normal">{wordDetail.antonyms?.join(',')}</span>
 				</p>
 				<p class="font-bold md:text-base text-sm">
-					Ghi chú: <span class="font-normal"
-						>{wordDetail.note ? wordDetail.note : 'Không có'}
+					Ghi chú:
+					<span class="font-normal">
+						{wordDetail.note ? wordDetail.note : 'Không có'}
 					</span>
 				</p>
 			</div>
 		</dialog>
-
 		<p class=" font-semibold mb-2 text-slate-600">
 			<span class="md:text-2xl text-lg">
 				{mean}
@@ -290,8 +265,6 @@
 		</p>
 		<Speaker key={word} />
 	</div>
-
-	<!-- Select to answer -->
 	<div class="flex flex-wrap justify-center md:items-center items-start">
 		{#each originSplit as ch, index (index)}
 			{#if isSelected(index)}

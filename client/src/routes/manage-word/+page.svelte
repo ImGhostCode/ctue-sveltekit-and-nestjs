@@ -193,7 +193,7 @@
 		}
 	}
 
-	$: if (form?.success) {
+	$: if (form?.success == true) {
 		toasts.add({
 			title: 'Success',
 			description: form?.message,
@@ -217,9 +217,10 @@
 		myModal6.close();
 		myModal7.close();
 		wordDetails = null;
+		form.success = false;
 	}
 
-	$: if (form?.error) {
+	$: if (form?.error == true) {
 		toasts.add({
 			title: 'Error',
 			description: form?.message,
@@ -231,6 +232,7 @@
 			onClick: () => {},
 			onRemove: () => {}
 		});
+		form.error = false;
 	}
 </script>
 
@@ -363,7 +365,6 @@
 		{/each}
 		<Pagination {totalPages} {currentPage} on:next={handleNextPage} on:pre={handlePrePAge} />
 	</div>
-
 	<dialog bind:this={myModal5} id="my_modal_5" class="modal">
 		<div class="modal-box w-11/12 max-w-5xl">
 			<h3 class="font-bold text-xl text-title mb-2">Gói từ vựng</h3>
@@ -495,11 +496,9 @@
 			</div>
 		</div>
 	</dialog>
-
 	<dialog bind:this={myModal6} id="my_modal_6" class="modal">
 		<FormAddWord {levels} {topics} {specializations} {types} on:cancel={handleCancel} />
 	</dialog>
-
 	<dialog bind:this={myModal7} id="my_modal_7" class="modal">
 		{#if wordDetails}
 			<FormEditWord

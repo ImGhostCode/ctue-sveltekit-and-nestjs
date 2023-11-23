@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Speaker from '../../components/Speaker.svelte';
 	import Pagination from '../../components/Pagination.svelte';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 
 	import tree from '$lib/assets/icons/topics/tree.png';
 	import social from '$lib/assets/icons/topics/social.png';
@@ -40,7 +40,6 @@
 	let myModal5: HTMLDialogElement;
 
 	export let data: PageData;
-	// export let form: ActionData;
 
 	const imgTopics: { [key: string]: string } = {
 		tree,
@@ -91,8 +90,8 @@
 	let words: any[] = [];
 	let key: string = '';
 	let wordDetails: any = {};
-
 	let favorite: any[] = [];
+
 	$: {
 		if (data.topics) topics = data.topics;
 		if (data.types) types = data.types;
@@ -182,7 +181,6 @@
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
 	<div class="flex justify-between items-center mb-4">
 		<h1 class="header-page">Từ điển CTUE</h1>
-		<!-- You can open the modal using ID.showModal() method -->
 		<button class="" on:click={() => myModal5.showModal()}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -411,14 +409,13 @@
 		<div class="modal-action">
 			<form method="dialog">
 				<button class="btn md:btn-md btn-sm mr-2">Đóng</button>
-				<button class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white"
-					>Hoàn tất</button
-				>
+				<button class="btn md:btn-md btn-sm bg-green-600 hover:bg-green-700 text-white">
+					Hoàn tất
+				</button>
 			</form>
 		</div>
 	</div>
 </dialog>
-
 <dialog bind:this={myModal4} id="my_modal_3" class="modal">
 	<div class="modal-box no-scrollbar md:text-base text-sm">
 		<form method="dialog">

@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import queryString from 'query-string';
 
 const axiosClient = axios.create({
     baseURL:
@@ -10,7 +9,6 @@ const axiosClient = axios.create({
         'content-type': 'application/json',
     },
     withCredentials: true,
-    // paramsSerializer: (params) => queryString.stringify(params),
 });
 
 axiosClient.interceptors.request.use(

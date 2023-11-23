@@ -1,6 +1,6 @@
 <script lang="ts">
 	import medal from '$lib/assets/icons/medal.png';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import default_image from '$lib/assets/images/default-image.png';
 
 	export let data: PageData;

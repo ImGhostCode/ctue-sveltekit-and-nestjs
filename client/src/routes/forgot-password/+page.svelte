@@ -27,7 +27,7 @@
 	$: if (form?.success) {
 		seconds = 120;
 		timeout = true;
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Success',
 			description: form?.message,
 			duration: 1500,
@@ -44,7 +44,7 @@
 	$: if (form?.successGoto) {
 		seconds = 120;
 		timeout = true;
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Success',
 			description: form?.message,
 			duration: 1500,
@@ -61,7 +61,7 @@
 	}
 
 	$: if (form?.invalidCredential) {
-		const toast = toasts.add({
+		toasts.add({
 			title: 'Error',
 			description: form?.message,
 			placement: 'bottom-right',

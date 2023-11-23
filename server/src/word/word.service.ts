@@ -18,7 +18,11 @@ export class WordService {
                 const file = await this.cloudinaryService.uploadFile(pictureFile)
                 picture = file.url
             }
-            topicId = topicId.map((id) => Number(id))
+            if (topicId) {
+                topicId = topicId.map((id) => Number(id))
+            } else {
+                topicId = []
+            }
             if (examples) examples = examples.filter(example => example !== '')
             if (antonyms) antonyms = antonyms.filter(antonym => antonym !== '')
             if (synonyms) synonyms = synonyms.filter(synonym => synonym !== '')
@@ -130,7 +134,6 @@ export class WordService {
                 const isExisted = await this.isExisted(content)
                 if (isExisted) return new ResponseData<string>(null, 400, 'Từ này đã tồn tại')
             }
-
             if (topicId) {
                 topicId = topicId.map((id) => Number(id))
                 await this.prismaService.word.update({
@@ -227,7 +230,6 @@ export class WordService {
                     };
                 }
             }
-
             const totalWordspack = await this.prismaService.word.count({
                 where: whereCondition
             })

@@ -122,7 +122,7 @@
 	}
 
 	const handleFileInput: svelte.JSX.EventHandler<Event, HTMLInputElement> = (e) => {
-		if (e.currentTarget.files == null) return; // files can be null, handle however appropriate
+		if (e.currentTarget.files == null) return;
 
 		imgIlustrate = e.currentTarget.files[0];
 	};
@@ -194,7 +194,6 @@
 				<p class="text-xs text-error mt-2">Hãy nhập phiên âm của từ</p>
 			{/if}
 		</div>
-
 		<div
 			class="form-control md:col-span-3 col-span-1 rounded-md md:p-3 p-2 bg-white shadow-lg mb-4 grid md:grid-cols-10 grid-cols-6 gap-2 border"
 			class:hidden={!showPhonetic}
@@ -207,7 +206,6 @@
 					>{phonetic}</button
 				>
 			{/each}
-
 			<button
 				type="button"
 				on:click={handleInputFocus}
@@ -215,7 +213,6 @@
 				>Đóng</button
 			>
 		</div>
-
 		<div class="mb-3 form-control">
 			<label for="types" class="block mb-2 text-sm">Loại từ (*)</label>
 			<select
@@ -229,18 +226,20 @@
 							<option
 								class="block bg-base-200 md:text-base text-xs px-4 py-2"
 								selected
-								value={type.id}>{type.name}</option
+								value={type.id}
 							>
+								{type.name}
+							</option>
 						{:else}
-							<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}
-								>{type.name}</option
-							>
+							<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}>
+								{type.name}
+							</option>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading"
-						>Đang tải</option
-					>
+					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading">
+						Đang tải
+					</option>
 				{/if}
 			</select>
 		</div>
@@ -258,22 +257,23 @@
 							<option
 								class="block bg-base-200 md:text-base text-xs px-4 py-2"
 								selected
-								value={level.id}>{level.name}</option
+								value={level.id}
 							>
+								{level.name}
+							</option>
 						{:else}
-							<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={level.id}
-								>{level.name}</option
-							>
+							<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={level.id}>
+								{level.name}
+							</option>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading"
-						>Đang tải</option
-					>
+					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading">
+						Đang tải
+					</option>
 				{/if}
 			</select>
 		</div>
-
 		<div class="mb-3 form-control">
 			<label for="specialization" class="block mb-2 text-sm">Thuộc chuyên ngành (*)</label>
 			<select
@@ -287,23 +287,26 @@
 							<option
 								class="block bg-base-200 md:text-base text-xs px-4 py-2"
 								selected
-								value={specialization.id}>{specialization.name}</option
+								value={specialization.id}
 							>
+								{specialization.name}
+							</option>
 						{:else}
 							<option
 								class="block bg-base-200 md:text-base text-xs px-4 py-2"
-								value={specialization.id}>{specialization.name}</option
+								value={specialization.id}
 							>
+								{specialization.name}
+							</option>
 						{/if}
 					{/each}
 				{:else}
-					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading"
-						>Đang tải</option
-					>
+					<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value="Loading">
+						Đang tải
+					</option>
 				{/if}
 			</select>
 		</div>
-
 		<div class="form-control w-full max-w-sm mb-3">
 			<label class="label" for="examples">
 				<span class="label-text">Câu ví dụ</span>
@@ -315,7 +318,6 @@
 				name="examples"
 			/>
 		</div>
-
 		<div class="form-control w-full max-w-sm mb-3">
 			<label class="label" for="synonyms">
 				<span class="label-text">Các từ đồng nghĩa</span>
@@ -327,7 +329,6 @@
 				name="synonyms"
 			/>
 		</div>
-
 		<div class="form-control w-full max-w-sm mb-3">
 			<label class="label" for="antonyms">
 				<span class="label-text">Các từ trái nghĩa</span>
@@ -339,7 +340,6 @@
 				name="antonyms"
 			/>
 		</div>
-
 		<div class="form-control w-full max-w-sm mb-3">
 			<label class="label" for="note">
 				<span class="label-text">Ghi chú</span>
@@ -351,10 +351,8 @@
 				name="note"
 			/>
 		</div>
-
 		<div class="form-control w-full max-w-sm mb-3">
 			<div class="md:h-[36px] h-5" />
-
 			{#if imgIlustrate instanceof File}
 				<div class="h-16 input input-bordered flex justify-between items-center">
 					<img
@@ -363,8 +361,8 @@
 						alt="Preview"
 					/>
 					<span class="truncate">{imgIlustrate.name}</span>
-					<button type="button" on:click={() => (imgIlustrate = null)}
-						><svg
+					<button type="button" on:click={() => (imgIlustrate = null)}>
+						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -377,7 +375,6 @@
 					</button>
 				</div>
 			{/if}
-
 			<label class="" class:hidden={imgIlustrate instanceof File} for="img-ilustrate">
 				<div
 					class:border-red-600={missingFields?.ilustrate}
@@ -415,14 +412,15 @@
 				{/if}
 			</label>
 		</div>
-
 		<div class="form-control w-full max-w-sm mb-3">
 			<div class="md:h-[36px] h-4" />
 			<button
 				type="button"
 				on:click={() => (showTopics = !showTopics)}
 				class="input input-bordered md:input-md input-sm w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
-				>Thêm chủ đề <span class="ml-2">
+			>
+				Thêm chủ đề
+				<span class="ml-2">
 					{#if showTopics}
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -450,8 +448,8 @@
 							/>
 						</svg>
 					{/if}
-				</span></button
-			>
+				</span>
+			</button>
 		</div>
 		{#if showTopics}
 			<div
@@ -473,7 +471,6 @@
 			<input type="text" id="topics" name="topics" bind:value={topics} class="hidden" />
 		{/if}
 		<div class="h-[1px] w-full border border-gray-200 mt-8 md:col-span-3 col-span-1" />
-
 		<div class="mt-4 md:col-span-3 col-span-1 text-right">
 			{#if isLoadingForm}
 				<button
@@ -496,7 +493,6 @@
 			{/if}
 			<button type="reset" class="btn md:btn-md btn-sm btn-outline btn-error">Loại bỏ</button>
 		</div>
-
 		<input type="text" class="hidden" name="topicId" id="topics" bind:value={topicIds} />
 	</form>
 </div>

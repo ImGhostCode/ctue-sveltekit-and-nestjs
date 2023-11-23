@@ -1,6 +1,4 @@
 <script lang="ts">
-	import fb_icon from '$lib/assets/icons/fb-icon.png';
-	import gg_icon from '$lib/assets/icons/gg-icon.png';
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
 	import { toasts, ToastContainer, FlatToast } from 'svelte-toasts';
@@ -12,9 +10,8 @@
 	let showInput1: boolean = false;
 
 	export let data: PageData;
-
 	export let form: ActionData;
-	let redirectOnToastClose = false;
+
 	let feedback: string = '';
 
 	$: if (form?.success) {
@@ -173,23 +170,6 @@
 						Quên mật khẩu?
 					</a>
 				</div>
-				<!-- <div class="mb-2 text-center text-sm">Hoặc</div>
-				<div class="flex justify-between">
-					<button
-						class="flex w-1/2 border-2 mr-2 text-sm hover:bg-gray-100 text-black font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
-						type="button"
-					>
-						<div class="inline-block"><img class="h-7 w-7" src={fb_icon} alt={fb_icon} /></div>
-						<span class="leading-8">Facebook</span>
-					</button>
-					<button
-						class="flex w-1/2 border-2 ml-2 text-sm hover:bg-gray-100 text-black font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
-						type="button"
-					>
-						<div class="inline-block"><img class="h-7 w-7" src={gg_icon} alt={gg_icon} /></div>
-						<span class="leading-8">Google</span>
-					</button>
-				</div> -->
 			</form>
 			<p class="text-center text-gray-500 text-sm">
 				Bạn chưa có tài khoản? <a class="text-blue-700" href="/register">Đăng ký</a>

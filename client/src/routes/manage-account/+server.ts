@@ -1,7 +1,6 @@
 import { json } from '@sveltejs/kit'
 import * as db from '$lib/server/database';
 
-
 export async function POST(event) {
     const data = await event.request.formData()
     const token = event.cookies.get('accessToken');

@@ -417,14 +417,15 @@
 				</div>
 			</label>
 		</div>
-
 		<div class="form-control w-full max-w-sm mb-3">
 			<div class="md:h-[36px] h-4" />
 			<button
 				type="button"
 				on:click={() => (showTopics = !showTopics)}
 				class="input input-bordered md:input-md input-sm w-full max-w-sm flex justify-center items-center border bg-gray-50 border-gray-300 focus:border-green-600 focus-visible:border-green-600 focus-within:outline-none"
-				>Thêm chủ đề <span class="ml-2">
+			>
+				Thêm chủ đề
+				<span class="ml-2">
 					{#if showTopics}
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -452,8 +453,8 @@
 							/>
 						</svg>
 					{/if}
-				</span></button
-			>
+				</span>
+			</button>
 		</div>
 		{#if showTopics}
 			<div
@@ -475,7 +476,6 @@
 			<input type="text" id="topics" name="topics" bind:value={topics} class="hidden" />
 		{/if}
 		<div class="h-[1px] w-full border border-gray-200 mt-8 md:col-span-3 col-span-1" />
-
 		<div class="mt-4 md:col-span-3 col-span-1 text-right">
 			{#if isLoadingForm}
 				<button

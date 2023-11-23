@@ -119,8 +119,10 @@
 								<option
 									class="block bg-base-200 md:text-base text-xs px-4 py-2"
 									selected
-									value={type.id}>{type.name}</option
+									value={type.id}
 								>
+									{type.name}
+								</option>
 							{:else}
 								<option class="block bg-base-200 md:text-base text-xs px-4 py-2" value={type.id}>
 									{type.name}
