@@ -120,7 +120,7 @@ export const actions = {
             if (phonetic) formDataWithFile.append('phonetic', phonetic);
             const res = await db.postWord(token, formDataWithFile)
             if (res.statusCode !== 200) {
-                return fail(400, { error: 'Error', message: res.message });
+                return fail(400, { error: true, message: res.message });
             } else {
                 return { success: true, message: res.message }
             }
@@ -223,7 +223,7 @@ export const actions = {
             if (phonetic) formDataWithFile.append('phonetic', phonetic);
             const res = await db.editWord(token, id, formDataWithFile)
             if (res.statusCode !== 200) {
-                return fail(400, { error: 'Error', message: res.message });
+                return fail(400, { error: true, message: res.message });
             } else {
                 return { success: true, message: res.message }
             }

@@ -39,7 +39,7 @@
 
 	$: getIrregularVerb(currentPage, key, sort);
 
-	$: if (form?.success) {
+	$: if (form?.success == true) {
 		toasts.add({
 			title: 'Success',
 			description: form?.message,
@@ -54,9 +54,10 @@
 		getIrregularVerb(currentPage, key, sort);
 		myModal10.close();
 		myModal11.close();
+		form.success = false;
 	}
 
-	$: if (form?.error) {
+	$: if (form?.error == true) {
 		toasts.add({
 			title: 'Error',
 			description: form?.message,
@@ -68,6 +69,7 @@
 			onClick: () => {},
 			onRemove: () => {}
 		});
+		form.error = false;
 	}
 
 	async function handleDeleteIreegular(id: number) {

@@ -89,7 +89,7 @@
 		myModal6.close();
 		myModal7.close();
 	}
-	$: if (form?.success) {
+	$: if (form?.success == true) {
 		toasts.add({
 			title: 'Success',
 			description: form?.message,
@@ -104,9 +104,10 @@
 		getSentences(topic, type, currentPage);
 		myModal6.close();
 		myModal7.close();
+		form.success = false;
 	}
 
-	$: if (form?.error) {
+	$: if (form?.error == true) {
 		toasts.add({
 			title: 'Error',
 			description: form?.message,
@@ -118,6 +119,7 @@
 			onClick: () => {},
 			onRemove: () => {}
 		});
+		form.error = false;
 	}
 
 	const handleDeleteSentence = async (id: number) => {

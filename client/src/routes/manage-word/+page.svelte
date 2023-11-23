@@ -193,7 +193,7 @@
 		}
 	}
 
-	$: if (form?.success) {
+	$: if (form?.success == true) {
 		toasts.add({
 			title: 'Success',
 			description: form?.message,
@@ -217,9 +217,10 @@
 		myModal6.close();
 		myModal7.close();
 		wordDetails = null;
+		form.success = false;
 	}
 
-	$: if (form?.error) {
+	$: if (form?.error == true) {
 		toasts.add({
 			title: 'Error',
 			description: form?.message,
@@ -231,6 +232,7 @@
 			onClick: () => {},
 			onRemove: () => {}
 		});
+		form.error = false;
 	}
 </script>
 
