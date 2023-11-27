@@ -34,6 +34,11 @@
 		document.body.scrollIntoView();
 		currentPage = currentPage + 1;
 	}
+
+	function handleChangePage(e: any) {
+		document.body.scrollIntoView();
+		currentPage = e.detail;
+	}
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
@@ -105,7 +110,15 @@
 					</tbody>
 				</table>
 			</div>
-			<Pagination {totalPages} {currentPage} on:next={handleNextPage} on:pre={handlePrePAge} />
+			{#if totalPages > 1}
+				<Pagination
+					{currentPage}
+					{totalPages}
+					on:next={handleNextPage}
+					on:pre={handlePrePAge}
+					on:page-change={handleChangePage}
+				/>
+			{/if}
 		{:else}
 			<p class="text-center text-base my-4 text-slate-600">Bạn chưa có bài ôn tập nào</p>
 		{/if}

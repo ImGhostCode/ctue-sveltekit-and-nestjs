@@ -168,6 +168,11 @@
 		currentPage = currentPage + 1;
 	}
 
+	function handleChangePage(e: any) {
+		document.body.scrollIntoView();
+		currentPage = e.detail;
+	}
+
 	function handleCancel() {
 		myModal6.close();
 	}
@@ -363,7 +368,15 @@
 				</div>
 			</div>
 		{/each}
-		<Pagination {totalPages} {currentPage} on:next={handleNextPage} on:pre={handlePrePAge} />
+		{#if totalPages > 1}
+			<Pagination
+				{currentPage}
+				{totalPages}
+				on:next={handleNextPage}
+				on:pre={handlePrePAge}
+				on:page-change={handleChangePage}
+			/>
+		{/if}
 	</div>
 	<dialog bind:this={myModal5} id="my_modal_5" class="modal">
 		<div class="modal-box w-11/12 max-w-5xl">

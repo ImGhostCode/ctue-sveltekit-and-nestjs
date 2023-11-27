@@ -21,3 +21,7 @@ body {
 .header-page {
     @apply md:text-2xl text-xl text-title font-bold md:mb-2
 }
+
+.active {
+    @apply bg-sky-500 text-white
+}

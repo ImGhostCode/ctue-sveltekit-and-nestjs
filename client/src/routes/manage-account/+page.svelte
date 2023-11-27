@@ -126,6 +126,11 @@
 		document.body.scrollIntoView();
 		currentPage = currentPage + 1;
 	}
+
+	function handleChangePage(e: any) {
+		document.body.scrollIntoView();
+		currentPage = e.detail;
+	}
 </script>
 
 <div class="max-w-screen-xl w-screen mx-auto text-left px-2 py-8 min-h-screen max-h-max">
@@ -205,7 +210,15 @@
 			</tbody>
 		</table>
 	</div>
-	<Pagination {totalPages} {currentPage} on:next={handleNextPage} on:pre={handlePrePAge} />
+	{#if totalPages > 1}
+		<Pagination
+			{currentPage}
+			{totalPages}
+			on:next={handleNextPage}
+			on:pre={handlePrePAge}
+			on:page-change={handleChangePage}
+		/>
+	{/if}
 </div>
 <dialog bind:this={myModal4} id="my_modal_4" class="modal">
 	<div class="modal-box w-11/12 max-w-5xl md:p-6 px-3 py-4">
