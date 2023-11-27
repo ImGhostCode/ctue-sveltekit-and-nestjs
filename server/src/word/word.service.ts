@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWordDto, UpdateWordDto } from './dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { PAGE_SIZE, ResponseData } from '../global';
+import { PAGE_SIZE, PRACTICE_SIZE, ResponseData } from '../global';
 import { Word } from '@prisma/client';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
@@ -211,9 +211,37 @@ export class WordService {
         })
     }
 
-    async getWordsPack(option: { type: number, level: number, specialization: number, topic: [], numSentence: number }) {
+    async getWordsPack(userId, option: { type: number, level: number, specialization: number, topic: [], numSentence: number }) {
         try {
             let { topic, type, level, specialization, numSentence } = option
+            const userPractice = await this.prismaService.practice.findMany({
+                where: {
+                    userId: userId,
+                },
+                include: {
+                    Words: true,
+                },
+            });
+
+            const wordReviewCounts = {};
+
+            userPractice.forEach((practice) => {
+                practice.Words.forEach((word) => {
+                    if (word.id in wordReviewCounts) {
+                        wordReviewCounts[word.id]++;
+                    } else {
+                        wordReviewCounts[word.id] = 1;
+                    }
+                });
+            });
+
+            const wordsOverReviewLimit = [];
+            Object.keys(wordReviewCounts).forEach((wordId) => {
+                if (wordReviewCounts[wordId] >= PRACTICE_SIZE.MAX_PRACTICE_COUNT) {
+                    wordsOverReviewLimit.push(parseInt(wordId));
+                }
+            });
+
             let whereCondition: any = {
             };
             if (type) whereCondition.typeId = Number(type);
@@ -228,6 +256,11 @@ export class WordService {
                     whereCondition.Topic = {
                         some: { id: Number(topic) }
                     };
+                }
+            }
+            if (wordsOverReviewLimit.length) {
+                whereCondition.id = {
+                    notIn: wordsOverReviewLimit,
                 }
             }
             const totalWordspack = await this.prismaService.word.count({
