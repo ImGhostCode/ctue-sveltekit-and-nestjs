@@ -3,8 +3,9 @@ import { WordService } from './word.service';
 import { CreateWordDto, UpdateWordDto } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MyJWTGuard, RolesGuard } from '../auth/guard';
-import { Roles } from '../auth/decorator';
+import { GetAccount, Roles } from '../auth/decorator';
 import { ACCOUNT_TYPES } from '../global';
+import { Account } from '@prisma/client';
 
 @Controller('word')
 export class WordController {
@@ -26,8 +27,8 @@ export class WordController {
     @Get('words-pack')
     @UseGuards(MyJWTGuard, RolesGuard)
     @Roles(ACCOUNT_TYPES.USER, ACCOUNT_TYPES.ADMIN)
-    getWordsPack(@Query() option: { type: number, level: number, specialization: number, topic: [], numSentence: number }) {
-        return this.wordServive.getWordsPack(option)
+    getWordsPack(@Query() option: { type: number, level: number, specialization: number, topic: [], numSentence: number }, @GetAccount() account: Account) {
+        return this.wordServive.getWordsPack(account.userId, option)
     }
 
     // @Get('id:id')

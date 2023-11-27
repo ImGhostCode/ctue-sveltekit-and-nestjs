@@ -85,6 +85,11 @@
 		currentPage = currentPage + 1;
 	}
 
+	function handleChangePage(e: any) {
+		document.body.scrollIntoView();
+		currentPage = e.detail;
+	}
+
 	function handleCancel() {
 		myModal6.close();
 		myModal7.close();
@@ -259,7 +264,15 @@
 	{:else}
 		<div class="py-4 text-center text-lg text-slate-600 font-semibold">Danh sách rỗng</div>
 	{/if}
-	<Pagination {currentPage} {totalPages} on:next={handleNextPage} on:pre={handlePrePAge} />
+	{#if totalPages > 1}
+		<Pagination
+			{currentPage}
+			{totalPages}
+			on:next={handleNextPage}
+			on:pre={handlePrePAge}
+			on:page-change={handleChangePage}
+		/>
+	{/if}
 </div>
 <dialog bind:this={myModal6} id="my_modal_" class="modal">
 	<FormAddSentence {topics} {types} on:cancel={handleCancel} />

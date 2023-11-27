@@ -44,5 +44,6 @@ export enum PAGE_SIZE {
 
 }
 export enum PRACTICE_SIZE {
-    PRACTICE_SELECT = 5
+    PRACTICE_SELECT = 5,
+    MAX_PRACTICE_COUNT = 100
 }

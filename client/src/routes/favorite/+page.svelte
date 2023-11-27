@@ -90,6 +90,11 @@
 		currentPage = currentPage + 1;
 	}
 
+	function handleChangePage(e: any) {
+		document.body.scrollIntoView();
+		currentPage = e.detail;
+	}
+
 	async function handleToggleFavorite(wordId: number) {
 		const response = await fetch(`/ctue-dictionary/${wordId}`, {
 			method: 'PATCH'
@@ -190,8 +195,14 @@
 			</div>
 		{/each}
 	</div>
-	{#if favorites?.length}
-		<Pagination {currentPage} {totalPages} on:next={handleNextPage} on:pre={handlePrePAge} />
+	{#if totalPages > 1}
+		<Pagination
+			{currentPage}
+			{totalPages}
+			on:next={handleNextPage}
+			on:pre={handlePrePAge}
+			on:page-change={handleChangePage}
+		/>
 	{/if}
 </div>
 <dialog bind:this={myModal4} id="my_modal_3" class="modal">
