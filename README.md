@@ -77,11 +77,11 @@ CTUE là một ứng dụng học tiếng Anh dành cho người mới bắt đ�
 Nếu bạn muốn đóng góp vào dự án CTUE, vui lòng tạo pull request và chúng tôi sẽ xem xét cùng với đội ngũ phát triển.
 
 ## 📞 Liên hệ
-Nếu có bất kỳ thắc mắc hoặc góp ý nào, vui lòng liên hệ với chúng tôi qua email: [quooctrangg@gmail.com](mailto:quooctrangg@gmail.com).
+Nếu có bất kỳ thắc mắc hoặc góp ý nào, vui lòng liên hệ với chúng tôi qua email: [help.ctue@gmail.com](mailto:help.ctue@gmail.com).
 
 Cảm ơn bạn đã sử dụng ứng dụng CTUE! Chúc bạn có trải nghiệm học tiếng Anh thú vị và hiệu quả.
 
-## Screenshots
+## Screenshot
 ![Screenshot from 2023-11-21 15-06-56](https://github.com/quooctrangg/ctue-sveltekit-and-nestjs/assets/97029516/0543e33c-aa66-467c-ac15-c1dc8e2dba93)
 
 
